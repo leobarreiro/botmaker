@@ -32,6 +32,7 @@
 		<version.war.plugin>2.5</version.war.plugin>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
+		<version.primefaces>5.3</version.primefaces>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -66,6 +67,11 @@
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>botgram</artifactId>
 				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces</groupId>
+				<artifactId>primefaces</artifactId>
+				<version>${version.primefaces}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

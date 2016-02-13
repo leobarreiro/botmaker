@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+	<p:dialog widgetVar="msgDialog" header="#{msgAction.titleModal}" modal="true" showEffect="fade" hideEffect="fade"
+		resizable="false" width="auto" height="auto">
+		<p:outputPanel>
+			<h:panelGroup layout="block" styleClass="ui-dialog-content ui-widget-content">
+				<h:panelGroup styleClass="ui-dialog-message ui-messages-error-icon" rendered="#{msgAction.error}" />
+				<h:panelGroup styleClass="ui-dialog-message ui-messages-warn-icon" rendered="#{msgAction.warn}" />
+				<h:panelGroup styleClass="ui-dialog-message ui-messages-info-icon" rendered="#{msgAction.info}" />
+				#{msgAction.msg}
+			</h:panelGroup>
+		</p:outputPanel>
+	</p:dialog>
+
+</ui:composition>
