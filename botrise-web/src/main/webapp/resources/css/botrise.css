@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Arial, Helvetica;
+	font-size: 12px;
+}
+
+.frm-login {
+	display: block;
+	width: 420px;
+	margin: auto;
+	margin-top: 50px;
+	padding: 6px;
+}
+
+.frm-title {
+	background-color: #cecece;
+	padding: 4px;
+	margin: 6px;
+	text-align: center;
+}
+
+.frm-title label {
+	
+}
+
+.frm-line {
+	padding: 2px;
+}
+
+.frm-line label {
+	display: inline-block;
+	width: 160px;
+	text-align: right;
+	margin-right: 4px;
+}
+
+.frm-submit {
+	text-align: center;
+	display: block;
+	margin-top: 6px;
+	padding: 2px;
+}

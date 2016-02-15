@@ -33,6 +33,13 @@
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<version.primefaces>5.3</version.primefaces>
+		<version.primefaces.extensions>4.0.0</version.primefaces.extensions>
+		<version.apache.poi>3.9</version.apache.poi>
+		<version.javaee.api>7.0</version.javaee.api>
+		<version.hibernate.core>5.1.0.Final</version.hibernate.core>
+		<version.hibernate.validator>5.2.3.Final</version.hibernate.validator>
+		<version.slf4j.api>1.7.12</version.slf4j.api>
+		<version.junit>4.10</version.junit>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -50,28 +57,64 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.wildfly.bom</groupId>
-				<artifactId>jboss-javaee-7.0-with-tools</artifactId>
-				<version>${version.jboss.bom}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.wildfly.bom</groupId>
-				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
-				<version>${version.jboss.bom}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>botgram</artifactId>
 				<version>0.0.1</version>
 			</dependency>
 			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${version.javaee.api}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${version.hibernate.core}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${version.hibernate.validator}</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${version.junit}</version>
+				<type>jar</type>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${version.slf4j.api}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>${version.primefaces}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.primefaces.extensions</groupId>
+				<artifactId>primefaces-extensions</artifactId>
+				<version>${version.primefaces.extensions}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${version.apache.poi}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${version.apache.poi}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
