@@ -141,7 +141,7 @@
 	<repositories>
 		<repository>
 			<id>javaleo</id>
-			<url>http://nexus.javaleo.org/content/repositories/</url>
+			<url>http://nexus.javaleo.org/content/repositories/releases/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
