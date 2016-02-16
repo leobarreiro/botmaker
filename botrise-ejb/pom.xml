@@ -41,6 +41,10 @@
 			<groupId>org.javaleo.libs</groupId>
 			<artifactId>botgram</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.javaleo.systems</groupId>
+			<artifactId>javaleo-core</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

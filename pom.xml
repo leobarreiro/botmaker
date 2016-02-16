@@ -57,6 +57,11 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
+				<groupId>com.javaleo.systems</groupId>
+				<artifactId>javaleo-core</artifactId>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>botgram</artifactId>
 				<version>0.0.1</version>
@@ -136,7 +141,7 @@
 	<repositories>
 		<repository>
 			<id>javaleo</id>
-			<url>http://nexus.javaleo.org/</url>
+			<url>http://nexus.javaleo.org/content/repositories/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
