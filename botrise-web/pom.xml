@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>botrise</artifactId>
 		<groupId>com.javaleo.systems</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>botrise-web</artifactId>
 	<packaging>war</packaging>
@@ -23,7 +23,6 @@
 			<groupId>com.javaleo.systems</groupId>
 			<artifactId>botrise-ejb</artifactId>
 			<type>ejb</type>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>

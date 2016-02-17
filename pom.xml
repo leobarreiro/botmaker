@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.javaleo.systems</groupId>
 	<artifactId>botrise</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 	<url>http://botrise.javaleo.com</url>
 	<licenses>
@@ -140,13 +140,23 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>javaleo</id>
+			<id>javaleo releases</id>
 			<url>http://nexus.javaleo.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>javaleo snapshots</id>
+			<url>http://nexus.javaleo.org/content/repositories/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
 			<releases>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</releases>
 		</repository>
 	</repositories>
