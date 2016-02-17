@@ -23,6 +23,7 @@
 			<groupId>com.javaleo.systems</groupId>
 			<artifactId>botrise-ejb</artifactId>
 			<type>ejb</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
