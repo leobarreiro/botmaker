@@ -41,6 +41,10 @@
 		<version.slf4j.api>1.7.12</version.slf4j.api>
 		<version.junit>4.10</version.junit>
 	</properties>
+	<scm>
+		<connection>scm:git:https://leobarreiro:gabr13loni@bitbucket.org/javaleo/botrise.git</connection>
+		<url>scm:git:https://leobarreiro:gabr13loni@bitbucket.org/javaleo/botrise.git</url>
+	</scm>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -133,6 +137,25 @@
 					<inherited>true</inherited>
 					<configuration>
 						<skip>true</skip>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!--<shortRevisionLength>5</shortRevisionLength>-->
+						<revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
+						<doCheck>true</doCheck>
+						<doUpdate>true</doUpdate>
 					</configuration>
 				</plugin>
 			</plugins>
