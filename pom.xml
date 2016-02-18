@@ -42,8 +42,8 @@
 		<version.junit>4.10</version.junit>
 	</properties>
 	<scm>
-		<connection>scm:git:https://leobarreiro:gabr13loni@bitbucket.org/javaleo/botrise.git</connection>
-		<url>scm:git:https://leobarreiro:gabr13loni@bitbucket.org/javaleo/botrise.git</url>
+		<connection>scm:git:https://leobarreiro:{X9yGnDYAAgAH0rFEZTRBwO6+UfvwYItnXoC46YUU9dI=}@bitbucket.org/javaleo/botrise.git</connection>
+		<url>scm:git:https://leobarreiro:{X9yGnDYAAgAH0rFEZTRBwO6+UfvwYItnXoC46YUU9dI=}@bitbucket.org/javaleo/botrise.git</url>
 	</scm>
 	<dependencyManagement>
 		<dependencies>
