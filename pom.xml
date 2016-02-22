@@ -61,8 +61,8 @@
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>com.javaleo.systems</groupId>
-				<artifactId>javaleo-core</artifactId>
+				<groupId>org.javaleo.libs</groupId>
+				<artifactId>jee-core</artifactId>
 				<version>0.0.1</version>
 			</dependency>
 			<dependency>
@@ -152,12 +152,13 @@
 						</execution>
 					</executions>
 					<configuration>
-						<!--<shortRevisionLength>5</shortRevisionLength>-->
+						<!--<shortRevisionLength>5</shortRevisionLength> -->
 						<revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
 						<doCheck>true</doCheck>
 						<doUpdate>true</doUpdate>
 						<username>leobarreiro</username>
 						<password>gabr13loni</password>
+						<!-- <password>{X9yGnDYAAgAH0rFEZTRBwO6+UfvwYItnXoC46YUU9dI=}</password> -->
 					</configuration>
 				</plugin>
 			</plugins>
@@ -185,7 +186,7 @@
 			</releases>
 		</repository>
 	</repositories>
-    <distributionManagement>
+	<distributionManagement>
 		<repository>
 			<id>javaleo</id>
 			<name>Internal Releases</name>

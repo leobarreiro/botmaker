@@ -1,7 +1,5 @@
 package com.javaleo.systems.botrise.ejb.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,12 +12,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.javaleo.libs.jee.core.model.IEntityBasic;
+
 import com.javaleo.systems.botrise.ejb.enums.BotType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = EntityUtils.BOT)
 @SequenceGenerator(schema = EntityUtils.SCHEMA, name = "bot_sq", sequenceName = "bot_seq", allocationSize = 1, initialValue = 1)
-public class Bot implements Serializable {
+public class Bot implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,7 @@ public class Bot implements Serializable {
 	private BotType botType;
 	private String unabledMessage;
 
+	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bot_sq")
 	@Column(name = "id")

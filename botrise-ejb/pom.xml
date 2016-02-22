@@ -42,8 +42,8 @@
 			<artifactId>botgram</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.javaleo.systems</groupId>
-			<artifactId>javaleo-core</artifactId>
+			<groupId>org.javaleo.libs</groupId>
+			<artifactId>jee-core</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
