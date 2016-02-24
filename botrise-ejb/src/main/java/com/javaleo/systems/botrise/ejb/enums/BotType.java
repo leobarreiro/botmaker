@@ -2,6 +2,20 @@ package com.javaleo.systems.botrise.ejb.enums;
 
 public enum BotType {
 
-	TELEGRAM, HYPERCHAT, IRC;
+	TELEGRAM("Telegram"), HYPERCHAT("Hyperchat"), IRC("IRC");
+
+	private BotType(String name) {
+		this.name = name;
+	}
+
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

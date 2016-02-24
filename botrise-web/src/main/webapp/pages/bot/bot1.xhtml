@@ -2,20 +2,22 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:panelGroup layout="block" styleClass="frm-login">
+		<h:panelGroup layout="block" styleClass="pc60 mrauto">
 			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Please type your username and password" />
+				<h:outputLabel value="Selecione o tipo de Bot" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Username" />
-				<h:inputText value="username" />
+				<h:outputLabel value="Tipo de Bot" />
+				<h:selectOneMenu value="#{botAction.botType}" >
+					<f:selectItems value="#{botAction.botTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Password" />
-				<h:inputSecret value="password" />
+				<h:outputLabel value="Token" />
+				<h:inputSecret value="#{botAction.token}" size="60" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="/pages/started.jsf" value="Login" />
+				<h:commandButton action="#{botAction.validateToken()}" value="Validar" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

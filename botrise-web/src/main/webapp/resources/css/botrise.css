@@ -14,10 +14,11 @@ body {
 }
 
 .frm-title {
-	background-color: #cecece;
 	padding: 4px;
 	margin: 6px;
 	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .frm-title label {
@@ -40,4 +41,12 @@ body {
 	display: block;
 	margin-top: 6px;
 	padding: 2px;
+}
+
+.mrauto {
+	margin: auto;
+}
+
+.pc60 {
+	width: 60%;
 }

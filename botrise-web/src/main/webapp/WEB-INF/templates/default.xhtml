@@ -16,6 +16,11 @@
 	<h:form id="frm">
 		<ui:include src="/pages/dialog/msg.xhtml" />
 		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
+		<p:menubar>
+			<p:submenu label="Bots">
+				<p:menuitem value="Cadastrar Bot" action="#{botAction.start()}" />
+			</p:submenu>
+		</p:menubar>
 		<h:panelGroup layout="block">
 			<ui:insert name="content">
 				[Template content will be inserted here]
