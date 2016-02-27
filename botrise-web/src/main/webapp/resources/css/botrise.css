@@ -2,51 +2,134 @@
 
 body {
 	font-family: Arial, Helvetica;
-	font-size: 12px;
+	font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #006699;
+}
+
+h1 {
+	font-size: 40px;
+	margin: 4px;
+}
+
+h2 {
+	font-size: 28px;
+	margin: auto;
+}
+
+
+.frm-crud, .frm-login {
+	margin: auto;
+	margin-top: 20px;
+	padding: 4px;
+	border: 1px solid #c4c4c4;
+	border-radius: 12px;
+}
+
+.ui-dialog {
+	padding: 4px;
+	border: 1px solid #c4c4c4;
+	border-radius: 12px;
 }
 
 .frm-login {
-	display: block;
 	width: 420px;
-	margin: auto;
 	margin-top: 50px;
-	padding: 6px;
 }
 
-.frm-title {
+.frm-title, .ui-dialog-titlebar {
 	padding: 4px;
-	margin: 6px;
-	text-align: center;
-	font-size: 14px;
+	margin: 0px 0px 12px 0px;
+	text-align: left;
+	font-size: 16px;
 	font-weight: bold;
+	color: #ffffff;
+	background: #006699;
+	border-radius: 8px 8px 0px 0px;
 }
 
-.frm-title label {
-	
+.ui-dialog-titlebar .ui-dialog-titlebar-close {
+	margin: 2px;
 }
 
 .frm-line {
-	padding: 2px;
+	padding: 4px;
+	margin: 4px;
 }
 
 .frm-line label {
 	display: inline-block;
 	width: 160px;
 	text-align: right;
-	margin-right: 4px;
+	margin-right: 12px;
 }
 
 .frm-submit {
 	text-align: center;
 	display: block;
-	margin-top: 6px;
+	margin-top: 12px;
 	padding: 2px;
+}
+
+.frm-submit .primary {
+	font-weight: bold;
+	padding: 4px;
+	border: 1px solid #c4c4c4;
+	background: #006699;
+	color: #ffffff;
+	border-radius: 6px;
+}
+
+.frm-submit .primary:hover {
+	color: #ccffff;
+}
+
+.required {
+	font-weight: bold;
 }
 
 .mrauto {
 	margin: auto;
 }
 
+.pc10 {
+	width: 10%;
+}
+
+.pc20 {
+	width: 20%;
+}
+
+.pc30 {
+	width: 30%;
+}
+
+.pc40 {
+	width: 40%;
+}
+
+.pc50 {
+	width: 50%;
+}
+
 .pc60 {
 	width: 60%;
+}
+
+.pc70 {
+	width: 70%;
+}
+
+.pc80 {
+	width: 80%;
+}
+
+.pc90 {
+	width: 90%;
+}
+
+.pc100 {
+	width: 100%;
 }

@@ -27,6 +27,7 @@ public class Bot implements IEntityBasic {
 	private String name;
 	private String token;
 	private BotType botType;
+	private Boolean active;
 	private String unabledMessage;
 
 	@Override
@@ -70,6 +71,15 @@ public class Bot implements IEntityBasic {
 
 	public void setBotType(BotType botType) {
 		this.botType = botType;
+	}
+
+	@Column(name = "active")
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	@Lob

@@ -9,7 +9,6 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.AbstractCrudAction;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
@@ -41,16 +40,13 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 	private List<Bot> bots;
 
 	public String validateToken() {
-		if (StringUtils.isNotBlank(token)) {
-			try {
-				bot = facade.validateBotTelegram(token);
-				return "/pages/bot/bot2.jsf?faces-redirect=true";
-			} catch (BotRiseException e) {
-				msgAction.addMessage(MessageType.ERROR, e.getMessage());
-				return "/pages/bot/bot1.jsf?faces-redirect=true";
-			}
+		try {
+			bot = facade.validateBotTelegram(token);
+			return "/pages/bot/bot2.jsf?faces-redirect=true";
+		} catch (BotRiseException e) {
+			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+			return "/pages/bot/bot1.jsf?faces-redirect=true";
 		}
-		return "/pages/bot/bot2.jsf?faces-redirect=true";
 	}
 
 	@Override
