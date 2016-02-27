@@ -39,14 +39,18 @@ h2 {
 }
 
 .frm-title, .ui-dialog-titlebar {
-	padding: 4px;
-	margin: 0px 0px 12px 0px;
+	padding: 2px;
+	margin: 0px 0px 4px 0px;
 	text-align: left;
 	font-size: 16px;
 	font-weight: bold;
 	color: #ffffff;
-	background: #006699;
-	border-radius: 8px 8px 0px 0px;
+	background-color: #006699 !important;
+	border-radius: 6px 6px 0px 0px !important;
+}
+
+.ui-dialog.ui-widget-content {
+    border-radius: 10px !important;
 }
 
 .ui-dialog-titlebar .ui-dialog-titlebar-close {

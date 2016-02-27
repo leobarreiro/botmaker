@@ -8,6 +8,9 @@ import org.javaleo.libs.jee.core.exceptions.JavaleoException;
 import org.javaleo.libs.jee.core.security.Credentials;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
+import com.javaleo.systems.botrise.ejb.business.IUserBusiness;
+import com.javaleo.systems.botrise.ejb.entities.User;
+
 @Named
 @Stateless
 public class BotRiseAuthenticator implements IJavaleoAuthenticator {
@@ -15,15 +18,22 @@ public class BotRiseAuthenticator implements IJavaleoAuthenticator {
 	@Inject
 	private Credentials credentials;
 
+	@Inject
+	private IUserBusiness userBusiness;
+
 	@Override
 	public void authenticate(String username, String password) throws JavaleoException {
-		// TODO Auto-generated method stub
+		User user = userBusiness.findUserByUsernameAndPassphrase(username, password);
+		if (user == null) {
+			throw new JavaleoException("Usuario não encontrado.");
+		}
 		credentials.setUsername(username);
+		credentials.setName(user.getName());
+		credentials.setEmail(user.getEmail());
 	}
 
 	@Override
 	public void logoff() throws JavaleoException {
-		// TODO Auto-generated method stub
 		credentials.clear();
 	}
 

@@ -8,14 +8,14 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Username" />
-				<h:inputText value="username" />
+				<h:inputText value="#{userAction.username}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Password" />
-				<h:inputSecret value="password" />
+				<h:inputSecret value="#{userAction.plainPassword}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="/pages/started.jsf" value="Login" styleClass="primary" />
+				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="primary" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

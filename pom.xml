@@ -37,6 +37,7 @@
 		<version.primefaces.extensions>4.0.0</version.primefaces.extensions>
 		<version.primefaces.themes>1.0.10</version.primefaces.themes>
 		<version.apache.poi>3.9</version.apache.poi>
+		<version.commons.codec>1.10</version.commons.codec>
 		<version.javaee.api>7.0</version.javaee.api>
 		<version.hibernate.core>5.1.0.Final</version.hibernate.core>
 		<version.hibernate.validator>5.2.3.Final</version.hibernate.validator>
@@ -128,6 +129,11 @@
 				<version>${version.apache.poi}</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${version.commons.codec}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
 				<version>${version.apache.poi}</version>
@@ -201,7 +207,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</repository>		
+		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>

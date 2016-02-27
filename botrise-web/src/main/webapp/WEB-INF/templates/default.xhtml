@@ -11,15 +11,18 @@
 	<h1>BotRise Administration</h1>
 	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-		<h:graphicImage value="/resources/images/loader.gif" width="50" height="50" />
+		<h:graphicImage value="/resources/img/ajax-loader.gif" width="54" height="55" />
 	</p:dialog>
 	<h:form id="frm">
 		<ui:include src="/pages/dialog/msg.xhtml" />
 		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
-		<p:menubar>
+		<p:menubar rendered="#{botRiseAuthenticator.authenticated}">
 			<p:submenu label="Bots">
 				<p:menuitem value="Cadastrar Bot" action="#{botAction.loadNewScreen()}" />
 				<p:menuitem value="Consultar Bots" action="#{botAction.loadSearchScreen()}" />
+			</p:submenu>
+			<p:submenu label="#{userAction.credentials.name}">
+				<p:menuitem value="Sair" action="#{userAction.logoff()}"/>
 			</p:submenu>
 		</p:menubar>
 		<h:panelGroup layout="block">

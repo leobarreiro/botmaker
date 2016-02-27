@@ -7,7 +7,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.javaleo.systems.botrise.ejb.business.IBotBusiness;
+import com.javaleo.systems.botrise.ejb.business.IUserBusiness;
 import com.javaleo.systems.botrise.ejb.entities.Bot;
+import com.javaleo.systems.botrise.ejb.entities.User;
 import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
 import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
@@ -19,6 +21,9 @@ public class BotRiseFacade implements IBotRiseFacade {
 
 	@Inject
 	private IBotBusiness botBusiness;
+
+	@Inject
+	private IUserBusiness userBusiness;
 
 	/*
 	 * (non-Javadoc)
@@ -50,6 +55,29 @@ public class BotRiseFacade implements IBotRiseFacade {
 	@Override
 	public List<Bot> searchBot(BotFilter filter) {
 		return botBusiness.searchBot(filter);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveUser(com.javaleo.systems.botrise.ejb.entities.User,
+	 * java.lang.String)
+	 */
+	@Override
+	public void saveUser(User user, String password) throws BotRiseException {
+		userBusiness.saveUser(user, password);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#findUserByUsernameAndPassphrase(java.lang.String,
+	 * java.lang.String)
+	 */
+	@Override
+	public User findUserByUsernameAndPassphrase(String username, String passphrase) {
+		return userBusiness.findUserByUsernameAndPassphrase(username, passphrase);
 	}
 
 }
