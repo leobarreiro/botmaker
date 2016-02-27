@@ -133,3 +133,15 @@ h2 {
 .pc100 {
 	width: 100%;
 }
+
+.txctr {
+	text-align: center;
+}
+
+.txrgt {
+	text-align: right;
+}
+
+.txlft {
+	text-align: left;
+}

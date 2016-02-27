@@ -14,10 +14,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.javaleo.systems.botrise.ejb.session.Credentials;
 import com.javaleo.systems.botrise.web.action.MsgAction;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
 
@@ -39,7 +39,7 @@ public class BotRiseFilter implements Filter {
 	private MsgAction msgAction;
 
 	@Inject
-	private Credentials credentials;
+	private IJavaleoAuthenticator authenticator;
 
 	@Override
 	public void init(FilterConfig filterconfig) throws ServletException {
@@ -49,7 +49,7 @@ public class BotRiseFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		if (credentials.getUsername() == null) {
+		if (!authenticator.isAuthenticated()) {
 			goToLoginPage(request, response);
 			return;
 		}

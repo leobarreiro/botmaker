@@ -18,7 +18,8 @@
 		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
 		<p:menubar>
 			<p:submenu label="Bots">
-				<p:menuitem value="Cadastrar Bot" action="#{botAction.start()}" />
+				<p:menuitem value="Cadastrar Bot" action="#{botAction.loadNewScreen()}" />
+				<p:menuitem value="Consultar Bots" action="#{botAction.loadSearchScreen()}" />
 			</p:submenu>
 		</p:menubar>
 		<h:panelGroup layout="block">

@@ -1,5 +1,7 @@
 package com.javaleo.systems.botrise.ejb.facades;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -7,6 +9,7 @@ import javax.inject.Named;
 import com.javaleo.systems.botrise.ejb.business.IBotBusiness;
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
 @Named
 @Stateless
@@ -35,6 +38,18 @@ public class BotRiseFacade implements IBotRiseFacade {
 	@Override
 	public void saveBot(Bot bot) throws BotRiseException {
 		botBusiness.saveBot(bot);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#searchBot(com.javaleo.systems.botrise.ejb.filters.BotFilter
+	 * )
+	 */
+	@Override
+	public List<Bot> searchBot(BotFilter filter) {
+		return botBusiness.searchBot(filter);
 	}
 
 }

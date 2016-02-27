@@ -1,7 +1,12 @@
 package com.javaleo.systems.botrise.ejb.business;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
@@ -14,6 +19,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.enums.BotType;
 import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
 @Stateless
 public class BotBusiness implements IBotBusiness {
@@ -50,6 +56,17 @@ public class BotBusiness implements IBotBusiness {
 	@Override
 	public void saveBot(Bot bot) throws BotRiseException {
 		persistence.saveOrUpdate(bot);
+	}
+
+	@Override
+	public List<Bot> searchBot(BotFilter filter) {
+		CriteriaBuilder builder = persistence.getCriteriaBuilder();
+		CriteriaQuery<Bot> query = builder.createQuery(Bot.class);
+		Root<Bot> from = query.from(Bot.class);
+		if (StringUtils.isNotBlank(filter.getName())) {
+			query.where(builder.equal(from.get("name"), filter.getName()));
+		}
+		return persistence.getResultList(query);
 	}
 
 }

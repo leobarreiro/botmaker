@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.javaleo.systems</groupId>
 	<artifactId>botrise</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<url>http://botrise.javaleo.com</url>
 	<licenses>
@@ -32,6 +32,7 @@
 		<version.war.plugin>2.5</version.war.plugin>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
+		<version.javaleo.core>0.0.2-SNAPSHOT</version.javaleo.core>
 		<version.primefaces>5.3</version.primefaces>
 		<version.primefaces.extensions>4.0.0</version.primefaces.extensions>
 		<version.apache.poi>3.9</version.apache.poi>
@@ -63,7 +64,7 @@
 			<dependency>
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>jee-core</artifactId>
-				<version>0.0.1</version>
+				<version>${version.javaleo.core}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.javaleo.libs</groupId>

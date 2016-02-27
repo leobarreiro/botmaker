@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc50">Detalhes do Bot</h2>
+
+		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-title">
+				<h:outputLabel value="Bot" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Tipo de Bot" />
+				<h:outputText value="#{botAction.bot.botType.name}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Token" />
+				<h:outputText value="#{botAction.bot.token}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Ativo" />
+				<h:outputText value="Sim" rendered="#{botAction.bot.active}" />
+				<h:outputText value="Não" rendered="#{not botAction.bot.active}" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{botAction.goBack()}" value="Voltar" styleClass="secondary" />
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
