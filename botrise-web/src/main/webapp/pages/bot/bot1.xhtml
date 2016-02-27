@@ -12,7 +12,7 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Tipo de Bot" />
 				<h:selectOneMenu value="#{botAction.botType}" >
-					<f:selectItems value="#{botAction.botTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
+					<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">

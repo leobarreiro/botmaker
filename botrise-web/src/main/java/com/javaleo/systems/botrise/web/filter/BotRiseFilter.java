@@ -1,7 +1,6 @@
 package com.javaleo.systems.botrise.web.filter;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 import javax.servlet.Filter;
@@ -32,8 +31,8 @@ public class BotRiseFilter implements Filter {
 
 	private FilterConfig filterConfig;
 
-	@Inject
-	private ResourceBundle bundle;
+	// @Inject
+	// private ResourceBundle bundle;
 
 	@Inject
 	private MsgAction msgAction;
@@ -49,10 +48,10 @@ public class BotRiseFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		if (!authenticator.isAuthenticated()) {
-			goToLoginPage(request, response);
-			return;
-		}
+		// if (!authenticator.isAuthenticated()) {
+		// goToLoginPage(request, response);
+		// return;
+		// }
 		try {
 			filterChain.doFilter(request, response);
 		} catch (Exception e) {
@@ -84,7 +83,7 @@ public class BotRiseFilter implements Filter {
 	private void goToLoginPage(ServletRequest request, ServletResponse response) throws IOException {
 		ServletContext servletContext = filterConfig.getServletContext();
 		String urlLogin = servletContext.getContextPath() + servletContext.getInitParameter("session.timeout");
-		msgAction.addMessage(MessageType.ERROR, bundle.getString("sessao.expirada"));
+		// msgAction.addMessage(MessageType.ERROR, bundle.getString("sessao.expirada"));
 		if (isAjaxRequest(request)) {
 			response.setContentType(TEXT_XML);
 			response.setCharacterEncoding(UTF_8);

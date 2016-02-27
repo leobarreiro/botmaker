@@ -2,7 +2,6 @@ package com.javaleo.systems.botrise.web.action;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -38,14 +37,12 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private BotType botType;
 	private BotFilter filter;
 	private CRUD crudOp;
-	private List<BotType> botTypes;
 	private Bot bot;
 	private List<Bot> bots;
 
 	@Override
 	public String loadNewScreen() {
 		startNewConversation();
-		botTypes = Arrays.asList(BotType.values());
 		bot = new Bot();
 		filter = new BotFilter();
 		return "/pages/bot/bot1.jsf?faces-redirect=true";
@@ -60,9 +57,8 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	}
 
 	@Override
-	public String search() {
+	public void search() {
 		bots = facade.searchBot(filter);
-		return "/pages/bot/bot-search.jsf?faces-redirect=true";
 	}
 
 	@Override
@@ -73,13 +69,14 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		} catch (BotRiseException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot1.jsf?faces-redirect=true";
+		return loadSearchScreen();
 	}
 
 	@Override
 	public String loadEditScreen(Bot bot) {
 		this.bot = bot;
-		return "/pages/bot/bot1.jsf?faces-redirect=true";
+		this.filter = new BotFilter();
+		return "/pages/bot/bot2.jsf?faces-redirect=true";
 	}
 
 	@Override
@@ -112,14 +109,6 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	@Override
 	public Conversation getConversation() {
 		return conversation;
-	}
-
-	public List<BotType> getBotTypes() {
-		return botTypes;
-	}
-
-	public void setBotTypes(List<BotType> botTypes) {
-		this.botTypes = botTypes;
 	}
 
 	public String getToken() {

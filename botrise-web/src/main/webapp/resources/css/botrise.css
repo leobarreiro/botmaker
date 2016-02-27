@@ -19,7 +19,6 @@ h2 {
 	margin: auto;
 }
 
-
 .frm-crud, .frm-login {
 	margin: auto;
 	margin-top: 20px;
@@ -54,6 +53,27 @@ h2 {
 	margin: 2px;
 }
 
+.ui-fieldset {
+	padding: 4px !important;
+}
+
+ .ui-fieldset .ui-fieldset-legend {
+    color: #006699 !important;
+	padding: 8px !important;
+	border: none !important;
+	background: transparent !important;
+}
+
+.ui-datatable-tablewrapper {
+	border-radius: 8px !important;
+}
+
+.ui-datatable table {
+	border-collapse: separate !important;
+	table-layout: auto !important F;
+	width: 100%;
+}
+
 .frm-line {
 	padding: 4px;
 	margin: 4px;
@@ -73,17 +93,18 @@ h2 {
 	padding: 2px;
 }
 
-.frm-submit .primary {
-	font-weight: bold;
-	padding: 4px;
-	border: 1px solid #c4c4c4;
-	background: #006699;
-	color: #ffffff;
-	border-radius: 6px;
+button.primary {
+	font-weight: bold !important;
+	padding: 4px !important;
+	border: 1px solid #c4c4c4 !important;
+	background: #006699 !important;
+	color: #ffffff !important;
+	border-radius: 6px !important;
+	text-shadow: none !important;
 }
 
-.frm-submit .primary:hover {
-	color: #ccffff;
+button.primary:hover {
+	color: #ccffff !important;
 }
 
 .required {
