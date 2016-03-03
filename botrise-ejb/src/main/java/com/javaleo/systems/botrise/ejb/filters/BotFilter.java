@@ -10,6 +10,7 @@ public class BotFilter {
 	private String name;
 	private BotType botType;
 	private String token;
+	private Boolean active;
 
 	private List<BotType> optBotTypes;
 
@@ -40,6 +41,14 @@ public class BotFilter {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public List<BotType> getOptBotTypes() {

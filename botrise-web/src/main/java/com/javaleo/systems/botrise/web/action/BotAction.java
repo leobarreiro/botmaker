@@ -1,7 +1,6 @@
 package com.javaleo.systems.botrise.web.action;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -52,7 +51,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	public String loadSearchScreen() {
 		startNewConversation();
 		filter = new BotFilter();
-		bots = new ArrayList<Bot>();
+		search();
 		return "/pages/bot/bot-search.jsf?faces-redirect=true";
 	}
 

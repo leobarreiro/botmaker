@@ -1,11 +1,14 @@
 package com.javaleo.systems.botrise.ejb.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +18,8 @@ import org.javaleo.libs.botgram.response.GetMeResponse;
 import org.javaleo.libs.botgram.service.BotGramConfig;
 import org.javaleo.libs.botgram.service.IBotGramService;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.enums.BotType;
@@ -25,6 +30,8 @@ import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 public class BotBusiness implements IBotBusiness {
 
 	private static final long serialVersionUID = 1L;
+
+	private Logger LOG = LoggerFactory.getLogger(BotBusiness.class);
 
 	@Inject
 	private IPersistenceBasic<Bot> persistence;
@@ -60,13 +67,22 @@ public class BotBusiness implements IBotBusiness {
 
 	@Override
 	public List<Bot> searchBot(BotFilter filter) {
-		CriteriaBuilder builder = persistence.getCriteriaBuilder();
-		CriteriaQuery<Bot> query = builder.createQuery(Bot.class);
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Bot> query = cb.createQuery(Bot.class);
 		Root<Bot> from = query.from(Bot.class);
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		if (StringUtils.isNotBlank(filter.getName())) {
-			query.where(builder.equal(from.get("name"), filter.getName()));
+			Expression<String> path = from.get("name");
+			predicates.add(cb.like(path, "%" + filter.getName() + "%"));
 		}
+		if (filter.getBotType() != null) {
+			predicates.add(cb.equal(from.get("botType"), filter.getBotType()));
+		}
+		if (filter.getActive() != null) {
+			predicates.add(cb.equal(from.get("active"), filter.getActive()));
+		}
+		query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
+		persistence.logQuery(query);
 		return persistence.getResultList(query);
 	}
-
 }
