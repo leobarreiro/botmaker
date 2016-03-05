@@ -19,7 +19,6 @@ import org.javaleo.libs.botgram.service.BotGramConfig;
 import org.javaleo.libs.botgram.service.IBotGramService;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.enums.BotType;
@@ -31,7 +30,8 @@ public class BotBusiness implements IBotBusiness {
 
 	private static final long serialVersionUID = 1L;
 
-	private Logger LOG = LoggerFactory.getLogger(BotBusiness.class);
+	@Inject
+	private Logger LOG;
 
 	@Inject
 	private IPersistenceBasic<Bot> persistence;
