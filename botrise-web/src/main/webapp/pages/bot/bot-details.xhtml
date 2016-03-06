@@ -24,8 +24,22 @@
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{botAction.goBack()}" value="Voltar" styleClass="secondary" />
+				<h:commandButton action="#{botAction.loadSearchScreen()}" value="Voltar" styleClass="secondary" />
+				<p:commandButton action="#{botAction.loadEditScreen()}" value="Editar Bot" styleClass="secondary" />
+				<p:commandButton action="#{commandAction.loadNewScreen()}" value="Novo Comando" styleClass="secondary" />
 			</h:panelGroup>
 		</h:panelGroup>
+
+		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+			<p:dataTable value="#{commandAction.commands}" var="cmd">
+				<p:column headerText="Comando" styleClass="pc30">
+					<h:outputText value="#{cmd.key}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{cmd.shortDescription}" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+
 	</ui:define>
 </ui:composition>

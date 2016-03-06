@@ -30,6 +30,9 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private MsgAction msgAction;
 
 	@Inject
+	private CommandAction commandAction;
+
+	@Inject
 	private Conversation conversation;
 
 	private String token;
@@ -72,22 +75,17 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	}
 
 	@Override
-	public String loadEditScreen(Bot bot) {
-		this.bot = bot;
+	public String loadEditScreen() {
 		this.filter = new BotFilter();
 		return "/pages/bot/bot2.jsf?faces-redirect=true";
 	}
 
 	@Override
-	public String loadViewScreen(Bot bot) {
+	public String loadDetailScreen(Bot bot) {
 		this.bot = bot;
+		commandAction.setBot(bot);
+		commandAction.search();
 		return "/pages/bot/bot-details.jsf?faces-redirect=true";
-	}
-
-	@Override
-	public String finish() {
-		endConversation();
-		return "/pages/bot/bot1.jsf?faces-redirect=true";
 	}
 
 	@Override
