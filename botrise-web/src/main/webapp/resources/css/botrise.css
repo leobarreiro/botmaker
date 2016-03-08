@@ -98,13 +98,12 @@ h2 {
 }
 
 button.primary {
-	font-weight: bold !important;
-	padding: 4px !important;
-	border: 1px solid #c4c4c4 !important;
+	padding: 1px !important;
 	background: #006699 !important;
 	color: #ffffff !important;
 	border-radius: 6px !important;
 	text-shadow: none !important;
+	margin: 4px;
 }
 
 button.primary:hover {

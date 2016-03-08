@@ -5,9 +5,13 @@
 
 		<h2 class="pc50">Detalhes do Bot</h2>
 
-		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud pc50">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Nome" />
+				<h:outputText value="#{botAction.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Tipo de Bot" />
@@ -24,22 +28,22 @@
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{botAction.loadSearchScreen()}" value="Voltar" styleClass="secondary" />
+				<p:commandButton action="#{botAction.loadSearchScreen()}" value="Voltar" styleClass="secondary" />
 				<p:commandButton action="#{botAction.loadEditScreen()}" value="Editar Bot" styleClass="secondary" />
 				<p:commandButton action="#{commandAction.loadNewScreen()}" value="Novo Comando" styleClass="secondary" />
 			</h:panelGroup>
-		</h:panelGroup>
+		</p:fieldset>
 
-		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud pc50">
 			<p:dataTable value="#{commandAction.commands}" var="cmd">
 				<p:column headerText="Comando" styleClass="pc30">
-					<h:outputText value="#{cmd.key}" />
+					<h:commandLink action="#{commandAction.edit(cmd)}" value="#{cmd.key}" />
 				</p:column>
 				<p:column headerText="Descrição">
 					<h:outputText value="#{cmd.shortDescription}" />
 				</p:column>
 			</p:dataTable>
-		</h:panelGroup>
+		</p:fieldset>
 
 	</ui:define>
 </ui:composition>

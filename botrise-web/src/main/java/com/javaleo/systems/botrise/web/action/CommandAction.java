@@ -66,6 +66,11 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
+	public String edit(Command command) {
+		this.command = command;
+		return "/pages/command/command.jsf?faces-redirect=true";
+	}
+
 	@Override
 	public String loadDetailScreen(Command pojo) {
 		return "/pages/command/command-details.jsf?faces-redirect=true";
@@ -79,7 +84,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		} catch (BotRiseException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot-details.jsf?faces-redirect=true";
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
 	@Override

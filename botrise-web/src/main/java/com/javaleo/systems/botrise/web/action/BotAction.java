@@ -85,7 +85,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		this.bot = bot;
 		commandAction.setBot(bot);
 		commandAction.search();
-		return "/pages/bot/bot-details.jsf?faces-redirect=true";
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
 	@Override

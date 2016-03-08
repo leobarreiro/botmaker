@@ -32,7 +32,8 @@ public class CommandBusiness implements ICommandBusiness {
 		Join<Command, Bot> joinBot = fromCommand.join("bot", JoinType.INNER);
 		cq.where(cb.equal(joinBot.get("id"), bot.getId()));
 		cq.select(fromCommand);
-		persistence.logQuery(cq);
+		cq.orderBy(cb.asc(fromCommand.get("key")));
+		// persistence.logQuery(cq);
 		return persistence.getResultList(cq);
 	}
 

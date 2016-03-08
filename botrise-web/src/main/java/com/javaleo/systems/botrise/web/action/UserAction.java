@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.javaleo.libs.jee.core.exceptions.JavaleoException;
-import org.javaleo.libs.jee.core.security.Credentials;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
@@ -22,7 +21,7 @@ public class UserAction implements Serializable {
 	private IJavaleoAuthenticator authenticator;
 
 	@Inject
-	private Credentials credentials;
+	private BotAction botAction;
 
 	@Inject
 	private MsgAction msgAction;
@@ -33,7 +32,7 @@ public class UserAction implements Serializable {
 	public String login() {
 		try {
 			authenticator.authenticate(username, plainPassword);
-			return "/pages/started.jsf?faces-redirect=true";
+			return botAction.loadSearchScreen();
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/index.jsf?faces-redirect=true";
@@ -47,14 +46,6 @@ public class UserAction implements Serializable {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 		return "/index.jsf?faces-redirect=true";
-	}
-
-	public Credentials getCredentials() {
-		return credentials;
-	}
-
-	public void setCredentials(Credentials credentials) {
-		this.credentials = credentials;
 	}
 
 	public String getUsername() {
