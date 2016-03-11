@@ -18,17 +18,17 @@
 		<p:fieldset styleClass="frm-crud pc50">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Key" />
-				<h:inputText value="#{commandAction.command.key}" />
+				<h:outputText value="#{commandAction.command.key}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Short Description" />
-				<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="3" />
+				<h:outputText value="#{commandAction.command.shortDescription}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{botAction.detail(commandAction.bot)}" value="Voltar" styleClass="secondary" />
-				<p:commandButton action="#{commandAction.save()}" value="Salvar Comando" styleClass="primary" />
+				<p:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Voltar" styleClass="secondary" />
+				<p:commandButton action="#{commandAction.edit()}" value="Editar Comando" styleClass="secondary" />
+				<p:commandButton value="Nova Questão" styleClass="secondary" />
 			</h:panelGroup>
-
 		</p:fieldset>
 
 	</ui:define>

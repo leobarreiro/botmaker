@@ -42,28 +42,24 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private Bot bot;
 	private List<Bot> bots;
 
-	@Override
-	public String loadNewScreen() {
+	public String startNew() {
 		startNewConversation();
 		bot = new Bot();
 		filter = new BotFilter();
 		return "/pages/bot/bot1.jsf?faces-redirect=true";
 	}
 
-	@Override
-	public String loadSearchScreen() {
+	public String list() {
 		startNewConversation();
 		filter = new BotFilter();
 		search();
 		return "/pages/bot/bot-search.jsf?faces-redirect=true";
 	}
 
-	@Override
 	public void search() {
 		bots = facade.searchBot(filter);
 	}
 
-	@Override
 	public String save() {
 		try {
 			facade.saveBot(bot);
@@ -71,17 +67,15 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		} catch (BotRiseException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return loadSearchScreen();
+		return list();
 	}
 
-	@Override
-	public String loadEditScreen() {
+	public String edit() {
 		this.filter = new BotFilter();
 		return "/pages/bot/bot2.jsf?faces-redirect=true";
 	}
 
-	@Override
-	public String loadDetailScreen(Bot bot) {
+	public String detail(Bot bot) {
 		this.bot = bot;
 		commandAction.setBot(bot);
 		commandAction.search();

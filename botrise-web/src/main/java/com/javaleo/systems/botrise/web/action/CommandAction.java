@@ -29,6 +29,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private IBotRiseFacade facade;
 
 	@Inject
+	private QuestionAction questionAction;
+
+	@Inject
 	private MsgAction msgAction;
 
 	private CRUD crudOp;
@@ -41,42 +44,35 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return conversation;
 	}
 
-	@Override
-	public String loadNewScreen() {
+	public String startNew() {
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
-	@Override
-	public String loadSearchScreen() {
+	public String list() {
 		startOrResumeConversation();
 		search();
-		return "/pages/bot/bot-details.jsf?faces-redirect=true";
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
-	@Override
 	public void search() {
 		commands = facade.listCommandsByBot(bot);
 	}
 
-	@Override
-	public String loadEditScreen() {
+	public String edit(Command pojo) {
+		this.command = pojo;
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
-	public String edit(Command command) {
+	public String detail(Command command) {
+		startOrResumeConversation();
 		this.command = command;
-		return "/pages/command/command.jsf?faces-redirect=true";
+		questionAction.setCommand(command);
+		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
-	@Override
-	public String loadDetailScreen(Command pojo) {
-		return "/pages/command/command-details.jsf?faces-redirect=true";
-	}
-
-	@Override
 	public String save() {
 		try {
 			facade.saveCommand(command);

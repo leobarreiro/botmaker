@@ -18,8 +18,8 @@
 		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
 		<p:menubar rendered="#{botRiseAuthenticator.authenticated}">
 			<p:submenu label="Bots">
-				<p:menuitem value="Cadastrar Bot" action="#{botAction.loadNewScreen()}" />
-				<p:menuitem value="Consultar Bots" action="#{botAction.loadSearchScreen()}" />
+				<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
+				<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
 			</p:submenu>
 			<p:submenu label="#{credentials.name}">
 				<p:menuitem value="Sair" action="#{userAction.logoff()}" />

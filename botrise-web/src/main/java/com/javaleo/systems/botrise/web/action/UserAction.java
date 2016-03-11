@@ -32,7 +32,7 @@ public class UserAction implements Serializable {
 	public String login() {
 		try {
 			authenticator.authenticate(username, plainPassword);
-			return botAction.loadSearchScreen();
+			return botAction.list();
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/index.jsf?faces-redirect=true";

@@ -22,7 +22,7 @@
 					<h:outputText value="#{bt.id}" />
 				</p:column>
 				<p:column headerText="Nome" sortBy="#{bt.name}" styleClass="txlft">
-					<h:commandLink action="#{botAction.loadDetailScreen(bt)}" value="#{bt.name}" />
+					<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" />
 				</p:column>
 				<p:column headerText="Tipo" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
 					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />

@@ -19,6 +19,19 @@ h2 {
 	margin: auto;
 }
 
+input:not([type]), input[type="text"], input[type="password"] {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 1.1em;
+	padding: 4px;
+	border-radius: 2px;
+	background: #ffffff none repeat scroll 0 0;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    cursor: text;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
 .frm-crud, .frm-login {
 	margin: auto;
 	margin-top: 20px;
@@ -50,7 +63,7 @@ h2 {
 }
 
 .ui-dialog.ui-widget-content {
-    border-radius: 10px !important;
+	border-radius: 10px !important;
 }
 
 .ui-dialog-titlebar .ui-dialog-titlebar-close {
@@ -61,8 +74,8 @@ h2 {
 	padding: 4px !important;
 }
 
- .ui-fieldset .ui-fieldset-legend {
-    color: #006699 !important;
+.ui-fieldset .ui-fieldset-legend {
+	color: #006699 !important;
 	padding: 8px !important;
 	border: none !important;
 	background: transparent !important;
