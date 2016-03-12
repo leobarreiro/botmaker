@@ -26,9 +26,26 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Voltar" styleClass="secondary" />
-				<p:commandButton action="#{commandAction.edit()}" value="Editar Comando" styleClass="secondary" />
-				<p:commandButton value="Nova Questão" styleClass="secondary" />
+				<p:commandButton action="#{commandAction.edit(commandAction.command)}" value="Editar Comando" styleClass="secondary" />
+				<p:commandButton action="#{questionAction.startNew()}" value="Nova Questão" styleClass="secondary" />
 			</h:panelGroup>
+		</p:fieldset>
+
+		<p:fieldset styleClass="frm-crud pc50">
+			<p:dataTable value="#{commandAction.questions}" var="qst">
+				<p:column headerText="Order" styleClass="pc10">
+					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.order}" />
+				</p:column>
+				<p:column headerText="Question">
+					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
+				</p:column>
+				<p:column headerText="Answer Type" styleClass="pc20">
+					<h:outputText value="#{qst.answerType}" />
+				</p:column>
+				<p:column headerText="Var Name" styleClass="pc20">
+					<h:outputText value="#{qst.varName}" />
+				</p:column>
+			</p:dataTable>
 		</p:fieldset>
 
 	</ui:define>

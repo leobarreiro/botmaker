@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc50">Questão</h2>
+
+		<p:fieldset styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-title">
+				<h:outputLabel value="Bot / Comando" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Bot" />
+				<h:outputText value="#{questionAction.command.bot.name}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Comando" />
+				<h:outputText value="#{questionAction.command.key}" />
+			</h:panelGroup>
+		</p:fieldset>
+
+		<p:fieldset styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Instruction" />
+				<h:inputTextarea value="#{questionAction.question.instruction}" cols="40" rows="3" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Answer Type" />
+				<h:selectOneMenu value="#{questionAction.question.answerType}">
+					<f:selectItems value="#{questionAction.answerTypeOptions}" var="ato" itemLabel="#{ato}" itemValue="#{ato}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Error Format Message" />
+				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" cols="40" rows="3" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Success Message" />
+				<h:inputTextarea value="#{questionAction.question.successMessage}" cols="40" rows="3" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Variable Name" />
+				<h:inputText value="#{questionAction.question.varName}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<p:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
+				<p:commandButton action="#{questionAction.save()}" value="Save Question" styleClass="primary" />
+			</h:panelGroup>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

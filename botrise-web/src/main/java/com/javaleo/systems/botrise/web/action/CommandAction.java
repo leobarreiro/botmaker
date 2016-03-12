@@ -12,6 +12,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
+import com.javaleo.systems.botrise.ejb.entities.Question;
 import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
 import com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
@@ -37,6 +38,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private CRUD crudOp;
 	private Command command;
 	private List<Command> commands;
+	private List<Question> questions;
 	private Bot bot;
 
 	@Override
@@ -69,6 +71,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String detail(Command command) {
 		startOrResumeConversation();
 		this.command = command;
+		questions = facade.listQuestionsByCommand(command);
 		questionAction.setCommand(command);
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
@@ -80,7 +83,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		} catch (BotRiseException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
 	@Override
@@ -110,6 +113,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setBot(Bot bot) {
 		this.bot = bot;
+	}
+
+	public List<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
 }

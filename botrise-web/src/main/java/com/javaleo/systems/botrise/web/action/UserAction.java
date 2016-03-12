@@ -2,7 +2,7 @@ package com.javaleo.systems.botrise.web.action;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,7 +12,7 @@ import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
 
 @Named
-@ConversationScoped
+@RequestScoped
 public class UserAction implements Serializable {
 
 	private static final long serialVersionUID = 8467442454444489390L;

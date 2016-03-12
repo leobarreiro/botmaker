@@ -1,5 +1,7 @@
 package com.javaleo.systems.botrise.web.action;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -11,6 +13,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botrise.ejb.entities.Command;
 import com.javaleo.systems.botrise.ejb.entities.Question;
+import com.javaleo.systems.botrise.ejb.enums.AnswerType;
 import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
 import com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
@@ -34,15 +37,27 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	private Command command;
 	private Question question;
-	private List<Question> questions;
+	private List<AnswerType> answerTypeOptions;
 
 	public String startNew() {
 		startOrResumeConversation();
+		loadOptions();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
 
-	public void search() {
-		this.questions = facade.listQuestionsByCommand(command);
+	public String edit(Question question) {
+		startOrResumeConversation();
+		this.question = question;
+		this.command = question.getCommand();
+		loadOptions();
+		return "/pages/question/question.jsf?faces-redirect=true";
+	}
+
+	public String detail(Question question) {
+		startOrResumeConversation();
+		this.question = question;
+		this.command = question.getCommand();
+		return "/pages/question/question-detail.jsf?faces-redirect=true";
 	}
 
 	public String save() {
@@ -54,6 +69,10 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/question/question.jsf?faces-redirect=true";
 		}
+	}
+
+	private void loadOptions() {
+		this.answerTypeOptions = new ArrayList<AnswerType>(Arrays.asList(AnswerType.values()));
 	}
 
 	@Override
@@ -82,12 +101,12 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = question;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	public List<AnswerType> getAnswerTypeOptions() {
+		return answerTypeOptions;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setAnswerTypeOptions(List<AnswerType> answerTypeOptions) {
+		this.answerTypeOptions = answerTypeOptions;
 	}
 
 }
