@@ -35,12 +35,17 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	@Inject
 	private MsgAction msgAction;
 
+	@Inject
+	private CommandAction commandAction;
+
 	private Command command;
 	private Question question;
 	private List<AnswerType> answerTypeOptions;
 
-	public String startNew() {
+	public String startNew(Command command) {
 		startOrResumeConversation();
+		this.command = command;
+		this.question = new Question();
 		loadOptions();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
@@ -62,9 +67,10 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	public String save() {
 		try {
+			question.setCommand(this.command);
 			facade.saveQuestion(question);
 			msgAction.addMessage(MessageType.INFO, "Registro salvo corretamente");
-			return "/pages/command/command-detail.jsf?faces-redirect=true";
+			return commandAction.detail(this.command);
 		} catch (BotRiseException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/question/question.jsf?faces-redirect=true";

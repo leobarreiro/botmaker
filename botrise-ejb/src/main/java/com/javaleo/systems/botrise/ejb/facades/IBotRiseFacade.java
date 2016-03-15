@@ -72,7 +72,7 @@ public interface IBotRiseFacade extends Serializable {
 	/**
 	 * @param command
 	 * @return
-	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#listQuestionsByCommand(com.javaleo.systems.botrise.ejb.entities.Command)
+	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#listQuestionsFromCommand(com.javaleo.systems.botrise.ejb.entities.Command)
 	 */
 	public List<Question> listQuestionsByCommand(Command command);
 

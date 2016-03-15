@@ -182,3 +182,7 @@ button.primary:hover {
 .txlft {
 	text-align: left;
 }
+
+.txtop {
+	vertical-align: top;
+}

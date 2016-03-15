@@ -30,9 +30,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private IBotRiseFacade facade;
 
 	@Inject
-	private QuestionAction questionAction;
-
-	@Inject
 	private MsgAction msgAction;
 
 	private CRUD crudOp;
@@ -72,7 +69,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		this.command = command;
 		questions = facade.listQuestionsByCommand(command);
-		questionAction.setCommand(command);
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 

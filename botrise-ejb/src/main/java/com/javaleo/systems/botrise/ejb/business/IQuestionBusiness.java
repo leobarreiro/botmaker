@@ -12,7 +12,9 @@ import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
 @Local
 public interface IQuestionBusiness extends Serializable {
 
-	List<Question> listQuestionsByCommand(Command command);
+	List<Question> listQuestionsFromCommand(Command command);
+
+	Question getLastQuestionFromCommand(Command command);
 
 	void saveQuestion(Question question) throws BotRiseException;
 

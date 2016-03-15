@@ -123,7 +123,7 @@ public class BotRiseFacade implements IBotRiseFacade {
 	 */
 	@Override
 	public List<Question> listQuestionsByCommand(Command command) {
-		return questionBusiness.listQuestionsByCommand(command);
+		return questionBusiness.listQuestionsFromCommand(command);
 	}
 
 	/*

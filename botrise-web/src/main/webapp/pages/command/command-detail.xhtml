@@ -27,7 +27,7 @@
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Voltar" styleClass="secondary" />
 				<p:commandButton action="#{commandAction.edit(commandAction.command)}" value="Editar Comando" styleClass="secondary" />
-				<p:commandButton action="#{questionAction.startNew()}" value="Nova Questão" styleClass="secondary" />
+				<p:commandButton action="#{questionAction.startNew(commandAction.command)}" value="Nova Questão" styleClass="secondary" />
 			</h:panelGroup>
 		</p:fieldset>
 
