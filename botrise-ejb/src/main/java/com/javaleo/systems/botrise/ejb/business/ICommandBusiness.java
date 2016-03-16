@@ -7,13 +7,13 @@ import javax.ejb.Local;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 
 @Local
 public interface ICommandBusiness extends Serializable {
 
 	List<Command> listCommandsByBot(Bot bot);
 
-	void saveCommand(Command command) throws BotRiseException;
+	void saveCommand(Command command) throws BusinessException;
 
 }

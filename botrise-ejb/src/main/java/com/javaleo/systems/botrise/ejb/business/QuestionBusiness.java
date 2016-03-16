@@ -16,7 +16,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botrise.ejb.entities.Command;
 import com.javaleo.systems.botrise.ejb.entities.Question;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -51,7 +51,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveQuestion(Question question) throws BotRiseException {
+	public void saveQuestion(Question question) throws BusinessException {
 		if (question.getId() == null) {
 			Question previousQuestion = getLastQuestionFromCommand(question.getCommand());
 			int thisOrder = (previousQuestion == null) ? 1 : (previousQuestion.getOrder() + 1);
@@ -60,4 +60,33 @@ public class QuestionBusiness implements IQuestionBusiness {
 		persistence.saveOrUpdate(question);
 	}
 
+	@Override
+	public void upQuestionOrder(Question question) throws BusinessException {
+		Integer actualOrder = question.getOrder();
+		if (actualOrder == null || actualOrder == 0) {
+			Question lastQuestion = getLastQuestionFromCommand(question.getCommand());
+			Integer order = (lastQuestion == null) ? 1 : (lastQuestion.getOrder() + 1);
+			question.setOrder(order);
+			persistence.saveOrUpdate(question);
+			return;
+		} else if (actualOrder == 1) {
+			throw new BusinessException("Question just have the first place in the command.");
+		} else {
+			Question previous = getQuestionByCommandAndOrder(question.getCommand(), (actualOrder - 1));
+			previous.setOrder(actualOrder);
+			question.setOrder(actualOrder - 1);
+			persistence.saveOrUpdate(previous);
+			persistence.saveOrUpdate(question);
+		}
+	}
+
+	private Question getQuestionByCommandAndOrder(Command command, int order) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Question> cq = cb.createQuery(Question.class);
+		Root<Question> from = cq.from(Question.class);
+		Join<Question, Command> joinCommand = from.join("command", JoinType.INNER);
+		cq.where(cb.and(cb.equal(joinCommand.get("id"), command.getId()), cb.equal(from.get("order"), order)));
+		cq.select(from);
+		return persistence.getSingleResult(cq);
+	}
 }

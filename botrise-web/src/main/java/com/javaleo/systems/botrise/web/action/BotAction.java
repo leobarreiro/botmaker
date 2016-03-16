@@ -12,7 +12,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.enums.BotType;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade;
 import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
@@ -64,7 +64,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		try {
 			facade.saveBot(bot);
 			msgAction.addMessage(MessageType.INFO, "Bot salvo corretamente");
-		} catch (BotRiseException e) {
+		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 		return list();
@@ -91,7 +91,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		try {
 			bot = facade.validateBotTelegram(token);
 			return "/pages/bot/bot2.jsf?faces-redirect=true";
-		} catch (BotRiseException e) {
+		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/bot/bot1.jsf?faces-redirect=true";
 		}

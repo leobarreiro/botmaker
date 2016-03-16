@@ -13,7 +13,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
 import com.javaleo.systems.botrise.ejb.entities.Question;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
 
@@ -76,7 +76,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		try {
 			facade.saveCommand(command);
 			msgAction.addMessage(MessageType.INFO, "Comando salvo corretamente");
-		} catch (BotRiseException e) {
+		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 		return "/pages/command/command-detail.jsf?faces-redirect=true";

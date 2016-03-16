@@ -14,7 +14,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botrise.ejb.entities.Command;
 import com.javaleo.systems.botrise.ejb.entities.Question;
 import com.javaleo.systems.botrise.ejb.enums.AnswerType;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade;
 import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
 
@@ -71,7 +71,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			facade.saveQuestion(question);
 			msgAction.addMessage(MessageType.INFO, "Registro salvo corretamente");
 			return commandAction.detail(this.command);
-		} catch (BotRiseException e) {
+		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/question/question.jsf?faces-redirect=true";
 		}

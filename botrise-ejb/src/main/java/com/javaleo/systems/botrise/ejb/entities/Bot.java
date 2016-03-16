@@ -4,9 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,6 +33,7 @@ public class Bot implements IEntityBasic {
 	private Boolean active;
 	private String closedBotMessage;
 	private String unknownCommadMessage;
+	private Company company;
 
 	@Override
 	@Id
@@ -100,18 +105,40 @@ public class Bot implements IEntityBasic {
 		this.unknownCommadMessage = unknownCommadMessage;
 	}
 
+	// TODO : remove optional = true after applying in database update mode
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_bot_company"))
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((active == null) ? 0 : active.hashCode());
 		result = prime * result + ((botType == null) ? 0 : botType.hashCode());
+		result = prime * result + ((closedBotMessage == null) ? 0 : closedBotMessage.hashCode());
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + ((unknownCommadMessage == null) ? 0 : unknownCommadMessage.hashCode());
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -128,6 +155,16 @@ public class Bot implements IEntityBasic {
 			return false;
 		if (botType != other.botType)
 			return false;
+		if (closedBotMessage == null) {
+			if (other.closedBotMessage != null)
+				return false;
+		} else if (!closedBotMessage.equals(other.closedBotMessage))
+			return false;
+		if (company == null) {
+			if (other.company != null)
+				return false;
+		} else if (!company.equals(other.company))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -142,6 +179,11 @@ public class Bot implements IEntityBasic {
 			if (other.token != null)
 				return false;
 		} else if (!token.equals(other.token))
+			return false;
+		if (unknownCommadMessage == null) {
+			if (other.unknownCommadMessage != null)
+				return false;
+		} else if (!unknownCommadMessage.equals(other.unknownCommadMessage))
 			return false;
 		return true;
 	}

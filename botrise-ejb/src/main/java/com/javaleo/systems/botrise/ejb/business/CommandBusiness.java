@@ -14,7 +14,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 
 @Stateless
 public class CommandBusiness implements ICommandBusiness {
@@ -38,7 +38,7 @@ public class CommandBusiness implements ICommandBusiness {
 	}
 
 	@Override
-	public void saveCommand(Command command) throws BotRiseException {
+	public void saveCommand(Command command) throws BusinessException {
 		persistence.saveOrUpdate(command);
 	}
 

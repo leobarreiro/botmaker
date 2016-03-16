@@ -8,13 +8,15 @@ import javax.inject.Named;
 
 import com.javaleo.systems.botrise.ejb.business.IBotBusiness;
 import com.javaleo.systems.botrise.ejb.business.ICommandBusiness;
+import com.javaleo.systems.botrise.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botrise.ejb.business.IQuestionBusiness;
 import com.javaleo.systems.botrise.ejb.business.IUserBusiness;
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
+import com.javaleo.systems.botrise.ejb.entities.Company;
 import com.javaleo.systems.botrise.ejb.entities.Question;
 import com.javaleo.systems.botrise.ejb.entities.User;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
 @Named
@@ -22,6 +24,9 @@ import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 public class BotRiseFacade implements IBotRiseFacade {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private ICompanyBusiness companyBusiness;
 
 	@Inject
 	private IBotBusiness botBusiness;
@@ -35,31 +40,67 @@ public class BotRiseFacade implements IBotRiseFacade {
 	@Inject
 	private IUserBusiness userBusiness;
 
+	/**
+	 * @return
+	 * @see com.javaleo.systems.botrise.ejb.business.ICompanyBusiness#listAllCompanies()
+	 */
+	public List<Company> listAllCompanies() {
+		return companyBusiness.listAllCompanies();
+	}
+
+	/**
+	 * @param company
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botrise.ejb.business.ICompanyBusiness#saveCompany(com.javaleo.systems.botrise.ejb.entities.Company)
+	 */
+	public void saveCompany(Company company) throws BusinessException {
+		companyBusiness.saveCompany(company);
+	}
+
+	/**
+	 * @param company
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botrise.ejb.business.ICompanyBusiness#activateCompany(com.javaleo.systems.botrise.ejb.entities.Company)
+	 */
+	public void activateCompany(Company company) throws BusinessException {
+		companyBusiness.activateCompany(company);
+	}
+
+	/**
+	 * @param company
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botrise.ejb.business.ICompanyBusiness#deactivateCompany(com.javaleo.systems.botrise.ejb.entities.Company)
+	 */
+	public void deactivateCompany(Company company) throws BusinessException {
+		companyBusiness.deactivateCompany(company);
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#validateBotTelegram(java.lang.String)
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#validateBotTelegram(java.lang.String)
 	 */
 	@Override
-	public Bot validateBotTelegram(String token) throws BotRiseException {
+	public Bot validateBotTelegram(String token) throws BusinessException {
 		return botBusiness.validateBotTelegram(token);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveBot(com.javaleo.systems.botrise.ejb.entities.Bot)
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveBot(com.javaleo.systems.botrise
+	 * .ejb.entities.Bot)
 	 */
 	@Override
-	public void saveBot(Bot bot) throws BotRiseException {
+	public void saveBot(Bot bot) throws BusinessException {
 		botBusiness.saveBot(bot);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#searchBot(com.javaleo.systems.botrise.ejb.filters.BotFilter
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#searchBot(com.javaleo.systems.botrise.ejb
+	 * .filters.BotFilter
 	 * )
 	 */
 	@Override
@@ -69,32 +110,33 @@ public class BotRiseFacade implements IBotRiseFacade {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveUser(com.javaleo.systems.botrise.ejb.entities.User,
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveUser(com.javaleo.systems.botrise.ejb
+	 * .entities.User,
 	 * java.lang.String)
 	 */
 	@Override
-	public void saveUser(User user, String password) throws BotRiseException {
+	public void saveUser(User user, String password) throws BusinessException {
 		userBusiness.saveUser(user, password);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#findUserByUsernameAndPassphrase(java.lang.String,
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#findUserByUsernameAndPassphrase(java
+	 * .lang.String,
 	 * java.lang.String)
 	 */
 	@Override
-	public User findUserByUsernameAndPassphrase(String username, String passphrase) {
+	public User findUserByUsernameAndPassword(String username, String passphrase) {
 		return userBusiness.findUserByUsernameAndPassphrase(username, passphrase);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listCommandsByBot(com.javaleo.systems.botrise.ejb.entities
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listCommandsByBot(com.javaleo.systems.
+	 * botrise.ejb.entities
 	 * .Bot)
 	 */
 	@Override
@@ -104,21 +146,21 @@ public class BotRiseFacade implements IBotRiseFacade {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveCommand(com.javaleo.systems.botrise.ejb.entities.Command
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveCommand(com.javaleo.systems.botrise
+	 * .ejb.entities.Command
 	 * )
 	 */
 	@Override
-	public void saveCommand(Command command) throws BotRiseException {
+	public void saveCommand(Command command) throws BusinessException {
 		commandBusiness.saveCommand(command);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listQuestionsByCommand(com.javaleo.systems.botrise.ejb
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listQuestionsByCommand(com.javaleo.systems
+	 * .botrise.ejb
 	 * .entities.Command)
 	 */
 	@Override
@@ -128,14 +170,56 @@ public class BotRiseFacade implements IBotRiseFacade {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveQuestion(com.javaleo.systems.botrise.ejb.entities.
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveQuestion(com.javaleo.systems.botrise
+	 * .ejb.entities.
 	 * Question)
 	 */
 	@Override
-	public void saveQuestion(Question question) throws BotRiseException {
+	public void saveQuestion(Question question) throws BusinessException {
 		questionBusiness.saveQuestion(question);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listQuestionsFromCommand(com.javaleo
+	 * .systems.botrise.ejb.entities.Command)
+	 */
+	@Override
+	public List<Question> listQuestionsFromCommand(Command command) {
+		return questionBusiness.listQuestionsFromCommand(command);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#getLastQuestionFromCommand(com.javaleo
+	 * .systems.botrise.ejb.entities.Command)
+	 */
+	@Override
+	public Question getLastQuestionFromCommand(Command command) {
+		return questionBusiness.getLastQuestionFromCommand(command);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#upQuestionOrder(com.javaleo.systems
+	 * .botrise.ejb.entities.Question)
+	 */
+	@Override
+	public void upQuestionOrder(Question question) throws BusinessException {
+		questionBusiness.upQuestionOrder(question);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listAllUsers()
+	 */
+	@Override
+	public List<User> listAllUsers() {
+		return userBusiness.listAllUsers();
 	}
 
 }

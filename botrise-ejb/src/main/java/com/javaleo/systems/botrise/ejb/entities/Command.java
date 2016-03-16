@@ -2,6 +2,7 @@ package com.javaleo.systems.botrise.ejb.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,7 +67,7 @@ public class Command implements IEntityBasic {
 	}
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "bot_id", referencedColumnName = "bot_id")
+	@JoinColumn(name = "bot_id", referencedColumnName = "bot_id", foreignKey = @ForeignKey(name = "fk_command_bot"))
 	public Bot getBot() {
 		return bot;
 	}

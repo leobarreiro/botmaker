@@ -9,7 +9,7 @@ import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.entities.Command;
 import com.javaleo.systems.botrise.ejb.entities.Question;
 import com.javaleo.systems.botrise.ejb.entities.User;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
 @Local
@@ -18,33 +18,33 @@ public interface IBotRiseFacade extends Serializable {
 	/**
 	 * @param token
 	 * @return
-	 * @throws BotRiseException
+	 * @throws BusinessException
 	 * @see com.javaleo.systems.botrise.ejb.business.IBotBusiness#validateBotTelegram(java.lang.String)
 	 */
-	Bot validateBotTelegram(String token) throws BotRiseException;
+	Bot validateBotTelegram(String token) throws BusinessException;
 
 	/**
 	 * @param bot
-	 * @throws BotRiseException
+	 * @throws BusinessException
 	 * @see com.javaleo.systems.botrise.ejb.business.IBotBusiness#saveBot(com.javaleo.systems.botrise.ejb.entities.Bot)
 	 */
-	void saveBot(Bot bot) throws BotRiseException;
+	void saveBot(Bot bot) throws BusinessException;
 
 	/**
 	 * @param filter
 	 * @return
 	 * @see com.javaleo.systems.botrise.ejb.business.IBotBusiness#searchBot(com.javaleo.systems.botrise.ejb.filters.BotFilter)
 	 */
-	public List<Bot> searchBot(BotFilter filter);
+	List<Bot> searchBot(BotFilter filter);
 
 	/**
 	 * @param user
 	 * @param password
-	 * @throws BotRiseException
+	 * @throws BusinessException
 	 * @see com.javaleo.systems.botrise.ejb.business.IUserBusiness#saveUser(com.javaleo.systems.botrise.ejb.entities.User,
 	 *      java.lang.String)
 	 */
-	public void saveUser(User user, String password) throws BotRiseException;
+	void saveUser(User user, String password) throws BusinessException;
 
 	/**
 	 * @param username
@@ -53,33 +53,61 @@ public interface IBotRiseFacade extends Serializable {
 	 * @see com.javaleo.systems.botrise.ejb.business.IUserBusiness#findUserByUsernameAndPassphrase(java.lang.String,
 	 *      java.lang.String)
 	 */
-	public User findUserByUsernameAndPassphrase(String username, String passphrase);
+	User findUserByUsernameAndPassword(String username, String passphrase);
 
 	/**
 	 * @param bot
 	 * @return
 	 * @see com.javaleo.systems.botrise.ejb.business.ICommandBusiness#listCommandsByBot(com.javaleo.systems.botrise.ejb.entities.Bot)
 	 */
-	public List<Command> listCommandsByBot(Bot bot);
+	List<Command> listCommandsByBot(Bot bot);
 
 	/**
 	 * @param command
-	 * @throws BotRiseException
+	 * @throws BusinessException
 	 * @see com.javaleo.systems.botrise.ejb.business.ICommandBusiness#saveCommand(com.javaleo.systems.botrise.ejb.entities.Command)
 	 */
-	public void saveCommand(Command command) throws BotRiseException;
+	void saveCommand(Command command) throws BusinessException;
 
 	/**
 	 * @param command
 	 * @return
 	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#listQuestionsFromCommand(com.javaleo.systems.botrise.ejb.entities.Command)
 	 */
-	public List<Question> listQuestionsByCommand(Command command);
+	List<Question> listQuestionsByCommand(Command command);
 
 	/**
 	 * @param question
-	 * @throws BotRiseException
+	 * @throws BusinessException
 	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#saveQuestion(com.javaleo.systems.botrise.ejb.entities.Question)
 	 */
-	public void saveQuestion(Question question) throws BotRiseException;
+	void saveQuestion(Question question) throws BusinessException;
+
+	/**
+	 * @param command
+	 * @return
+	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#listQuestionsFromCommand(com.javaleo.systems.botrise.ejb.entities.Command)
+	 */
+	List<Question> listQuestionsFromCommand(Command command);
+
+	/**
+	 * @param command
+	 * @return
+	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#getLastQuestionFromCommand(com.javaleo.systems.botrise.ejb.entities.Command)
+	 */
+	Question getLastQuestionFromCommand(Command command);
+
+	/**
+	 * @param question
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botrise.ejb.business.IQuestionBusiness#upQuestionOrder(com.javaleo.systems.botrise.ejb.entities.Question)
+	 */
+	void upQuestionOrder(Question question) throws BusinessException;
+
+	/**
+	 * @return
+	 * @see com.javaleo.systems.botrise.ejb.business.IUserBusiness#listAllUsers()
+	 */
+	List<User> listAllUsers();
+
 }

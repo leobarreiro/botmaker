@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 
 import com.javaleo.systems.botrise.ejb.entities.Bot;
 import com.javaleo.systems.botrise.ejb.enums.BotType;
-import com.javaleo.systems.botrise.ejb.exceptions.BotRiseException;
+import com.javaleo.systems.botrise.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botrise.ejb.filters.BotFilter;
 
 @Stateless
@@ -40,9 +40,9 @@ public class BotBusiness implements IBotBusiness {
 	private IBotGramService botgramService;
 
 	@Override
-	public Bot validateBotTelegram(String token) throws BotRiseException {
+	public Bot validateBotTelegram(String token) throws BusinessException {
 		if (StringUtils.isBlank(token)) {
-			throw new BotRiseException("Token não pode ser nulo ou estar em branco.");
+			throw new BusinessException("Token não pode ser nulo ou estar em branco.");
 		}
 		Bot bot = new Bot();
 		BotGramConfig config = new BotGramConfig();
@@ -55,13 +55,13 @@ public class BotBusiness implements IBotBusiness {
 			bot.setName(user.getFirstName());
 			bot.setToken(token);
 		} catch (BotGramException e) {
-			throw new BotRiseException("O Token informado não foi validado no Telegram.", e);
+			throw new BusinessException("O Token informado não foi validado no Telegram.", e);
 		}
 		return bot;
 	}
 
 	@Override
-	public void saveBot(Bot bot) throws BotRiseException {
+	public void saveBot(Bot bot) throws BusinessException {
 		persistence.saveOrUpdate(bot);
 	}
 
