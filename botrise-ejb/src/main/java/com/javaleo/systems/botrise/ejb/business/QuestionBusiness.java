@@ -61,6 +61,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void upQuestionOrder(Question question) throws BusinessException {
 		Integer actualOrder = question.getOrder();
 		if (actualOrder == null || actualOrder == 0) {

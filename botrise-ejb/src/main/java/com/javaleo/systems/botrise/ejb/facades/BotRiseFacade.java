@@ -159,18 +159,6 @@ public class BotRiseFacade implements IBotRiseFacade {
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listQuestionsByCommand(com.javaleo.systems
-	 * .botrise.ejb
-	 * .entities.Command)
-	 */
-	@Override
-	public List<Question> listQuestionsByCommand(Command command) {
-		return questionBusiness.listQuestionsFromCommand(command);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
 	 * com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#saveQuestion(com.javaleo.systems.botrise
 	 * .ejb.entities.
 	 * Question)

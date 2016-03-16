@@ -68,7 +68,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String detail(Command command) {
 		startOrResumeConversation();
 		this.command = command;
-		questions = facade.listQuestionsByCommand(command);
+		questions = facade.listQuestionsFromCommand(command);
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 

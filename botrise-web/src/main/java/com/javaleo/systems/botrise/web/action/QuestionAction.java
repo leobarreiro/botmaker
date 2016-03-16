@@ -77,6 +77,15 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		}
 	}
 
+	public void upQuestion(Question question) {
+		try {
+			facade.upQuestionOrder(question);
+			commandAction.setQuestions(facade.listQuestionsFromCommand(command));
+		} catch (BusinessException e) {
+			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+		}
+	}
+
 	private void loadOptions() {
 		this.answerTypeOptions = new ArrayList<AnswerType>(Arrays.asList(AnswerType.values()));
 	}
