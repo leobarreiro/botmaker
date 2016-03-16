@@ -8,23 +8,25 @@
 	<h:outputStylesheet name="css/botrise.css" />
 </h:head>
 <h:body>
-	<h1>BotRise Administration</h1>
-	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-		<h:graphicImage value="/resources/img/ajax-loader.gif" width="54" height="55" />
-	</p:dialog>
 	<h:form id="frm">
+		<h:panelGroup layout="block" styleClass="head">
+			<h1>BotRise Administration</h1>
+			<p:menubar rendered="#{botRiseAuthenticator.authenticated}">
+				<p:submenu label="Bots">
+					<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
+					<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
+				</p:submenu>
+				<p:submenu label="#{credentials.name}">
+					<p:menuitem value="Sair" action="#{userAction.logoff()}" />
+				</p:submenu>
+			</p:menubar>
+		</h:panelGroup>
+		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+			<h:graphicImage value="/resources/img/ajax-loader.gif" width="54" height="55" />
+		</p:dialog>
 		<ui:include src="/pages/dialog/msg.xhtml" />
 		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
-		<p:menubar rendered="#{botRiseAuthenticator.authenticated}">
-			<p:submenu label="Bots">
-				<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
-				<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
-			</p:submenu>
-			<p:submenu label="#{credentials.name}">
-				<p:menuitem value="Sair" action="#{userAction.logoff()}" />
-			</p:submenu>
-		</p:menubar>
 		<h:panelGroup layout="block">
 			<ui:insert name="content">
 				[Template content will be inserted here]

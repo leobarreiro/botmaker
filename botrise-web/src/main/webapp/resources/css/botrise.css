@@ -1,22 +1,30 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: Arial, Helvetica;
+	font-family: Arial, Helvetica !important;;
 	font-size: 14px;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: #006699;
+	display: block;
 }
 
 h1 {
-	font-size: 40px;
+	font-size: 36px;
 	margin: 4px;
 }
 
 h2 {
-	font-size: 28px;
-	margin: auto;
+	font-size: 30px;
+	margin: 4px 2px 0px 2px !important;
+	padding: 4px !important;
+}
+
+h3 {
+	font-size: 22px;
+	margin: 4px 2px 0px 2px !important;
+	padding: 4px !important;
 }
 
 input:not([type]), input[type="text"], input[type="password"] {
@@ -131,44 +139,48 @@ button.primary:hover {
 	margin: auto;
 }
 
+.pc5 {
+	width: 5% !important;
+}
+
 .pc10 {
-	width: 10%;
+	width: 10% !important;
 }
 
 .pc20 {
-	width: 20%;
+	width: 20% !important;
 }
 
 .pc30 {
-	width: 30%;
+	width: 30% !important;
 }
 
 .pc40 {
-	width: 40%;
+	width: 40% !important;
 }
 
 .pc50 {
-	width: 50%;
+	width: 50% !important;
 }
 
 .pc60 {
-	width: 60%;
+	width: 60% !important;
 }
 
 .pc70 {
-	width: 70%;
+	width: 70% !important;
 }
 
 .pc80 {
-	width: 80%;
+	width: 80% !important;
 }
 
 .pc90 {
-	width: 90%;
+	width: 90% !important;
 }
 
 .pc100 {
-	width: 100%;
+	width: 100% !important;
 }
 
 .txctr {
@@ -185,4 +197,42 @@ button.primary:hover {
 
 .txtop {
 	vertical-align: top;
+}
+
+.fltrgt {
+	float: right;
+}
+
+.fltlft {
+	float: left;
+}
+
+.mgbot4 {
+	margin-bottom: 4px !important;
+}
+
+div.head {
+	display: inline-block;
+	width: 100%;
+}
+
+div.head h1 {
+	width: 40% !important;
+	display: block;
+	float: left;
+}
+
+div.head div.ui-menubar {
+	margin: 4px 0px 0px 0px !important;
+	height: 30px !important;
+	width: 40% !important;
+	display: block !important;
+	float: right !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+div.head div.ui-menubar ul {
+	float: right !important;
 }

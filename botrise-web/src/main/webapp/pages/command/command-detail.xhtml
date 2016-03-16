@@ -3,9 +3,9 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc50">Comando</h2>
+		<h2>Comando</h2>
 
-		<p:fieldset styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
 			</h:panelGroup>
@@ -15,7 +15,7 @@
 			</h:panelGroup>
 		</p:fieldset>
 
-		<p:fieldset styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Key" />
 				<h:outputText value="#{commandAction.command.key}" />
@@ -31,18 +31,18 @@
 			</h:panelGroup>
 		</p:fieldset>
 
-		<p:fieldset styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud">
 			<p:dataTable value="#{commandAction.questions}" var="qst">
-				<p:column headerText="Order" styleClass="pc10">
+				<p:column headerText="Order" styleClass="pc5">
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.order}" />
 				</p:column>
 				<p:column headerText="Question">
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
 				</p:column>
-				<p:column headerText="Answer Type" styleClass="pc20">
+				<p:column headerText="Answer Type" styleClass="pc10">
 					<h:outputText value="#{qst.answerType}" />
 				</p:column>
-				<p:column headerText="Var Name" styleClass="pc20">
+				<p:column headerText="Var Name" styleClass="pc10">
 					<h:outputText value="#{qst.varName}" />
 				</p:column>
 			</p:dataTable>

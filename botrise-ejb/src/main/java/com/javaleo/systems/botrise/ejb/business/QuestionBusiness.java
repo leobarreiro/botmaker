@@ -52,9 +52,11 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveQuestion(Question question) throws BotRiseException {
-		Question previousQuestion = getLastQuestionFromCommand(question.getCommand());
-		int thisOrder = (previousQuestion == null) ? 1 : previousQuestion.getOrder();
-		question.setOrder(thisOrder);
+		if (question.getId() == null) {
+			Question previousQuestion = getLastQuestionFromCommand(question.getCommand());
+			int thisOrder = (previousQuestion == null) ? 1 : (previousQuestion.getOrder() + 1);
+			question.setOrder(thisOrder);
+		}
 		persistence.saveOrUpdate(question);
 	}
 

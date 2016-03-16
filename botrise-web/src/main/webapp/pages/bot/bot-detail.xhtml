@@ -3,9 +3,9 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc50">Detalhes do Bot</h2>
+		<h2>Detalhes do Bot</h2>
 
-		<p:fieldset styleClass="frm-crud pc50">
+		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
 			</h:panelGroup>
@@ -34,7 +34,8 @@
 			</h:panelGroup>
 		</p:fieldset>
 
-		<p:fieldset styleClass="frm-crud pc50">
+		<h3>Comandos</h3>
+		<p:fieldset styleClass="frm-crud">
 			<p:dataTable value="#{commandAction.commands}" var="cmd">
 				<p:column headerText="Comando" styleClass="pc30">
 					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{cmd.key}" />
