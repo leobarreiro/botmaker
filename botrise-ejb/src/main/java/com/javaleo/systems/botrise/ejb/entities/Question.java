@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -100,7 +101,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	}
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "command_id", referencedColumnName = "command_id")
+	@JoinColumn(name = "command_id", referencedColumnName = "command_id", foreignKey = @ForeignKey(name = "fk_question_command"))
 	public Command getCommand() {
 		return command;
 	}

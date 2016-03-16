@@ -33,6 +33,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 		Root<Question> fromQuestion = cq.from(Question.class);
 		Join<Question, Command> joinCommand = fromQuestion.join("command", JoinType.INNER);
 		cq.where(cb.equal(joinCommand.get("id"), command.getId()));
+		cq.orderBy(cb.asc(fromQuestion.get("order")));
 		cq.select(fromQuestion);
 		return persistence.getResultList(cq);
 	}
