@@ -1,4 +1,4 @@
-package com.javaleo.systems.botrise.web.action;
+package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,7 +15,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
-import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
+import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped

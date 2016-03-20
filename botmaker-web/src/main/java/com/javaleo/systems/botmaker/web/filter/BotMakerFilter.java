@@ -1,4 +1,4 @@
-package com.javaleo.systems.botrise.web.filter;
+package com.javaleo.systems.botmaker.web.filter;
 
 import java.io.IOException;
 
@@ -17,16 +17,16 @@ import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.javaleo.systems.botrise.web.action.MsgAction;
-import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
+import com.javaleo.systems.botmaker.web.action.MsgAction;
+import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
-public class BotRiseFilter implements Filter {
+public class BotMakerFilter implements Filter {
 
 	private static final String FACES_REQUEST = "Faces-Request";
 	private static final String PARTIAL_AJAX = "partial/ajax";
 	private static final String UTF_8 = "UTF-8";
 	private static final String TEXT_XML = "text/xml";
-	private static final Logger LOG = LoggerFactory.getLogger(BotRiseFilter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BotMakerFilter.class);
 	private static final String AJAX_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><partial-response><redirect url=\"%s\"></redirect></partial-response>";
 
 	private FilterConfig filterConfig;

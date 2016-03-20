@@ -1,4 +1,4 @@
-package com.javaleo.systems.botrise.web.action;
+package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.inject.Named;
 import org.javaleo.libs.jee.core.exceptions.JavaleoException;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
-import com.javaleo.systems.botrise.web.action.MsgAction.MessageType;
+import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @RequestScoped

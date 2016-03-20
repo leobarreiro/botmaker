@@ -1,4 +1,4 @@
-package com.javaleo.systems.botrise.web.action;
+package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
 

@@ -13,7 +13,7 @@ import com.javaleo.systems.botmaker.ejb.entities.User;
 
 @Named
 @Stateless
-public class BotRiseAuthenticator implements IJavaleoAuthenticator {
+public class BotMakerAuthenticator implements IJavaleoAuthenticator {
 
 	@Inject
 	private Credentials credentials;
