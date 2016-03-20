@@ -55,7 +55,7 @@ input:not([type]), input[type="text"], input[type="password"] {
 }
 
 .frm-login {
-	width: 420px;
+	width: 360px;
 	margin-top: 50px;
 }
 
@@ -106,7 +106,7 @@ input:not([type]), input[type="text"], input[type="password"] {
 
 .frm-line label {
 	display: inline-block;
-	width: 160px;
+	width: 140px;
 	text-align: right;
 	margin-right: 12px;
 }

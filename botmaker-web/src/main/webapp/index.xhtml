@@ -8,11 +8,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Username" />
-				<p:inputText value="#{userAction.username}" />
+				<p:inputText value="#{userAction.username}" styleClass="pc40" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Password" />
-				<h:inputSecret value="#{userAction.plainPassword}" />
+				<h:inputSecret value="#{userAction.plainPassword}" styleClass="pc40" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{userAction.login()}" value="Login" styleClass="primary" />

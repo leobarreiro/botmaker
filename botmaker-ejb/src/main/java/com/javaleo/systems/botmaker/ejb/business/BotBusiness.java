@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -21,6 +23,8 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
@@ -85,4 +89,16 @@ public class BotBusiness implements IBotBusiness {
 		persistence.logQuery(query);
 		return persistence.getResultList(query);
 	}
+
+	@Override
+	public List<Bot> listActiveBots() {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);
+		Root<Bot> from = cq.from(Bot.class);
+		Join<Bot, Command> joinCommand = from.join("commands", JoinType.INNER);
+		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.INNER);
+		cq.where(cb.equal(from.get("active"), true));
+		return persistence.getResultList(cq);
+	}
+
 }

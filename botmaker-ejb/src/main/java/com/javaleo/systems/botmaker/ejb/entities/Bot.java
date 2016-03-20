@@ -1,5 +1,7 @@
 package com.javaleo.systems.botmaker.ejb.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -34,6 +37,7 @@ public class Bot implements IEntityBasic {
 	private String closedBotMessage;
 	private String unknownCommadMessage;
 	private Company company;
+	private List<Command> commands;
 
 	@Override
 	@Id
@@ -116,8 +120,18 @@ public class Bot implements IEntityBasic {
 		this.company = company;
 	}
 
+	@OneToMany(mappedBy = "bot")
+	public List<Command> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
+	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -137,6 +151,7 @@ public class Bot implements IEntityBasic {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

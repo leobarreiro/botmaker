@@ -18,4 +18,6 @@ public interface IBotBusiness extends Serializable {
 
 	List<Bot> searchBot(BotFilter filter);
 
+	List<Bot> listActiveBots();
+
 }
