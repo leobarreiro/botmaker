@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<name>botrise</name>
+	<name>botmaker</name>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.javaleo.systems</groupId>
-	<artifactId>botrise</artifactId>
+	<artifactId>botmaker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<url>http://botrise.javaleo.com</url>
+	<url>http://botmaker.javaleo.com</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -16,9 +16,9 @@
 		</license>
 	</licenses>
 	<modules>
-		<module>botrise-ejb</module>
-		<module>botrise-web</module>
-		<module>botrise-ear</module>
+		<module>botmaker-ejb</module>
+		<module>botmaker-web</module>
+		<module>botmaker-ear</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,20 +45,20 @@
 		<version.junit>4.10</version.junit>
 	</properties>
 	<scm>
-		<connection>scm:git:https://bitbucket.org/javaleo/botrise.git</connection>
-		<url>scm:git:https://bitbucket.org/javaleo/botrise.git</url>
+		<connection>scm:git:https://bitbucket.org/javaleo/botmaker.git</connection>
+		<url>scm:git:https://bitbucket.org/javaleo/botmaker.git</url>
 	</scm>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.javaleo.systems</groupId>
-				<artifactId>botrise-ejb</artifactId>
+				<artifactId>botmaker-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
 			<dependency>
 				<groupId>com.javaleo.systems</groupId>
-				<artifactId>botrise-web</artifactId>
+				<artifactId>botmaker-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 				<scope>compile</scope>
