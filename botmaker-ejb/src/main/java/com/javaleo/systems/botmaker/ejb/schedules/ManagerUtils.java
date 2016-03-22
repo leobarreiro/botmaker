@@ -15,6 +15,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.javaleo.libs.botgram.model.Update;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 
 @Local
 @Singleton
@@ -25,11 +26,13 @@ public class ManagerUtils implements Serializable {
 
 	private ConcurrentMap<Long, Set<Update>> botUpdatesMap;
 	private ConcurrentMap<Long, Integer> lastUpdateIdMap;
+	private ConcurrentMap<Long, Set<Dialog>> dialogsPerBotMap;
 
 	@PostConstruct
 	public void startInit() {
 		this.botUpdatesMap = new ConcurrentHashMap<Long, Set<Update>>();
 		this.lastUpdateIdMap = new ConcurrentHashMap<Long, Integer>();
+		this.dialogsPerBotMap = new ConcurrentHashMap<Long, Set<Dialog>>();
 	}
 
 	public void addUpdatesToBot(Bot bot, List<Update> updates) {
@@ -70,6 +73,17 @@ public class ManagerUtils implements Serializable {
 
 	public int getNextUpdateOffsetFromBot(Bot bot) {
 		return (getLastUpdateIdFromBot(bot) + 1);
+	}
+
+	public void addDialogToBot(Bot bot, Dialog dialog) {
+		if (!dialogsPerBotMap.containsKey(bot.getId())) {
+			dialogsPerBotMap.put(bot.getId(), new HashSet<Dialog>());
+		}
+		dialogsPerBotMap.get(bot.getId()).add(dialog);
+	}
+
+	public Set<Dialog> getDialogsFromBot(Bot bot) {
+		return (dialogsPerBotMap.containsKey(bot.getId())) ? dialogsPerBotMap.get(bot.getId()) : new HashSet<Dialog>();
 	}
 
 }

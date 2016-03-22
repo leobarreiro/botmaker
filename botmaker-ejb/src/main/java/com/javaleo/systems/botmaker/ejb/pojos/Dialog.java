@@ -3,9 +3,9 @@ package com.javaleo.systems.botmaker.ejb.pojos;
 import java.io.Serializable;
 import java.util.List;
 
+import org.javaleo.libs.botgram.model.Chat;
 import org.javaleo.libs.botgram.model.Update;
 
-import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 
 public class Dialog implements Serializable {
@@ -13,7 +13,7 @@ public class Dialog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Update update;
-	private Bot bot;
+	private Chat chat;
 	private Command command;
 	private boolean pendingServer;
 	private boolean finish;
@@ -27,12 +27,12 @@ public class Dialog implements Serializable {
 		this.update = update;
 	}
 
-	public Bot getBot() {
-		return bot;
+	public Chat getChat() {
+		return chat;
 	}
 
-	public void setBot(Bot bot) {
-		this.bot = bot;
+	public void setChat(Chat chat) {
+		this.chat = chat;
 	}
 
 	public Command getCommand() {

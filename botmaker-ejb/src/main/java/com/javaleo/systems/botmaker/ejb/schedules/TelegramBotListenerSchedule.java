@@ -22,7 +22,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 @Named
 @Local
 @Stateless
-public class BotListenerSchedule implements Serializable {
+public class TelegramBotListenerSchedule implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
