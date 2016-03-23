@@ -91,4 +91,10 @@ public class QuestionBusiness implements IQuestionBusiness {
 		cq.select(from);
 		return persistence.getSingleResult(cq);
 	}
+
+	@Override
+	public Question getNextQuestion(Command command, int lastOrder) {
+		return getQuestionByCommandAndOrder(command, (lastOrder + 1));
+	}
+
 }

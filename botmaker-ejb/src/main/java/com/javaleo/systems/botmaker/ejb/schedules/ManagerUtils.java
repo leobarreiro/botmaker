@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Local;
@@ -71,7 +72,7 @@ public class ManagerUtils implements Serializable {
 		return (lastUpdateIdMap.containsKey(bot.getId())) ? lastUpdateIdMap.get(bot.getId()) : 0;
 	}
 
-	public int getNextUpdateOffsetFromBot(Bot bot) {
+	public int getNextUpdateOfsetFromBot(Bot bot) {
 		return (getLastUpdateIdFromBot(bot) + 1);
 	}
 
@@ -84,6 +85,30 @@ public class ManagerUtils implements Serializable {
 
 	public Set<Dialog> getDialogsFromBot(Bot bot) {
 		return (dialogsPerBotMap.containsKey(bot.getId())) ? dialogsPerBotMap.get(bot.getId()) : new HashSet<Dialog>();
+	}
+
+	public void cleanDialogsFinished() {
+		for (Long idBot : dialogsPerBotMap.keySet()) {
+			Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(idBot));
+			for (Dialog d : dialogs) {
+				if (d.isFinish()) {
+					dialogs.remove(d);
+				}
+			}
+			dialogsPerBotMap.put(idBot, dialogs);
+		}
+	}
+
+	public void updateDialogToBot(Bot bot, Dialog dialog) {
+		Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(bot.getId()));
+		for (Dialog d : dialogs) {
+			if (d.getIdChat() == dialog.getIdChat()) {
+				dialogs.remove(d);
+				dialogs.add(dialog);
+				break;
+			}
+		}
+		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
 }

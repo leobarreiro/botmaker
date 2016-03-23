@@ -20,4 +20,6 @@ public interface IQuestionBusiness extends Serializable {
 
 	void upQuestionOrder(Question question) throws BusinessException;
 
+	Question getNextQuestion(Command command, int lastOrder);
+
 }

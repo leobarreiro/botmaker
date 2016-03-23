@@ -42,4 +42,15 @@ public class CommandBusiness implements ICommandBusiness {
 		persistence.saveOrUpdate(command);
 	}
 
+	@Override
+	public Command getCommandByBotAndKey(Bot bot, String text) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
+		Root<Command> fromCommand = cq.from(Command.class);
+		Join<Command, Bot> joinBot = fromCommand.join("bot", JoinType.INNER);
+		cq.where(cb.and(cb.equal(joinBot.get("id"), bot.getId()), cb.equal(fromCommand.get("key"), text)));
+		cq.select(fromCommand);
+		return persistence.getSingleResult(cq);
+	}
+
 }

@@ -16,4 +16,6 @@ public interface ICommandBusiness extends Serializable {
 
 	void saveCommand(Command command) throws BusinessException;
 
+	Command getCommandByBotAndKey(Bot bot, String text);
+
 }
