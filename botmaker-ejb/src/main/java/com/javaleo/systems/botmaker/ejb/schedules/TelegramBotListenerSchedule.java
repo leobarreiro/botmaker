@@ -1,6 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,9 +57,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 	@Inject
 	private ManagerUtils managerUtils;
 
-	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/30", persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/10", persistent = false)
 	public void listenBotUpdates() {
-		LOG.info("Verificando Updates dos Bots ativos.");
+		// LOG.info("Verificando Updates dos Bots ativos.");
 		List<Bot> bots = botBusiness.listActiveBots();
 		for (Bot bot : bots) {
 			BotGramConfig config = new BotGramConfig();
@@ -97,12 +99,22 @@ public class TelegramBotListenerSchedule implements Serializable {
 				if (command == null) {
 					SendMessageRequest request = new SendMessageRequest();
 					request.setChatId(u.getMessage().getChat().getId());
-					request.setText(bot.getUnknownCommadMessage());
+					byte[] textBytes = bot.getUnknownCommadMessage().getBytes(StandardCharsets.ISO_8859_1);
+					String text = new String(textBytes, Charset.forName("UTF-8"));
+					request.setText(text);
+					LOG.info(request.getText());
 					try {
 						BotGramConfig config = new BotGramConfig();
 						config.setToken(bot.getToken());
 						BotGramService service = new BotGramService(config);
 						SendMessageResponse messageResponse = service.sendMessage(request);
+						// LOG.info(MessageFormat.format("Comando nao reconhecido. Bot: {0}, Ok: {1}, Det: {2}",
+						// bot.getName(), messageResponse.getOk(), messageResponse.getDescription()));
+						// SendMessageRequest request = new SendMessageRequest();
+						// request.setChatId(update.getMessage().getChat().getId());
+						// request.setText(Calendar.getInstance().getTime().toString());
+						// SendMessageResponse messageResponse = service.sendMessage(request);
+						// assertTrue(messageResponse.getDescription(), messageResponse.getOk());
 					} catch (BotGramException e) {
 						LOG.error(e.getMessage());
 					}
