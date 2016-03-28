@@ -2,7 +2,7 @@ package com.javaleo.systems.botmaker.ejb.entities;
 
 public class EntityUtils {
 
-	public static final String SCHEMA = "botrise";
+	public static final String SCHEMA = "botmaker";
 	public static final String BOT = "bot";
 	public static final String COMMAND = "command";
 
