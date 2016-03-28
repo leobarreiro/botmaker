@@ -97,27 +97,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 				// Unknowed Command
 				if (command == null) {
-					SendMessageRequest request = new SendMessageRequest();
-					request.setChatId(u.getMessage().getChat().getId());
-					byte[] textBytes = bot.getUnknownCommadMessage().getBytes(StandardCharsets.ISO_8859_1);
-					String text = new String(textBytes, Charset.forName("UTF-8"));
-					request.setText(text);
-					LOG.info(request.getText());
-					try {
-						BotGramConfig config = new BotGramConfig();
-						config.setToken(bot.getToken());
-						BotGramService service = new BotGramService(config);
-						SendMessageResponse messageResponse = service.sendMessage(request);
-						// LOG.info(MessageFormat.format("Comando nao reconhecido. Bot: {0}, Ok: {1}, Det: {2}",
-						// bot.getName(), messageResponse.getOk(), messageResponse.getDescription()));
-						// SendMessageRequest request = new SendMessageRequest();
-						// request.setChatId(update.getMessage().getChat().getId());
-						// request.setText(Calendar.getInstance().getTime().toString());
-						// SendMessageResponse messageResponse = service.sendMessage(request);
-						// assertTrue(messageResponse.getDescription(), messageResponse.getOk());
-					} catch (BotGramException e) {
-						LOG.error(e.getMessage());
-					}
+					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), bot.getUnknownCommadMessage());
 				}
 				// Command recognized
 				else {
@@ -130,6 +110,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
+					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), question.getInstruction());
 					managerUtils.addDialogToBot(bot, dialog);
 				}
 			}
@@ -142,24 +123,30 @@ public class TelegramBotListenerSchedule implements Serializable {
 				a.setAnswer(u.getMessage().getText());
 				answers.add(a);
 				dialog.setAnswers(answers);
+				// sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
 				Question newQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
 				dialog.setLastQuestion(newQuestion);
 				a.setQuestion(newQuestion);
-				try {
-					SendMessageRequest request = new SendMessageRequest();
-					request.setChatId(dialog.getIdChat());
-					request.setText(newQuestion.getInstruction());
-					BotGramConfig config = new BotGramConfig();
-					config.setToken(bot.getToken());
-					BotGramService service = new BotGramService(config);
-					SendMessageResponse response = service.sendMessage(request);
-				} catch (BotGramException e) {
-					LOG.error(e.getMessage());
-				}
-
+				sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
 				managerUtils.updateDialogToBot(bot, dialog);
-				// service.sendMessage(request)
 			}
+		}
+
+	}
+
+	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction) {
+		SendMessageRequest request = new SendMessageRequest();
+		request.setChatId(idChat);
+		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
+		String text = new String(textBytes, Charset.forName("UTF-8"));
+		request.setText(text);
+		try {
+			BotGramConfig config = new BotGramConfig();
+			config.setToken(bot.getToken());
+			BotGramService service = new BotGramService(config);
+			SendMessageResponse messageResponse = service.sendMessage(request);
+		} catch (BotGramException e) {
+			LOG.error(e.getMessage());
 		}
 
 	}

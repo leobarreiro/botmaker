@@ -18,7 +18,7 @@ import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = EntityUtils.COMMAND)
-@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "command_sq", sequenceName = "command_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "command_seq", sequenceName = "command_seq", initialValue = 1, allocationSize = 1)
 public class Command implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Command implements IEntityBasic {
 	@Override
 	@Id
 	@Column(name = "command_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "command_sq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "command_seq")
 	public Long getId() {
 		return id;
 	}

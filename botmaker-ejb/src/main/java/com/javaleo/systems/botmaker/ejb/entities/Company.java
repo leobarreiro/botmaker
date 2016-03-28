@@ -12,7 +12,7 @@ import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "company")
-@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "company_sq", sequenceName = "company_sq", allocationSize = 1, initialValue = 1)
+@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "company_sq", sequenceName = "company_seq", allocationSize = 1, initialValue = 1)
 public class Company implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
