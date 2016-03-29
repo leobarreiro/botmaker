@@ -3,6 +3,7 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,8 +61,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/10", persistent = false)
 	public void listenBotUpdates() {
-		LOG.info("Verificando Updates dos Bots ativos.");
 		List<Bot> bots = botBusiness.listActiveBots();
+		LOG.info(MessageFormat.format("Verificando updates de {0} bot ativos.", bots.size()));
 		for (Bot bot : bots) {
 			BotGramConfig config = new BotGramConfig();
 			config.setToken(bot.getToken());
@@ -69,6 +70,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			try {
 				GetUpdatesResponse updatesResponse = service.getUpdates(managerUtils.getNextUpdateOfsetFromBot(bot), 20);
 				List<Update> updates = updatesResponse.getUpdates();
+				LOG.info(MessageFormat.format("Bot {0} possui {1} update(s).", bot.getName(), updates.size()));
 				managerUtils.addUpdatesToBot(bot, updates);
 				processDialogsToBot(bot, updates);
 			} catch (BotGramException e) {
@@ -89,9 +91,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 		for (Update u : updates) {
 			Dialog dialog = dialogMap.get(u.getMessage().getChat().getId());
-
 			// New Dialog
 			if (dialog == null) {
+				LOG.info(MessageFormat.format("Novo dialogo estabelecido: {0} / {1}.", u.getMessage().getChat().getUsername(), u.getMessage().getText()));
 				dialog = new Dialog();
 				dialog.setAnswers(new ArrayList<Answer>());
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
@@ -154,6 +156,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
 			SendMessageResponse messageResponse = service.sendMessage(request);
+			LOG.info(MessageFormat.format("Msg.. Ok: {0} / Dscr: {1}.", messageResponse.getOk(), messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
