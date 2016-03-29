@@ -95,9 +95,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 			if (dialog == null) {
 				LOG.info(MessageFormat.format("Novo dialogo estabelecido: {0} / {1}.", u.getMessage().getChat().getUsername(), u.getMessage().getText()));
 				dialog = new Dialog();
+				dialog.setIdChat(u.getMessage().getChat().getId());
 				dialog.setAnswers(new ArrayList<Answer>());
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
-
 				// Command unknown
 				if (command == null) {
 					sendMessageToBotUser(bot, dialog.getIdChat(), bot.getUnknownCommadMessage());
@@ -107,7 +107,6 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setCommand(command);
 					dialog.setAnswers(new ArrayList<Answer>());
 					dialog.setFinish(false);
-					dialog.setIdChat(u.getMessage().getChat().getId());
 					Question question = questionBusiness.getNextQuestion(command, 0);
 					dialog.setLastQuestion(question);
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
