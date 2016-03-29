@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.Update;
@@ -95,9 +96,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 				dialog.setAnswers(new ArrayList<Answer>());
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
 
-				// Unknowed Command
+				// Command unknown
 				if (command == null) {
-					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), bot.getUnknownCommadMessage());
+					sendMessageToBotUser(bot, dialog.getIdChat(), bot.getUnknownCommadMessage());
 				}
 				// Command recognized
 				else {
@@ -111,6 +112,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
 					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), question.getInstruction());
+					dialog.setPendingServer(false);
 					managerUtils.addDialogToBot(bot, dialog);
 				}
 			}
@@ -123,11 +125,18 @@ public class TelegramBotListenerSchedule implements Serializable {
 				a.setAnswer(u.getMessage().getText());
 				answers.add(a);
 				dialog.setAnswers(answers);
-				// sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
-				Question newQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
-				dialog.setLastQuestion(newQuestion);
-				a.setQuestion(newQuestion);
-				sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
+				if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
+					sendMessageToBotUser(bot, dialog.getIdChat(), dialog.getLastQuestion().getSuccessMessage());
+				}
+				Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
+				if (nextQuestion != null) {
+					dialog.setLastQuestion(nextQuestion);
+					a.setQuestion(nextQuestion);
+					sendMessageToBotUser(bot, dialog.getIdChat(), nextQuestion.getInstruction());
+				} else {
+					dialog.setFinish(true);
+				}
+				dialog.setPendingServer(false);
 				managerUtils.updateDialogToBot(bot, dialog);
 			}
 		}
