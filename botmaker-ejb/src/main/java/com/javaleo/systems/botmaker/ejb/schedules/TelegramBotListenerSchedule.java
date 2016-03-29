@@ -60,7 +60,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/10", persistent = false)
 	public void listenBotUpdates() {
-		// LOG.info("Verificando Updates dos Bots ativos.");
+		LOG.info("Verificando Updates dos Bots ativos.");
 		List<Bot> bots = botBusiness.listActiveBots();
 		for (Bot bot : bots) {
 			BotGramConfig config = new BotGramConfig();
