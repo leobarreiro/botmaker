@@ -136,14 +136,16 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setLastQuestion(nextQuestion);
 					a.setQuestion(nextQuestion);
 					sendMessageToBotUser(bot, dialog.getIdChat(), nextQuestion.getInstruction());
+					dialog.setPendingServer(false);
+					managerUtils.updateDialogToBot(bot, dialog);
 				} else {
 					if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
 						sendMessageToBotUser(bot, dialog.getIdChat(), bot.getEndOfDialogMessage());
 					}
 					dialog.setFinish(true);
+					dialog.setPendingServer(false);
+					managerUtils.removeFinishedDialog(bot, dialog);
 				}
-				dialog.setPendingServer(false);
-				managerUtils.updateDialogToBot(bot, dialog);
 			}
 		}
 
