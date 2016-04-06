@@ -30,6 +30,10 @@
 				<h:outputLabel value="Mensagem de Comando não reconhecido" styleClass="vtop" />
 				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" styleClass="pc80" rows="4" />
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Mensagem de Fim de Diálogo" styleClass="vtop" />
+				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" styleClass="pc80" rows="4" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{botAction.save()}" value="Salvar" styleClass="primary" />
 				<p:commandButton action="#{botAction.list()}" value="Voltar" styleClass="secondary" />

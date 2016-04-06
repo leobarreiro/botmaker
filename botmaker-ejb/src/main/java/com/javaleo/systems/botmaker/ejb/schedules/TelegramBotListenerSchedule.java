@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.Update;
@@ -59,8 +60,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/10", persistent = false)
 	public void listenBotUpdates() {
-		// LOG.info("Verificando Updates dos Bots ativos.");
 		List<Bot> bots = botBusiness.listActiveBots();
+		// LOG.info(MessageFormat.format("Verificando updates de {0} bot(s) ativo(s).",
+		// bots.size()));
 		for (Bot bot : bots) {
 			BotGramConfig config = new BotGramConfig();
 			config.setToken(bot.getToken());
@@ -68,6 +70,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 			try {
 				GetUpdatesResponse updatesResponse = service.getUpdates(managerUtils.getNextUpdateOfsetFromBot(bot), 20);
 				List<Update> updates = updatesResponse.getUpdates();
+				// LOG.info(MessageFormat.format("Bot {0} possui {1} update(s).", bot.getName(),
+				// updates.size()));
 				managerUtils.addUpdatesToBot(bot, updates);
 				processDialogsToBot(bot, updates);
 			} catch (BotGramException e) {
@@ -88,29 +92,30 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 		for (Update u : updates) {
 			Dialog dialog = dialogMap.get(u.getMessage().getChat().getId());
-
 			// New Dialog
 			if (dialog == null) {
+				// LOG.info(MessageFormat.format("Novo dialogo estabelecido: {0} / {1}.",
+				// u.getMessage().getChat().getUsername(), u.getMessage().getText()));
 				dialog = new Dialog();
+				dialog.setIdChat(u.getMessage().getChat().getId());
 				dialog.setAnswers(new ArrayList<Answer>());
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
-
-				// Unknowed Command
+				// Command unknown
 				if (command == null) {
-					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), bot.getUnknownCommadMessage());
+					sendMessageToBotUser(bot, dialog.getIdChat(), bot.getUnknownCommadMessage());
 				}
 				// Command recognized
 				else {
 					dialog.setCommand(command);
 					dialog.setAnswers(new ArrayList<Answer>());
 					dialog.setFinish(false);
-					dialog.setIdChat(u.getMessage().getChat().getId());
 					Question question = questionBusiness.getNextQuestion(command, 0);
 					dialog.setLastQuestion(question);
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
 					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), question.getInstruction());
+					dialog.setPendingServer(false);
 					managerUtils.addDialogToBot(bot, dialog);
 				}
 			}
@@ -121,19 +126,33 @@ public class TelegramBotListenerSchedule implements Serializable {
 				Answer ans = new Answer();
 				ans.setQuestion(dialog.getLastQuestion());
 				ans.setAnswer(u.getMessage().getText());
-				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
-					ans.setAccepted(true);
-					Question newQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
-					dialog.setLastQuestion(newQuestion);
-					requestedMessage = newQuestion.getInstruction();
-				} else {
-					ans.setAccepted(false);
-					requestedMessage = dialog.getLastQuestion().getErrorFormatMessage();
-				}
 				answers.add(ans);
 				dialog.setAnswers(answers);
-				sendMessageToBotUser(bot, u.getMessage().getChat().getId(), requestedMessage);
-				managerUtils.updateDialogToBot(bot, dialog);
+				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
+					ans.setAccepted(true);
+					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
+						sendMessageToBotUser(bot, dialog.getIdChat(), dialog.getLastQuestion().getSuccessMessage());
+					}
+					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
+					if (nextQuestion != null) {
+						dialog.setLastQuestion(nextQuestion);
+						sendMessageToBotUser(bot, dialog.getIdChat(), nextQuestion.getInstruction());
+						dialog.setPendingServer(false);
+						dialog.setLastQuestion(nextQuestion);
+						managerUtils.updateDialogToBot(bot, dialog);
+					} else {
+						if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
+							sendMessageToBotUser(bot, dialog.getIdChat(), bot.getEndOfDialogMessage());
+						}
+						dialog.setFinish(true);
+						dialog.setPendingServer(false);
+						managerUtils.removeFinishedDialog(bot, dialog);
+					}
+				} else {
+					ans.setAccepted(false);
+					sendMessageToBotUser(bot, dialog.getIdChat(), dialog.getLastQuestion().getErrorFormatMessage());
+					managerUtils.updateDialogToBot(bot, dialog);
+				}
 			}
 		}
 
@@ -150,6 +169,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
 			SendMessageResponse messageResponse = service.sendMessage(request);
+			// LOG.info(MessageFormat.format("Msg.. Ok: {0} / Dscr: {1}.", messageResponse.getOk(),
+			// messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}

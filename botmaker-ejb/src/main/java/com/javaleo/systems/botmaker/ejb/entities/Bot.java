@@ -36,6 +36,7 @@ public class Bot implements IEntityBasic {
 	private Boolean active;
 	private String closedBotMessage;
 	private String unknownCommadMessage;
+	private String endOfDialogMessage;
 	private Company company;
 	private List<Command> commands;
 
@@ -109,8 +110,15 @@ public class Bot implements IEntityBasic {
 		this.unknownCommadMessage = unknownCommadMessage;
 	}
 
-	// TODO : remove optional = true after applying in database update mode
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	public String getEndOfDialogMessage() {
+		return endOfDialogMessage;
+	}
+
+	public void setEndOfDialogMessage(String endOfDialogMessage) {
+		this.endOfDialogMessage = endOfDialogMessage;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_bot_company"))
 	public Company getCompany() {
 		return company;
@@ -131,7 +139,6 @@ public class Bot implements IEntityBasic {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -151,7 +158,6 @@ public class Bot implements IEntityBasic {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
