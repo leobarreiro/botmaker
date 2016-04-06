@@ -10,6 +10,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
@@ -39,12 +40,13 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Override
 	public void saveCommand(Command command) throws BusinessException {
+		command.setKey(StringUtils.lowerCase(command.getKey()));
 		persistence.saveOrUpdate(command);
 	}
 
 	@Override
 	public Command getCommandByBotAndKey(Bot bot, String text) {
-		String clearText = text.replaceAll("/", "");
+		String clearText = StringUtils.lowerCase(text.replaceAll("/", ""));
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
 		Root<Command> fromCommand = cq.from(Command.class);
