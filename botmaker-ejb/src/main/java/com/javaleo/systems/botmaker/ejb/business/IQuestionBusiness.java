@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 
 @Local
 public interface IQuestionBusiness extends Serializable {
@@ -21,5 +22,7 @@ public interface IQuestionBusiness extends Serializable {
 	void upQuestionOrder(Question question) throws BusinessException;
 
 	Question getNextQuestion(Command command, int lastOrder);
+
+	boolean validateAnswer(Question question, Answer answer);
 
 }

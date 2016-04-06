@@ -117,17 +117,22 @@ public class TelegramBotListenerSchedule implements Serializable {
 			// Old Dialog
 			else {
 				List<Answer> answers = dialog.getAnswers();
-				Answer a = new Answer();
-				// TODO: realizar tratamento de respostas para ver se estao corretas.
-				a.setAccepted(true);
-				a.setAnswer(u.getMessage().getText());
-				answers.add(a);
+				String requestedMessage;
+				Answer ans = new Answer();
+				ans.setQuestion(dialog.getLastQuestion());
+				ans.setAnswer(u.getMessage().getText());
+				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
+					ans.setAccepted(true);
+					Question newQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
+					dialog.setLastQuestion(newQuestion);
+					requestedMessage = newQuestion.getInstruction();
+				} else {
+					ans.setAccepted(false);
+					requestedMessage = dialog.getLastQuestion().getErrorFormatMessage();
+				}
+				answers.add(ans);
 				dialog.setAnswers(answers);
-				// sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
-				Question newQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
-				dialog.setLastQuestion(newQuestion);
-				a.setQuestion(newQuestion);
-				sendMessageToBotUser(bot, u.getMessage().getChat().getId(), newQuestion.getInstruction());
+				sendMessageToBotUser(bot, u.getMessage().getChat().getId(), requestedMessage);
 				managerUtils.updateDialogToBot(bot, dialog);
 			}
 		}

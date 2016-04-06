@@ -1,6 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -12,11 +14,14 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -27,6 +32,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private IPersistenceBasic<Question> persistence;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Question> listQuestionsFromCommand(Command command) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Question> cq = cb.createQuery(Question.class);
@@ -39,6 +45,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Question getLastQuestionFromCommand(Command command) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Question> cq = cb.createQuery(Question.class);
@@ -82,6 +89,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 		}
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	private Question getQuestionByCommandAndOrder(Command command, int order) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Question> cq = cb.createQuery(Question.class);
@@ -93,8 +101,23 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Question getNextQuestion(Command command, int lastOrder) {
 		return getQuestionByCommandAndOrder(command, (lastOrder + 1));
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public boolean validateAnswer(Question question, Answer answer) {
+		Pattern pattern;
+		if (question.getAnswerType().equals(AnswerType.SET) && StringUtils.isNotBlank(question.getOptions())) {
+			pattern = question.getAnswerType().getArrayPattern(question.getOptions());
+		} else {
+			pattern = question.getAnswerType().getSimplePattern();
+		}
+		String content = StringUtils.lowerCase(answer.getAnswer());
+		Matcher m = pattern.matcher(content);
+		return m.matches();
 	}
 
 }

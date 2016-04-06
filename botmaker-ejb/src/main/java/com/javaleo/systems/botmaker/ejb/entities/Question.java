@@ -27,6 +27,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	private Long id;
 	private String instruction;
 	private AnswerType answerType;
+	private String options;
 	private String errorFormatMessage;
 	private String successMessage;
 	private String varName;
@@ -62,6 +63,15 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	public void setAnswerType(AnswerType answerType) {
 		this.answerType = answerType;
+	}
+
+	@Column(name = "answer_options", length = 255, nullable = true)
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
 	}
 
 	@Column(name = "error_message", length = 255)
