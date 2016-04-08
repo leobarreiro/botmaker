@@ -162,7 +162,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
-		byte[] textBytes = instruction.getBytes(StandardCharsets.UTF_8);
+		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);
 		request.setText(text);
