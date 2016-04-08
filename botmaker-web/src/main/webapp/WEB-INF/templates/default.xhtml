@@ -1,6 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<title><h:outputText value="BotMaker" /></title>
@@ -8,30 +12,36 @@
 	<h:outputStylesheet name="css/botmaker.css" />
 </h:head>
 <h:body>
-	<h:form id="frm">
-		<h:panelGroup layout="block" styleClass="head">
-			<h1>BotMaker</h1>
-			<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
-				<p:submenu label="Bots">
-					<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
-					<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
-				</p:submenu>
-				<p:submenu label="#{credentials.name}">
-					<p:menuitem value="Sair" action="#{userAction.logoff()}" />
-				</p:submenu>
-			</p:menubar>
-		</h:panelGroup>
-		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-			<h:graphicImage value="/resources/img/ajax-loader.gif" width="54" height="55" />
-		</p:dialog>
-		<ui:include src="/pages/dialog/msg.xhtml" />
-		<p:remoteCommand name="onload" action="#{msgAction.show()}" autoRun="true" />
-		<h:panelGroup layout="block">
-			<ui:insert name="content">
+	<f:view contentType="text/html; charset=UTF-8" encoding="UTF-8">
+		<h:form id="frm" acceptcharset="UTF-8">
+			<h:panelGroup layout="block" styleClass="head">
+				<h1>BotMaker</h1>
+				<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
+					<p:submenu label="Bots">
+						<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
+						<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
+					</p:submenu>
+					<p:submenu label="#{credentials.name}">
+						<p:menuitem value="Sair" action="#{userAction.logoff()}" />
+					</p:submenu>
+				</p:menubar>
+			</h:panelGroup>
+			<p:ajaxStatus onstart="PF('statusDialog').show()"
+				onsuccess="PF('statusDialog').hide()" />
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+				closable="false" resizable="false" showHeader="false">
+				<h:graphicImage value="/resources/img/ajax-loader.gif" width="54"
+					height="55" />
+			</p:dialog>
+			<ui:include src="/pages/dialog/msg.xhtml" />
+			<p:remoteCommand name="onload" action="#{msgAction.show()}"
+				autoRun="true" />
+			<h:panelGroup layout="block">
+				<ui:insert name="content">
 				[Template content will be inserted here]
 			</ui:insert>
-		</h:panelGroup>
-	</h:form>
+			</h:panelGroup>
+		</h:form>
+	</f:view>
 </h:body>
 </html>
