@@ -2,7 +2,7 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.Update;
@@ -161,16 +162,16 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
-		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
-		String text = new String(textBytes, Charset.forName("UTF-8"));
+		byte[] textBytes = instruction.getBytes(Charset.forName("UTF-8"));
+		String text = new String(textBytes);
+		request.setParseMode(ParseMode.HTML);
 		request.setText(text);
 		try {
 			BotGramConfig config = new BotGramConfig();
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
 			SendMessageResponse messageResponse = service.sendMessage(request);
-			// LOG.info(MessageFormat.format("Msg.. Ok: {0} / Dscr: {1}.", messageResponse.getOk(),
-			// messageResponse.getDescription()));
+			LOG.info(MessageFormat.format("Msg.. Ok: {0} / Dscr: {1}.", messageResponse.getOk(), messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
