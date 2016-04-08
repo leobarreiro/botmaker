@@ -2,6 +2,7 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,8 +163,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
-		byte[] textBytes = instruction.getBytes(Charset.forName("UTF-8"));
-		String text = new String(textBytes);
+		byte[] textBytes = instruction.getBytes(StandardCharsets.UTF_8);
+		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);
 		request.setText(text);
 		try {
