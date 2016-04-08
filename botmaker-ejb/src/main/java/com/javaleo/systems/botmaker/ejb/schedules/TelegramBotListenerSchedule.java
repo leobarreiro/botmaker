@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
