@@ -12,23 +12,23 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
-import org.javaleo.libs.jee.core.security.Credentials;
 
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.SnippetCode;
 import com.javaleo.systems.botmaker.ejb.filters.SnippetCodeFilter;
+import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Named
 @Stateless
 public class SnippetCodeBusiness implements ISnippetCodeBusiness {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private IPersistenceBasic<SnippetCode> persistence;
-	
+
 	@Inject
-	private Credentials credentials;
+	private BotMakerCredentials credentials;
 
 	@Override
 	public void saveSnippetCode(SnippetCode snippetCode) {
@@ -41,7 +41,11 @@ public class SnippetCodeBusiness implements ISnippetCodeBusiness {
 		CriteriaQuery<SnippetCode> cq = cb.createQuery(SnippetCode.class);
 		Root<SnippetCode> fromSnippet = cq.from(SnippetCode.class);
 		Join<SnippetCode, Company> joinCompany = fromSnippet.join("company", JoinType.LEFT);
-		cq.where(cb.or(cb.equal(joinCompany.get("id"), 1), cb.isNull(joinCompany.get("id"))));
+		if (credentials.getCompany() != null) {
+			cq.where(cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.isNull(joinCompany.get("id"))));
+		} else {
+			cq.where(cb.isNull(joinCompany.get("id")));
+		}
 		return persistence.getResultList(cq);
 	}
 
