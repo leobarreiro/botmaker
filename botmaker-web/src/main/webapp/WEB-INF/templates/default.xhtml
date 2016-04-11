@@ -6,14 +6,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-<h:head>
-	<title><h:outputText value="BotMaker" /></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<h:outputStylesheet name="css/botmaker.css" />
-</h:head>
-<h:body>
-	<f:view contentType="text/html; charset=UTF-8" encoding="UTF-8">
-		<h:form id="frm" acceptcharset="UTF-8">
+<f:view contentType="text/html; charset=ISO-8859-1"
+	encoding="ISO-8859-1">
+	<h:head>
+		<title><h:outputText value="BotMaker" /></title>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=iso-8859-1" />
+		<h:outputStylesheet name="css/botmaker.css" />
+	</h:head>
+	<h:body>
+		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
 				<h1>BotMaker</h1>
 				<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
@@ -42,6 +44,6 @@
 			</ui:insert>
 			</h:panelGroup>
 		</h:form>
-	</f:view>
-</h:body>
+	</h:body>
+</f:view>
 </html>

@@ -31,7 +31,7 @@ public class BotMakerAuthenticator implements IJavaleoAuthenticator {
 	public void authenticate(String username, String password) throws JavaleoException {
 		User user = userBusiness.findUserByUsernameAndPassphrase(username, password);
 		if (user == null) {
-			throw new JavaleoException("User not found.");
+			throw new JavaleoException("user.not.found");
 		}
 		credentials.setUser(user);
 		if (user.getCompany() != null) {
