@@ -1,12 +1,21 @@
 package com.javaleo.systems.botmaker.ejb.filters;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
-public class SnippetCodeFilter {
+public class SnippetFilter {
 
-	private ScriptType scriptType;
 	private String name;
 	private String description;
+	private ScriptType scriptType;
+	private List<ScriptType> scriptTypeOptions;
+
+	public SnippetFilter() {
+		super();
+		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
+	}
 
 	public ScriptType getScriptType() {
 		return scriptType;
@@ -30,6 +39,14 @@ public class SnippetCodeFilter {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<ScriptType> getScriptTypeOptions() {
+		return scriptTypeOptions;
+	}
+
+	public void setScriptTypeOptions(List<ScriptType> scriptTypeOptions) {
+		this.scriptTypeOptions = scriptTypeOptions;
 	}
 
 }

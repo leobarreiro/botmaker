@@ -59,7 +59,7 @@ public class BotMakerAuthenticator implements IJavaleoAuthenticator {
 	 */
 	@Override
 	public boolean isAuthenticated() {
-		return (credentials.getUsername() != null);
+		return (credentials.getUser() != null);
 	}
 
 }

@@ -10,17 +10,17 @@ import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
-import com.javaleo.systems.botmaker.ejb.business.ISnippetCodeBusiness;
+import com.javaleo.systems.botmaker.ejb.business.ISnippetBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.entities.SnippetCode;
+import com.javaleo.systems.botmaker.ejb.entities.Snippet;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
-import com.javaleo.systems.botmaker.ejb.filters.SnippetCodeFilter;
+import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
 
 @Named
 @Stateless
@@ -41,7 +41,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	private IQuestionBusiness questionBusiness;
 
 	@Inject
-	private ISnippetCodeBusiness snippetCodeBusiness;
+	private ISnippetBusiness snippetBusiness;
 
 	@Inject
 	private IUserBusiness userBusiness;
@@ -219,8 +219,8 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * .SnippetCode)
 	 */
 	@Override
-	public void saveSnippetCode(SnippetCode snippetCode) {
-		snippetCodeBusiness.saveSnippetCode(snippetCode);
+	public void saveSnippet(Snippet snippet) throws BusinessException {
+		snippetBusiness.saveSnippet(snippet);
 	}
 
 	/*
@@ -231,8 +231,8 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * .ejb.filters.SnippetCodeFilter)
 	 */
 	@Override
-	public List<SnippetCode> searchSnippetCodeByFilter(SnippetCodeFilter filter) {
-		return snippetCodeBusiness.searchSnippetCodeByFilter(filter);
+	public List<Snippet> searchSnippetByFilter(SnippetFilter filter) {
+		return snippetBusiness.searchSnippetByFilter(filter);
 	}
 
 }

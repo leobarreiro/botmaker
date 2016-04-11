@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Search Snippets</h2>
-		<p:fieldset legend="Filtro" styleClass="frm-crud">
+		<p:fieldset legend="Filter" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
-				<h:outputText value="Nome" />
-				<h:inputText value="#{botAction.filter.name}" />
-				<h:outputText value="Tipo" />
-				<h:selectOneMenu value="#{botAction.filter.botType}">
-					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="Todos" />
-					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
+				<h:outputText value="Name" />
+				<h:inputText value="#{snippetAction.filter.name}" />
+				<h:outputText value="Type" />
+				<h:selectOneMenu value="#{snippetAction.filter.scriptType}">
+					<f:selectItem value="#{null}" itemValue="#{null}"
+						itemLabel="All of them" />
+					<f:selectItems value="#{snippetAction.filter.scriptTypeOptions}"
+						var="snpOpt" itemLabel="#{snpOpt.descriptor}"
+						itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
-				<p:commandButton action="#{botAction.search()}" value="Pesquisar" update="dtBots" styleClass="primary" />
+				<p:commandButton action="#{snippetAction.list()}" value="Search"
+					update="snippetsId" styleClass="primary" />
 			</h:panelGrid>
 		</p:fieldset>
 		<h:panelGroup layout="block" styleClass="frm-crud">
-			<p:dataTable id="dtBots" widgetVar="dtBots" value="#{botAction.bots}" var="bt" rows="10" paginatorAlwaysVisible="false" paginatorPosition="bottom" styleClass="pc100">
-				<p:column headerText="Id" sortBy="#{bt.id}" styleClass="pc5 txctr">
-					<h:outputText value="#{bt.id}" />
+			<p:dataTable id="snippetsId" widgetVar="dtSnippets"
+				value="#{snippetAction.snippets}" var="snp" rows="10"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom"
+				styleClass="pc100">
+				<p:column headerText="Id" sortBy="#{snp.id}" styleClass="pc5 txctr">
+					<h:outputText value="#{snp.id}" />
 				</p:column>
-				<p:column headerText="Nome" sortBy="#{bt.name}" styleClass="txlft">
-					<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" />
+				<p:column headerText="Name" sortBy="#{snp.name}"
+					styleClass="txlft pc20">
+					<h:commandLink action="#{snippetAction.detail(snp)}"
+						value="#{snp.name}" />
 				</p:column>
-				<p:column headerText="Tipo" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
-					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />
+				<p:column headerText="Description" sortBy="#{snp.description}"
+					styleClass="txlft">
+					<h:outputText value="#{snp.description}" />
 				</p:column>
-				<p:column headerText="Ativo" sortBy="#{bt.active}" styleClass="pc10 txctr">
-					<h:outputText value="#{(bt.active) ? 'Sim' : 'Não'}" />
+				<p:column headerText="Script Type"
+					sortBy="#{snp.scriptType.descriptor}" styleClass="pc10 txctr">
+					<h:outputText value="#{snp.scriptType.descriptor}" />
+				</p:column>
+				<p:column headerText="Regular Expression / Script Code"
+					sortBy="#{snp.regularExpression}" styleClass="pc30">
+					<h:outputText value="#{snp.codeResume()}" />
 				</p:column>
 			</p:dataTable>
 		</h:panelGroup>

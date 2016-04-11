@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Snippet Details</h2>
 
 		<p:fieldset styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Snippet" />
-			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText value="#{snippetAction.snippet.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Tipo de Bot" />
-				<h:outputText value="#{botAction.bot.botType.name}" />
+				<h:outputLabel value="Description" styleClass="txtop" />
+				<h:outputText value="#{snippetAction.snippet.description}"
+					styleClass="pc80" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Token" />
-				<h:outputText value="#{botAction.bot.token}" />
+				<h:outputLabel value="Script Type" />
+				<h:outputText value="#{snippetAction.snippet.scriptType.descriptor}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Ativo" />
-				<h:outputText value="Sim" rendered="#{botAction.bot.active}" />
-				<h:outputText value="Não" rendered="#{not botAction.bot.active}" />
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.scriptType.regexp}">
+				<h:outputLabel value="Regular Expression" />
+				<h:outputText value="#{snippetAction.snippet.regularExpression}" />
 			</h:panelGroup>
-
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.scriptType.regexp}">
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:outputText value="#{snippetAction.snippet.scriptCode}" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{botAction.list()}" value="Voltar" styleClass="secondary" />
-				<p:commandButton action="#{botAction.edit()}" value="Editar Bot" styleClass="secondary" />
-				<p:commandButton action="#{commandAction.startNew()}" value="Novo Comando" styleClass="secondary" />
+				<p:commandButton action="#{snippetAction.cancel()}" value="Go Back"
+					styleClass="secondary" />
+				<p:commandButton action="#{snippetAction.edit()}" value="Edit"
+					styleClass="primary" />
 			</h:panelGroup>
-		</p:fieldset>
-
-		<h3>Comandos</h3>
-		<p:fieldset styleClass="frm-crud">
-			<p:dataTable value="#{commandAction.commands}" var="cmd">
-				<p:column headerText="Comando" styleClass="pc30">
-					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{cmd.key}" />
-				</p:column>
-				<p:column headerText="Descrição">
-					<h:outputText value="#{cmd.shortDescription}" />
-				</p:column>
-			</p:dataTable>
 		</p:fieldset>
 
 	</ui:define>

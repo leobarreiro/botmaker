@@ -19,12 +19,16 @@
 			<h:panelGroup layout="block" styleClass="head">
 				<h1>BotMaker</h1>
 				<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
-					<p:submenu label="Bots">
-						<p:menuitem value="Cadastrar Bot" action="#{botAction.startNew()}" />
-						<p:menuitem value="Consultar Bots" action="#{botAction.list()}" />
+					<p:submenu label="Snippets" rendered="#{botMakerCredentials.user.admin}">
+						<p:menuitem value="New Snippet" action="#{snippetAction.startNew()}" />
+						<p:menuitem value="Search Snippets" action="#{snippetAction.list()}" />
 					</p:submenu>
-					<p:submenu label="#{credentials.name}">
-						<p:menuitem value="Sair" action="#{userAction.logoff()}" />
+					<p:submenu label="Bots">
+						<p:menuitem value="New Bot" action="#{botAction.startNew()}" />
+						<p:menuitem value="Search Bots" action="#{botAction.list()}" />
+					</p:submenu>
+					<p:submenu label="#{botMakerCredentials.user.name}">
+						<p:menuitem value="Logout" action="#{userAction.logoff()}" />
 					</p:submenu>
 				</p:menubar>
 			</h:panelGroup>

@@ -12,7 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
@@ -20,7 +22,7 @@ import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "snippet")
 @SequenceGenerator(schema = EntityUtils.SCHEMA, name = "snippet_sq", sequenceName = "snippet_seq", initialValue = 1, allocationSize = 1)
-public class SnippetCode implements IEntityBasic {
+public class Snippet implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
 
@@ -99,4 +101,9 @@ public class SnippetCode implements IEntityBasic {
 		this.scriptCode = scriptCode;
 	}
 
+	@Transient
+	public String codeResume() {
+		return (scriptType.equals(ScriptType.REGEXP)) ? regularExpression : StringUtils.abbreviate(scriptCode, 100) ;
+	}
+	
 }

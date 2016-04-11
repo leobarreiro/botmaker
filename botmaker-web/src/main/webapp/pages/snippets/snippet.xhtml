@@ -6,45 +6,32 @@
 		<h2>Snippet</h2>
 
 		<p:fieldset styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Bot / Comando" />
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Name" />
+				<h:inputText value="#{snippetAction.snippet.name}" />
+			</h:panelGroup>		
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Description" styleClass="txtop" />
+				<h:inputTextarea value="#{snippetAction.snippet.description}" styleClass="pc80" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Bot" />
-				<h:outputText value="#{questionAction.command.bot.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Comando" />
-				<h:outputText value="#{questionAction.command.key}" />
-			</h:panelGroup>
-		</p:fieldset>
-
-		<p:fieldset styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Instruction" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.instruction}" styleClass="pc80" rows="3" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Answer Type" />
-				<h:selectOneMenu value="#{questionAction.question.answerType}">
-					<f:selectItems value="#{questionAction.answerTypeOptions}" var="ato" itemLabel="#{ato}" itemValue="#{ato}" />
+				<h:outputLabel value="Script Type" />
+				<h:selectOneMenu value="#{snippetAction.snippet.scriptType}">
+					<f:selectItems value="#{snippetAction.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
+					<f:ajax event="change" render="@all" />
 				</h:selectOneMenu>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Error Format Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" styleClass="pc80" rows="3" />
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.scriptType.regexp}">
+				<h:outputLabel value="Regular Expression" />
+				<h:inputText value="#{snippetAction.snippet.regularExpression}" size="60" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Success Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.successMessage}" styleClass="pc80" rows="3" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Variable Name" />
-				<h:inputText value="#{questionAction.question.varName}" />
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.scriptType.regexp}">
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:inputTextarea value="#{snippetAction.snippet.scriptCode}" styleClass="pc80" rows="8" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
-				<p:commandButton action="#{questionAction.save()}" value="Save Question" styleClass="primary" />
+				<p:commandButton action="#{snippetAction.cancel()}" value="Cancel" styleClass="secondary" />
+				<p:commandButton action="#{snippetAction.save()}" value="Save Snippet" styleClass="primary" />
 			</h:panelGroup>
 
 		</p:fieldset>
