@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2>Search Snippets</h2>
+		<p:fieldset legend="Filtro" styleClass="frm-crud">
+			<h:panelGrid columns="5" styleClass="pc100">
+				<h:outputText value="Nome" />
+				<h:inputText value="#{botAction.filter.name}" />
+				<h:outputText value="Tipo" />
+				<h:selectOneMenu value="#{botAction.filter.botType}">
+					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="Todos" />
+					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
+				</h:selectOneMenu>
+				<p:commandButton action="#{botAction.search()}" value="Pesquisar" update="dtBots" styleClass="primary" />
+			</h:panelGrid>
+		</p:fieldset>
+		<h:panelGroup layout="block" styleClass="frm-crud">
+			<p:dataTable id="dtBots" widgetVar="dtBots" value="#{botAction.bots}" var="bt" rows="10" paginatorAlwaysVisible="false" paginatorPosition="bottom" styleClass="pc100">
+				<p:column headerText="Id" sortBy="#{bt.id}" styleClass="pc5 txctr">
+					<h:outputText value="#{bt.id}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{bt.name}" styleClass="txlft">
+					<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" />
+				</p:column>
+				<p:column headerText="Tipo" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
+					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />
+				</p:column>
+				<p:column headerText="Ativo" sortBy="#{bt.active}" styleClass="pc10 txctr">
+					<h:outputText value="#{(bt.active) ? 'Sim' : 'Não'}" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
