@@ -1,5 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +20,6 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 
@@ -109,15 +109,42 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public boolean validateAnswer(Question question, Answer answer) {
-		Pattern pattern;
-		if (question.getAnswerType().equals(AnswerType.SET) && StringUtils.isNotBlank(question.getOptions())) {
-			pattern = question.getAnswerType().getArrayPattern(question.getOptions());
+		if (question.getExpectedAnswer().getScriptType().isRegexp()) {
+			Pattern pattern = Pattern.compile(question.getExpectedAnswer().getRegularExpression());
+			Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
+			return m.matches();
 		} else {
-			pattern = question.getAnswerType().getSimplePattern();
+			return true;
 		}
-		String content = StringUtils.lowerCase(answer.getAnswer());
-		Matcher m = pattern.matcher(content);
-		return m.matches();
 	}
 
+	@Override
+	public String convertOptionsToArrayOfStrings(Question question) {
+		String[] optArray = StringUtils.split(question.getOptions(), ",");
+		for (int i = 0; i < optArray.length; i++) {
+			optArray[i] = StringUtils.lowerCase(StringUtils.trim(optArray[i]));
+		}
+		List<String> options = Arrays.asList(optArray);
+		int part = 4;
+		StringBuffer str = new StringBuffer("[");
+		// if (options.size() > part) {
+		// appendOptionToBuffer(str, options, subPart);
+		// } else {
+		// appendOptionToBuffer(str, options);
+		// }
+		appendOptionToBuffer(str, options);
+		str.append("]");
+		return str.toString();
+	}
+
+	private void appendOptionToBuffer(StringBuffer str, List<String> optionList) {
+		for (int i = 0; i < optionList.size(); i++) {
+			str.append("['");
+			str.append(optionList.get(i));
+			str.append("']");
+			// if () {
+			//
+			// }
+		}
+	}
 }

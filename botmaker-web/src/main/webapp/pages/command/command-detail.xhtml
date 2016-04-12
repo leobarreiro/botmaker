@@ -44,8 +44,8 @@
 				<p:column headerText="Question">
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
 				</p:column>
-				<p:column headerText="Answer Type" styleClass="pc10">
-					<h:outputText value="#{qst.answerType}" />
+				<p:column headerText="Expected Answer" styleClass="pc10">
+					<h:outputText value="#{qst.expectedAnswer.name}" />
 				</p:column>
 				<p:column headerText="Var Name" styleClass="pc10">
 					<h:outputText value="#{qst.varName}" />

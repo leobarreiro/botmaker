@@ -34,6 +34,7 @@ public class Snippet implements IEntityBasic {
 	private ScriptType scriptType;
 	private String scriptCode;
 
+	@Override
 	@Id
 	@Column(name = "snippet_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "snippet_sq")
@@ -103,7 +104,65 @@ public class Snippet implements IEntityBasic {
 
 	@Transient
 	public String codeResume() {
-		return (scriptType.equals(ScriptType.REGEXP)) ? regularExpression : StringUtils.abbreviate(scriptCode, 100) ;
+		return (scriptType.equals(ScriptType.REGEXP)) ? regularExpression : StringUtils.abbreviate(scriptCode, 100);
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((regularExpression == null) ? 0 : regularExpression.hashCode());
+		result = prime * result + ((scriptCode == null) ? 0 : scriptCode.hashCode());
+		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Snippet other = (Snippet) obj;
+		if (company == null) {
+			if (other.company != null)
+				return false;
+		} else if (!company.equals(other.company))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (regularExpression == null) {
+			if (other.regularExpression != null)
+				return false;
+		} else if (!regularExpression.equals(other.regularExpression))
+			return false;
+		if (scriptCode == null) {
+			if (other.scriptCode != null)
+				return false;
+		} else if (!scriptCode.equals(other.scriptCode))
+			return false;
+		if (scriptType != other.scriptType)
+			return false;
+		return true;
+	}
+
 }

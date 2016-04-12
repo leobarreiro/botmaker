@@ -13,9 +13,11 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Snippet;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
+import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
@@ -41,6 +43,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private Command command;
 	private Question question;
 	private List<AnswerType> answerTypeOptions;
+	private List<Snippet> snippets;
 
 	public String startNew(Command command) {
 		startOrResumeConversation();
@@ -89,6 +92,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	}
 
 	private void loadOptions() {
+		this.snippets = facade.searchSnippetByFilter(new SnippetFilter());
 		this.answerTypeOptions = new ArrayList<AnswerType>(Arrays.asList(AnswerType.values()));
 	}
 
@@ -124,6 +128,14 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	public void setAnswerTypeOptions(List<AnswerType> answerTypeOptions) {
 		this.answerTypeOptions = answerTypeOptions;
+	}
+
+	public List<Snippet> getSnippets() {
+		return snippets;
+	}
+
+	public void setSnippets(List<Snippet> snippets) {
+		this.snippets = snippets;
 	}
 
 }

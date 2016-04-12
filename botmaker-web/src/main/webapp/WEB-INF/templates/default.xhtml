@@ -20,15 +20,15 @@
 				<h1>BotMaker</h1>
 				<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
 					<p:submenu label="Snippets" rendered="#{botMakerCredentials.user.admin}">
-						<p:menuitem value="New Snippet" action="#{snippetAction.startNew()}" />
-						<p:menuitem value="Search Snippets" action="#{snippetAction.list()}" />
+						<p:menuitem value="New Snippet" action="#{snippetAction.startNew()}" immediate="true" />
+						<p:menuitem value="Search Snippets" action="#{snippetAction.list()}" immediate="true"/>
 					</p:submenu>
 					<p:submenu label="Bots">
-						<p:menuitem value="New Bot" action="#{botAction.startNew()}" />
-						<p:menuitem value="Search Bots" action="#{botAction.list()}" />
+						<p:menuitem value="New Bot" action="#{botAction.startNew()}" immediate="true" />
+						<p:menuitem value="Search Bots" action="#{botAction.list()}" immediate="true"/>
 					</p:submenu>
 					<p:submenu label="#{botMakerCredentials.user.name}">
-						<p:menuitem value="Logout" action="#{userAction.logoff()}" />
+						<p:menuitem value="Logout" action="#{userAction.logoff()}" immediate="true" />
 					</p:submenu>
 				</p:menubar>
 			</h:panelGroup>

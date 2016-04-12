@@ -17,9 +17,9 @@ public enum ScriptType {
 	public void setDescriptor(String descriptor) {
 		this.descriptor = descriptor;
 	}
-	
+
 	public boolean isRegexp() {
 		return this.equals(ScriptType.REGEXP);
 	}
-	
+
 }

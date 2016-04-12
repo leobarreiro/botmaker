@@ -13,7 +13,7 @@ import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
 public interface ISnippetBusiness extends Serializable {
 
 	void saveSnippet(Snippet snippetCode) throws BusinessException;
-	
+
 	List<Snippet> searchSnippetByFilter(SnippetFilter filter);
-	
+
 }

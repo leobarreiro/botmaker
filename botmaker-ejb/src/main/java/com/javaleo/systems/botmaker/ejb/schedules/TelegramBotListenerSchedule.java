@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Message;
+import org.javaleo.libs.botgram.model.ReplyKeyboardMarkup;
 import org.javaleo.libs.botgram.model.Update;
 import org.javaleo.libs.botgram.request.SendMessageRequest;
 import org.javaleo.libs.botgram.response.GetUpdatesResponse;
@@ -171,10 +172,37 @@ public class TelegramBotListenerSchedule implements Serializable {
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
 			SendMessageResponse messageResponse = service.sendMessage(request);
-			LOG.info(MessageFormat.format("Msg.. Ok: {0} / Dscr: {1}.", messageResponse.getOk(), messageResponse.getDescription()));
+			LOG.info(MessageFormat.format("Msg [Ok:{0}|Dscr:{1}]", messageResponse.getOk(), messageResponse.getDescription()));
+		} catch (BotGramException e) {
+			LOG.error(e.getMessage());
+		}
+	}
+
+	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction, String options) {
+		SendMessageRequest request = new SendMessageRequest();
+		request.setChatId(idChat);
+		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
+		String text = new String(textBytes, StandardCharsets.UTF_8);
+		ReplyKeyboardMarkup replyKey = new ReplyKeyboardMarkup();
+		replyKey.setKeyboard(options);
+		replyKey.setOneTimeKeyboard(true);
+		replyKey.setResizeKeyboard(true);
+		request.setReplyKeyboardMarkup(replyKey);
+		request.setParseMode(ParseMode.HTML);
+		request.setText(text);
+		try {
+			BotGramConfig config = new BotGramConfig();
+			config.setToken(bot.getToken());
+			BotGramService service = new BotGramService(config);
+			SendMessageResponse messageResponse = service.sendMessage(request);
+			LOG.info(MessageFormat.format("Msg [Ok:{0}|Dscr:{1}]", messageResponse.getOk(), messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
 
 	}
+
+	// ScriptEngineManager mgr = new ScriptEngineManager();
+	// jsEngine = mgr.getEngineByName("JavaScript");
+
 }

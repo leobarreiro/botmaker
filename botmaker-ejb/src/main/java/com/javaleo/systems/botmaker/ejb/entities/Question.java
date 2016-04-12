@@ -2,8 +2,6 @@ package com.javaleo.systems.botmaker.ejb.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +13,6 @@ import javax.persistence.Table;
 
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
-import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
-
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "question")
 @SequenceGenerator(schema = EntityUtils.SCHEMA, name = "question_sq", sequenceName = "question_seq", initialValue = 1, allocationSize = 1)
@@ -26,7 +22,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	private Long id;
 	private String instruction;
-	private AnswerType answerType;
+	private Snippet expectedAnswer;
 	private String options;
 	private String errorFormatMessage;
 	private String successMessage;
@@ -55,14 +51,14 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.instruction = instruction;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "answer_type", length = 30, nullable = false)
-	public AnswerType getAnswerType() {
-		return answerType;
+	@ManyToOne()
+	@JoinColumn(name = "snippet_id", referencedColumnName = "snippet_id", foreignKey = @ForeignKey(name = "fk_question_snippet"), nullable = true)
+	public Snippet getExpectedAnswer() {
+		return expectedAnswer;
 	}
 
-	public void setAnswerType(AnswerType answerType) {
-		this.answerType = answerType;
+	public void setExpectedAnswer(Snippet expectedAnswer) {
+		this.expectedAnswer = expectedAnswer;
 	}
 
 	@Column(name = "answer_options", length = 255, nullable = true)
@@ -138,11 +134,13 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((answerType == null) ? 0 : answerType.hashCode());
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
+		result = prime * result + ((expectedAnswer == null) ? 0 : expectedAnswer.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((successMessage == null) ? 0 : successMessage.hashCode());
+		result = prime * result + ((varName == null) ? 0 : varName.hashCode());
 		return result;
 	}
 
@@ -155,12 +153,15 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		if (getClass() != obj.getClass())
 			return false;
 		Question other = (Question) obj;
-		if (answerType != other.answerType)
-			return false;
 		if (command == null) {
 			if (other.command != null)
 				return false;
 		} else if (!command.equals(other.command))
+			return false;
+		if (expectedAnswer == null) {
+			if (other.expectedAnswer != null)
+				return false;
+		} else if (!expectedAnswer.equals(other.expectedAnswer))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -176,6 +177,16 @@ public class Question implements IEntityBasic, Comparable<Question> {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
+			return false;
+		if (successMessage == null) {
+			if (other.successMessage != null)
+				return false;
+		} else if (!successMessage.equals(other.successMessage))
+			return false;
+		if (varName == null) {
+			if (other.varName != null)
+				return false;
+		} else if (!varName.equals(other.varName))
 			return false;
 		return true;
 	}

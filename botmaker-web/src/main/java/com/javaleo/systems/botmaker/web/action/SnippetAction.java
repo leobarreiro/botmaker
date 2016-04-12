@@ -26,7 +26,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 
 	@Inject
 	private Conversation conversation;
-	
+
 	@Inject
 	private MsgAction msgAction;
 
@@ -44,6 +44,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 		startNewConversation();
 		loadOptions();
 		snippet = new Snippet();
+		snippet.setScriptType(ScriptType.REGEXP);
 		return "/pages/snippets/snippet.jsf?faces-redirect=true";
 	}
 
@@ -56,19 +57,19 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 		}
 		return list();
 	}
-	
+
 	public String edit() {
 		startOrResumeConversation();
 		loadOptions();
 		return "/pages/snippets/snippet.jsf?faces-redirect=true";
 	}
-	
+
 	public String detail(Snippet snippet) {
 		startOrResumeConversation();
 		this.snippet = snippet;
-		return "/pages/snippets/snippet-detail.jsf?faces-redirect=true"; 
+		return "/pages/snippets/snippet-detail.jsf?faces-redirect=true";
 	}
-	
+
 	public String cancel() {
 		return list();
 	}
@@ -79,7 +80,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 		snippets = facade.searchSnippetByFilter(filter);
 		return "/pages/snippets/snippet-search.jsf?faces-redirect=true";
 	}
-	
+
 	private void loadOptions() {
 		filter = new SnippetFilter();
 		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
