@@ -26,16 +26,16 @@
 				<h:outputText value="#{botAction.bot.closedBotMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Unknowed Command Message" styleClass="pc30" />
+				<h:outputLabel value="Unknown Command Message" styleClass="pc30" />
 				<h:outputText value="#{botAction.bot.unknownCommadMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" styleClass="pc30" />
-				<h:outputText value="#{botAction.bot.active ? 'Yes' : 'No'}" />
+				<h:outputText value="#{botAction.bot.active ? 'Yes' : 'No'}" styleClass="#{botAction.bot.active ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="List Commands when receive Unknowed command" styleClass="pc30" />
-				<h:outputText value="#{botAction.bot.listCommands ? 'Yes' : 'No'}" />
+				<h:outputLabel value="List commands when unknown command is received" styleClass="pc30" />
+				<h:outputText value="#{botAction.bot.listCommands ? 'Yes' : 'No'}" styleClass="#{botAction.bot.listCommands ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
