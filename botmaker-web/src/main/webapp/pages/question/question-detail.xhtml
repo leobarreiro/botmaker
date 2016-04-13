@@ -7,14 +7,14 @@
 
 		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Bot / Comando" />
+				<h:outputLabel value="Bot / Command" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot" />
 				<h:outputText value="#{questionAction.command.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Comando" />
+				<h:outputLabel value="Command" />
 				<h:outputText value="#{questionAction.command.key}" />
 			</h:panelGroup>
 		</p:fieldset>
@@ -42,7 +42,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
-				<p:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="secondary" />
+				<p:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
 			</h:panelGroup>
 
 		</p:fieldset>

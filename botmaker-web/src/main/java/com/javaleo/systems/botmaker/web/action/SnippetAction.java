@@ -12,7 +12,7 @@ import javax.inject.Named;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Snippet;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.SnippetType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
@@ -35,7 +35,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 	private SnippetFilter filter;
 	private Snippet snippet;
 	private List<Snippet> snippets;
-	private List<ScriptType> scriptTypeOptions;
+	private List<SnippetType> snippetTypeOptions;
 
 	@Inject
 	private IBotMakerFacade facade;
@@ -44,7 +44,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 		startNewConversation();
 		loadOptions();
 		snippet = new Snippet();
-		snippet.setScriptType(ScriptType.REGEXP);
+		snippet.setSnippetType(SnippetType.REGEXP);
 		return "/pages/snippets/snippet.jsf?faces-redirect=true";
 	}
 
@@ -83,7 +83,7 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 
 	private void loadOptions() {
 		filter = new SnippetFilter();
-		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
+		this.snippetTypeOptions = Arrays.asList(SnippetType.values());
 	}
 
 	@Override
@@ -116,12 +116,12 @@ public class SnippetAction extends AbstractCrudAction<Snippet> implements Serial
 		this.snippets = snippets;
 	}
 
-	public List<ScriptType> getScriptTypeOptions() {
-		return scriptTypeOptions;
+	public List<SnippetType> getSnippetTypeOptions() {
+		return snippetTypeOptions;
 	}
 
-	public void setScriptTypeOptions(List<ScriptType> scriptTypeOptions) {
-		this.scriptTypeOptions = scriptTypeOptions;
+	public void setSnippetTypeOptions(List<SnippetType> snippetTypeOptions) {
+		this.snippetTypeOptions = snippetTypeOptions;
 	}
 
 	public SnippetFilter getFilter() {

@@ -104,7 +104,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
 				// Command unknown
 				if (command == null) {
-					sendMessageToBotUser(bot, dialog.getIdChat(), bot.getUnknownCommadMessage());
+					sendMessageUnknowCommand(bot, dialog.getIdChat());
 				}
 				// Command recognized
 				else {
@@ -116,7 +116,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
-					sendMessageToBotUser(bot, u.getMessage().getChat().getId(), question.getInstruction());
+					sendMessage(bot, dialog.getIdChat(), question, question.getInstruction());
 					dialog.setPendingServer(false);
 					managerUtils.addDialogToBot(bot, dialog);
 				}
@@ -133,26 +133,24 @@ public class TelegramBotListenerSchedule implements Serializable {
 				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
 					ans.setAccepted(true);
 					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
-						sendMessageToBotUser(bot, dialog.getIdChat(), dialog.getLastQuestion().getSuccessMessage());
+						sendMessageSuccessAnswer(bot, dialog.getIdChat(), dialog.getLastQuestion());
 					}
 					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
 					if (nextQuestion != null) {
 						dialog.setLastQuestion(nextQuestion);
-						sendMessageToBotUser(bot, dialog.getIdChat(), nextQuestion.getInstruction());
+						sendMessage(bot, dialog.getIdChat(), nextQuestion, nextQuestion.getInstruction());
 						dialog.setPendingServer(false);
 						dialog.setLastQuestion(nextQuestion);
 						managerUtils.updateDialogToBot(bot, dialog);
 					} else {
-						if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
-							sendMessageToBotUser(bot, dialog.getIdChat(), bot.getEndOfDialogMessage());
-						}
+						sendMessageEndOfDialog(bot, dialog.getIdChat());
 						dialog.setFinish(true);
 						dialog.setPendingServer(false);
 						managerUtils.removeFinishedDialog(bot, dialog);
 					}
 				} else {
 					ans.setAccepted(false);
-					sendMessageToBotUser(bot, dialog.getIdChat(), dialog.getLastQuestion().getErrorFormatMessage());
+					sendMessageErrorFormat(bot, dialog.getIdChat(), dialog.getLastQuestion());
 					managerUtils.updateDialogToBot(bot, dialog);
 				}
 			}
@@ -160,10 +158,43 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	}
 
-	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction) {
+	private void sendMessage(Bot bot, Integer idChat, Question question, String text) {
+		if (question.getExpectedAnswer().getSnippetType().isSetOfOptions()) {
+			String options = questionBusiness.convertOptionsToArrayOfStrings(question);
+			sendMessageWithOptions(bot, idChat, text, options);
+		} else {
+			sendMessageWithoutOptions(bot, idChat, text);
+		}
+	}
+
+	private void sendMessageUnknowCommand(Bot bot, Integer idChat) {
+		if (StringUtils.isNotBlank(bot.getUnknownCommadMessage())) {
+			sendMessageWithoutOptions(bot, idChat, bot.getUnknownCommadMessage());
+		}
+	}
+
+	private void sendMessageEndOfDialog(Bot bot, Integer idChat) {
+		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
+			sendMessageWithoutOptions(bot, idChat, bot.getEndOfDialogMessage());
+		}
+	}
+
+	private void sendMessageErrorFormat(Bot bot, Integer idChat, Question question) {
+		if (StringUtils.isNotBlank(question.getErrorFormatMessage())) {
+			sendMessageWithoutOptions(bot, idChat, question.getErrorFormatMessage());
+		}
+	}
+
+	private void sendMessageSuccessAnswer(Bot bot, Integer idChat, Question question) {
+		if (StringUtils.isNotBlank(question.getSuccessMessage())) {
+			sendMessageWithoutOptions(bot, idChat, question.getSuccessMessage());
+		}
+	}
+
+	private void sendMessageWithoutOptions(Bot bot, Integer idChat, String plainText) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
-		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
+		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);
 		request.setText(text);
@@ -178,10 +209,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 		}
 	}
 
-	private void sendMessageToBotUser(Bot bot, Integer idChat, String instruction, String options) {
+	private void sendMessageWithOptions(Bot bot, Integer idChat, String plainText, String options) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
-		byte[] textBytes = instruction.getBytes(StandardCharsets.ISO_8859_1);
+		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		ReplyKeyboardMarkup replyKey = new ReplyKeyboardMarkup();
 		replyKey.setKeyboard(options);

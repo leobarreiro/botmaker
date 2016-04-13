@@ -22,13 +22,13 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{snippetAction.snippet.scriptType.descriptor}" />
+				<h:outputText value="#{snippetAction.snippet.snippetType.descriptor}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.scriptType.regexp}">
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.snippetType.script}">
 				<h:outputLabel value="Regular Expression" />
 				<h:outputText value="#{snippetAction.snippet.regularExpression}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.scriptType.regexp}">
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.snippetType.script}">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:outputText value="#{snippetAction.snippet.scriptCode}" />
 			</h:panelGroup>

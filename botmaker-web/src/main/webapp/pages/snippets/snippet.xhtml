@@ -15,17 +15,17 @@
 				<h:inputTextarea value="#{snippetAction.snippet.description}" immediate="true" styleClass="pc80" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu value="#{snippetAction.snippet.scriptType}" immediate="true">
-					<f:selectItems value="#{snippetAction.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
-					<f:ajax event="change" render=":frm:regexpId :frm:scriptCodeId @form" />
+				<h:outputLabel value="Type" />
+				<h:selectOneMenu value="#{snippetAction.snippet.snippetType}" immediate="true">
+					<f:selectItems value="#{snippetAction.snippetTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
+					<f:ajax event="change" render="@form" />
 				</h:selectOneMenu>
 			</h:panelGroup>
-			<h:panelGroup id="regexpId" layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.scriptType.regexp}">
+			<h:panelGroup id="regexpId" layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.snippetType.script}">
 				<h:outputLabel id="regexpLabelId" value="Regular Expression" />
-				<h:inputText value="#{snippetAction.snippet.regularExpression}" size="60" />
+				<h:inputText value="#{snippetAction.snippet.regularExpression}" styleClass="pc80" />
 			</h:panelGroup>
-			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.scriptType.regexp}">
+			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.snippetType.script}">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:inputTextarea value="#{snippetAction.snippet.scriptCode}" styleClass="pc80" rows="8" />
 			</h:panelGroup>

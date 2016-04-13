@@ -34,20 +34,16 @@
 					<h:outputText value="#{snp.id}" />
 				</p:column>
 				<p:column headerText="Name" sortBy="#{snp.name}"
-					styleClass="txlft pc20">
+					styleClass="txlft pc15">
 					<h:commandLink action="#{snippetAction.detail(snp)}"
 						value="#{snp.name}" />
 				</p:column>
-				<p:column headerText="Description" sortBy="#{snp.description}"
-					styleClass="txlft">
-					<h:outputText value="#{snp.description}" />
+				<p:column headerText="Type"
+					sortBy="#{snp.snippetType.descriptor}" styleClass="pc10 txctr">
+					<h:outputText value="#{snp.snippetType.descriptor}" />
 				</p:column>
-				<p:column headerText="Script Type"
-					sortBy="#{snp.scriptType.descriptor}" styleClass="pc10 txctr">
-					<h:outputText value="#{snp.scriptType.descriptor}" />
-				</p:column>
-				<p:column headerText="Regular Expression / Script Code"
-					sortBy="#{snp.regularExpression}" styleClass="pc30">
+				<p:column headerText="RegExp / Options / Script Code"
+					sortBy="#{snp.regularExpression}" styleClass="pc40">
 					<h:outputText value="#{snp.codeResume()}" />
 				</p:column>
 			</p:dataTable>

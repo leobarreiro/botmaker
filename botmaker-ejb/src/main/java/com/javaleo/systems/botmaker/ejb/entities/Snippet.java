@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.SnippetType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "snippet")
@@ -30,8 +30,8 @@ public class Snippet implements IEntityBasic {
 	private Company company;
 	private String name;
 	private String description;
+	private SnippetType snippetType;
 	private String regularExpression;
-	private ScriptType scriptType;
 	private String scriptCode;
 
 	@Override
@@ -65,15 +65,6 @@ public class Snippet implements IEntityBasic {
 		this.name = name;
 	}
 
-	@Column(name = "description", length = 120)
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	@Column(name = "regular_expression", length = 180)
 	public String getRegularExpression() {
 		return regularExpression;
@@ -83,14 +74,23 @@ public class Snippet implements IEntityBasic {
 		this.regularExpression = regularExpression;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "script_type", length = 30, nullable = false)
-	public ScriptType getScriptType() {
-		return scriptType;
+	@Column(name = "description", length = 120)
+	public String getDescription() {
+		return description;
 	}
 
-	public void setScriptType(ScriptType scriptType) {
-		this.scriptType = scriptType;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "snippet_type", length = 30, nullable = false)
+	public SnippetType getSnippetType() {
+		return snippetType;
+	}
+
+	public void setSnippetType(SnippetType snippetType) {
+		this.snippetType = snippetType;
 	}
 
 	@Column(name = "script_code", columnDefinition = "text")
@@ -104,7 +104,7 @@ public class Snippet implements IEntityBasic {
 
 	@Transient
 	public String codeResume() {
-		return (scriptType.equals(ScriptType.REGEXP)) ? regularExpression : StringUtils.abbreviate(scriptCode, 100);
+		return (this.snippetType.isScript()) ? StringUtils.abbreviate(scriptCode, 100) : regularExpression;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class Snippet implements IEntityBasic {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((regularExpression == null) ? 0 : regularExpression.hashCode());
 		result = prime * result + ((scriptCode == null) ? 0 : scriptCode.hashCode());
-		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
+		result = prime * result + ((snippetType == null) ? 0 : snippetType.hashCode());
 		return result;
 	}
 
@@ -160,7 +160,7 @@ public class Snippet implements IEntityBasic {
 				return false;
 		} else if (!scriptCode.equals(other.scriptCode))
 			return false;
-		if (scriptType != other.scriptType)
+		if (snippetType != other.snippetType)
 			return false;
 		return true;
 	}

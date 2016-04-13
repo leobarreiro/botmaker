@@ -1,6 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -27,6 +28,9 @@ import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 public class QuestionBusiness implements IQuestionBusiness {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Logger LOG;
 
 	@Inject
 	private IPersistenceBasic<Question> persistence;
@@ -79,7 +83,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 			persistence.saveOrUpdate(question);
 			return;
 		} else if (actualOrder == 1) {
-			throw new BusinessException("The question was already on top of the list.");
+			throw new BusinessException("The question is already at top of the list.");
 		} else {
 			Question previous = getQuestionByCommandAndOrder(question.getCommand(), (actualOrder - 1));
 			previous.setOrder(actualOrder);
@@ -109,7 +113,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public boolean validateAnswer(Question question, Answer answer) {
-		if (question.getExpectedAnswer().getScriptType().isRegexp()) {
+		if (question.getExpectedAnswer().getSnippetType().isScript()) {
 			Pattern pattern = Pattern.compile(question.getExpectedAnswer().getRegularExpression());
 			Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
 			return m.matches();
@@ -120,31 +124,17 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	public String convertOptionsToArrayOfStrings(Question question) {
-		String[] optArray = StringUtils.split(question.getOptions(), ",");
+		List<String> options = new ArrayList<String>();
+		String[] optArray = StringUtils.split(question.getExpectedAnswer().getRegularExpression(), ",");
 		for (int i = 0; i < optArray.length; i++) {
-			optArray[i] = StringUtils.lowerCase(StringUtils.trim(optArray[i]));
+			options.add(StringUtils.lowerCase("\"".concat(StringUtils.trim(optArray[i])).concat("\"")));
 		}
-		List<String> options = Arrays.asList(optArray);
-		int part = 4;
 		StringBuffer str = new StringBuffer("[");
-		// if (options.size() > part) {
-		// appendOptionToBuffer(str, options, subPart);
-		// } else {
-		// appendOptionToBuffer(str, options);
-		// }
-		appendOptionToBuffer(str, options);
+		str.append("[");
+		str.append(StringUtils.join(options, ","));
 		str.append("]");
+		str.append("]");
+		LOG.info(str.toString());
 		return str.toString();
-	}
-
-	private void appendOptionToBuffer(StringBuffer str, List<String> optionList) {
-		for (int i = 0; i < optionList.size(); i++) {
-			str.append("['");
-			str.append(optionList.get(i));
-			str.append("']");
-			// if () {
-			//
-			// }
-		}
 	}
 }
