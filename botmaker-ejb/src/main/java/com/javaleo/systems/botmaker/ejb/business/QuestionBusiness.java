@@ -1,6 +1,5 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,6 +22,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
+import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -123,18 +123,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
-	public String convertOptionsToArrayOfStrings(Question question) {
-		List<String> options = new ArrayList<String>();
-		String[] optArray = StringUtils.split(question.getExpectedAnswer().getRegularExpression(), ",");
-		for (int i = 0; i < optArray.length; i++) {
-			options.add(StringUtils.lowerCase("\"".concat(StringUtils.trim(optArray[i])).concat("\"")));
-		}
-		StringBuffer str = new StringBuffer("[");
-		str.append("[");
-		str.append(StringUtils.join(options, ","));
-		str.append("]");
-		str.append("]");
-		LOG.info(str.toString());
-		return str.toString();
+	public List<List<String>> convertOptions(Question question) {
+		return BotMakerUtils.convertStringToArrayOfArrays(question.getExpectedAnswer().getRegularExpression(), 2, ',');
 	}
 }

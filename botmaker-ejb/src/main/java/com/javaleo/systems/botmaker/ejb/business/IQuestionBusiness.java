@@ -25,6 +25,6 @@ public interface IQuestionBusiness extends Serializable {
 
 	boolean validateAnswer(Question question, Answer answer);
 
-	String convertOptionsToArrayOfStrings(Question question);
+	List<List<String>> convertOptions(Question question);
 
 }

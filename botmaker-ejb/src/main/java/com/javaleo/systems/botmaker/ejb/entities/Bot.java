@@ -36,6 +36,7 @@ public class Bot implements IEntityBasic {
 	private Boolean active;
 	private String closedBotMessage;
 	private String unknownCommadMessage;
+	private Boolean listCommands;
 	private String endOfDialogMessage;
 	private Company company;
 	private List<Command> commands;
@@ -108,6 +109,15 @@ public class Bot implements IEntityBasic {
 
 	public void setUnknownCommadMessage(String unknownCommadMessage) {
 		this.unknownCommadMessage = unknownCommadMessage;
+	}
+
+	@Column(name="list_commands")
+	public Boolean getListCommands() {
+		return listCommands;
+	}
+
+	public void setListCommands(Boolean listCommands) {
+		this.listCommands = listCommands;
 	}
 
 	public String getEndOfDialogMessage() {

@@ -203,6 +203,10 @@ button.primary:hover {
 	vertical-align: top;
 }
 
+.txmiddle {
+	vertical-align: middle;
+}
+
 .fltrgt {
 	float: right;
 }

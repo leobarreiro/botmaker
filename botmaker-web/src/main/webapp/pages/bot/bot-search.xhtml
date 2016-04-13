@@ -3,14 +3,14 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Pesquisar Bots</h2>
+		<h2>Search Bots</h2>
 		<p:fieldset legend="Filtro" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
-				<h:outputText value="Nome" />
+				<h:outputText value="Name" />
 				<h:inputText value="#{botAction.filter.name}" />
-				<h:outputText value="Tipo" />
+				<h:outputText value="Type" />
 				<h:selectOneMenu value="#{botAction.filter.botType}">
-					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="Todos" />
+					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
 				</h:selectOneMenu>
 				<p:commandButton action="#{botAction.search()}" value="Pesquisar" update="dtBots" styleClass="primary" />
@@ -21,14 +21,17 @@
 				<p:column headerText="Id" sortBy="#{bt.id}" styleClass="pc5 txctr">
 					<h:outputText value="#{bt.id}" />
 				</p:column>
-				<p:column headerText="Nome" sortBy="#{bt.name}" styleClass="txlft">
+				<p:column headerText="Name" sortBy="#{bt.name}" styleClass="txlft">
 					<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" />
 				</p:column>
-				<p:column headerText="Tipo" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
+				<p:column headerText="Type" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
 					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />
 				</p:column>
-				<p:column headerText="Ativo" sortBy="#{bt.active}" styleClass="pc10 txctr">
-					<h:outputText value="#{(bt.active) ? 'Sim' : 'Não'}" />
+				<p:column headerText="List Commands" sortBy="#{bt.listCommands}" styleClass="pc10 txctr">
+					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" />
+				</p:column>
+				<p:column headerText="Active" sortBy="#{bt.active}" styleClass="pc10 txctr">
+					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" />
 				</p:column>
 			</p:dataTable>
 		</h:panelGroup>

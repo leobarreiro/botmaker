@@ -43,6 +43,7 @@
 		<version.hibernate.validator>5.2.3.Final</version.hibernate.validator>
 		<version.slf4j.api>1.7.12</version.slf4j.api>
 		<version.junit>4.10</version.junit>
+		<version.botgram>0.0.3</version.botgram>
 	</properties>
 	<scm>
 		<connection>scm:git:https://bitbucket.org/javaleo/botmaker.git</connection>
@@ -71,7 +72,7 @@
 			<dependency>
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>botgram</artifactId>
-				<version>0.0.2</version>
+				<version>${version.botgram}</version>
 			</dependency>
 			<dependency>
 				<groupId>javax</groupId>

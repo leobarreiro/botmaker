@@ -1,5 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -16,6 +17,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 
 @Stateless
 public class CommandBusiness implements ICommandBusiness {
@@ -56,4 +58,14 @@ public class CommandBusiness implements ICommandBusiness {
 		return persistence.getSingleResult(cq);
 	}
 
+	@Override
+	public List<List<String>> convertCommandsToOptions(Bot bot) {
+		List<Command> commands = listCommandsByBot(bot);
+		List<String> keyCommands = new ArrayList<String>();
+		for (Command c : commands) {
+			keyCommands.add(c.getKey());
+		}
+		return BotMakerUtils.convertArrayOfArrays(keyCommands, 2);
+	}
+	
 }
