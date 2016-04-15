@@ -213,6 +213,14 @@ button.primary:hover {
 	width: 100% !important;
 }
 
+.green {
+	color: green;
+}
+
+.red {
+	color: red;
+}
+
 .txctr {
 	text-align: center;
 }
@@ -227,6 +235,10 @@ button.primary:hover {
 
 .txtop {
 	vertical-align: top;
+}
+
+.txmiddle {
+	vertical-align: middle;
 }
 
 .fltrgt {

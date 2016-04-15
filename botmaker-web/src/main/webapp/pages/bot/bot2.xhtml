@@ -4,10 +4,10 @@
 	<ui:define name="content">
 		<h:panelGroup layout="block" styleClass="frm-crud pc70">
 			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Confirme as informações" />
+				<h:outputLabel value="Review information" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Tipo de Bot" />
+				<h:outputLabel value="Bot Type" />
 				<h:outputText value="#{botAction.bot.botType.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
@@ -15,28 +15,32 @@
 				<h:outputText value="#{botAction.bot.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Nome" />
+				<h:outputLabel value="Name" />
 				<h:outputText value="#{botAction.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Ativo" />
+				<h:outputLabel value="Active" />
 				<h:selectBooleanCheckbox value="#{botAction.bot.active}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Mensagem de Bot em manutenção" styleClass="vtop" />
+				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
 				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" styleClass="pc80" rows="4" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Mensagem de Comando não reconhecido" styleClass="vtop" />
+				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
 				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" styleClass="pc80" rows="4" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Mensagem de Fim de Diálogo" styleClass="vtop" />
+				<h:outputLabel value="List commands when unknown command is received" />
+				<h:selectBooleanCheckbox value="#{botAction.bot.listCommands}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
 				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" styleClass="pc80" rows="4" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{botAction.save()}" value="Salvar" styleClass="primary" />
-				<p:commandButton action="#{botAction.list()}" value="Voltar" styleClass="secondary" />
+				<p:commandButton action="#{botAction.save()}" value="Save" styleClass="primary" />
+				<p:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

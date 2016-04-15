@@ -3,14 +3,14 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 	
-		<h2 class="pc50">Cadastro de Bot</h2>
+		<h2 class="pc50">Bot registry</h2>
 	
 		<h:panelGroup layout="block" styleClass="frm-crud pc50">
 			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Selecione o tipo de Bot" />
+				<h:outputLabel value="Select a bot type" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Tipo de Bot" />
+				<h:outputLabel value="Bot Type" />
 				<h:selectOneMenu value="#{botAction.botType}" >
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
 				</h:selectOneMenu>
@@ -20,7 +20,7 @@
 				<h:inputSecret value="#{botAction.token}" size="50" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{botAction.validateToken()}" value="Validar" styleClass="primary" />
+				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

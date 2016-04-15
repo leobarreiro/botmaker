@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Message;
+import org.javaleo.libs.botgram.model.ReplyKeyboardHide;
 import org.javaleo.libs.botgram.model.ReplyKeyboardMarkup;
 import org.javaleo.libs.botgram.model.Update;
 import org.javaleo.libs.botgram.request.SendMessageRequest;
@@ -160,7 +161,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	private void sendMessage(Bot bot, Integer idChat, Question question, String text) {
 		if (question.getExpectedAnswer().getSnippetType().isSetOfOptions()) {
-			String options = questionBusiness.convertOptionsToArrayOfStrings(question);
+			List<List<String>> options = questionBusiness.convertOptions(question);
 			sendMessageWithOptions(bot, idChat, text, options);
 		} else {
 			sendMessageWithoutOptions(bot, idChat, text);
@@ -169,7 +170,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	private void sendMessageUnknowCommand(Bot bot, Integer idChat) {
 		if (StringUtils.isNotBlank(bot.getUnknownCommadMessage())) {
-			sendMessageWithoutOptions(bot, idChat, bot.getUnknownCommadMessage());
+			if (bot.getListCommands()) {
+				List<List<String>> options = commandBusiness.convertCommandsToOptions(bot);
+				sendMessageWithOptions(bot, idChat, bot.getUnknownCommadMessage(), options);
+			} else {
+				sendMessageWithoutOptions(bot, idChat, bot.getUnknownCommadMessage());
+			}
 		}
 	}
 
@@ -197,19 +203,23 @@ public class TelegramBotListenerSchedule implements Serializable {
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);
+		ReplyKeyboardHide keyboardHide = new ReplyKeyboardHide();
+		keyboardHide.setHideKeyboard(true);
+		keyboardHide.setSelective(false);
+		request.setKeyboard(keyboardHide);
 		request.setText(text);
 		try {
 			BotGramConfig config = new BotGramConfig();
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
 			SendMessageResponse messageResponse = service.sendMessage(request);
-			LOG.info(MessageFormat.format("Msg [Ok:{0}|Dscr:{1}]", messageResponse.getOk(), messageResponse.getDescription()));
+			LOG.info(MessageFormat.format("Msg [Ok:{0}|Dsc:{1}]", messageResponse.getOk(), messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
 	}
 
-	private void sendMessageWithOptions(Bot bot, Integer idChat, String plainText, String options) {
+	private void sendMessageWithOptions(Bot bot, Integer idChat, String plainText, List<List<String>> options) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(idChat);
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
@@ -218,7 +228,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 		replyKey.setKeyboard(options);
 		replyKey.setOneTimeKeyboard(true);
 		replyKey.setResizeKeyboard(true);
-		request.setReplyKeyboardMarkup(replyKey);
+		replyKey.setSelective(false);
+		request.setKeyboard(replyKey);
 		request.setParseMode(ParseMode.HTML);
 		request.setText(text);
 		try {
@@ -230,7 +241,6 @@ public class TelegramBotListenerSchedule implements Serializable {
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
-
 	}
 
 	// ScriptEngineManager mgr = new ScriptEngineManager();
