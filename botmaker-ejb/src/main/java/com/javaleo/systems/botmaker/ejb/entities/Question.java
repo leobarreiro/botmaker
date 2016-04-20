@@ -2,6 +2,8 @@ package com.javaleo.systems.botmaker.ejb.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +14,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.javaleo.libs.jee.core.model.IEntityBasic;
+
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "question")
@@ -27,6 +31,9 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	private String errorFormatMessage;
 	private String successMessage;
 	private String varName;
+	private Boolean processAnswer;
+	private ScriptType scriptType;
+	private String postProcessScript;
 	private Integer order;
 	private Command command;
 
@@ -97,6 +104,34 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.varName = varName;
 	}
 
+	@Column(name = "process_answer")
+	public Boolean getProcessAnswer() {
+		return processAnswer;
+	}
+
+	public void setProcessAnswer(Boolean processAnswer) {
+		this.processAnswer = processAnswer;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "script_type", length = 30)
+	public ScriptType getScriptType() {
+		return scriptType;
+	}
+
+	public void setScriptType(ScriptType scriptType) {
+		this.scriptType = scriptType;
+	}
+
+	@Column(name = "post_process_script", columnDefinition = "text", nullable = true)
+	public String getPostProcessScript() {
+		return postProcessScript;
+	}
+
+	public void setPostProcessScript(String postProcessScript) {
+		this.postProcessScript = postProcessScript;
+	}
+
 	@Column(name = "order_number", nullable = false)
 	public Integer getOrder() {
 		return order;
@@ -135,11 +170,16 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
-		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
+		result = prime * result + ((errorFormatMessage == null) ? 0 : errorFormatMessage.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
+		result = prime * result + ((options == null) ? 0 : options.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((postProcessScript == null) ? 0 : postProcessScript.hashCode());
+		result = prime * result + ((processAnswer == null) ? 0 : processAnswer.hashCode());
+		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
 		result = prime * result + ((successMessage == null) ? 0 : successMessage.hashCode());
+		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		result = prime * result + ((varName == null) ? 0 : varName.hashCode());
 		return result;
 	}
@@ -158,10 +198,10 @@ public class Question implements IEntityBasic, Comparable<Question> {
 				return false;
 		} else if (!command.equals(other.command))
 			return false;
-		if (validator == null) {
-			if (other.validator != null)
+		if (errorFormatMessage == null) {
+			if (other.errorFormatMessage != null)
 				return false;
-		} else if (!validator.equals(other.validator))
+		} else if (!errorFormatMessage.equals(other.errorFormatMessage))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -173,15 +213,37 @@ public class Question implements IEntityBasic, Comparable<Question> {
 				return false;
 		} else if (!instruction.equals(other.instruction))
 			return false;
+		if (options == null) {
+			if (other.options != null)
+				return false;
+		} else if (!options.equals(other.options))
+			return false;
 		if (order == null) {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
 			return false;
+		if (postProcessScript == null) {
+			if (other.postProcessScript != null)
+				return false;
+		} else if (!postProcessScript.equals(other.postProcessScript))
+			return false;
+		if (processAnswer == null) {
+			if (other.processAnswer != null)
+				return false;
+		} else if (!processAnswer.equals(other.processAnswer))
+			return false;
+		if (scriptType != other.scriptType)
+			return false;
 		if (successMessage == null) {
 			if (other.successMessage != null)
 				return false;
 		} else if (!successMessage.equals(other.successMessage))
+			return false;
+		if (validator == null) {
+			if (other.validator != null)
+				return false;
+		} else if (!validator.equals(other.validator))
 			return false;
 		if (varName == null) {
 			if (other.varName != null)

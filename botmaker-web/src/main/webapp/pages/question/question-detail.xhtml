@@ -3,7 +3,7 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Questão</h2>
+		<h2>Question</h2>
 
 		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
@@ -39,6 +39,18 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
 				<h:outputText value="#{questionAction.question.varName}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Process Answer" />
+				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="#{questionAction.question.processAnswer ? 'green' : 'red'}" />				
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Type" />
+				<h:outputText value="#{questionAction.question.scriptType.descriptor}" styleClass="purple" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Code" styleClass="txtop" />
+				<h:outputText value="#{questionAction.question.postProcessScript}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<p:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Local;
@@ -26,14 +27,28 @@ public class ManagerUtils implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private ConcurrentMap<Long, Set<Update>> botUpdatesMap;
-	private ConcurrentMap<Long, Integer> lastUpdateIdMap;
+	private ConcurrentMap<Long, AtomicInteger> lastUpdateIdMap;
+	private ConcurrentMap<Long, Boolean> processingBotMap;
 	private ConcurrentMap<Long, Set<Dialog>> dialogsPerBotMap;
 
 	@PostConstruct
 	public void startInit() {
 		this.botUpdatesMap = new ConcurrentHashMap<Long, Set<Update>>();
-		this.lastUpdateIdMap = new ConcurrentHashMap<Long, Integer>();
+		this.lastUpdateIdMap = new ConcurrentHashMap<Long, AtomicInteger>();
+		this.processingBotMap = new ConcurrentHashMap<Long, Boolean>();
 		this.dialogsPerBotMap = new ConcurrentHashMap<Long, Set<Dialog>>();
+	}
+
+	public void startProcessBot(Bot bot) {
+		processingBotMap.put(bot.getId(), true);
+	}
+
+	public void finishProcessingBot(Bot bot) {
+		processingBotMap.put(bot.getId(), false);
+	}
+
+	public boolean isProcessingBot(Bot bot) {
+		return (processingBotMap.containsKey(bot.getId())) ? processingBotMap.get(bot.getId()) : false;
 	}
 
 	public void addUpdatesToBot(Bot bot, List<Update> updates) {
@@ -45,7 +60,7 @@ public class ManagerUtils implements Serializable {
 		} else {
 			botUpdatesMap.put(bot.getId(), new HashSet<Update>(updates));
 		}
-		lastUpdateIdMap.put(bot.getId(), getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId())));
+		lastUpdateIdMap.put(bot.getId(), new AtomicInteger((int) getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId()))));
 	}
 
 	private Integer getMaxIdFromUpdatesList(Set<Update> updates) {
@@ -69,7 +84,7 @@ public class ManagerUtils implements Serializable {
 	}
 
 	public int getLastUpdateIdFromBot(Bot bot) {
-		return (lastUpdateIdMap.containsKey(bot.getId())) ? lastUpdateIdMap.get(bot.getId()) : 0;
+		return (lastUpdateIdMap.containsKey(bot.getId())) ? lastUpdateIdMap.get(bot.getId()).get() : 0;
 	}
 
 	public int getNextUpdateOfsetFromBot(Bot bot) {
@@ -111,7 +126,7 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public void removeFinishedDialog(Bot bot, Dialog dialog) {
+	public synchronized void removeFinishedDialog(Bot bot, Dialog dialog) {
 		if (dialogsPerBotMap.containsKey(bot.getId())) {
 			dialogsPerBotMap.get(bot.getId()).remove(dialog);
 		}

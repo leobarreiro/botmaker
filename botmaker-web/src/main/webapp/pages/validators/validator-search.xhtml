@@ -27,24 +27,28 @@
 		</p:fieldset>
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<p:dataTable id="snippetsId" widgetVar="dtSnippets"
-				value="#{validatorAction.validators}" var="snp" rows="10"
+				value="#{validatorAction.validators}" var="vdt" rows="20"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom"
 				styleClass="pc100">
-				<p:column headerText="Id" sortBy="#{snp.id}" styleClass="pc5 txctr">
-					<h:outputText value="#{snp.id}" />
+				<p:column headerText="Id" sortBy="#{vdt.id}" styleClass="pc5 txctr">
+					<h:outputText value="#{vdt.id}" />
 				</p:column>
-				<p:column headerText="Name" sortBy="#{snp.name}"
-					styleClass="txlft pc15">
-					<h:commandLink action="#{validatorAction.detail(snp)}"
-						value="#{snp.name}" />
+				<p:column headerText="Name" sortBy="#{vdt.name}"
+					styleClass="txlft pc10">
+					<h:commandLink action="#{validatorAction.detail(vdt)}"
+						value="#{vdt.name}" />
 				</p:column>
-				<p:column headerText="Type"
-					sortBy="#{snp.scriptType.descriptor}" styleClass="pc10 txctr">
-					<h:outputText value="#{snp.scriptType.descriptor}" />
+				<p:column headerText="Description" sortBy="#{vdt.name}"
+					styleClass="txlft pc25">
+					<h:outputText value="#{vdt.shortDescription}" />
+				</p:column>
+				<p:column headerText="Type" sortBy="#{vdt.scriptType.descriptor}"
+					styleClass="pc10 txctr">
+					<h:outputText value="#{vdt.scriptType.descriptor}" />
 				</p:column>
 				<p:column headerText="RegExp / Options / Script Code"
-					sortBy="#{snp.scriptCode}" styleClass="pc40">
-					<h:outputText value="#{snp.codeResume()}" />
+					sortBy="#{vdt.scriptCode}" styleClass="pc40">
+					<h:outputText value="#{vdt.codeResume()}" />
 				</p:column>
 			</p:dataTable>
 		</h:panelGroup>

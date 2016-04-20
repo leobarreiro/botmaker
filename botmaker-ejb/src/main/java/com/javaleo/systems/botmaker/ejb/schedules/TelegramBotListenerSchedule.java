@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
@@ -19,6 +20,7 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
+import org.javaleo.libs.botgram.model.Chat;
 import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.ReplyKeyboardHide;
 import org.javaleo.libs.botgram.model.ReplyKeyboardMarkup;
@@ -61,30 +63,36 @@ public class TelegramBotListenerSchedule implements Serializable {
 	@Inject
 	private ManagerUtils managerUtils;
 
-	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/2", persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/1", persistent = false)
 	public void listenBotUpdates() {
 		List<Bot> bots = botBusiness.listActiveBots();
-		// LOG.info(MessageFormat.format("Verificando updates de {0} bot(s) ativo(s).",
-		// bots.size()));
 		for (Bot bot : bots) {
-			BotGramConfig config = new BotGramConfig();
-			config.setToken(bot.getToken());
-			BotGramService service = new BotGramService(config);
-			try {
-				GetUpdatesResponse updatesResponse = service.getUpdates(managerUtils.getNextUpdateOfsetFromBot(bot), 20);
-				List<Update> updates = updatesResponse.getUpdates();
-				// LOG.info(MessageFormat.format("Bot {0} possui {1} update(s).", bot.getName(),
-				// updates.size()));
-				managerUtils.addUpdatesToBot(bot, updates);
-				processDialogsToBot(bot, updates);
-			} catch (BotGramException e) {
-				LOG.error(e.getMessage());
-			}
+			processDialogsToBot(bot);
 		}
 	}
 
-	public void processDialogsToBot(Bot bot, List<Update> updates) {
+	public void processDialogsToBot(Bot bot) {
+		if (managerUtils.isProcessingBot(bot)) {
+			return;
+		}
+		managerUtils.startProcessBot(bot);
+		BotGramConfig config = new BotGramConfig();
+		config.setToken(bot.getToken());
+		BotGramService service = new BotGramService(config);
+		List<Update> updates = new ArrayList<Update>();
+		try {
+			GetUpdatesResponse updatesResponse = service.getUpdates(managerUtils.getNextUpdateOfsetFromBot(bot), 20);
+			updates = updatesResponse.getUpdates();
+			// LOG.info(MessageFormat.format("Bot {0} possui {1} update(s).", bot.getName(),
+			// updates.size()));
+			managerUtils.addUpdatesToBot(bot, updates);
+
+		} catch (BotGramException e) {
+			LOG.error(e.getMessage());
+		}
+
 		if (updates == null || updates.isEmpty()) {
+			managerUtils.finishProcessingBot(bot);
 			return;
 		}
 		Set<Dialog> dialogs = managerUtils.getDialogsFromBot(bot);
@@ -95,20 +103,16 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 		for (Update u : updates) {
 			Dialog dialog = dialogMap.get(u.getMessage().getChat().getId());
-			// New Dialog
-			if (dialog == null) {
-				// LOG.info(MessageFormat.format("Novo dialogo estabelecido: {0} / {1}.",
-				// u.getMessage().getChat().getUsername(), u.getMessage().getText()));
+			if (dialog == null) { // New Dialog
 				dialog = new Dialog();
 				dialog.setIdChat(u.getMessage().getChat().getId());
 				dialog.setAnswers(new ArrayList<Answer>());
+				dialog.setPendingServer(true);
 				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
-				// Command unknown
-				if (command == null) {
-					sendMessageUnknowCommand(bot, dialog.getIdChat());
-				}
-				// Command recognized
-				else {
+				if (command == null) { // Command unknown
+					sendMessageUnknowCommand(bot, dialog);
+					dialog.setPendingServer(false);
+				} else { // Command recognized
 					dialog.setCommand(command);
 					dialog.setAnswers(new ArrayList<Answer>());
 					dialog.setFinish(false);
@@ -117,89 +121,100 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
-					sendMessageInstruction(bot, dialog.getIdChat(), question);
-					dialog.setPendingServer(false);
 					managerUtils.addDialogToBot(bot, dialog);
+					sendMessageInstruction(bot, dialog, question);
+					dialog.setPendingServer(false);
 				}
-			}
-			// Old Dialog
-			else {
+			} else { // Old Dialog
 				List<Answer> answers = dialog.getAnswers();
-				String requestedMessage;
 				Answer ans = new Answer();
 				ans.setQuestion(dialog.getLastQuestion());
 				ans.setAnswer(u.getMessage().getText());
 				answers.add(ans);
 				dialog.setAnswers(answers);
+				dialog.setPendingServer(true);
 				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
+					ans.setVarName(dialog.getLastQuestion().getVarName());
+					if (dialog.getLastQuestion().getProcessAnswer()) {
+						questionBusiness.postProduceAnswer(dialog.getLastQuestion(), ans);
+					}
 					ans.setAccepted(true);
 					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
-						sendMessageSuccessAnswer(bot, dialog.getIdChat(), dialog.getLastQuestion());
+						sendMessageSuccessAnswer(bot, dialog, dialog.getLastQuestion());
 					}
 					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
 					if (nextQuestion != null) {
 						dialog.setLastQuestion(nextQuestion);
-						sendMessageInstruction(bot, dialog.getIdChat(), nextQuestion);
+						sendMessageInstruction(bot, dialog, nextQuestion);
 						dialog.setPendingServer(false);
 						dialog.setLastQuestion(nextQuestion);
 						managerUtils.updateDialogToBot(bot, dialog);
 					} else {
-						sendMessageEndOfDialog(bot, dialog.getIdChat());
+						sendMessageEndOfDialog(bot, dialog);
 						dialog.setFinish(true);
 						dialog.setPendingServer(false);
 						managerUtils.removeFinishedDialog(bot, dialog);
 					}
 				} else {
 					ans.setAccepted(false);
-					sendMessageErrorFormat(bot, dialog.getIdChat(), dialog.getLastQuestion());
+					sendMessageErrorFormat(bot, dialog, dialog.getLastQuestion());
+					dialog.setPendingServer(false);
 					managerUtils.updateDialogToBot(bot, dialog);
 				}
 			}
 		}
-
+		managerUtils.finishProcessingBot(bot);
 	}
 
-	private void sendMessageInstruction(Bot bot, Integer idChat, Question question) {
-		if (question.getValidator().getScriptType().isSetOfOptions()) {
-			List<List<String>> options = questionBusiness.convertOptions(question);
-			sendMessageWithOptions(bot, idChat, question.getInstruction(), options);
-		} else {
-			sendMessageWithoutOptions(bot, idChat, question.getInstruction());
-		}
-	}
-
-	private void sendMessageUnknowCommand(Bot bot, Integer idChat) {
-		if (StringUtils.isNotBlank(bot.getUnknownCommadMessage())) {
-			if (bot.getListCommands()) {
-				List<List<String>> options = commandBusiness.convertCommandsToOptions(bot);
-				sendMessageWithOptions(bot, idChat, bot.getUnknownCommadMessage(), options);
+	@Asynchronous
+	private void sendMessageInstruction(Bot bot, Dialog dialog, Question question) {
+		if (dialog.isPendingServer()) {
+			if (question.getValidator().getScriptType().isSetOfOptions()) {
+				List<List<String>> options = questionBusiness.convertOptions(question);
+				sendMessageWithOptions(bot, dialog, question.getInstruction(), options);
 			} else {
-				sendMessageWithoutOptions(bot, idChat, bot.getUnknownCommadMessage());
+				sendMessageWithoutOptions(bot, dialog, question.getInstruction());
 			}
 		}
 	}
 
-	private void sendMessageEndOfDialog(Bot bot, Integer idChat) {
-		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
-			sendMessageWithoutOptions(bot, idChat, bot.getEndOfDialogMessage());
+	@Asynchronous
+	private void sendMessageUnknowCommand(Bot bot, Dialog dialog) {
+		if (dialog.isPendingServer() && StringUtils.isNotBlank(bot.getUnknownCommadMessage())) {
+			if (bot.getListCommands()) {
+				List<List<String>> options = commandBusiness.convertCommandsToOptions(bot);
+				sendMessageWithOptions(bot, dialog, bot.getUnknownCommadMessage(), options);
+			} else {
+				sendMessageWithoutOptions(bot, dialog, bot.getUnknownCommadMessage());
+			}
 		}
 	}
 
-	private void sendMessageErrorFormat(Bot bot, Integer idChat, Question question) {
+	@Asynchronous
+	private void sendMessageEndOfDialog(Bot bot, Dialog dialog) {
+		if (!dialog.isFinish() && StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
+			sendMessageWithoutOptions(bot, dialog, bot.getEndOfDialogMessage());
+		}
+	}
+
+	@Asynchronous
+	private void sendMessageErrorFormat(Bot bot, Dialog dialog, Question question) {
 		if (StringUtils.isNotBlank(question.getErrorFormatMessage())) {
-			sendMessageWithoutOptions(bot, idChat, question.getErrorFormatMessage());
+			sendMessageWithoutOptions(bot, dialog, question.getErrorFormatMessage());
 		}
 	}
 
-	private void sendMessageSuccessAnswer(Bot bot, Integer idChat, Question question) {
+	@Asynchronous
+	private void sendMessageSuccessAnswer(Bot bot, Dialog dialog, Question question) {
 		if (StringUtils.isNotBlank(question.getSuccessMessage())) {
-			sendMessageWithoutOptions(bot, idChat, question.getSuccessMessage());
+			sendMessageWithoutOptions(bot, dialog, question.getSuccessMessage());
 		}
 	}
 
-	private void sendMessageWithoutOptions(Bot bot, Integer idChat, String plainText) {
+	@Asynchronous
+	private void sendMessageWithoutOptions(Bot bot, Dialog dialog, String plainText) {
 		SendMessageRequest request = new SendMessageRequest();
-		request.setChatId(idChat);
+		request.setChatId(dialog.getIdChat());
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);
@@ -219,9 +234,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 		}
 	}
 
-	private void sendMessageWithOptions(Bot bot, Integer idChat, String plainText, List<List<String>> options) {
+	@Asynchronous
+	private void sendMessageWithOptions(Bot bot, Dialog dialog, String plainText, List<List<String>> options) {
 		SendMessageRequest request = new SendMessageRequest();
-		request.setChatId(idChat);
+		request.setChatId(dialog.getIdChat());
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		ReplyKeyboardMarkup replyKey = new ReplyKeyboardMarkup();

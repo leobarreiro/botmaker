@@ -126,10 +126,24 @@ public class QuestionBusiness implements IQuestionBusiness {
 			return m.matches();
 		} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
 			Binding binding = new Binding();
+			// TODO: usar o nome da variavel tal como definido na question, ao inves de bmAnswer fixo
 			binding.setVariable("bmAnswer", answer.getAnswer());
 			return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
 		} else {
 			return true;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public void postProduceAnswer(Question question, Answer answer) {
+		if (question.getProcessAnswer()) {
+			if (question.getScriptType().equals(ScriptType.GROOVY)) {
+				Binding binding = new Binding();
+				binding.setVariable(question.getVarName(), answer.getAnswer());
+				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
+				answer.setCodeProduced(postProcessed);
+			}
 		}
 	}
 

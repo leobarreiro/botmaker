@@ -2,15 +2,22 @@
 
 body {
 	font-family: Arial, Helvetica !important;;
-	font-size: 12pt;
+	font-size: 11pt;
 	color: #000000;
 }
 
+body.page {
+	background-image: url("../img/botmaker-bck.png.jsf");
+	background-position: left top;
+	background-repeat: repeat-x;
+}
+
+a {
+	color: blue !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
-	color: #72a435;
-	color: #006699;
-	color: #3d82ab;
-	color: #000000;
+	color: #643c83;
 	display: block;
 }
 
@@ -21,8 +28,7 @@ h1 {
 
 h2 {
 	font-size: 30px;
-	margin: 4px 2px 0px 2px !important;
-	padding: 4px !important;
+	margin: 2px !important;
 }
 
 h3 {
@@ -57,8 +63,8 @@ input {
 }
 
 .frm-crud {
-	border: 1px solid #a1c4d8;
-	border-radius: 8px;
+	border: 1px solid #643c83;
+	border-radius: 4px;
 }
 
 .frm-login {
@@ -92,12 +98,12 @@ input {
 	font-size: 16px;
 	font-weight: bold;
 	color: #ffffff;
-	background-color: #006699 !important;
-	border-radius: 6px 6px 0px 0px !important;
+	background-color: #643c83 !important;
+	border-radius: 4px !important;
 }
 
 .ui-dialog.ui-widget-content {
-	border-radius: 10px !important;
+	border-radius: 6px !important;
 }
 
 .ui-dialog-titlebar .ui-dialog-titlebar-close {
@@ -132,9 +138,16 @@ input {
 
 .frm-line label {
 	display: inline-block;
-	width: 140px;
+	float: left;
+	width: 15%;
 	text-align: right;
 	margin-right: 12px;
+	color: gray !important;
+	font-style: italic !important;
+}
+
+.frm-line div, .frm-line table, .frm-line input, .frm-line textarea {
+	width: 80% !important;
 }
 
 .frm-submit {
@@ -217,6 +230,10 @@ button.primary:hover {
 	color: green;
 }
 
+.purple {
+	color: purple;
+}
+
 .red {
 	color: red;
 }
@@ -256,10 +273,11 @@ button.primary:hover {
 div.head {
 	display: inline-block;
 	width: 100%;
-	height: 125px !important;
-	background-image: url("../img/botmaker-screen.png.jsf");
+	height: 78px !important; background-image :
+	url("../img/botmaker-screen.png.jsf");
 	background-position: left top;
 	background-repeat: no-repeat;
+	background-image: url("../img/botmaker-screen.png.jsf");
 }
 
 div.head h1 {
@@ -279,6 +297,11 @@ div.head div.ui-menubar {
 	border: none !important;
 	background: transparent !important;
 	box-shadow: none !important;
+}
+
+div.head .ui-menu.ui-menubar.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix ul.ui-menu-list.ui-helper-reset li.ui-widget.ui-menuitem.ui-corner-all.ui-menu-parent a.ui-menuitem-link.ui-submenu-link.ui-corner-all span.ui-menuitem-text
+	{
+	color: #FFFFFF !important;
 }
 
 div.head div.ui-menubar ul {

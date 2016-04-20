@@ -97,6 +97,11 @@ public class Validator implements IEntityBasic {
 		return StringUtils.abbreviate(scriptCode, 100);
 	}
 
+	@Transient
+	public String getShortDescription() {
+		return StringUtils.abbreviate(description, 50);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
