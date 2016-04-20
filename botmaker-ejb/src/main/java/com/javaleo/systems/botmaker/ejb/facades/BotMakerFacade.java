@@ -16,11 +16,11 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.entities.Snippet;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
-import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
+import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 
 @Named
 @Stateless
@@ -219,8 +219,8 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * .SnippetCode)
 	 */
 	@Override
-	public void saveSnippet(Snippet snippet) throws BusinessException {
-		snippetBusiness.saveSnippet(snippet);
+	public void saveValidator(Validator validator) throws BusinessException {
+		snippetBusiness.saveValidator(validator);
 	}
 
 	/*
@@ -231,8 +231,8 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * .ejb.filters.SnippetCodeFilter)
 	 */
 	@Override
-	public List<Snippet> searchSnippetByFilter(SnippetFilter filter) {
-		return snippetBusiness.searchSnippetByFilter(filter);
+	public List<Validator> searchValidatorByFilter(ValidatorFilter filter) {
+		return snippetBusiness.searchValidatorByFilter(filter);
 	}
 
 }

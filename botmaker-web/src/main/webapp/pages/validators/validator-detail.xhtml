@@ -8,34 +8,30 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Snippet Details</h2>
+		<h2>Validator Details</h2>
 
 		<p:fieldset styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{snippetAction.snippet.name}" />
+				<h:outputText value="#{validatorAction.validator.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Description" styleClass="txtop" />
-				<h:outputText value="#{snippetAction.snippet.description}"
+				<h:outputText value="#{validatorAction.validator.description}"
 					styleClass="pc80" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{snippetAction.snippet.snippetType.descriptor}" />
+				<h:outputText value="#{validatorAction.validator.scriptType.descriptor}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{snippetAction.snippet.snippetType.script}">
-				<h:outputLabel value="Regular Expression" />
-				<h:outputText value="#{snippetAction.snippet.regularExpression}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{not snippetAction.snippet.snippetType.script}">
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:outputText value="#{snippetAction.snippet.scriptCode}" />
+				<h:outputText value="#{validatorAction.validator.scriptCode}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{snippetAction.cancel()}" value="Go Back"
+				<p:commandButton action="#{validatorAction.cancel()}" value="Go Back"
 					styleClass="secondary" />
-				<p:commandButton action="#{snippetAction.edit()}" value="Edit"
+				<p:commandButton action="#{validatorAction.edit()}" value="Edit"
 					styleClass="primary" />
 			</h:panelGroup>
 		</p:fieldset>

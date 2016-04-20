@@ -3,25 +3,25 @@ package com.javaleo.systems.botmaker.ejb.filters;
 import java.util.Arrays;
 import java.util.List;
 
-import com.javaleo.systems.botmaker.ejb.enums.SnippetType;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
-public class SnippetFilter {
+public class ValidatorFilter {
 
 	private String name;
 	private String description;
-	private SnippetType scriptType;
-	private List<SnippetType> scriptTypeOptions;
+	private ScriptType scriptType;
+	private List<ScriptType> scriptTypeOptions;
 
-	public SnippetFilter() {
+	public ValidatorFilter() {
 		super();
-		this.scriptTypeOptions = Arrays.asList(SnippetType.values());
+		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
 	}
 
-	public SnippetType getScriptType() {
+	public ScriptType getScriptType() {
 		return scriptType;
 	}
 
-	public void setScriptType(SnippetType scriptType) {
+	public void setScriptType(ScriptType scriptType) {
 		this.scriptType = scriptType;
 	}
 
@@ -41,11 +41,11 @@ public class SnippetFilter {
 		this.description = description;
 	}
 
-	public List<SnippetType> getScriptTypeOptions() {
+	public List<ScriptType> getScriptTypeOptions() {
 		return scriptTypeOptions;
 	}
 
-	public void setScriptTypeOptions(List<SnippetType> scriptTypeOptions) {
+	public void setScriptTypeOptions(List<ScriptType> scriptTypeOptions) {
 		this.scriptTypeOptions = scriptTypeOptions;
 	}
 

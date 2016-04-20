@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2>Validator</h2>
+
+		<p:fieldset styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Name" />
+				<h:inputText value="#{validatorAction.validator.name}" immediate="true" />
+			</h:panelGroup>		
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Description" styleClass="txtop" />
+				<h:inputTextarea value="#{validatorAction.validator.description}" immediate="true" styleClass="pc80" rows="3" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Type" />
+				<h:selectOneMenu value="#{validatorAction.validator.scriptType}" immediate="true">
+					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
+					<f:ajax event="change" render="@form" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc80" rows="8" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<p:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
+				<p:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
+			</h:panelGroup>
+
+		</p:fieldset>
+
+	</ui:define>
+</ui:composition>

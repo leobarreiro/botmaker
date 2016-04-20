@@ -1,10 +1,10 @@
 package com.javaleo.systems.botmaker.ejb.enums;
 
-public enum SnippetType {
+public enum ScriptType {
 
 	SET("Set of Options"), REGEXP("Simple Regexp"), GROOVY("Groovy"), JAVASCRIPT("Javascript"), PYTHON("Python");
 
-	private SnippetType(String descriptor) {
+	private ScriptType(String descriptor) {
 		this.descriptor = descriptor;
 	}
 
@@ -19,11 +19,11 @@ public enum SnippetType {
 	}
 
 	public boolean isScript() {
-		return (!this.equals(SnippetType.REGEXP) && !this.equals(SnippetType.SET));
+		return (!this.equals(ScriptType.REGEXP) && !this.equals(ScriptType.SET));
 	}
 
 	public boolean isSetOfOptions() {
-		return this.equals(SnippetType.SET);
+		return this.equals(ScriptType.SET);
 	}
 
 }

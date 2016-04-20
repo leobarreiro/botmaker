@@ -22,7 +22,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	private Long id;
 	private String instruction;
-	private Snippet expectedAnswer;
+	private Validator validator;
 	private String options;
 	private String errorFormatMessage;
 	private String successMessage;
@@ -52,13 +52,13 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	}
 
 	@ManyToOne()
-	@JoinColumn(name = "snippet_id", referencedColumnName = "snippet_id", foreignKey = @ForeignKey(name = "fk_question_snippet"), nullable = true)
-	public Snippet getExpectedAnswer() {
-		return expectedAnswer;
+	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", foreignKey = @ForeignKey(name = "fk_question_validator"), nullable = true)
+	public Validator getValidator() {
+		return validator;
 	}
 
-	public void setExpectedAnswer(Snippet expectedAnswer) {
-		this.expectedAnswer = expectedAnswer;
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 	@Column(name = "answer_options", length = 255, nullable = true)
@@ -135,7 +135,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
-		result = prime * result + ((expectedAnswer == null) ? 0 : expectedAnswer.hashCode());
+		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
@@ -158,10 +158,10 @@ public class Question implements IEntityBasic, Comparable<Question> {
 				return false;
 		} else if (!command.equals(other.command))
 			return false;
-		if (expectedAnswer == null) {
-			if (other.expectedAnswer != null)
+		if (validator == null) {
+			if (other.validator != null)
 				return false;
-		} else if (!expectedAnswer.equals(other.expectedAnswer))
+		} else if (!validator.equals(other.validator))
 			return false;
 		if (id == null) {
 			if (other.id != null)

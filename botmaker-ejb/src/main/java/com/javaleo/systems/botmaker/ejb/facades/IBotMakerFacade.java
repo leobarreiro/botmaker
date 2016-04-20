@@ -8,11 +8,11 @@ import javax.ejb.Local;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.entities.Snippet;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
-import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
+import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 
 @Local
 public interface IBotMakerFacade extends Serializable {
@@ -112,7 +112,7 @@ public interface IBotMakerFacade extends Serializable {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#saveSnippetCode(com.javaleo.systems.botmaker.ejb.entities
 	 * .SnippetCode)
 	 */
-	void saveSnippet(Snippet snippetCode) throws BusinessException;
+	void saveValidator(Validator validator) throws BusinessException;
 
 	/*
 	 * (non-Javadoc)
@@ -121,6 +121,6 @@ public interface IBotMakerFacade extends Serializable {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#searchSnippetCodeByFilter(com.javaleo.systems.botmaker
 	 * .ejb.filters.SnippetCodeFilter)
 	 */
-	List<Snippet> searchSnippetByFilter(SnippetFilter filter);
+	List<Validator> searchValidatorByFilter(ValidatorFilter filter);
 
 }

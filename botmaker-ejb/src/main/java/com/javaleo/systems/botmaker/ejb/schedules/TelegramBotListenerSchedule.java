@@ -61,7 +61,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 	@Inject
 	private ManagerUtils managerUtils;
 
-	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/10", persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/2", persistent = false)
 	public void listenBotUpdates() {
 		List<Bot> bots = botBusiness.listActiveBots();
 		// LOG.info(MessageFormat.format("Verificando updates de {0} bot(s) ativo(s).",
@@ -117,7 +117,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 					dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
 					dialog.setPendingServer(true);
 					dialog.setUpdate(u);
-					sendMessage(bot, dialog.getIdChat(), question, question.getInstruction());
+					sendMessageInstruction(bot, dialog.getIdChat(), question);
 					dialog.setPendingServer(false);
 					managerUtils.addDialogToBot(bot, dialog);
 				}
@@ -139,7 +139,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
 					if (nextQuestion != null) {
 						dialog.setLastQuestion(nextQuestion);
-						sendMessage(bot, dialog.getIdChat(), nextQuestion, nextQuestion.getInstruction());
+						sendMessageInstruction(bot, dialog.getIdChat(), nextQuestion);
 						dialog.setPendingServer(false);
 						dialog.setLastQuestion(nextQuestion);
 						managerUtils.updateDialogToBot(bot, dialog);
@@ -159,12 +159,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	}
 
-	private void sendMessage(Bot bot, Integer idChat, Question question, String text) {
-		if (question.getExpectedAnswer().getSnippetType().isSetOfOptions()) {
+	private void sendMessageInstruction(Bot bot, Integer idChat, Question question) {
+		if (question.getValidator().getScriptType().isSetOfOptions()) {
 			List<List<String>> options = questionBusiness.convertOptions(question);
-			sendMessageWithOptions(bot, idChat, text, options);
+			sendMessageWithOptions(bot, idChat, question.getInstruction(), options);
 		} else {
-			sendMessageWithoutOptions(bot, idChat, text);
+			sendMessageWithoutOptions(bot, idChat, question.getInstruction());
 		}
 	}
 

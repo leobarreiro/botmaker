@@ -26,7 +26,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Expected Answer" />
-				<p:selectOneMenu value="#{questionAction.question.expectedAnswer}" converter="#{entityConverter}">
+				<p:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
 					<f:selectItem itemValue="#{null}" itemLabel="Select..."/>
 					<f:selectItems value="#{questionAction.snippets}" var="snp" itemLabel="#{snp.name}" itemValue="#{snp}" />
 				</p:selectOneMenu>

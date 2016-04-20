@@ -1,5 +1,7 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import groovy.lang.Binding;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,9 +22,11 @@ import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -34,6 +38,9 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Inject
 	private IPersistenceBasic<Question> persistence;
+
+	@Inject
+	private ScriptRunnerUtils scriptRunner;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -113,10 +120,14 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public boolean validateAnswer(Question question, Answer answer) {
-		if (question.getExpectedAnswer().getSnippetType().isScript()) {
-			Pattern pattern = Pattern.compile(question.getExpectedAnswer().getRegularExpression());
+		if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
+			Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
 			Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
 			return m.matches();
+		} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
+			Binding binding = new Binding();
+			binding.setVariable("bmAnswer", answer.getAnswer());
+			return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
 		} else {
 			return true;
 		}
@@ -124,6 +135,6 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	public List<List<String>> convertOptions(Question question) {
-		return BotMakerUtils.convertStringToArrayOfArrays(question.getExpectedAnswer().getRegularExpression(), 2, ',');
+		return BotMakerUtils.convertStringToArrayOfArrays(question.getValidator().getScriptCode(), 2, ',');
 	}
 }

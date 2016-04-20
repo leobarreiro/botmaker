@@ -8,26 +8,26 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Search Snippets</h2>
+		<h2>Search Validators</h2>
 		<p:fieldset legend="Filter" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
 				<h:outputText value="Name" />
-				<h:inputText value="#{snippetAction.filter.name}" />
+				<h:inputText value="#{validatorAction.filter.name}" />
 				<h:outputText value="Type" />
-				<h:selectOneMenu value="#{snippetAction.filter.scriptType}">
+				<h:selectOneMenu value="#{validatorAction.filter.scriptType}">
 					<f:selectItem value="#{null}" itemValue="#{null}"
 						itemLabel="All of them" />
-					<f:selectItems value="#{snippetAction.filter.scriptTypeOptions}"
+					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}"
 						var="snpOpt" itemLabel="#{snpOpt.descriptor}"
 						itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
-				<p:commandButton action="#{snippetAction.list()}" value="Search"
+				<p:commandButton action="#{validatorAction.list()}" value="Search"
 					update="snippetsId" styleClass="primary" />
 			</h:panelGrid>
 		</p:fieldset>
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<p:dataTable id="snippetsId" widgetVar="dtSnippets"
-				value="#{snippetAction.snippets}" var="snp" rows="10"
+				value="#{validatorAction.validators}" var="snp" rows="10"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom"
 				styleClass="pc100">
 				<p:column headerText="Id" sortBy="#{snp.id}" styleClass="pc5 txctr">
@@ -35,15 +35,15 @@
 				</p:column>
 				<p:column headerText="Name" sortBy="#{snp.name}"
 					styleClass="txlft pc15">
-					<h:commandLink action="#{snippetAction.detail(snp)}"
+					<h:commandLink action="#{validatorAction.detail(snp)}"
 						value="#{snp.name}" />
 				</p:column>
 				<p:column headerText="Type"
-					sortBy="#{snp.snippetType.descriptor}" styleClass="pc10 txctr">
-					<h:outputText value="#{snp.snippetType.descriptor}" />
+					sortBy="#{snp.scriptType.descriptor}" styleClass="pc10 txctr">
+					<h:outputText value="#{snp.scriptType.descriptor}" />
 				</p:column>
 				<p:column headerText="RegExp / Options / Script Code"
-					sortBy="#{snp.regularExpression}" styleClass="pc40">
+					sortBy="#{snp.scriptCode}" styleClass="pc40">
 					<h:outputText value="#{snp.codeResume()}" />
 				</p:column>
 			</p:dataTable>

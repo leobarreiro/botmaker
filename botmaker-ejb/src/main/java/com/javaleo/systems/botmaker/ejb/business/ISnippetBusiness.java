@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.javaleo.systems.botmaker.ejb.entities.Snippet;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
-import com.javaleo.systems.botmaker.ejb.filters.SnippetFilter;
+import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 
 @Local
 public interface ISnippetBusiness extends Serializable {
 
-	void saveSnippet(Snippet snippetCode) throws BusinessException;
+	void saveValidator(Validator snippetCode) throws BusinessException;
 
-	List<Snippet> searchSnippetByFilter(SnippetFilter filter);
+	List<Validator> searchValidatorByFilter(ValidatorFilter filter);
 
 }

@@ -17,12 +17,12 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
-import com.javaleo.systems.botmaker.ejb.enums.SnippetType;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
-@Table(schema = EntityUtils.SCHEMA, name = "snippet")
-@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "snippet_sq", sequenceName = "snippet_seq", initialValue = 1, allocationSize = 1)
-public class Snippet implements IEntityBasic {
+@Table(schema = EntityUtils.SCHEMA, name = "validator")
+@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "validator_sq", sequenceName = "validator_seq", initialValue = 1, allocationSize = 1)
+public class Validator implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,14 +30,13 @@ public class Snippet implements IEntityBasic {
 	private Company company;
 	private String name;
 	private String description;
-	private SnippetType snippetType;
-	private String regularExpression;
+	private ScriptType scriptType;
 	private String scriptCode;
 
 	@Override
 	@Id
-	@Column(name = "snippet_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "snippet_sq")
+	@Column(name = "validator_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "validator_sq")
 	public Long getId() {
 		return id;
 	}
@@ -52,7 +51,7 @@ public class Snippet implements IEntityBasic {
 	}
 
 	@ManyToOne(optional = true)
-	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_snippet_code_company"), nullable = true)
+	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_validator_company"), nullable = true)
 	public Company getCompany() {
 		return company;
 	}
@@ -65,15 +64,6 @@ public class Snippet implements IEntityBasic {
 		this.name = name;
 	}
 
-	@Column(name = "regular_expression", length = 180)
-	public String getRegularExpression() {
-		return regularExpression;
-	}
-
-	public void setRegularExpression(String regularExpression) {
-		this.regularExpression = regularExpression;
-	}
-
 	@Column(name = "description", length = 120)
 	public String getDescription() {
 		return description;
@@ -84,13 +74,13 @@ public class Snippet implements IEntityBasic {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "snippet_type", length = 30, nullable = false)
-	public SnippetType getSnippetType() {
-		return snippetType;
+	@Column(name = "script_type", length = 30, nullable = false)
+	public ScriptType getScriptType() {
+		return scriptType;
 	}
 
-	public void setSnippetType(SnippetType snippetType) {
-		this.snippetType = snippetType;
+	public void setScriptType(ScriptType scriptType) {
+		this.scriptType = scriptType;
 	}
 
 	@Column(name = "script_code", columnDefinition = "text")
@@ -104,7 +94,7 @@ public class Snippet implements IEntityBasic {
 
 	@Transient
 	public String codeResume() {
-		return (this.snippetType.isScript()) ? StringUtils.abbreviate(scriptCode, 100) : regularExpression;
+		return StringUtils.abbreviate(scriptCode, 100);
 	}
 
 	@Override
@@ -115,9 +105,8 @@ public class Snippet implements IEntityBasic {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((regularExpression == null) ? 0 : regularExpression.hashCode());
 		result = prime * result + ((scriptCode == null) ? 0 : scriptCode.hashCode());
-		result = prime * result + ((snippetType == null) ? 0 : snippetType.hashCode());
+		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
 		return result;
 	}
 
@@ -129,7 +118,7 @@ public class Snippet implements IEntityBasic {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Snippet other = (Snippet) obj;
+		Validator other = (Validator) obj;
 		if (company == null) {
 			if (other.company != null)
 				return false;
@@ -150,17 +139,12 @@ public class Snippet implements IEntityBasic {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (regularExpression == null) {
-			if (other.regularExpression != null)
-				return false;
-		} else if (!regularExpression.equals(other.regularExpression))
-			return false;
 		if (scriptCode == null) {
 			if (other.scriptCode != null)
 				return false;
 		} else if (!scriptCode.equals(other.scriptCode))
 			return false;
-		if (snippetType != other.snippetType)
+		if (scriptType != other.scriptType)
 			return false;
 		return true;
 	}

@@ -45,7 +45,7 @@
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
 				</p:column>
 				<p:column headerText="Expected Answer" styleClass="pc20 txctr">
-					<h:outputText value="#{qst.expectedAnswer.name}" />
+					<h:outputText value="#{qst.validator.name}" />
 				</p:column>
 				<p:column headerText="Var Name" styleClass="pc10">
 					<h:outputText value="#{qst.varName}" />
