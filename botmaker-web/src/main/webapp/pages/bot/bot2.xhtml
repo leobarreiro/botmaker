@@ -39,8 +39,8 @@
 				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" styleClass="pc80" rows="4" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{botAction.save()}" value="Save" styleClass="primary" />
-				<p:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
+				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />
+				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>
