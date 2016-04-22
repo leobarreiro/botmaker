@@ -14,10 +14,10 @@
 			content="text/html; charset=iso-8859-1" />
 		<h:outputStylesheet name="css/botmaker.css" />
 	</h:head>
-	<h:body>
+	<h:body styleClass="page">
 		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
-				<h1>botmaker - the bot factory</h1>
+				
 				<p:menubar rendered="#{botMakerAuthenticator.authenticated}">
 					<p:submenu label="Validators" rendered="#{botMakerCredentials.user.admin}">
 						<p:menuitem value="New Validator" action="#{validatorAction.startNew()}" immediate="true" />

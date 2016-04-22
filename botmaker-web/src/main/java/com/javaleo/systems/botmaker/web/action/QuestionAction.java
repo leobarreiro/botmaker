@@ -1,6 +1,5 @@
 package com.javaleo.systems.botmaker.web.action;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
-import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -42,8 +41,8 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	private Command command;
 	private Question question;
-	private List<AnswerType> answerTypeOptions;
-	private List<Validator> snippets;
+	private List<Validator> validators;
+	private List<ScriptType> scriptTypeOpt;
 
 	public String startNew(Command command) {
 		startOrResumeConversation();
@@ -92,8 +91,8 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	}
 
 	private void loadOptions() {
-		this.snippets = facade.searchValidatorByFilter(new ValidatorFilter());
-		this.answerTypeOptions = new ArrayList<AnswerType>(Arrays.asList(AnswerType.values()));
+		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
+		this.scriptTypeOpt = Arrays.asList(ScriptType.values());
 	}
 
 	@Override
@@ -122,20 +121,20 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = question;
 	}
 
-	public List<AnswerType> getAnswerTypeOptions() {
-		return answerTypeOptions;
+	public List<Validator> getValidators() {
+		return validators;
 	}
 
-	public void setAnswerTypeOptions(List<AnswerType> answerTypeOptions) {
-		this.answerTypeOptions = answerTypeOptions;
+	public void setValidators(List<Validator> validators) {
+		this.validators = validators;
 	}
 
-	public List<Validator> getSnippets() {
-		return snippets;
+	public List<ScriptType> getScriptTypeOpt() {
+		return scriptTypeOpt;
 	}
 
-	public void setSnippets(List<Validator> snippets) {
-		this.snippets = snippets;
+	public void setScriptTypeOpt(List<ScriptType> scriptTypeOpt) {
+		this.scriptTypeOpt = scriptTypeOpt;
 	}
 
 }
