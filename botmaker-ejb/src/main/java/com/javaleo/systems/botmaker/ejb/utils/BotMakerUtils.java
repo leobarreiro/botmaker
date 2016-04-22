@@ -8,14 +8,13 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 public class BotMakerUtils {
-	
+
 	public static List<List<String>> convertStringToArrayOfArrays(String source, int maxSize, char separator) {
 		String[] optArray = StringUtils.split(source, separator);
 		List<String> options = Arrays.asList(optArray);
 		return convertArrayOfArrays(options, maxSize);
 	}
-	
-	
+
 	public static List<List<String>> convertArrayOfArrays(List<String> originalOptions, int maxSize) {
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
 		List<String> subList = new ArrayList<String>();
