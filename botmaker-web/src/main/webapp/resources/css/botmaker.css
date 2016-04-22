@@ -2,7 +2,7 @@
 
 body {
 	font-family: Arial, Helvetica !important;;
-	font-size: 11pt;
+	font-size: 12pt;
 	color: #000000;
 }
 
@@ -37,17 +37,14 @@ h3 {
 	padding: 4px !important;
 }
 
-/*input:not ([type] ), input[type="text"], input[type="password"]*/
-input {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 1.1em;
-	padding: 4px;
-	border-radius: 2px;
-	background: #ffffff none repeat scroll 0 0;
-	border: 1px solid #a1c4d8;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-	cursor: text;
-	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+label {
+	padding: 4pt !important;
+	font-size: 12pt !important;
+}
+
+input, select, textarea {
+	padding: 4pt !important;
+	font-size: 12pt !important;
 }
 
 .frm-crud, .frm-login {
@@ -73,22 +70,20 @@ input {
 	border: none;
 }
 
-.frm-login input {
-	display: block;
-	width: 96%;
-	padding: 6pt;
-	border: 1px solid #a1c4d8;
-	font-size: 16pt;
-	border-radius: 4px;
-}
-
 .frm-login label {
 	margin-top: 12pt;
 	display: block;
 }
 
-.frm-login button {
-	margin-top: 14pt !important;
+.frm-login input {
+	width: 100% !important;
+	padding: 6pt !important;
+	font-size: 16pt !important;
+	border-radius: 4pt !important;
+}
+
+.frm-login input[type="submit"] {
+	margin-top: 16pt !important;
 }
 
 .frm-title, .ui-dialog-titlebar {
@@ -158,13 +153,14 @@ input {
 }
 
 input.primary, button.primary {
-	background: #54326f !important;
+	/*background: #54326f !important;*/
 	color: #ffffff !important;
 	padding: 6px !important;
 	font-weight: bold;
 	border-radius: 4px !important;
 	text-shadow: none !important;
 	margin: 4px;
+	cursor: default !important;
 }
 
 input.secondary, button.secondary {
@@ -296,22 +292,13 @@ div.head h1 {
 	font-size: 32pt;
 }
 
-div.head div.ui-menubar {
-	margin: 4px 0px 0px 0px !important;
+div.head table.menubar {
+	margin: 4px 0px 0px 200px !important;
 	height: 30px !important;
 	width: 40% !important;
 	display: block !important;
-	float: right !important;
 	border: none !important;
 	background: transparent !important;
 	box-shadow: none !important;
 }
 
-div.head .ui-menu.ui-menubar.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix ul.ui-menu-list.ui-helper-reset li.ui-widget.ui-menuitem.ui-corner-all.ui-menu-parent a.ui-menuitem-link.ui-submenu-link.ui-corner-all span.ui-menuitem-text
-	{
-	color: #FFFFFF !important;
-}
-
-div.head div.ui-menubar ul {
-	float: right !important;
-}

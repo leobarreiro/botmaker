@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Validator</h2>
 
-		<p:fieldset styleClass="frm-crud pc70">
+		<rich:panel styleClass="frm-crud pc70">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
 				<h:inputText value="#{validatorAction.validator.name}" immediate="true" />
-			</h:panelGroup>		
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Description" styleClass="txtop" />
 				<h:inputTextarea value="#{validatorAction.validator.description}" immediate="true" styleClass="pc80" rows="3" />
@@ -28,9 +28,10 @@
 				</h:panelGrid>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
-				<p:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
+				<h:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
+				<h:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
+
 	</ui:define>
 </ui:composition>

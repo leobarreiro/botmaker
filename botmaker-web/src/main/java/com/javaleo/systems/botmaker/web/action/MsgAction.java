@@ -7,7 +7,6 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
-import org.primefaces.context.RequestContext;
 
 @Named
 @SessionScoped
@@ -57,7 +56,8 @@ public class MsgAction implements Serializable {
 
 	public void show() {
 		if (hasMsg()) {
-			RequestContext.getCurrentInstance().execute("PF('msgDialog').show();");
+			
+			//RequestContext.getCurrentInstance().execute("PF('msgDialog').show();");
 			clear();
 		}
 	}
@@ -73,7 +73,7 @@ public class MsgAction implements Serializable {
 				severity = FacesMessage.SEVERITY_INFO;
 			}
 			FacesMessage facesMessage = new FacesMessage(severity, titleModal, msg);
-			RequestContext.getCurrentInstance().showMessageInDialog(facesMessage);
+			//RequestContext.getCurrentInstance().showMessageInDialog(facesMessage);
 			clear();
 		}
 	}

@@ -46,6 +46,7 @@
 		<version.botgram>0.0.4</version.botgram>
 		<version.groovy>2.4.6</version.groovy>
 		<version.jboss.ext.ejb>2.2.0.Final</version.jboss.ext.ejb>
+		<version.richfaces>4.5.15.Final</version.richfaces>
 	</properties>
 	<scm>
 		<connection>scm:git:https://bitbucket.org/javaleo/botmaker.git</connection>
@@ -100,11 +101,9 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${version.junit}</version>
-				<type>jar</type>
-				<scope>test</scope>
+				<groupId>org.richfaces</groupId>
+				<artifactId>richfaces</artifactId>
+				<version>${version.richfaces}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -112,34 +111,9 @@
 				<version>${version.slf4j.api}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.primefaces</groupId>
-				<artifactId>primefaces</artifactId>
-				<version>${version.primefaces}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.primefaces.extensions</groupId>
-				<artifactId>primefaces-extensions</artifactId>
-				<version>${version.primefaces.extensions}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.primefaces.themes</groupId>
-				<artifactId>all-themes</artifactId>
-				<version>${version.primefaces.themes}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi</artifactId>
-				<version>${version.apache.poi}</version>
-			</dependency>
-			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
 				<version>${version.commons.codec}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.poi</groupId>
-				<artifactId>poi-ooxml</artifactId>
-				<version>${version.apache.poi}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
@@ -150,6 +124,13 @@
 				<groupId>org.jboss.ejb3</groupId>
 				<artifactId>jboss-ejb3-ext-api</artifactId>
 				<version>${version.jboss.ext.ejb}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${version.junit}</version>
+				<type>jar</type>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -183,7 +164,6 @@
 						<doCheck>true</doCheck>
 						<doUpdate>true</doUpdate>
 						<username>leobarreiro</username>
-						<password>gabr13loni</password>
 						<!-- <password>{X9yGnDYAAgAH0rFEZTRBwO6+UfvwYItnXoC46YUU9dI=}</password> -->
 					</configuration>
 				</plugin>
@@ -209,16 +189,6 @@
 			</snapshots>
 			<releases>
 				<enabled>false</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>primefaces themes</id>
-			<url>http://repository.primefaces.org/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
 			</releases>
 		</repository>
 	</repositories>
