@@ -26,10 +26,10 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
-				<p:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
+				<h:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
 					<f:selectItem itemValue="#{null}" itemLabel="Select..."/>
 					<f:selectItems value="#{questionAction.validators}" var="snp" itemLabel="#{snp.name}" itemValue="#{snp}" />
-				</p:selectOneMenu>
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" styleClass="txtop" />
@@ -59,8 +59,8 @@
 				<h:inputTextarea value="#{questionAction.question.postProcessScript}" styleClass="pc80" rows="8" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
-				<p:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
+				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
+				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 
 		</p:fieldset>

@@ -157,12 +157,20 @@ input {
 	padding: 2px;
 }
 
-button.primary {
-	padding: 1px !important;
-	background: #006699 !important;
+input.primary, button.primary {
+	background: #54326f !important;
 	color: #ffffff !important;
-	border-radius: 6px !important;
+	padding: 6px !important;
+	font-weight: bold;
+	border-radius: 4px !important;
 	text-shadow: none !important;
+	margin: 4px;
+}
+
+input.secondary, button.secondary {
+	padding: 6px !important;
+	border-radius: 4px !important;
+	background: #cecece !important;
 	margin: 4px;
 }
 
