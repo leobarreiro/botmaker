@@ -127,22 +127,25 @@ input, select, textarea {
 }
 
 .frm-line {
-	padding: 4px;
-	margin: 4px;
+    display: inline-block;
+    margin: 4px;
+    padding: 4px;
+    width: 100%;
+    font-size: 12pt;
+    vertical-align: middle;
 }
 
 .frm-line label {
 	display: inline-block;
 	float: left;
-	width: 15%;
+	width: 25%;
 	text-align: right;
 	margin-right: 12px;
-	color: gray !important;
 	font-style: italic !important;
 }
 
-.frm-line div, .frm-line table, .frm-line input, .frm-line textarea {
-	width: 80% !important;
+.frm-line div, .frm-line table, .frm-line input, .frm-line textarea, .frm-line select {
+	width: 70% !important;
 }
 
 .frm-submit {
@@ -166,7 +169,7 @@ input.primary, button.primary {
 input.secondary, button.secondary {
 	padding: 6px !important;
 	border-radius: 4px !important;
-	background: #cecece !important;
+	background: #666666 !important;
 	margin: 4px;
 }
 
@@ -302,3 +305,6 @@ div.head table.menubar {
 	box-shadow: none !important;
 }
 
+.rf-dt-shdr-c, .rf-dt-c, input, select, textarea, button, keygen, isindex, legend, a {
+	font-size: 12pt !important;
+}

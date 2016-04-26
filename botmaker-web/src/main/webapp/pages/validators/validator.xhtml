@@ -8,11 +8,11 @@
 		<rich:panel styleClass="frm-crud pc70">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:inputText value="#{validatorAction.validator.name}" immediate="true" />
+				<h:inputText value="#{validatorAction.validator.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Description" styleClass="txtop" />
-				<h:inputTextarea value="#{validatorAction.validator.description}" immediate="true" styleClass="pc80" rows="3" />
+				<h:inputTextarea value="#{validatorAction.validator.description}" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />
@@ -21,10 +21,10 @@
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:panelGrid columns="1">
+				<h:outputLabel value="Script Code"/>
+				<h:panelGrid columns="1" styleClass="pc75">
 					<h:outputText value="Validator scripts must return a boolean value (true or false)" />
-					<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc100" rows="8" />
+					<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc100"/>
 				</h:panelGrid>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">

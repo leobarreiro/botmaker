@@ -31,7 +31,7 @@
 					<f:facet name="header">Type</f:facet>
 					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />
 				</rich:column>
-				<rich:column sortBy="#{bt.listCommands}" styleClass="pc10 txctr">
+				<rich:column sortBy="#{bt.listCommands}" styleClass="pc15 txctr">
 					<f:facet name="header">List Commands</f:facet>
 					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" />
 				</rich:column>
