@@ -8,15 +8,15 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot Type" />
-				<h:outputText value="#{botAction.bot.botType.name}" />
+				<h:outputText styleClass="txt #{botAction.bot.botType.name eq 'Telegram' ? 'blue' : 'green'}" value="#{botAction.bot.botType.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Token" />
-				<h:outputText value="#{botAction.bot.token}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
@@ -24,11 +24,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="List commands when unknown command is received" />
@@ -36,7 +36,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />

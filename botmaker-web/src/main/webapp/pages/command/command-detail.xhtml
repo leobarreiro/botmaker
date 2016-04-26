@@ -11,18 +11,18 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
 		</rich:panel>
 
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Key" />
-				<h:outputText value="#{commandAction.command.key}" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.key}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Short Description" />
-				<h:outputText value="#{commandAction.command.shortDescription}" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />

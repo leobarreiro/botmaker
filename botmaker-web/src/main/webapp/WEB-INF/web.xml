@@ -17,7 +17,7 @@
 	</context-param>
 	<context-param>
 		<param-name>org.richfaces.skin</param-name>
-		<param-value>deepMarine</param-value>
+		<param-value>japanCherry</param-value>
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>

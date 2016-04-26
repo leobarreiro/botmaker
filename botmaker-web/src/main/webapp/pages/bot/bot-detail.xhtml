@@ -10,31 +10,31 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot Type" />
-				<h:outputText value="#{botAction.bot.botType.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.botType.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Token" />
-				<h:outputText value="#{botAction.bot.token}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Maintenance Message" />
-				<h:outputText value="#{botAction.bot.closedBotMessage}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.closedBotMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Unknown Command Message" />
-				<h:outputText value="#{botAction.bot.unknownCommadMessage}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.unknownCommadMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
-				<h:outputText value="#{botAction.bot.active ? 'Yes' : 'No'}" styleClass="#{botAction.bot.active ? 'green' : 'red'}" />
+				<h:outputText value="#{botAction.bot.active ? 'Yes' : 'No'}" styleClass="txt #{botAction.bot.active ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="List commands when unknown command" />
-				<h:outputText value="#{botAction.bot.listCommands ? 'Yes' : 'No'}" styleClass="#{botAction.bot.listCommands ? 'green' : 'red'}" />
+				<h:outputText value="#{botAction.bot.listCommands ? 'Yes' : 'No'}" styleClass="txt #{botAction.bot.listCommands ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />

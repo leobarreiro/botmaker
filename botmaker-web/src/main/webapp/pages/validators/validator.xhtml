@@ -21,10 +21,10 @@
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Code"/>
+				<h:outputLabel value="Script Code" />
 				<h:panelGrid columns="1" styleClass="pc75">
 					<h:outputText value="Validator scripts must return a boolean value (true or false)" />
-					<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc100"/>
+					<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc100 script" rows="6" />
 				</h:panelGrid>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">

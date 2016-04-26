@@ -7,9 +7,9 @@
 
 		<rich:panel legend="Filter" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
-				<h:outputText value="Name" />
+				<h:outputText styleClass="txt" value="Name" />
 				<h:inputText value="#{validatorAction.filter.name}" />
-				<h:outputText value="Type" />
+				<h:outputText styleClass="txt" value="Type" />
 				<h:selectOneMenu value="#{validatorAction.filter.scriptType}">
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />

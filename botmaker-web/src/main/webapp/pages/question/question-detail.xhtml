@@ -1,63 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml"
+                xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
 		<h2>Question</h2>
-
-		<p:fieldset styleClass="frm-crud">
+		
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot / Command" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot" />
-				<h:outputText value="#{questionAction.command.bot.name}" />
+				<h:outputText styleClass="txt" value="#{questionAction.command.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Command" />
-				<h:outputText value="#{questionAction.command.key}" />
+				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
 
-		<p:fieldset styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" />
-				<h:outputText value="#{questionAction.question.instruction}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.instruction}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Expected Answer" />
-				<h:outputText value="#{questionAction.question.validator.name}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.validator.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" />
-				<h:outputText value="#{questionAction.question.errorFormatMessage}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.errorFormatMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Success Message" />
-				<h:outputText value="#{questionAction.question.successMessage}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.successMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
-				<h:outputText value="#{questionAction.question.varName}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.varName}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
-				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="#{questionAction.question.processAnswer ? 'green' : 'red'}" />				
+				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="txt #{questionAction.question.processAnswer ? 'green' : 'red'}" />				
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
-				<h:outputText value="#{questionAction.question.scriptType.descriptor}" styleClass="purple" />
+				<h:outputText value="#{questionAction.question.scriptType.descriptor}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:outputText value="#{questionAction.question.postProcessScript}" />
+				<h:outputText styleClass="txt" value="#{questionAction.question.postProcessScript}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
 			</h:panelGroup>
 
-		</p:fieldset>
+		</rich:panel>
 
 	</ui:define>
 </ui:composition>
