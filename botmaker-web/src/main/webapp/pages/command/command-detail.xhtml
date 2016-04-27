@@ -26,7 +26,8 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
-				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit Command" styleClass="secondary" />
+				<h:commandButton action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
+				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="New Question" styleClass="secondary" />
 			</h:panelGroup>
 		</rich:panel>

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -63,9 +65,16 @@ public class CommandBusiness implements ICommandBusiness {
 		List<Command> commands = listCommandsByBot(bot);
 		List<String> keyCommands = new ArrayList<String>();
 		for (Command c : commands) {
-			keyCommands.add(c.getKey());
+			keyCommands.add("/".concat(c.getKey()));
 		}
-		return BotMakerUtils.convertArrayOfArrays(keyCommands, 2);
+		return BotMakerUtils.convertArrayOfArrays(keyCommands, 3);
 	}
-	
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void dropCommand(Command command) {
+		Command deleteCommand = persistence.find(Command.class, command.getId());
+		persistence.remove(deleteCommand);
+	}
+
 }

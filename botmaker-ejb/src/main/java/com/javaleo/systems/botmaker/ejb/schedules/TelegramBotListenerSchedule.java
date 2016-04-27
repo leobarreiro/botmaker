@@ -20,7 +20,6 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
-import org.javaleo.libs.botgram.model.Chat;
 import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.ReplyKeyboardHide;
 import org.javaleo.libs.botgram.model.ReplyKeyboardMarkup;
@@ -135,10 +134,11 @@ public class TelegramBotListenerSchedule implements Serializable {
 				dialog.setPendingServer(true);
 				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
 					ans.setVarName(dialog.getLastQuestion().getVarName());
-					if (dialog.getLastQuestion().getProcessAnswer()) {
-						questionBusiness.postProduceAnswer(dialog.getLastQuestion(), ans);
-					}
 					ans.setAccepted(true);
+					if (dialog.getLastQuestion().getProcessAnswer()) {
+						questionBusiness.postProcessAnswer(dialog.getLastQuestion(), ans);
+						sendMessageWithoutOptions(bot, dialog, ans.getPostProcessedAnswer());
+					}
 					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
 						sendMessageSuccessAnswer(bot, dialog, dialog.getLastQuestion());
 					}

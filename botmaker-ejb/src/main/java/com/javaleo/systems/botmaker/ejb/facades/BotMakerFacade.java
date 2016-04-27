@@ -16,8 +16,8 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -155,6 +155,18 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void saveCommand(Command command) throws BusinessException {
 		commandBusiness.saveCommand(command);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.business.ICommandBusiness#dropCommand(com.javaleo.systems.botmaker.ejb.entities
+	 * .Command)
+	 */
+	@Override
+	public void dropCommand(Command command) {
+		commandBusiness.dropCommand(command);
 	}
 
 	/*

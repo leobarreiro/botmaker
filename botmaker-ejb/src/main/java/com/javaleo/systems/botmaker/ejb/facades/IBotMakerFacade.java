@@ -8,8 +8,8 @@ import javax.ejb.Local;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -77,6 +77,13 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness#saveQuestion(com.javaleo.systems.botmaker.ejb.entities.Question)
 	 */
 	void saveQuestion(Question question) throws BusinessException;
+
+	/**
+	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.business.ICommandBusiness#dropCommand(com.javaleo.systems.botmaker.ejb.entities
+	 *      .Command)
+	 */
+	void dropCommand(Command command);
 
 	/**
 	 * @param command

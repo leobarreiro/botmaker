@@ -27,6 +27,6 @@ public interface IQuestionBusiness extends Serializable {
 
 	List<List<String>> convertOptions(Question question);
 
-	void postProduceAnswer(Question question, Answer answer);
+	void postProcessAnswer(Question question, Answer answer);
 
 }

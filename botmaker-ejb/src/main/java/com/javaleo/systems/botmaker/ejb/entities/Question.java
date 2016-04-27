@@ -1,5 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -141,7 +142,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.order = order;
 	}
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = { CascadeType.REMOVE })
 	@JoinColumn(name = "command_id", referencedColumnName = "command_id", foreignKey = @ForeignKey(name = "fk_question_command"))
 	public Command getCommand() {
 		return command;

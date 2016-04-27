@@ -82,6 +82,12 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
+	public String dropCommand() {
+		facade.dropCommand(command);
+		search();
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+	}
+
 	@Override
 	public CRUD getCrudOp() {
 		return crudOp;

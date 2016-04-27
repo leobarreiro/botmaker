@@ -10,7 +10,7 @@ public class Answer implements Serializable {
 
 	private Question question;
 	private String varName;
-	private String codeProduced;
+	private String postProcessedAnswer;
 	private String answer;
 	private boolean accepted;
 
@@ -30,12 +30,12 @@ public class Answer implements Serializable {
 		this.varName = varName;
 	}
 
-	public String getCodeProduced() {
-		return codeProduced;
+	public String getPostProcessedAnswer() {
+		return postProcessedAnswer;
 	}
 
-	public void setCodeProduced(String codeProduced) {
-		this.codeProduced = codeProduced;
+	public void setPostProcessedAnswer(String processed) {
+		this.postProcessedAnswer = processed;
 	}
 
 	public String getAnswer() {

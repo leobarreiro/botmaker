@@ -136,13 +136,13 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public void postProduceAnswer(Question question, Answer answer) {
+	public void postProcessAnswer(Question question, Answer answer) {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
 				binding.setVariable(question.getVarName(), answer.getAnswer());
 				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
-				answer.setCodeProduced(postProcessed);
+				answer.setPostProcessedAnswer(postProcessed);
 			}
 		}
 	}
