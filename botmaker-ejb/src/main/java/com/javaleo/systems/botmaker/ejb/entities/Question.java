@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
@@ -151,7 +153,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	public void setCommand(Command command) {
 		this.command = command;
 	}
-
+	
 	@Override
 	public int compareTo(Question o) {
 		if (this.getOrder() != null && o.getOrder() != null) {

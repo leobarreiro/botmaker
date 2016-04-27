@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml"
-                xmlns:rich="http://richfaces.org/rich">
+	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
 		<h2>Question</h2>
-		
+
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot / Command" />
@@ -43,7 +42,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
-				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="txt #{questionAction.question.processAnswer ? 'green' : 'red'}" />				
+				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="txt #{questionAction.question.processAnswer ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
@@ -51,7 +50,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:outputText styleClass="txt" value="#{questionAction.question.postProcessScript}" />
+				<h:inputTextarea value="#{questionAction.question.postProcessScript}" rows="12" readonly="true" styleClass="script" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
