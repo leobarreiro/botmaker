@@ -50,7 +50,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.postProcessScript}" rows="12" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />
+				<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />
 				<h:outputText value="--" styleClass="purple txt" rendered="#{questionAction.question.scriptType eq null}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
@@ -59,6 +59,16 @@
 			</h:panelGroup>
 
 		</rich:panel>
+
+		<script>
+		var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+		    mode: "groovy",
+		    theme: "solarized",
+		    lineNumbers: true, 
+		    readOnly: true, 
+		    indentWithTabs: true,
+		});
+		</script>
 
 	</ui:define>
 </ui:composition>
