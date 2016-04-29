@@ -16,6 +16,7 @@ public class Dialog implements Serializable {
 	private int idChat;
 	private Update update;
 	private Command command;
+	private String postProcessedResult;
 	private Question lastQuestion;
 	private boolean pendingServer;
 	private boolean finish;
@@ -44,6 +45,14 @@ public class Dialog implements Serializable {
 
 	public void setCommand(Command command) {
 		this.command = command;
+	}
+
+	public String getPostProcessedResult() {
+		return postProcessedResult;
+	}
+
+	public void setProcessedResult(String postProcessedResult) {
+		this.postProcessedResult = postProcessedResult;
 	}
 
 	public Question getLastQuestion() {

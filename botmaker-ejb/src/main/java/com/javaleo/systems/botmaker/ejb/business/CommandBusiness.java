@@ -1,5 +1,7 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import groovy.lang.Binding;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +20,12 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.pojos.Answer;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
 
 @Stateless
 public class CommandBusiness implements ICommandBusiness {
@@ -28,6 +34,9 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Inject
 	private IPersistenceBasic<Command> persistence;
+
+	@Inject
+	private ScriptRunnerUtils scriptRunner;
 
 	@Override
 	public List<Command> listCommandsByBot(Bot bot) {
@@ -38,7 +47,6 @@ public class CommandBusiness implements ICommandBusiness {
 		cq.where(cb.equal(joinBot.get("id"), bot.getId()));
 		cq.select(fromCommand);
 		cq.orderBy(cb.asc(fromCommand.get("key")));
-		// persistence.logQuery(cq);
 		return persistence.getResultList(cq);
 	}
 
@@ -75,6 +83,23 @@ public class CommandBusiness implements ICommandBusiness {
 	public void dropCommand(Command command) {
 		Command deleteCommand = persistence.find(Command.class, command.getId());
 		persistence.remove(deleteCommand);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public void postProcessCommand(Dialog dialog, Command command) {
+		if (command.getPostProcess()) {
+			if (command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
+				Binding binding = new Binding();
+				for (Answer a : dialog.getAnswers()) {
+					if (a.isAccepted() && a.getQuestion().getCommand().getId().equals(command.getId())) {
+						binding.setVariable(a.getVarName(), a.getAnswer());
+					}
+				}
+				String postProcessed = (String) scriptRunner.evaluateGroovy(command.getPostProcessScript(), binding);
+				dialog.setProcessedResult(postProcessed);
+			}
+		}
 	}
 
 }

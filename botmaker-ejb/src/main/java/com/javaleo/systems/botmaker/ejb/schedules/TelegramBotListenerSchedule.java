@@ -150,6 +150,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 						dialog.setLastQuestion(nextQuestion);
 						managerUtils.updateDialogToBot(bot, dialog);
 					} else {
+						if (dialog.getLastQuestion().getCommand().getPostProcess()) {
+							commandBusiness.postProcessCommand(dialog, dialog.getLastQuestion().getCommand());
+							sendMessageWithoutOptions(bot, dialog, dialog.getPostProcessedResult());
+						} 
 						sendMessageEndOfDialog(bot, dialog);
 						dialog.setFinish(true);
 						dialog.setPendingServer(false);
@@ -215,6 +219,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void sendMessageWithoutOptions(Bot bot, Dialog dialog, String plainText) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(dialog.getIdChat());
+		if (StringUtils.isBlank(plainText)) {
+			LOG.error("Tried to send an empty Message. Bot {}.", bot.getName());
+			return;
+		}
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
 		request.setParseMode(ParseMode.HTML);

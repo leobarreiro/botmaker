@@ -35,9 +35,6 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Logger LOG;
-
-	@Inject
 	private IPersistenceBasic<Question> persistence;
 
 	@Inject
