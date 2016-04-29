@@ -16,7 +16,7 @@ body.page {
 div.head {
 	display: inline-block;
 	width: 100%;
-	height: 40px !important; 
+	height: 40px !important;
 	background-color: purple;
 	background-image: url("../img/botmaker-screen.png.jsf");
 	background-position: left top;
@@ -40,7 +40,6 @@ div.head table.menubar {
 	box-shadow: none !important;
 }
 
-
 a {
 	color: blue !important;
 }
@@ -48,23 +47,20 @@ a {
 h1, h2, h3, h4, h5, h6 {
 	color: purple;
 	display: block;
+	margin: auto;
+	width: 98% !important;
 }
 
 h1 {
 	font-size: 36px;
-	margin: 4px 0px 0px 14px !important;
-	
 }
 
 h2 {
 	font-size: 30px;
-	margin: 2px !important;
-	margin: 4px 0px 0px 14px !important;
 }
 
 h3 {
 	font-size: 22px;
-	margin: 12px 0px 12px 14px !important;
 }
 
 input, select, textarea {
@@ -127,12 +123,12 @@ input, select, textarea {
 }
 
 .frm-crud .frm-line {
-    display: inline-block;
-    margin: 12px 4px 4px 4px !important;
-    padding: 4px;
-    width: 100%;
-    font-size: 12pt;
-    vertical-align: middle;
+	display: inline-block;
+	margin: 12px 4px 4px 4px !important;
+	padding: 4px;
+	width: 100%;
+	font-size: 12pt;
+	vertical-align: middle;
 }
 
 .frm-crud .frm-line label {
@@ -152,8 +148,7 @@ span.txt {
 	font-size: 12pt !important;
 }
 
-
-.frm-line div, .frm-line table, .frm-line input[type="text"], .frm-line input[type="password"], .frm-line textarea {
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
 	width: 70%;
 }
 
@@ -163,6 +158,10 @@ span.txt {
 
 .frm-line input[type="checkbox"] {
 	margin-top: 6px !important;
+}
+
+.frm-line div.CodeMirror {
+	width: 71% !important;
 }
 
 .frm-submit {
@@ -194,7 +193,8 @@ input.secondary, button.secondary {
 	padding: 6px !important;
 }
 
-input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
+input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
+	{
 	color: yellow !important;
 }
 
@@ -254,10 +254,17 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	width: 100% !important;
 }
 
-.script {
-	color: purple;
+textarea.script {
+	color: green !important;
+	font-family: monospace !important;
 	background-image: none !important;
-	background-color: #cecece;
+	background-color: #333333 !important;
+}
+
+textarea[disabled].script {
+	color: #222222 !important;
+	background-color: #888888 !important;
+	border: 1px solid purple !important;
 }
 
 .green {
@@ -327,34 +334,35 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	background: transparent !important;
 }
 
-.rf-dt-shdr-c, .rf-dt-c, input, select, textarea, button, keygen, isindex, legend, a {
+.rf-dt-shdr-c, .rf-dt-c, input, select, textarea, button, keygen,
+	isindex, legend, a {
 	font-size: 12pt !important;
 }
 
 .rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
-    background-color: purple !important;
-    border: 1px solid #FFFFFF !important;
-    font-size: 10pt !important;
-    color: #FFFFFF !important;
-    font-weight: normal !important;
-    padding: 4px !important;
-    background-image: none !important;
+	background-color: purple !important;
+	border: 1px solid #FFFFFF !important;
+	font-size: 10pt !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	padding: 4px !important;
+	background-image: none !important;
 }
 
 .rf-dt-c-srt {
-    cursor: pointer;
-    color: #FFFFFF !important;
+	cursor: pointer;
+	color: #FFFFFF !important;
 }
 
 .rf-dt-c-srt:hover {
-    color: #FFFFFF !important;
+	color: #FFFFFF !important;
 }
 
 .rf-dt-shdr-c {
-    border: none !important;
-    background-color: purple !important;
-    background-image: none !important;
-    color: #FFFFFF;
-    padding: 4px;
-    text-align: center;
+	border: none !important;
+	background-color: purple !important;
+	background-image: none !important;
+	color: #FFFFFF;
+	padding: 4px;
+	text-align: center;
 }

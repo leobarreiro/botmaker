@@ -1,6 +1,7 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -13,6 +14,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
@@ -36,6 +38,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private Command command;
 	private List<Command> commands;
 	private List<Question> questions;
+	private List<ScriptType> scriptTypeOpt;
 	private Bot bot;
 
 	@Override
@@ -47,12 +50,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
+		loadOptions();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
 	public String list() {
 		startOrResumeConversation();
 		search();
+		loadOptions();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
@@ -62,6 +67,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = pojo;
+		loadOptions();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
@@ -86,6 +92,10 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		facade.dropCommand(command);
 		search();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+	}
+
+	private void loadOptions() {
+		this.scriptTypeOpt = Arrays.asList(ScriptType.values());
 	}
 
 	@Override
@@ -115,6 +125,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setBot(Bot bot) {
 		this.bot = bot;
+	}
+
+	public List<ScriptType> getScriptTypeOpt() {
+		return scriptTypeOpt;
+	}
+
+	public void setScriptTypeOpt(List<ScriptType> scriptTypeOpt) {
+		this.scriptTypeOpt = scriptTypeOpt;
 	}
 
 	public List<Question> getQuestions() {

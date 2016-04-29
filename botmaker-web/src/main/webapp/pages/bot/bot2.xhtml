@@ -2,7 +2,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:panelGroup layout="block" styleClass="frm-crud pc70">
+	
+		<h1>Bot</h1>
+	
+		<h:panelGroup layout="block" styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Review information" />
 			</h:panelGroup>
@@ -24,11 +27,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" />
+				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" />
+				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="List commands when unknown command is received" />
@@ -36,7 +39,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" />
+				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />

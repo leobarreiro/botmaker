@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.javaleo.libs.jee.core.model.IEntityBasic;
+
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = EntityUtils.COMMAND)
@@ -30,6 +34,9 @@ public class Command implements IEntityBasic {
 	private Bot bot;
 	private Boolean active;
 	private List<Question> questions;
+	private Boolean postProcess;
+	private ScriptType postProcessScriptType;
+	private String postProcessScript;
 
 	@Override
 	@Id
@@ -96,6 +103,34 @@ public class Command implements IEntityBasic {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	@Column(name = "post_process")
+	public Boolean getPostProcess() {
+		return postProcess;
+	}
+
+	public void setPostProcess(Boolean postProcess) {
+		this.postProcess = postProcess;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "script_type", length = 30)
+	public ScriptType getPostProcessScriptType() {
+		return postProcessScriptType;
+	}
+
+	public void setPostProcessScriptType(ScriptType postProcessScriptType) {
+		this.postProcessScriptType = postProcessScriptType;
+	}
+
+	@Column(name = "post_process_script", columnDefinition = "text", nullable = true)
+	public String getPostProcessScript() {
+		return postProcessScript;
+	}
+
+	public void setPostProcessScript(String postProcessScript) {
+		this.postProcessScript = postProcessScript;
 	}
 
 	@Override

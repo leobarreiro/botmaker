@@ -25,6 +25,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
 
@@ -136,11 +137,15 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public void postProcessAnswer(Question question, Answer answer) {
+	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
-				binding.setVariable(question.getVarName(), answer.getAnswer());
+				for (Answer a : dialog.getAnswers()) {
+					if (a.isAccepted()) {
+						binding.setVariable(a.getVarName(), a.getAnswer());
+					}
+				}
 				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
 				answer.setPostProcessedAnswer(postProcessed);
 			}

@@ -24,6 +24,19 @@
 				<h:outputLabel value="Short Description" />
 				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Process Answers" />
+				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Type" />
+				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="gray txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Code" styleClass="txtop" />
+				<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
+				<h:outputText value="--" styleClass="gray txt" rendered="#{not commandAction.command.postProcessScript}" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
 				<h:commandButton action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
@@ -56,8 +69,22 @@
 					<f:facet name="header">Var Name</f:facet>
 					<h:outputText value="#{qst.varName}" />
 				</rich:column>
+				<rich:column styleClass="pc15">
+					<f:facet name="header">Post Process Answer</f:facet>
+					<h:outputText value="#{(qst.processAnswer eq true) ? 'Yes' : 'No'}" styleClass="#{(qst.processAnswer eq true) ? 'green' : 'red'}" />
+				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
+
+		<script>
+		var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+		    mode: "groovy",
+		    theme: "solarized",
+		    lineNumbers: true, 
+		    readOnly: true, 
+		    indentWithTabs: true,
+		});
+		</script>
 
 	</ui:define>
 </ui:composition>

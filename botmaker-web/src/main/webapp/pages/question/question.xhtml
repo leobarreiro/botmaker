@@ -23,7 +23,7 @@
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.instruction}" rows="3" />
+				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
@@ -34,11 +34,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" rows="2" />
+				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Success Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.successMessage}" rows="2" />
+				<h:inputTextarea value="#{questionAction.question.successMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
@@ -57,13 +57,22 @@
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.postProcessScript}" rows="8" />
+				<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>		
 		</rich:panel>
+		
+		<script>
+		var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+		    mode: "groovy",
+		    theme: "vibrant-ink",
+		    lineNumbers: true, 
+		    indentWithTabs: true,
+		});
+		</script>
 
 	</ui:define>
 </ui:composition>

@@ -9,6 +9,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 
 @Local
 public interface IQuestionBusiness extends Serializable {
@@ -27,6 +28,6 @@ public interface IQuestionBusiness extends Serializable {
 
 	List<List<String>> convertOptions(Question question);
 
-	void postProcessAnswer(Question question, Answer answer);
+	void postProcessAnswer(Dialog dialog, Question question, Answer answer);
 
 }

@@ -135,12 +135,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
 					ans.setVarName(dialog.getLastQuestion().getVarName());
 					ans.setAccepted(true);
-					if (dialog.getLastQuestion().getProcessAnswer()) {
-						questionBusiness.postProcessAnswer(dialog.getLastQuestion(), ans);
-						sendMessageWithoutOptions(bot, dialog, ans.getPostProcessedAnswer());
-					}
 					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
 						sendMessageSuccessAnswer(bot, dialog, dialog.getLastQuestion());
+					}
+					if (dialog.getLastQuestion().getProcessAnswer()) {
+						questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
+						sendMessageWithoutOptions(bot, dialog, ans.getPostProcessedAnswer());
 					}
 					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getCommand(), dialog.getLastQuestion().getOrder());
 					if (nextQuestion != null) {
@@ -227,8 +227,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 			BotGramConfig config = new BotGramConfig();
 			config.setToken(bot.getToken());
 			BotGramService service = new BotGramService(config);
-			SendMessageResponse messageResponse = service.sendMessage(request);
-			LOG.info(MessageFormat.format("Msg [Ok:{0}|Dsc:{1}]", messageResponse.getOk(), messageResponse.getDescription()));
+			service.sendMessage(request);
+			// SendMessageResponse messageResponse = service.sendMessage(request);
+			// LOG.info(MessageFormat.format("Msg [Ok:{0}|Dsc:{1}]", messageResponse.getOk(),
+			// messageResponse.getDescription()));
 		} catch (BotGramException e) {
 			LOG.error(e.getMessage());
 		}
