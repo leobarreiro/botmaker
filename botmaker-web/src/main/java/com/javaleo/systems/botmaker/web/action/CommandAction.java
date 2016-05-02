@@ -30,6 +30,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	@Inject
 	private IBotMakerFacade facade;
+	
+	@Inject
+	private UserPreferenceAction userPreferenceAction;
 
 	@Inject
 	private MsgAction msgAction;
@@ -51,6 +54,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		command = new Command();
 		command.setBot(bot);
 		loadOptions();
+		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
@@ -68,6 +72,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String edit(Command pojo) {
 		this.command = pojo;
 		loadOptions();
+		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
@@ -75,6 +80,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		this.command = command;
 		questions = facade.listQuestionsFromCommand(command);
+		userPreferenceAction.loadPreferences();
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
@@ -143,4 +149,5 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		this.questions = questions;
 	}
 
+	
 }

@@ -9,6 +9,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
@@ -130,4 +131,34 @@ public interface IBotMakerFacade extends Serializable {
 	 */
 	List<Validator> searchValidatorByFilter(ValidatorFilter filter);
 
+	/**
+	 * @param user
+	 * @return
+	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#listPreferencesByUser(com.javaleo.systems.botmaker.ejb.entities.User)
+	 */
+	List<UserPreference> listPreferencesByUser(User user);
+	
+	/**
+	 * @param user
+	 * @param name
+	 * @return
+	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#getPreferenceByUserAndName(com.javaleo.systems.botmaker.ejb.entities.User,
+	 *      java.lang.String)
+	 */
+	UserPreference getPreferenceByUserAndName(User user, String name);
+
+	/**
+	 * @param user
+	 * @param userPreference
+	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#savePreference(com.javaleo.systems.botmaker.ejb.entities.User,
+	 *      com.javaleo.systems.botmaker.ejb.entities.UserPreference)
+	 */
+	void savePreference(User user, UserPreference userPreference);
+
+	/**
+	 * @param userPreference
+	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#removePreference(com.javaleo.systems.botmaker.ejb.entities.UserPreference)
+	 */
+	void removePreference(UserPreference userPreference);
+	
 }

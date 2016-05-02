@@ -1,5 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,6 +33,7 @@ public class User implements IEntityBasic {
 	private Company company;
 	private Boolean admin;
 	private Boolean active;
+	private List<UserPreference> preferences;
 
 	@Override
 	@Id
@@ -106,10 +111,15 @@ public class User implements IEntityBasic {
 		this.active = active;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	public List<UserPreference> getPreferences() {
+		return preferences;
+	}
+
+	public void setPreferences(List<UserPreference> preferences) {
+		this.preferences = preferences;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,10 +135,6 @@ public class User implements IEntityBasic {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

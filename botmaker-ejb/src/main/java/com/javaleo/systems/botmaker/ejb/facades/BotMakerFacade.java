@@ -12,11 +12,13 @@ import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ISnippetBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
@@ -45,6 +47,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IUserBusiness userBusiness;
+
+	@Inject
+	private IUserPreferenceBusiness userPreferenceBusiness;
 
 	/**
 	 * @return
@@ -245,6 +250,50 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public List<Validator> searchValidatorByFilter(ValidatorFilter filter) {
 		return snippetBusiness.searchValidatorByFilter(filter);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#listPreferencesByUser(com.javaleo.systems.botmaker.ejb
+	 * .entities.User)
+	 */
+	public List<UserPreference> listPreferencesByUser(User user) {
+		return userPreferenceBusiness.listPreferencesByUser(user);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#getPreferenceByUserAndName(com.javaleo.systems.botmaker
+	 * .ejb.entities.User, java.lang.String)
+	 */
+	public UserPreference getPreferenceByUserAndName(User user, String name) {
+		return userPreferenceBusiness.getPreferenceByUserAndName(user, name);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#savePreference(com.javaleo.systems.botmaker.ejb.entities
+	 * .User, com.javaleo.systems.botmaker.ejb.entities.UserPreference)
+	 */
+	public void savePreference(User user, UserPreference userPreference) {
+		userPreferenceBusiness.savePreference(user, userPreference);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#removePreference(com.javaleo.systems.botmaker.ejb.entities
+	 * .UserPreference)
+	 */
+	public void removePreference(UserPreference userPreference) {
+		userPreferenceBusiness.removePreference(userPreference);
 	}
 
 }

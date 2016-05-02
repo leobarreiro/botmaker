@@ -34,8 +34,10 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
-				<h:outputText value="--" styleClass="gray txt" rendered="#{not commandAction.command.postProcessScript}" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
+					<h:outputText value="--" styleClass="gray txt" rendered="#{not commandAction.command.postProcess}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
@@ -79,11 +81,14 @@
 		<script>
 		var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
 		    mode: "groovy",
-		    theme: "solarized",
+		    theme: "#{userPreferenceAction.nameScriptingTheme}",
 		    lineNumbers: true, 
 		    readOnly: true, 
-		    indentWithTabs: true,
+		    height: 50, 
+		    indentWithTabs: true
 		});
+
+		readonlyCodeMirror.setSize('100%', 150);
 		</script>
 
 	</ui:define>

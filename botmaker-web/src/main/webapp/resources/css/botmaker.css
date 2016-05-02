@@ -148,7 +148,8 @@ span.txt {
 	font-size: 12pt !important;
 }
 
-.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
+	{
 	width: 70%;
 }
 
@@ -160,8 +161,29 @@ span.txt {
 	margin-top: 6px !important;
 }
 
+.frm-line div.scripting {
+	display: inline-block;
+	width: 73%;
+	padding: 0px;
+	margin: 0px;
+}
+
+span.explain {
+	display: inline-block;
+	font-size: 11pt;
+	margin: 0px 0px 6px 0px;
+	color: gray;
+	font-style: italic;
+}
+
+.frm-line div div.themeBox {
+	float: right;
+	width: 25%;
+}
+
 .frm-line div.CodeMirror {
-	width: 71% !important;
+	/*width: 100% !important;*/
+	
 }
 
 .frm-submit {
