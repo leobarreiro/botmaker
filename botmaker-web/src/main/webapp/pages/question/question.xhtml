@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/templates/default.xhtml"
-                xmlns:rich="http://richfaces.org/rich">
+	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
 		<h2>Question</h2>
@@ -28,7 +27,7 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
 				<h:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
-					<f:selectItem itemValue="#{null}" itemLabel="Select..."/>
+					<f:selectItem itemValue="#{null}" itemLabel="Select..." />
 					<f:selectItems value="#{questionAction.validators}" var="snp" itemLabel="#{snp.name}" itemValue="#{snp}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
@@ -50,28 +49,48 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
-				<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
-					<f:selectItem itemValue="#{null}" itemLabel="None"/>
-					<f:selectItems value="#{questionAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-				</h:selectOneMenu>
+
+				<h:panelGroup layout="block" styleClass="frm-multicell">
+
+					<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
+						<f:selectItem itemValue="#{null}" itemLabel="None" />
+						<f:selectItems value="#{questionAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+					</h:selectOneMenu>
+
+					<h:panelGroup layout="block" styleClass="themeBox">
+						<h:outputLabel styleClass="explain" value="Theme" />
+						<h:selectOneMenu value="#{userPreferenceAction.nameScriptingTheme}">
+							<f:selectItems value="#{userPreferenceAction.themeOpt}" />
+							<f:ajax event="change" listener="#{userPreferenceAction.saveScriptingTheme()}" onevent="changeScriptTheme(this.value)" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:outputText styleClass="explain" value="Question Post Scripts must return a String (that will be presented to final Users)" />
+					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
-			</h:panelGroup>		
+			</h:panelGroup>
 		</rich:panel>
-		
-		<script>
-		var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-		    mode: "groovy",
-		    theme: "vibrant-ink",
-		    lineNumbers: true, 
-		    indentWithTabs: true,
-		});
+
+		<script type="text/javascript">
+			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.nameScriptingTheme}",
+			    lineNumbers: true, 
+			    indentWithTabs: true, 
+			    lineWrapping: true
+			});
+			scriptEditor.setSize('100%', 360);
+			function changeScriptTheme(themePref) {
+				scriptEditor.setOption("theme", themePref);
+			}
 		</script>
 
 	</ui:define>

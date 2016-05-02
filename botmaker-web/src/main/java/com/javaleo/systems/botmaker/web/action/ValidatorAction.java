@@ -28,6 +28,9 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 	private Conversation conversation;
 
 	@Inject
+	private UserPreferenceAction userPreferencesAction;
+	
+	@Inject
 	private MsgAction msgAction;
 
 	private CRUD crudOp;
@@ -45,6 +48,7 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 		loadOptions();
 		validator = new Validator();
 		validator.setScriptType(ScriptType.REGEXP);
+		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator.jsf?faces-redirect=true";
 	}
 
@@ -61,12 +65,14 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 	public String edit() {
 		startOrResumeConversation();
 		loadOptions();
+		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator.jsf?faces-redirect=true";
 	}
 
 	public String detail(Validator validator) {
 		startOrResumeConversation();
 		this.validator = validator;
+		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator-detail.jsf?faces-redirect=true";
 	}
 

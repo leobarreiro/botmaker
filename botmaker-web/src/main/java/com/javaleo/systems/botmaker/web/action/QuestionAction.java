@@ -34,6 +34,9 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private IBotMakerFacade facade;
 
 	@Inject
+	private UserPreferenceAction userPreferencesAction;
+	
+	@Inject
 	private MsgAction msgAction;
 
 	@Inject
@@ -49,6 +52,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.command = command;
 		this.question = new Question();
 		loadOptions();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
 
@@ -57,6 +61,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = question;
 		this.command = question.getCommand();
 		loadOptions();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
 
@@ -64,6 +69,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		this.question = question;
 		this.command = question.getCommand();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question-detail.jsf?faces-redirect=true";
 	}
 
