@@ -50,8 +50,10 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />
-				<h:outputText value="--" styleClass="purple txt" rendered="#{questionAction.question.scriptType eq null}" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />
+					<h:outputText value="--" styleClass="purple txt" rendered="#{questionAction.question.scriptType eq null}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
@@ -60,14 +62,16 @@
 
 		</rich:panel>
 
-		<script>
-		var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-		    mode: "groovy",
-		    theme: "solarized",
-		    lineNumbers: true, 
-		    readOnly: true, 
-		    indentWithTabs: true,
-		});
+		<script type="text/javascript">
+			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.nameScriptingTheme}", 
+			    lineNumbers: true, 
+			    readOnly: true, 
+			    indentWithTabs: true, 
+			});
+	
+			readonlyCodeMirror.setSize('100%', 150);
 		</script>
 
 	</ui:define>

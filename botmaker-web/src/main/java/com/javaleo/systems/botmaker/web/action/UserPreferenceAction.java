@@ -32,7 +32,7 @@ public class UserPreferenceAction implements Serializable {
 
 	public void loadPreferences() {
 		scriptingTheme = facade.getPreferenceByUserAndName(credentials.getUser(), SCRIPTING_THEME);
-		nameScriptingTheme = scriptingTheme.getValue();
+		nameScriptingTheme = (scriptingTheme != null) ? scriptingTheme.getValue() : "default";
 		themeOpt = Arrays
 				.asList(new String[] { "ambiance", "cobalt", "eclipse", "elegant", "erlang-dark", "icecoder", "liquibyte", "monokai", "pastel-on-dark", "solarized", "rubyblue", "vibrant-ink" });
 	}
