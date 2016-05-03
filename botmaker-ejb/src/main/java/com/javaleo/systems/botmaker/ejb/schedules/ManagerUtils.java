@@ -60,7 +60,7 @@ public class ManagerUtils implements Serializable {
 		} else {
 			botUpdatesMap.put(bot.getId(), new HashSet<Update>(updates));
 		}
-		lastUpdateIdMap.put(bot.getId(), new AtomicInteger((int) getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId()))));
+		lastUpdateIdMap.put(bot.getId(), new AtomicInteger(getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId()))));
 	}
 
 	private Integer getMaxIdFromUpdatesList(Set<Update> updates) {
@@ -126,7 +126,7 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public synchronized void removeFinishedDialog(Bot bot, Dialog dialog) {
+	public void removeDialog(Bot bot, Dialog dialog) {
 		if (dialogsPerBotMap.containsKey(bot.getId())) {
 			dialogsPerBotMap.get(bot.getId()).remove(dialog);
 		}

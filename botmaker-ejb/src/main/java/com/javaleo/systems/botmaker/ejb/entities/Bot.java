@@ -38,6 +38,8 @@ public class Bot implements IEntityBasic {
 	private String unknownCommadMessage;
 	private Boolean listCommands;
 	private String endOfDialogMessage;
+	private String cancelKey;
+	private String cancelMessage;
 	private Company company;
 	private List<Command> commands;
 
@@ -111,7 +113,7 @@ public class Bot implements IEntityBasic {
 		this.unknownCommadMessage = unknownCommadMessage;
 	}
 
-	@Column(name="list_commands")
+	@Column(name = "list_commands")
 	public Boolean getListCommands() {
 		return listCommands;
 	}
@@ -120,12 +122,31 @@ public class Bot implements IEntityBasic {
 		this.listCommands = listCommands;
 	}
 
+	@Column(name = "end_of_dialog", length = 255, nullable = true)
 	public String getEndOfDialogMessage() {
 		return endOfDialogMessage;
 	}
 
 	public void setEndOfDialogMessage(String endOfDialogMessage) {
 		this.endOfDialogMessage = endOfDialogMessage;
+	}
+
+	@Column(name = "cancel_key", length = 40, nullable = true)
+	public String getCancelKey() {
+		return cancelKey;
+	}
+
+	public void setCancelKey(String cancelKey) {
+		this.cancelKey = cancelKey;
+	}
+
+	@Column(name = "cancel_message", length = 255, nullable = true)
+	public String getCancelMessage() {
+		return cancelMessage;
+	}
+
+	public void setCancelMessage(String cancelMessage) {
+		this.cancelMessage = cancelMessage;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -149,6 +170,7 @@ public class Bot implements IEntityBasic {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -168,6 +190,7 @@ public class Bot implements IEntityBasic {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

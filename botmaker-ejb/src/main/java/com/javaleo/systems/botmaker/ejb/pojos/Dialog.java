@@ -95,4 +95,48 @@ public class Dialog implements Serializable {
 		this.answers = answers;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (finish ? 1231 : 1237);
+		result = prime * result + idChat;
+		result = prime * result + (pendingServer ? 1231 : 1237);
+		result = prime * result + ((postProcessedResult == null) ? 0 : postProcessedResult.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Dialog other = (Dialog) obj;
+		if (finish != other.finish)
+			return false;
+		if (idChat != other.idChat)
+			return false;
+		if (pendingServer != other.pendingServer)
+			return false;
+		if (postProcessedResult == null) {
+			if (other.postProcessedResult != null)
+				return false;
+		} else if (!postProcessedResult.equals(other.postProcessedResult))
+			return false;
+		return true;
+	}
+
 }

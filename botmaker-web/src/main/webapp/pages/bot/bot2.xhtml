@@ -41,6 +41,14 @@
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
 				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
+				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc70" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Cancel Message" styleClass="txtop" />
+				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc70" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
