@@ -2,7 +2,6 @@ package com.javaleo.systems.botmaker.ejb.utils;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.ejb.Asynchronous;
@@ -82,10 +81,8 @@ public class TelegramSendMessageUtils implements Serializable {
 		config.setToken(token);
 		BotGramService service = new BotGramService(config);
 		SendMessageResponse response = service.sendMessage(message);
-		if (response.getOk()) {
-			LOG.info("Msg [St:{}|Ok:{}]", response.getHttpResponseCode(), response.getOk());
-		} else {
-			LOG.info("Msg [St:{}|Ok:{}|Dsc:{}]", response.getHttpResponseCode(), response.getOk(), response.getDescription());
+		if (!response.getOk()) {
+			LOG.info("Msg Ok: {} / Description: {}", response.getOk(), response.getDescription());
 		}
 		return response;
 	}

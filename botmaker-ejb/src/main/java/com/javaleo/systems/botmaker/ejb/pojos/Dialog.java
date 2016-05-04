@@ -3,7 +3,6 @@ package com.javaleo.systems.botmaker.ejb.pojos;
 import java.io.Serializable;
 import java.util.List;
 
-import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.Update;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
@@ -20,7 +19,6 @@ public class Dialog implements Serializable {
 	private Question lastQuestion;
 	private boolean pendingServer;
 	private boolean finish;
-	private List<Message> messages;
 	private List<Answer> answers;
 
 	public int getId() {
@@ -79,14 +77,6 @@ public class Dialog implements Serializable {
 		this.finish = finish;
 	}
 
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
@@ -95,11 +85,6 @@ public class Dialog implements Serializable {
 		this.answers = answers;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,11 +96,6 @@ public class Dialog implements Serializable {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

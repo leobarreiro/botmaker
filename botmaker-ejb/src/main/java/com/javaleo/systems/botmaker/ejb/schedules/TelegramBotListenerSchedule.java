@@ -97,87 +97,102 @@ public class TelegramBotListenerSchedule implements Serializable {
 		}
 
 		for (Update u : updates) {
-
 			Dialog dialog = dialogMap.get(u.getMessage().getChat().getId());
-
-			if (dialog == null) { // New Dialog
-				dialog = new Dialog();
-				dialog.setId(u.getMessage().getChat().getId());
-				dialog.setAnswers(new ArrayList<Answer>());
-				dialog.setPendingServer(true);
-				dialog.setFinish(false);
-				Command command = commandBusiness.getCommandByBotAndKey(bot, u.getMessage().getText());
-				if (command == null) { // Command unknown
-					unknowCommand(bot, dialog);
-					dialog.setPendingServer(false);
-				} else { // Command found
-					dialog.setLastCommand(command);
-					dialog.setAnswers(new ArrayList<Answer>());
-					Question question = questionBusiness.getNextQuestion(command, 0);
-					dialog.setLastQuestion(question);
-					// dialog.setMessages(Arrays.asList(new Message[] { u.getMessage() }));
-					dialog.setPendingServer(true);
-					dialog.setLastUpdate(u);
-					instructUser(bot, dialog, question);
-					dialog.setPendingServer(false);
-					managerUtils.addDialogToBot(bot, dialog);
-				}
-			} else { // Old Dialog
-
-				// if (StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(),
-				// u.getMessage().getText())) {
-				// dialog.setPendingServer(false);
-				// dialog.setFinish(true);
-				// if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
-				// sendMessageWithoutOptions(bot, dialog, bot.getCancelMessage());
-				// }
-				// managerUtils.removeDialog(bot, dialog);
-				// } else {
-
-				List<Answer> answers = dialog.getAnswers();
-				Answer ans = new Answer();
-				ans.setQuestion(dialog.getLastQuestion());
-				ans.setAnswer(u.getMessage().getText());
-				answers.add(ans);
-				dialog.setAnswers(answers);
-				dialog.setPendingServer(true);
-				if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
-					ans.setVarName(dialog.getLastQuestion().getVarName());
-					ans.setAccepted(true);
-					if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
-						successAnswer(bot, dialog, dialog.getLastQuestion());
-					}
-					if (dialog.getLastQuestion().getProcessAnswer()) {
-						questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
-						sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer());
-					}
-					Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
-					if (nextQuestion != null) {
-						dialog.setLastQuestion(nextQuestion);
-						instructUser(bot, dialog, nextQuestion);
-						dialog.setPendingServer(false);
-						dialog.setLastQuestion(nextQuestion);
-						managerUtils.updateDialogToBot(bot, dialog);
-					} else {
-						if (dialog.getLastQuestion().getCommand().getPostProcess()) {
-							commandBusiness.postProcessCommand(dialog, dialog.getLastQuestion().getCommand());
-							sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult());
-						}
-						endOfCommand(bot, dialog);
-						dialog.setFinish(true);
-						dialog.setPendingServer(false);
-						managerUtils.removeDialog(bot, dialog);
-					}
+			// New Dialog
+			if (dialog == null) {
+				dialog = startNewDialog(bot, u);
+				managerUtils.addDialogToBot(bot, dialog);
+			}
+			// Old Dialog
+			else {
+				boolean cancelCalled = (StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(), u.getMessage().getText()));
+				if (cancelCalled) {
+					breakDialog(bot, dialog, u);
 				} else {
-					ans.setAccepted(false);
-					errorFormat(bot, dialog, dialog.getLastQuestion());
-					dialog.setPendingServer(false);
-					managerUtils.updateDialogToBot(bot, dialog);
+					proceedDialog(bot, dialog, u.getMessage().getText());
 				}
-				// }
 			}
 		}
 		managerUtils.finishProcessingBot(bot);
+	}
+
+	private void breakDialog(Bot bot, Dialog dialog, Update u) {
+		if (StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(), u.getMessage().getText())) {
+			dialog.setPendingServer(false);
+			if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
+				sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage());
+			}
+		}
+		managerUtils.removeDialog(bot, dialog);
+	}
+
+	private Dialog startNewDialog(Bot bot, Update update) {
+		Dialog dialog = new Dialog();
+		dialog.setId(update.getMessage().getChat().getId());
+		dialog.setAnswers(new ArrayList<Answer>());
+		dialog.setPendingServer(true);
+		dialog.setFinish(false);
+		Command command = commandBusiness.getCommandByBotAndKey(bot, update.getMessage().getText());
+		// Command unknown
+		if (command == null) {
+			unknowCommand(bot, dialog);
+			dialog.setPendingServer(false);
+		}
+		// Command found
+		else {
+			dialog.setLastCommand(command);
+			dialog.setAnswers(new ArrayList<Answer>());
+			Question question = questionBusiness.getNextQuestion(command, 0);
+			dialog.setLastQuestion(question);
+			dialog.setPendingServer(true);
+			dialog.setLastUpdate(update);
+			instructUser(bot, dialog, question);
+			dialog.setPendingServer(false);
+		}
+		return dialog;
+	}
+
+	private void proceedDialog(Bot bot, Dialog dialog, String userText) {
+		List<Answer> answers = dialog.getAnswers();
+		Answer ans = new Answer();
+		ans.setQuestion(dialog.getLastQuestion());
+		ans.setAnswer(userText);
+		answers.add(ans);
+		dialog.setAnswers(answers);
+		dialog.setPendingServer(true);
+		if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
+			ans.setVarName(dialog.getLastQuestion().getVarName());
+			ans.setAccepted(true);
+			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
+				successAnswer(bot, dialog, dialog.getLastQuestion());
+			}
+			if (dialog.getLastQuestion().getProcessAnswer()) {
+				questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
+				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer());
+			}
+			Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
+			if (nextQuestion != null) {
+				dialog.setLastQuestion(nextQuestion);
+				instructUser(bot, dialog, nextQuestion);
+				dialog.setPendingServer(false);
+				dialog.setLastQuestion(nextQuestion);
+				managerUtils.updateDialogToBot(bot, dialog);
+			} else {
+				if (dialog.getLastQuestion().getCommand().getPostProcess()) {
+					commandBusiness.postProcessCommand(dialog, dialog.getLastQuestion().getCommand());
+					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult());
+				}
+				endOfCommand(bot, dialog);
+				dialog.setFinish(true);
+				dialog.setPendingServer(false);
+				managerUtils.removeDialog(bot, dialog);
+			}
+		} else {
+			ans.setAccepted(false);
+			errorFormat(bot, dialog, dialog.getLastQuestion());
+			dialog.setPendingServer(false);
+			managerUtils.updateDialogToBot(bot, dialog);
+		}
 	}
 
 	private void instructUser(Bot bot, Dialog dialog, Question question) {
@@ -206,8 +221,6 @@ public class TelegramBotListenerSchedule implements Serializable {
 		List<List<String>> options = getAvailableCommands(bot);
 		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
 			sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getEndOfDialogMessage(), options);
-		} else {
-			sendMessageUtils.sendMessageWithOptions(bot, dialog, "-", options);
 		}
 	}
 

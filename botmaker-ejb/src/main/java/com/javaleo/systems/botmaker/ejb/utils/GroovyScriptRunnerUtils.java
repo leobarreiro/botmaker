@@ -12,10 +12,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Named;
 
-import org.jboss.ejb3.annotation.TransactionTimeout;
-
-import com.javaleo.systems.botmaker.ejb.security.ScriptSecurityManager;
-
 @Named
 @Stateless
 public class GroovyScriptRunnerUtils implements Serializable {
