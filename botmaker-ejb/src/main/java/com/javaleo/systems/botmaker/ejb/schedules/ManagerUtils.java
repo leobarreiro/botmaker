@@ -117,7 +117,7 @@ public class ManagerUtils implements Serializable {
 	public void updateDialogToBot(Bot bot, Dialog dialog) {
 		Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(bot.getId()));
 		for (Dialog d : dialogs) {
-			if (d.getIdChat() == dialog.getIdChat()) {
+			if (d.getId() == dialog.getId()) {
 				dialogs.remove(d);
 				dialogs.add(dialog);
 				break;

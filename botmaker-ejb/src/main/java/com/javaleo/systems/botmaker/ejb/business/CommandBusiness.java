@@ -25,7 +25,7 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
-import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 
 @Stateless
 public class CommandBusiness implements ICommandBusiness {
@@ -36,7 +36,7 @@ public class CommandBusiness implements ICommandBusiness {
 	private IPersistenceBasic<Command> persistence;
 
 	@Inject
-	private ScriptRunnerUtils scriptRunner;
+	private GroovyScriptRunnerUtils scriptRunner;
 
 	@Override
 	public List<Command> listCommandsByBot(Bot bot) {

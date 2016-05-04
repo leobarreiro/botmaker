@@ -27,7 +27,7 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
-import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -38,7 +38,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private IPersistenceBasic<Question> persistence;
 
 	@Inject
-	private ScriptRunnerUtils scriptRunner;
+	private GroovyScriptRunnerUtils scriptRunner;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)

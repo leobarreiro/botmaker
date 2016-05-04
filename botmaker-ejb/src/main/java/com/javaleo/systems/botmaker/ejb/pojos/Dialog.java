@@ -13,9 +13,9 @@ public class Dialog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int idChat;
-	private Update update;
-	private Command command;
+	private int id;
+	private Update lastUpdate;
+	private Command lastCommand;
 	private String postProcessedResult;
 	private Question lastQuestion;
 	private boolean pendingServer;
@@ -23,28 +23,28 @@ public class Dialog implements Serializable {
 	private List<Message> messages;
 	private List<Answer> answers;
 
-	public int getIdChat() {
-		return idChat;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdChat(int idChat) {
-		this.idChat = idChat;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public Update getUpdate() {
-		return update;
+	public Update getLastUpdate() {
+		return lastUpdate;
 	}
 
-	public void setUpdate(Update update) {
-		this.update = update;
+	public void setLastUpdate(Update lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
-	public Command getCommand() {
-		return command;
+	public Command getLastCommand() {
+		return lastCommand;
 	}
 
-	public void setCommand(Command command) {
-		this.command = command;
+	public void setLastCommand(Command lastCommand) {
+		this.lastCommand = lastCommand;
 	}
 
 	public String getPostProcessedResult() {
@@ -105,7 +105,7 @@ public class Dialog implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (finish ? 1231 : 1237);
-		result = prime * result + idChat;
+		result = prime * result + id;
 		result = prime * result + (pendingServer ? 1231 : 1237);
 		result = prime * result + ((postProcessedResult == null) ? 0 : postProcessedResult.hashCode());
 		return result;
@@ -127,7 +127,7 @@ public class Dialog implements Serializable {
 		Dialog other = (Dialog) obj;
 		if (finish != other.finish)
 			return false;
-		if (idChat != other.idChat)
+		if (id != other.id)
 			return false;
 		if (pendingServer != other.pendingServer)
 			return false;
