@@ -13,8 +13,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.javaleo.libs.botgram.model.Update;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -23,8 +25,11 @@ import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 @Singleton
 @ApplicationScoped
 public class ManagerUtils implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private Logger LOG;
 
 	private ConcurrentMap<Long, Set<Update>> botUpdatesMap;
 	private ConcurrentMap<Long, AtomicInteger> lastUpdateIdMap;
@@ -127,8 +132,11 @@ public class ManagerUtils implements Serializable {
 	}
 
 	public void removeDialog(Bot bot, Dialog dialog) {
+		LOG.info("Remove Dialog: {}", dialogsPerBotMap.containsKey(bot.getId()));
 		if (dialogsPerBotMap.containsKey(bot.getId())) {
+			LOG.info("Dialogs size after: {}", dialogsPerBotMap.get(bot.getId()).size());
 			dialogsPerBotMap.get(bot.getId()).remove(dialog);
+			LOG.info("Dialogs size before: {}", dialogsPerBotMap.get(bot.getId()).size());
 		}
 	}
 

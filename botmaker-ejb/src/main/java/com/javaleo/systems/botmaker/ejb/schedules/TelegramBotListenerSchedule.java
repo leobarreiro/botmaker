@@ -100,33 +100,17 @@ public class TelegramBotListenerSchedule implements Serializable {
 			Dialog dialog = dialogMap.get(u.getMessage().getChat().getId());
 			// New Dialog
 			if (dialog == null) {
-				dialog = startNewDialog(bot, u);
-				managerUtils.addDialogToBot(bot, dialog);
+				startNewDialog(bot, u);
 			}
 			// Old Dialog
 			else {
-				boolean cancelCalled = (StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(), u.getMessage().getText()));
-				if (cancelCalled) {
-					breakDialog(bot, dialog, u);
-				} else {
-					proceedDialog(bot, dialog, u.getMessage().getText());
-				}
+				proceedDialog(bot, dialog, u.getMessage().getText());
 			}
 		}
 		managerUtils.finishProcessingBot(bot);
 	}
 
-	private void breakDialog(Bot bot, Dialog dialog, Update u) {
-		if (StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(), u.getMessage().getText())) {
-			dialog.setPendingServer(false);
-			if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage());
-			}
-		}
-		managerUtils.removeDialog(bot, dialog);
-	}
-
-	private Dialog startNewDialog(Bot bot, Update update) {
+	private void startNewDialog(Bot bot, Update update) {
 		Dialog dialog = new Dialog();
 		dialog.setId(update.getMessage().getChat().getId());
 		dialog.setAnswers(new ArrayList<Answer>());
@@ -146,13 +130,19 @@ public class TelegramBotListenerSchedule implements Serializable {
 			dialog.setLastQuestion(question);
 			dialog.setPendingServer(true);
 			dialog.setLastUpdate(update);
-			instructUser(bot, dialog, question);
 			dialog.setPendingServer(false);
+			managerUtils.addDialogToBot(bot, dialog);
+			instructUser(bot, dialog);
 		}
-		return dialog;
 	}
 
 	private void proceedDialog(Bot bot, Dialog dialog, String userText) {
+
+		if ((StringUtils.isNotEmpty(bot.getCancelKey()) && StringUtils.equalsIgnoreCase(bot.getCancelKey(), userText))) {
+			breakDialog(bot, dialog, userText);
+			return;
+		}
+
 		List<Answer> answers = dialog.getAnswers();
 		Answer ans = new Answer();
 		ans.setQuestion(dialog.getLastQuestion());
@@ -161,10 +151,10 @@ public class TelegramBotListenerSchedule implements Serializable {
 		dialog.setAnswers(answers);
 		dialog.setPendingServer(true);
 		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion(), ans)) {
-			ans.setVarName(dialog.getLastQuestion().getVarName());
 			ans.setAccepted(true);
+			ans.setVarName(dialog.getLastQuestion().getVarName());
 			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
-				successAnswer(bot, dialog, dialog.getLastQuestion());
+				successAnswer(bot, dialog);
 			}
 			if (dialog.getLastQuestion().getProcessAnswer()) {
 				questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
@@ -173,7 +163,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
 			if (nextQuestion != null) {
 				dialog.setLastQuestion(nextQuestion);
-				instructUser(bot, dialog, nextQuestion);
+				instructUser(bot, dialog);
 				dialog.setPendingServer(false);
 				dialog.setLastQuestion(nextQuestion);
 				managerUtils.updateDialogToBot(bot, dialog);
@@ -189,20 +179,25 @@ public class TelegramBotListenerSchedule implements Serializable {
 			}
 		} else {
 			ans.setAccepted(false);
-			errorFormat(bot, dialog, dialog.getLastQuestion());
+			errorFormat(bot, dialog);
 			dialog.setPendingServer(false);
 			managerUtils.updateDialogToBot(bot, dialog);
 		}
 	}
 
-	private void instructUser(Bot bot, Dialog dialog, Question question) {
-		if (dialog.isPendingServer()) {
-			if (question.getValidator().getScriptType().isSetOfOptions()) {
-				List<List<String>> options = questionBusiness.convertOptions(question);
-				sendMessageUtils.sendMessageWithOptions(bot, dialog, question.getInstruction(), options);
-			} else {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, question.getInstruction());
-			}
+	private void breakDialog(Bot bot, Dialog dialog, String userText) {
+		if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
+			sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage());
+		}
+		managerUtils.removeDialog(bot, dialog);
+	}
+
+	private void instructUser(Bot bot, Dialog dialog) {
+		if (dialog.getLastQuestion().getValidator().getScriptType().isSetOfOptions()) {
+			List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
+			sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), options);
+		} else {
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction());
 		}
 	}
 
@@ -224,15 +219,15 @@ public class TelegramBotListenerSchedule implements Serializable {
 		}
 	}
 
-	private void errorFormat(Bot bot, Dialog dialog, Question question) {
-		if (StringUtils.isNotBlank(question.getErrorFormatMessage())) {
-			sendMessageUtils.sendSimpleMessage(bot, dialog, question.getErrorFormatMessage());
+	private void errorFormat(Bot bot, Dialog dialog) {
+		if (StringUtils.isNotBlank(dialog.getLastQuestion().getErrorFormatMessage())) {
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getErrorFormatMessage());
 		}
 	}
 
-	private void successAnswer(Bot bot, Dialog dialog, Question question) {
-		if (StringUtils.isNotBlank(question.getSuccessMessage())) {
-			sendMessageUtils.sendSimpleMessage(bot, dialog, question.getSuccessMessage());
+	private void successAnswer(Bot bot, Dialog dialog) {
+		if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getSuccessMessage());
 		}
 	}
 
