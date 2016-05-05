@@ -18,7 +18,6 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
-import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -117,18 +116,24 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public boolean validateAnswer(Question question, Answer answer) {
-		if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
-			Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
-			Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
-			return m.matches();
-		} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
-			Binding binding = new Binding();
-			// TODO: usar o nome da variavel tal como definido na question, ao inves de bmAnswer fixo
-			binding.setVariable("bmAnswer", answer.getAnswer());
-			return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
-		} else {
+	public boolean validateAnswer(Dialog dialog, Question question, Answer answer) {
+		if (question.getValidator() == null || question.getValidator().getScriptType() == null) {
 			return true;
+		} else {
+			if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
+				Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
+				Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
+				return m.matches();
+			} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
+				Binding binding = new Binding();
+				binding.setVariable("bmIdChat", dialog.getId());
+				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
+				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
+				binding.setVariable(answer.getQuestion().getVarName(), answer.getAnswer());
+				return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+			} else {
+				return true;
+			}
 		}
 	}
 
@@ -138,6 +143,9 @@ public class QuestionBusiness implements IQuestionBusiness {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
+				binding.setVariable("bmIdChat", dialog.getId());
+				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
+				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
 				for (Answer a : dialog.getAnswers()) {
 					if (a.isAccepted()) {
 						binding.setVariable(a.getVarName(), a.getAnswer());

@@ -160,7 +160,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		answers.add(ans);
 		dialog.setAnswers(answers);
 		dialog.setPendingServer(true);
-		if (questionBusiness.validateAnswer(dialog.getLastQuestion(), ans)) {
+		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion(), ans)) {
 			ans.setVarName(dialog.getLastQuestion().getVarName());
 			ans.setAccepted(true);
 			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {

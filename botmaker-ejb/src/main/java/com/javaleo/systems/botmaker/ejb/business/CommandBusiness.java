@@ -91,6 +91,9 @@ public class CommandBusiness implements ICommandBusiness {
 		if (command.getPostProcess()) {
 			if (command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
+				binding.setVariable("bmIdChat", dialog.getId());
+				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
+				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
 				for (Answer a : dialog.getAnswers()) {
 					if (a.isAccepted() && a.getQuestion().getCommand().getId().equals(command.getId())) {
 						binding.setVariable(a.getVarName(), a.getAnswer());

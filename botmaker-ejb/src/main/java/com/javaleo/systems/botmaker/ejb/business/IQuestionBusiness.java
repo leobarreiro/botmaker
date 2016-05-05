@@ -24,7 +24,7 @@ public interface IQuestionBusiness extends Serializable {
 
 	Question getNextQuestion(Command command, int lastOrder);
 
-	boolean validateAnswer(Question question, Answer answer);
+	boolean validateAnswer(Dialog dialog, Question question, Answer answer);
 
 	List<List<String>> convertOptions(Question question);
 
