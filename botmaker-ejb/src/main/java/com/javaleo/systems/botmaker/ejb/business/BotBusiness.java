@@ -95,8 +95,8 @@ public class BotBusiness implements IBotBusiness {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);
 		Root<Bot> from = cq.from(Bot.class);
-		Join<Bot, Command> joinCommand = from.join("commands", JoinType.INNER);
-		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.INNER);
+		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
+		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.equal(from.get("active"), true));
 		return persistence.getResultList(cq);
 	}
