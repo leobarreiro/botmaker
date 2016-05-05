@@ -132,11 +132,8 @@ public class ManagerUtils implements Serializable {
 	}
 
 	public void removeDialog(Bot bot, Dialog dialog) {
-		LOG.info("Remove Dialog: {}", dialogsPerBotMap.containsKey(bot.getId()));
 		if (dialogsPerBotMap.containsKey(bot.getId())) {
-			LOG.info("Dialogs size after: {}", dialogsPerBotMap.get(bot.getId()).size());
 			dialogsPerBotMap.get(bot.getId()).remove(dialog);
-			LOG.info("Dialogs size before: {}", dialogsPerBotMap.get(bot.getId()).size());
 		}
 	}
 
