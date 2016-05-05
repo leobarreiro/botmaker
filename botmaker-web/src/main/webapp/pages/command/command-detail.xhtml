@@ -78,17 +78,16 @@
 			</rich:dataTable>
 		</rich:panel>
 
-		<script>
-		var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-		    mode: "groovy",
-		    theme: "#{userPreferenceAction.nameScriptingTheme}",
-		    lineNumbers: true, 
-		    readOnly: true, 
-		    height: 50, 
-		    indentWithTabs: true
-		});
-
-		readonlyCodeMirror.setSize('100%', 150);
+		<script type="text/javascript">
+			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    readOnly: true, 
+			    height: 50, 
+			    indentWithTabs: true
+			});
+			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		</script>
 
 	</ui:define>

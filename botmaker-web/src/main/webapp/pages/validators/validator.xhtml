@@ -16,19 +16,9 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />
-				<h:panelGroup layout="block" styleClass="frm-multicell">
-					<h:selectOneMenu value="#{validatorAction.validator.scriptType}" immediate="true">
-						<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
-					</h:selectOneMenu>
-					<h:panelGroup layout="block" styleClass="themeBox">
-						<h:outputLabel styleClass="explain" value="Theme" />
-						<h:selectOneMenu value="#{userPreferenceAction.nameScriptingTheme}">
-							<f:selectItems value="#{userPreferenceAction.themeOpt}" />
-							<f:ajax event="change" listener="#{userPreferenceAction.saveScriptingTheme()}" onevent="changeScriptTheme(this.value)" />
-						</h:selectOneMenu>
-					</h:panelGroup>
-				</h:panelGroup>
-
+				<h:selectOneMenu value="#{validatorAction.validator.scriptType}" immediate="true">
+					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" />
@@ -46,17 +36,12 @@
 		<script type="text/javascript">
 			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
 			    mode: "groovy",
-			    theme: "#{userPreferenceAction.nameScriptingTheme}",
-			    lineNumbers: false, 
-			    lineWrapping: true, 
-			    indentWithTabs: true
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    indentWithTabs: true,
+			    lineWrapping: true 
 			});
-
-			scriptEditor.setSize('100%', 120);
-
-			function changeScriptTheme(themePref) {
-				scriptEditor.setOption("theme", themePref);
-			}
+			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		</script>
 
 	</ui:define>

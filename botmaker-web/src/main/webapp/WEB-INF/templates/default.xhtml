@@ -46,6 +46,8 @@
 						<f:facet name="label">
 							<h:outputText value="#{botMakerCredentials.user.name}" />
 						</f:facet>
+						<rich:menuItem label="Preferences" action="#{userPreferenceAction.init()}" immediate="true" execute="@this" />
+						<rich:menuSeparator />
 						<rich:menuItem label="Logout" action="#{userAction.logoff()}" immediate="true" />
 					</rich:dropDownMenu>
 				</rich:toolbar>

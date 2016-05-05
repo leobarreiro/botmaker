@@ -88,6 +88,7 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 	}
 
 	private void loadOptions() {
+		userPreferencesAction.loadPreferences();
 		filter = new ValidatorFilter();
 		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
 	}

@@ -20,7 +20,7 @@ import org.javaleo.libs.jee.core.model.IEntityBasic;
 public class UserPreference implements IEntityBasic {
 
 	public enum PrefsType {
-		STRING, INTEGER, FLOAT;
+		STRING, INTEGER, FLOAT, BOOLEAN;
 	}
 
 	private static final long serialVersionUID = 6604293256169464271L;

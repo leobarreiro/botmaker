@@ -38,13 +38,13 @@
 		<script type="text/javascript">
 			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
 			    mode: "groovy",
-			    theme: "#{userPreferenceAction.nameScriptingTheme}", 
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 			    lineNumbers: true, 
 			    readOnly: true, 
 			    indentWithTabs: true, 
 			});
 	
-			readonlyCodeMirror.setSize('100%', 150);
+			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		</script>
 
 	</ui:define>

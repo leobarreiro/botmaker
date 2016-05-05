@@ -36,13 +36,6 @@
 						<f:selectItem itemValue="#{null}" itemLabel="None" />
 						<f:selectItems value="#{commandAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
 					</h:selectOneMenu>
-					<h:panelGroup layout="block" styleClass="themeBox">
-						<h:outputLabel styleClass="explain" value="Theme" />
-						<h:selectOneMenu value="#{userPreferenceAction.nameScriptingTheme}">
-							<f:selectItems value="#{userPreferenceAction.themeOpt}" />
-							<f:ajax event="change" listener="#{userPreferenceAction.saveScriptingTheme()}" onevent="changeScriptTheme(this.value)" />
-						</h:selectOneMenu>
-					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
@@ -61,15 +54,12 @@
 		<script type="text/javascript">
 			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
 			    mode: "groovy",
-			    theme: "#{userPreferenceAction.nameScriptingTheme}",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 			    lineNumbers: true, 
 			    indentWithTabs: true, 
 			    lineWrapping: true
 			});
-			scriptEditor.setSize('100%', 360);
-			function changeScriptTheme(themePref) {
-				scriptEditor.setOption("theme", themePref);
-			}
+			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		</script>
 
 	</ui:define>
