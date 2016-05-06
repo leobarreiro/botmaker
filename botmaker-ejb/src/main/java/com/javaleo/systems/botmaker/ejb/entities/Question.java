@@ -13,9 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
-import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
@@ -35,6 +35,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	private String successMessage;
 	private String varName;
 	private Boolean processAnswer;
+	private ParseMode parseMode;
 	private ScriptType scriptType;
 	private String postProcessScript;
 	private Integer order;
@@ -61,8 +62,9 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.instruction = instruction;
 	}
 
+	@NotNull
 	@ManyToOne()
-	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", foreignKey = @ForeignKey(name = "fk_question_validator"), nullable = true)
+	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", foreignKey = @ForeignKey(name = "fk_question_validator"), nullable = false)
 	public Validator getValidator() {
 		return validator;
 	}
@@ -117,6 +119,16 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	}
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "parse_mode", length = 20, nullable = true)
+	public ParseMode getParseMode() {
+		return parseMode;
+	}
+
+	public void setParseMode(ParseMode parseMode) {
+		this.parseMode = parseMode;
+	}
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "script_type", length = 30)
 	public ScriptType getScriptType() {
 		return scriptType;
@@ -153,7 +165,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	public void setCommand(Command command) {
 		this.command = command;
 	}
-	
+
 	@Override
 	public int compareTo(Question o) {
 		if (this.getOrder() != null && o.getOrder() != null) {
@@ -178,6 +190,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
 		result = prime * result + ((options == null) ? 0 : options.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
 		result = prime * result + ((postProcessScript == null) ? 0 : postProcessScript.hashCode());
 		result = prime * result + ((processAnswer == null) ? 0 : processAnswer.hashCode());
 		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
@@ -225,6 +238,8 @@ public class Question implements IEntityBasic, Comparable<Question> {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
+			return false;
+		if (parseMode != other.parseMode)
 			return false;
 		if (postProcessScript == null) {
 			if (other.postProcessScript != null)

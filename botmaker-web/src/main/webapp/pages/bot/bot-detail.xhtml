@@ -50,9 +50,21 @@
 					<f:facet name="header">Command</f:facet>
 					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{cmd.key}" />
 				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Post Process</f:facet>
+					<h:outputText value="#{(cmd.postProcess eq true) ? 'Yes' : 'No'}" styleClass="#{(cmd.postProcess eq true) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Parse Mode</f:facet>
+					<h:outputText value="#{cmd.parseMode}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Script Type</f:facet>
+					<h:outputText value="#{cmd.postProcessScriptType}" />
+				</rich:column>
 				<rich:column>
-					<h:outputText value="#{cmd.shortDescription}" />
 					<f:facet name="header">Description</f:facet>
+					<h:outputText value="#{cmd.shortDescription}" />
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>

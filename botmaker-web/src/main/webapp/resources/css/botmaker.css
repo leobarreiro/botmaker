@@ -228,6 +228,22 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	margin: auto;
 }
 
+.wd100 {
+	width: 100px !important;
+}
+
+.wd200 {
+	width: 150px !important;
+}
+
+.wd200 {
+	width: 200px !important;
+}
+
+.wd250 {
+	width: 250px !important;
+}
+
 .pc5 {
 	width: 5% !important;
 }

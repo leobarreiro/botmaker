@@ -33,7 +33,7 @@ public class TelegramSendMessageUtils implements Serializable {
 	private Logger LOG;
 
 	@Asynchronous
-	public void sendSimpleMessage(Bot bot, Dialog dialog, String plainText) {
+	public void sendSimpleMessage(Bot bot, Dialog dialog, String plainText, ParseMode parseMode) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(dialog.getId());
 		if (StringUtils.isBlank(plainText)) {
@@ -42,7 +42,7 @@ public class TelegramSendMessageUtils implements Serializable {
 		}
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
 		String text = new String(textBytes, StandardCharsets.UTF_8);
-		request.setParseMode(ParseMode.HTML);
+		request.setParseMode(parseMode);
 		ReplyKeyboardHide keyboardHide = new ReplyKeyboardHide();
 		keyboardHide.setHideKeyboard(true);
 		keyboardHide.setSelective(false);
@@ -56,7 +56,7 @@ public class TelegramSendMessageUtils implements Serializable {
 	}
 
 	@Asynchronous
-	public void sendMessageWithOptions(Bot bot, Dialog dialog, String plainText, List<List<String>> options) {
+	public void sendMessageWithOptions(Bot bot, Dialog dialog, String plainText, ParseMode parseMode, List<List<String>> options) {
 		SendMessageRequest request = new SendMessageRequest();
 		request.setChatId(dialog.getId());
 		byte[] textBytes = plainText.getBytes(StandardCharsets.ISO_8859_1);
@@ -67,7 +67,7 @@ public class TelegramSendMessageUtils implements Serializable {
 		replyKey.setResizeKeyboard(true);
 		replyKey.setSelective(false);
 		request.setKeyboard(replyKey);
-		request.setParseMode(ParseMode.HTML);
+		request.setParseMode(parseMode);
 		request.setText(text);
 		try {
 			sendMessage(bot.getToken(), request);

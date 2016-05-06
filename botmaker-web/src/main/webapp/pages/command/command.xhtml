@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h1 class="pc90">Command</h1>
@@ -24,19 +24,23 @@
 				<h:outputLabel value="Short Description" styleClass="txtop" />
 				<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="2" styleClass="pc70" />
 			</h:panelGroup>
-
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answers" />
 				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
-				<h:panelGroup layout="block" styleClass="frm-multicell">
-					<h:selectOneMenu value="#{commandAction.command.postProcessScriptType}" immediate="true">
-						<f:selectItem itemValue="#{null}" itemLabel="None" />
-						<f:selectItems value="#{commandAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-					</h:selectOneMenu>
-				</h:panelGroup>
+				<h:selectOneMenu value="#{commandAction.command.postProcessScriptType}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:selectOneMenu value="#{commandAction.command.parseMode}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />

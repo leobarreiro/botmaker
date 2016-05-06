@@ -30,7 +30,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	@Inject
 	private IBotMakerFacade facade;
-	
+
 	@Inject
 	private UserPreferenceAction userPreferenceAction;
 
@@ -41,7 +41,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private Command command;
 	private List<Command> commands;
 	private List<Question> questions;
-	private List<ScriptType> scriptTypeOpt;
 	private Bot bot;
 
 	@Override
@@ -53,7 +52,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
-		loadOptions();
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
@@ -61,7 +59,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String list() {
 		startOrResumeConversation();
 		search();
-		loadOptions();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
@@ -71,7 +68,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = pojo;
-		loadOptions();
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
@@ -87,7 +83,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String save() {
 		try {
 			facade.saveCommand(command);
-			msgAction.addMessage(MessageType.INFO, "Comando salvo corretamente");
+			msgAction.addMessage(MessageType.INFO, "Command saved");
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
@@ -98,10 +94,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		facade.dropCommand(command);
 		search();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
-	}
-
-	private void loadOptions() {
-		this.scriptTypeOpt = Arrays.asList(ScriptType.values());
 	}
 
 	@Override
@@ -133,14 +125,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		this.bot = bot;
 	}
 
-	public List<ScriptType> getScriptTypeOpt() {
-		return scriptTypeOpt;
-	}
-
-	public void setScriptTypeOpt(List<ScriptType> scriptTypeOpt) {
-		this.scriptTypeOpt = scriptTypeOpt;
-	}
-
 	public List<Question> getQuestions() {
 		return questions;
 	}
@@ -149,5 +133,4 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		this.questions = questions;
 	}
 
-	
 }

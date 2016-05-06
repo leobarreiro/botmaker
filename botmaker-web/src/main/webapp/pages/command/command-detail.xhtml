@@ -33,6 +33,10 @@
 				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="gray txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="gray txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
 				<h:panelGroup layout="block" styleClass="scripting">
 					<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
@@ -67,13 +71,21 @@
 					<f:facet name="header">Validator</f:facet>
 					<h:outputText value="#{qst.validator.name}" />
 				</rich:column>
-				<rich:column styleClass="pc10">
+				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Var Name</f:facet>
 					<h:outputText value="#{qst.varName}" />
 				</rich:column>
-				<rich:column styleClass="pc15">
+				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Post Process Answer</f:facet>
 					<h:outputText value="#{(qst.processAnswer eq true) ? 'Yes' : 'No'}" styleClass="#{(qst.processAnswer eq true) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Parse Mode</f:facet>
+					<h:outputText value="#{qst.parseMode}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Script Type</f:facet>
+					<h:outputText value="#{qst.scriptType.descriptor}" />
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>

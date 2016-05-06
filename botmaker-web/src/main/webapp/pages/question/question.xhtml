@@ -41,7 +41,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
-				<h:inputText value="#{questionAction.question.varName}" styleClass="wdt200" />
+				<h:inputText value="#{questionAction.question.varName}" styleClass="wd150" maxlength="20" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
@@ -49,12 +49,17 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
-				<h:panelGroup layout="block" styleClass="frm-multicell">
-					<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
-						<f:selectItem itemValue="#{null}" itemLabel="None" />
-						<f:selectItems value="#{questionAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-					</h:selectOneMenu>
-				</h:panelGroup>
+				<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:selectOneMenu value="#{questionAction.question.parseMode}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />

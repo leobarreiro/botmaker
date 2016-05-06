@@ -49,6 +49,10 @@
 				<h:outputText value="#{(questionAction.question.scriptType ne null) ? questionAction.question.scriptType.descriptor : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
 				<h:panelGroup layout="block" styleClass="scripting">
 					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />

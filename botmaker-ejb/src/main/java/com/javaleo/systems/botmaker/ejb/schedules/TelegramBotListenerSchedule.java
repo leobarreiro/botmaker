@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Update;
 import org.javaleo.libs.botgram.response.GetUpdatesResponse;
@@ -160,7 +161,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			}
 			if (dialog.getLastQuestion().getProcessAnswer()) {
 				questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
-				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer());
+				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer(), dialog.getLastQuestion().getParseMode());
 			}
 			Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
 			if (nextQuestion != null) {
@@ -183,7 +184,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	private void breakDialog(Bot bot, Dialog dialog, String userText) {
 		if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
-			sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage());
+			sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage(), ParseMode.HTML);
 		}
 		managerUtils.removeDialog(bot, dialog);
 	}
@@ -192,9 +193,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 		if (dialog.getLastQuestion() != null) {
 			if (dialog.getLastQuestion().getValidator().getScriptType().isSetOfOptions()) {
 				List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
-				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), options);
+				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getParseMode(), options);
 			} else {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction());
+				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getParseMode());
 			}
 		}
 	}
@@ -203,9 +204,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 		if (dialog.isPendingServer() && StringUtils.isNotBlank(bot.getUnknownCommadMessage())) {
 			List<List<String>> options = getAvailableCommands(bot);
 			if (options.isEmpty()) {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getUnknownCommadMessage());
+				sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getUnknownCommadMessage(), ParseMode.HTML);
 			} else {
-				sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getUnknownCommadMessage(), options);
+				sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getUnknownCommadMessage(), ParseMode.HTML, options);
 			}
 		}
 	}
@@ -213,11 +214,11 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void endOfCommand(Bot bot, Dialog dialog) {
 		if (dialog.getLastCommand().getPostProcess()) {
 			commandBusiness.postProcessCommand(dialog, dialog.getLastCommand());
-			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult());
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult(), dialog.getLastCommand().getParseMode());
 		}
 		List<List<String>> options = getAvailableCommands(bot);
 		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {
-			sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getEndOfDialogMessage(), options);
+			sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getEndOfDialogMessage(), ParseMode.HTML, options);
 		}
 		dialog.setFinish(true);
 		dialog.setPendingServer(false);
@@ -225,13 +226,13 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	private void errorFormat(Bot bot, Dialog dialog) {
 		if (StringUtils.isNotBlank(dialog.getLastQuestion().getErrorFormatMessage())) {
-			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getErrorFormatMessage());
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getErrorFormatMessage(), ParseMode.HTML);
 		}
 	}
 
 	private void successAnswer(Bot bot, Dialog dialog) {
 		if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
-			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getSuccessMessage());
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getSuccessMessage(), ParseMode.HTML);
 		}
 	}
 
