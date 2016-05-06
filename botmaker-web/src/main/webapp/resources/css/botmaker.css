@@ -388,3 +388,11 @@ textarea[disabled].script {
 	padding: 4px;
 	text-align: center;
 }
+
+.statPane {
+	margin: auto;
+	width: 200px;
+	height: 100px;
+	display: block;
+	border: 1px solid green;
+}

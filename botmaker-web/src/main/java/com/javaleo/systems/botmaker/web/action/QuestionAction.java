@@ -35,7 +35,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	@Inject
 	private UserPreferenceAction userPreferencesAction;
-	
+
 	@Inject
 	private MsgAction msgAction;
 
@@ -92,7 +92,6 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			commandAction.setQuestions(facade.listQuestionsFromCommand(command));
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			msgAction.showInDialog();
 		}
 	}
 

@@ -2,14 +2,11 @@ package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
-
 @Named
-@SessionScoped
+@ConversationScoped
 public class MsgAction implements Serializable {
 
 	private static final long serialVersionUID = -8826748452551615678L;
@@ -20,18 +17,12 @@ public class MsgAction implements Serializable {
 
 	private String msg;
 	private MessageType type;
-	private String titleModal;
+	private boolean mustShow;
 
 	public void addMessage(MessageType type, String msg) {
 		this.type = type;
 		this.msg = msg;
-		if (isError()) {
-			titleModal = "Erro";
-		} else if (isWarn()) {
-			titleModal = "Atenção";
-		} else {
-			titleModal = "Informação";
-		}
+		this.mustShow = true;
 	}
 
 	public void clear() {
@@ -50,32 +41,9 @@ public class MsgAction implements Serializable {
 		return (type != null && type.equals(MessageType.INFO));
 	}
 
-	public boolean hasMsg() {
-		return (StringUtils.isNotBlank(msg));
-	}
-
-	public void show() {
-		if (hasMsg()) {
-			
-			//RequestContext.getCurrentInstance().execute("PF('msgDialog').show();");
-			clear();
-		}
-	}
-
-	public void showInDialog() {
-		if (hasMsg()) {
-			FacesMessage.Severity severity;
-			if (isError()) {
-				severity = FacesMessage.SEVERITY_ERROR;
-			} else if (isWarn()) {
-				severity = FacesMessage.SEVERITY_WARN;
-			} else {
-				severity = FacesMessage.SEVERITY_INFO;
-			}
-			FacesMessage facesMessage = new FacesMessage(severity, titleModal, msg);
-			//RequestContext.getCurrentInstance().showMessageInDialog(facesMessage);
-			clear();
-		}
+	public String showMsg() {
+		this.mustShow = false;
+		return msg;
 	}
 
 	public String getMsg() {
@@ -86,8 +54,16 @@ public class MsgAction implements Serializable {
 		return type;
 	}
 
-	public String getTitleModal() {
-		return titleModal;
+	public boolean isMustShow() {
+		return mustShow;
+	}
+
+	public void setMustShow(boolean mustShow) {
+		this.mustShow = mustShow;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 }

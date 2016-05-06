@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	 xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 	
 		<h1>Bot</h1>
@@ -50,7 +50,7 @@
 				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />
+				<a4j:commandButton value="Save Bot" action="#{botAction.save()}" styleClass="primary" render="notify" />
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 			</h:panelGroup>
 		</h:panelGroup>

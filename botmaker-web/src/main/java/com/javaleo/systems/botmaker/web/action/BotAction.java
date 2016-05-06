@@ -43,6 +43,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private List<Bot> bots;
 
 	public String startNew() {
+		msgAction.clear();
 		startNewConversation();
 		bot = new Bot();
 		filter = new BotFilter();
@@ -63,7 +64,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	public String save() {
 		try {
 			facade.saveBot(bot);
-			msgAction.addMessage(MessageType.INFO, "Bot salvo corretamente");
+			msgAction.addMessage(MessageType.INFO, "Bot saved");
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}

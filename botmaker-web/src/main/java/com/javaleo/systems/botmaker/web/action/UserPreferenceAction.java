@@ -12,6 +12,7 @@ import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference.PrefsType;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
+import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
@@ -30,6 +31,9 @@ public class UserPreferenceAction implements Serializable {
 
 	@Inject
 	private BotMakerCredentials credentials;
+
+	@Inject
+	private MsgAction msgAction;
 
 	private UserPreference scriptingTheme;
 	private UserPreference editorMaxWidthSize;
@@ -92,6 +96,7 @@ public class UserPreferenceAction implements Serializable {
 		facade.savePreference(credentials.getUser(), editorMaxHeightSize);
 		facade.savePreference(credentials.getUser(), editorMaxWidthSize);
 		facade.savePreference(credentials.getUser(), scriptingTheme);
+		msgAction.addMessage(MessageType.INFO, "Preferences saved");
 		return PAGE_PREFS;
 	}
 
