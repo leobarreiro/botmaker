@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.javaleo.libs.botgram.enums.ParseMode;
 
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Named
@@ -26,4 +27,8 @@ public class AuxAction implements Serializable {
 		return new ArrayList<ParseMode>(Arrays.asList(ParseMode.values()));
 	}
 
+	public List<AnswerType> getAnswerTypeOpt() {
+		return new ArrayList<AnswerType>(Arrays.asList(AnswerType.values()));
+	}
+	
 }

@@ -1,18 +1,28 @@
 package com.javaleo.systems.botmaker.ejb.standalone;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
+import com.javaleo.systems.botmaker.ejb.entities.EntityUtils;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 
 @Startup
@@ -21,6 +31,9 @@ public class StartupLoader implements IStartupLoader {
 
 	private static final long serialVersionUID = -903960922086627052L;
 
+	@Inject
+	private EntityManager entityManager;
+	
 	@Inject
 	private ICompanyBusiness companyBusiness;
 
@@ -32,6 +45,7 @@ public class StartupLoader implements IStartupLoader {
 
 	@Override
 	@PostConstruct
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void startVerification() {
 		try {
 			List<Company> companies = companyBusiness.listAllCompanies();
@@ -41,7 +55,6 @@ public class StartupLoader implements IStartupLoader {
 				company.setWebsite("http://javaleo.org");
 				company.setActive(true);
 				companyBusiness.saveCompany(company);
-
 				List<User> users = userBusiness.listAllUsers();
 				if (users == null || users.isEmpty()) {
 					User user = new User();
@@ -54,10 +67,40 @@ public class StartupLoader implements IStartupLoader {
 					String passwd = "admin@123";
 					userBusiness.saveUser(user, passwd);
 				}
-
+				mountCompanyRootDirectory(company.getId());
+			} else {
+				for (Company c : companies) {
+					mountCompanyRootDirectory(c.getId());
+				}
 			}
+			
+			String jpqlAnswerType = "UPDATE botmaker.question SET answer_type = \'STRING\' WHERE answer_type IS NULL";
+			Query qrAnswerType = entityManager.createNativeQuery(jpqlAnswerType);
+			qrAnswerType.executeUpdate();
+			
+			String jpqlParseMode = "UPDATE botmaker.question SET parse_mode = \'HTML\' WHERE parse_mode IS NULL";
+			Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
+			qrParseMode.executeUpdate();
+			
+
 		} catch (BusinessException e) {
 			LOG.warn(e.getMessage());
 		}
 	}
+
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	private void mountCompanyRootDirectory(Long idCompany) {
+		StringBuilder str = new StringBuilder(System.getProperty("botmaker.companies.dir"));
+		str.append(File.separator);
+		str.append(idCompany);
+		File file = new File(str.toString());
+		if (!file.exists()) {
+			try {
+				FileUtils.forceMkdir(file);
+			} catch (IOException e) {
+				LOG.error(e.getMessage());
+			}
+		}
+	}
+
 }

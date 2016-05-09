@@ -67,7 +67,11 @@
 					<f:facet name="header">Question</f:facet>
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
 				</rich:column>
-				<rich:column styleClass="pc20 txctr">
+				<rich:column styleClass="pc15 txctr">
+					<f:facet name="header">Answer Type</f:facet>
+					<h:outputText value="#{qst.answerType}" />
+				</rich:column>
+				<rich:column styleClass="pc15 txctr">
 					<f:facet name="header">Validator</f:facet>
 					<h:outputText value="#{qst.validator.name}" />
 				</rich:column>

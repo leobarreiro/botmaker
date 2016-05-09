@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
@@ -29,6 +30,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	private Long id;
 	private String instruction;
+	private AnswerType answerType;
 	private Validator validator;
 	private String options;
 	private String errorFormatMessage;
@@ -60,6 +62,16 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "answer_type", length = 20)
+	public AnswerType getAnswerType() {
+		return answerType;
+	}
+
+	public void setAnswerType(AnswerType answerType) {
+		this.answerType = answerType;
 	}
 
 	@NotNull
@@ -184,17 +196,12 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((answerType == null) ? 0 : answerType.hashCode());
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
-		result = prime * result + ((errorFormatMessage == null) ? 0 : errorFormatMessage.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
-		result = prime * result + ((options == null) ? 0 : options.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
 		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
-		result = prime * result + ((postProcessScript == null) ? 0 : postProcessScript.hashCode());
-		result = prime * result + ((processAnswer == null) ? 0 : processAnswer.hashCode());
-		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
-		result = prime * result + ((successMessage == null) ? 0 : successMessage.hashCode());
 		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		result = prime * result + ((varName == null) ? 0 : varName.hashCode());
 		return result;
@@ -209,15 +216,12 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		if (getClass() != obj.getClass())
 			return false;
 		Question other = (Question) obj;
+		if (answerType != other.answerType)
+			return false;
 		if (command == null) {
 			if (other.command != null)
 				return false;
 		} else if (!command.equals(other.command))
-			return false;
-		if (errorFormatMessage == null) {
-			if (other.errorFormatMessage != null)
-				return false;
-		} else if (!errorFormatMessage.equals(other.errorFormatMessage))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -229,34 +233,12 @@ public class Question implements IEntityBasic, Comparable<Question> {
 				return false;
 		} else if (!instruction.equals(other.instruction))
 			return false;
-		if (options == null) {
-			if (other.options != null)
-				return false;
-		} else if (!options.equals(other.options))
-			return false;
 		if (order == null) {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
 			return false;
 		if (parseMode != other.parseMode)
-			return false;
-		if (postProcessScript == null) {
-			if (other.postProcessScript != null)
-				return false;
-		} else if (!postProcessScript.equals(other.postProcessScript))
-			return false;
-		if (processAnswer == null) {
-			if (other.processAnswer != null)
-				return false;
-		} else if (!processAnswer.equals(other.processAnswer))
-			return false;
-		if (scriptType != other.scriptType)
-			return false;
-		if (successMessage == null) {
-			if (other.successMessage != null)
-				return false;
-		} else if (!successMessage.equals(other.successMessage))
 			return false;
 		if (validator == null) {
 			if (other.validator != null)

@@ -58,7 +58,10 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Override
 	public Command getCommandByBotAndKey(Bot bot, String text) {
-		String clearText = StringUtils.lowerCase(text.replaceAll("/", ""));
+		String clearText = StringUtils.lowerCase(StringUtils.replace(text, "/", ""));
+		if (clearText == null) {
+			return null;
+		}
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
 		Root<Command> fromCommand = cq.from(Command.class);

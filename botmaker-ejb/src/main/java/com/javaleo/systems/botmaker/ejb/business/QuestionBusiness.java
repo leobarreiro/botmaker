@@ -17,10 +17,13 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.model.Document;
+import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
@@ -117,22 +120,30 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public boolean validateAnswer(Dialog dialog, Question question, Answer answer) {
-		if (question.getValidator() == null || question.getValidator().getScriptType() == null) {
-			return true;
+		if (question.getAnswerType().equals(AnswerType.PHOTO)) {
+			List<PhotoSize> photoSizes = dialog.getLastUpdate().getMessage().getPhotosizes();
+			return (photoSizes != null && !photoSizes.isEmpty());
+		} else if (question.getAnswerType().equals(AnswerType.DOCUMENT)) {
+			Document document = dialog.getLastUpdate().getMessage().getDocument();
+			return (document != null && document.getSize() > 0);
 		} else {
-			if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
-				Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
-				Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
-				return m.matches();
-			} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
-				Binding binding = new Binding();
-				binding.setVariable("bmIdChat", dialog.getId());
-				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
-				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
-				binding.setVariable(answer.getQuestion().getVarName(), answer.getAnswer());
-				return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
-			} else {
+			if (question.getValidator() == null || question.getValidator().getScriptType() == null) {
 				return true;
+			} else {
+				if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
+					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
+					Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
+					return m.matches();
+				} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
+					Binding binding = new Binding();
+					binding.setVariable("bmIdChat", dialog.getId());
+					binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
+					binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
+					binding.setVariable(answer.getQuestion().getVarName(), answer.getAnswer());
+					return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+				} else {
+					return true;
+				}
 			}
 		}
 	}

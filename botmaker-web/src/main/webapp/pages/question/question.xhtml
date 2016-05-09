@@ -25,6 +25,13 @@
 				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Answer Type" />
+				<h:selectOneMenu value="#{questionAction.question.answerType}" converter="#{entityConverter}">
+					<f:selectItem itemValue="#{null}" itemLabel="Select..." />
+					<f:selectItems value="#{auxAction.answerTypeOpt}" var="atOpt" itemValue="#{atOpt}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
 				<h:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
 					<f:selectItem itemValue="#{null}" itemLabel="Select..." />
