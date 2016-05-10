@@ -2,9 +2,7 @@ package com.javaleo.systems.botmaker.ejb.enums;
 
 public enum ScriptType {
 
-	SET("Set of Options"), REGEXP("Simple Regexp"), GROOVY("Groovy")
-	// ,JAVASCRIPT("Javascript"), PYTHON("Python")
-	;
+	NONE("None"), SET("Set of Options"), REGEXP("Simple Regexp"), GROOVY("Groovy");
 
 	private ScriptType(String descriptor) {
 		this.descriptor = descriptor;

@@ -3,6 +3,7 @@ package com.javaleo.systems.botmaker.ejb.pojos;
 import java.io.Serializable;
 
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 
 public class Answer implements Serializable {
 
@@ -12,6 +13,9 @@ public class Answer implements Serializable {
 	private String varName;
 	private String postProcessedAnswer;
 	private String answer;
+	private AnswerType answerType;
+	private String url;
+	private String fileId;
 	private boolean accepted;
 
 	public Question getQuestion() {
@@ -44,6 +48,30 @@ public class Answer implements Serializable {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public AnswerType getAnswerType() {
+		return answerType;
+	}
+
+	public void setAnswerType(AnswerType answerType) {
+		this.answerType = answerType;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public boolean isAccepted() {

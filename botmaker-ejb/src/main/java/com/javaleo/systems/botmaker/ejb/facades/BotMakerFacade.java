@@ -55,6 +55,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * @return
 	 * @see com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness#listAllCompanies()
 	 */
+	@Override
 	public List<Company> listAllCompanies() {
 		return companyBusiness.listAllCompanies();
 	}
@@ -64,6 +65,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * @throws BusinessException
 	 * @see com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness#saveCompany(com.javaleo.systems.botmaker.ejb.entities.Company)
 	 */
+	@Override
 	public void saveCompany(Company company) throws BusinessException {
 		companyBusiness.saveCompany(company);
 	}
@@ -82,6 +84,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * @throws BusinessException
 	 * @see com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness#deactivateCompany(com.javaleo.systems.botmaker.ejb.entities.Company)
 	 */
+	@Override
 	public void deactivateCompany(Company company) throws BusinessException {
 		companyBusiness.deactivateCompany(company);
 	}
@@ -259,6 +262,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#listPreferencesByUser(com.javaleo.systems.botmaker.ejb
 	 * .entities.User)
 	 */
+	@Override
 	public List<UserPreference> listPreferencesByUser(User user) {
 		return userPreferenceBusiness.listPreferencesByUser(user);
 	}
@@ -270,6 +274,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#getPreferenceByUserAndName(com.javaleo.systems.botmaker
 	 * .ejb.entities.User, java.lang.String)
 	 */
+	@Override
 	public UserPreference getPreferenceByUserAndName(User user, String name) {
 		return userPreferenceBusiness.getPreferenceByUserAndName(user, name);
 	}
@@ -281,6 +286,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#savePreference(com.javaleo.systems.botmaker.ejb.entities
 	 * .User, com.javaleo.systems.botmaker.ejb.entities.UserPreference)
 	 */
+	@Override
 	public void savePreference(User user, UserPreference userPreference) {
 		userPreferenceBusiness.savePreference(user, userPreference);
 	}
@@ -292,6 +298,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#removePreference(com.javaleo.systems.botmaker.ejb.entities
 	 * .UserPreference)
 	 */
+	@Override
 	public void removePreference(UserPreference userPreference) {
 		userPreferenceBusiness.removePreference(userPreference);
 	}

@@ -7,6 +7,7 @@ import javax.ejb.Local;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
@@ -137,7 +138,7 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#listPreferencesByUser(com.javaleo.systems.botmaker.ejb.entities.User)
 	 */
 	List<UserPreference> listPreferencesByUser(User user);
-	
+
 	/**
 	 * @param user
 	 * @param name
@@ -160,5 +161,11 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness#removePreference(com.javaleo.systems.botmaker.ejb.entities.UserPreference)
 	 */
 	void removePreference(UserPreference userPreference);
-	
+
+	List<Company> listAllCompanies();
+
+	void saveCompany(Company company) throws BusinessException;
+
+	void deactivateCompany(Company company) throws BusinessException;
+
 }
