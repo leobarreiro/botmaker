@@ -1,0 +1,32 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.9
+-- Dumped by pg_dump version 9.3.9
+-- Started on 2016-05-02 13:51:35
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = botmaker, pg_catalog;
+
+--
+-- TOC entry 1968 (class 0 OID 117237)
+-- Dependencies: 171
+-- Data for Name: bot; Type: TABLE DATA; Schema: botmaker; Owner: botmaker
+--
+
+INSERT INTO bot VALUES (1, true, 'TELEGRAM', 'Bot em manutencao', 'Ok! Ficamos felizes em ajudar voce. Volte sempre que quiser.', '@DatamedBot', '117715702:AAGriUujd6u9EirJ70tDXLGKWzXmQy4TQg8', 'Comando nao reconhecido. Utilize a lista de comandos validos deste bot.', NULL, true);
+
+
+-- Completed on 2016-05-02 13:51:35
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -13,8 +13,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.javaleo.libs.botgram.model.Update;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -23,8 +25,11 @@ import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 @Singleton
 @ApplicationScoped
 public class ManagerUtils implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private Logger LOG;
 
 	private ConcurrentMap<Long, Set<Update>> botUpdatesMap;
 	private ConcurrentMap<Long, AtomicInteger> lastUpdateIdMap;
@@ -60,7 +65,7 @@ public class ManagerUtils implements Serializable {
 		} else {
 			botUpdatesMap.put(bot.getId(), new HashSet<Update>(updates));
 		}
-		lastUpdateIdMap.put(bot.getId(), new AtomicInteger((int) getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId()))));
+		lastUpdateIdMap.put(bot.getId(), new AtomicInteger(getMaxIdFromUpdatesList(botUpdatesMap.get(bot.getId()))));
 	}
 
 	private Integer getMaxIdFromUpdatesList(Set<Update> updates) {
@@ -117,7 +122,7 @@ public class ManagerUtils implements Serializable {
 	public void updateDialogToBot(Bot bot, Dialog dialog) {
 		Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(bot.getId()));
 		for (Dialog d : dialogs) {
-			if (d.getIdChat() == dialog.getIdChat()) {
+			if (d.getId() == dialog.getId()) {
 				dialogs.remove(d);
 				dialogs.add(dialog);
 				break;
@@ -126,7 +131,7 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public synchronized void removeFinishedDialog(Bot bot, Dialog dialog) {
+	public void removeDialog(Bot bot, Dialog dialog) {
 		if (dialogsPerBotMap.containsKey(bot.getId())) {
 			dialogsPerBotMap.get(bot.getId()).remove(dialog);
 		}

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Validator</h2>
 
-		<p:fieldset styleClass="frm-crud pc70">
+		<rich:panel styleClass="frm-crud pc70">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:inputText value="#{validatorAction.validator.name}" immediate="true" />
-			</h:panelGroup>		
+				<h:inputText value="#{validatorAction.validator.name}" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Description" styleClass="txtop" />
-				<h:inputTextarea value="#{validatorAction.validator.description}" immediate="true" styleClass="pc80" rows="3" />
+				<h:inputTextarea value="#{validatorAction.validator.description}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />
@@ -21,16 +21,29 @@
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:panelGrid columns="1">
-					<h:outputText value="Validator scripts must return a boolean value (true or false)" />
-					<h:inputTextarea value="#{validatorAction.validator.scriptCode}" styleClass="pc100" rows="8" />
-				</h:panelGrid>
+				<h:outputLabel value="Script Code" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:outputText styleClass="explain" value="Validator scripts must return a boolean value (true or false)" />
+					<ui:include src="/pages/aux/defaultvars.xhtml" />
+					<h:inputTextarea id="scriptCode" value="#{validatorAction.validator.scriptCode}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
-				<p:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
+				<h:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
+				<h:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
+
+		<script type="text/javascript">
+			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    indentWithTabs: true,
+			    lineWrapping: true 
+			});
+			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+		</script>
+
 	</ui:define>
 </ui:composition>

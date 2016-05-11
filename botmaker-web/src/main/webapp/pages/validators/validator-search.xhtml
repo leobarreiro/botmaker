@@ -1,56 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Search Validators</h2>
-		<p:fieldset legend="Filter" styleClass="frm-crud">
+
+		<rich:panel legend="Filter" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
-				<h:outputText value="Name" />
+				<h:outputText styleClass="txt" value="Name" />
 				<h:inputText value="#{validatorAction.filter.name}" />
-				<h:outputText value="Type" />
+				<h:outputText styleClass="txt" value="Type" />
 				<h:selectOneMenu value="#{validatorAction.filter.scriptType}">
-					<f:selectItem value="#{null}" itemValue="#{null}"
-						itemLabel="All of them" />
-					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}"
-						var="snpOpt" itemLabel="#{snpOpt.descriptor}"
-						itemValue="#{snpOpt}" />
+					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
+					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
-				<p:commandButton action="#{validatorAction.list()}" value="Search"
-					update="snippetsId" styleClass="primary" />
+				<h:commandButton action="#{validatorAction.list()}" value="Search" update="snippetsId" styleClass="primary" />
 			</h:panelGrid>
-		</p:fieldset>
+		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
-			<p:dataTable id="snippetsId" widgetVar="dtSnippets"
-				value="#{validatorAction.validators}" var="vdt" rows="20"
-				paginatorAlwaysVisible="false" paginatorPosition="bottom"
-				styleClass="pc100">
-				<p:column headerText="Id" sortBy="#{vdt.id}" styleClass="pc5 txctr">
+			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="10" styleClass="pc100">
+				<rich:column sortBy="#{vdt.id}" styleClass="pc5 txctr">
+					<f:facet name="header">Id</f:facet>
 					<h:outputText value="#{vdt.id}" />
-				</p:column>
-				<p:column headerText="Name" sortBy="#{vdt.name}"
-					styleClass="txlft pc10">
-					<h:commandLink action="#{validatorAction.detail(vdt)}"
-						value="#{vdt.name}" />
-				</p:column>
-				<p:column headerText="Description" sortBy="#{vdt.name}"
-					styleClass="txlft pc25">
+				</rich:column>
+				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc10">
+					<f:facet name="header">Mame</f:facet>
+					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" />
+				</rich:column>
+				<rich:column sortBy="#{vdt.description}" styleClass="txlft pc25">
+					<f:facet name="header">Description</f:facet>
 					<h:outputText value="#{vdt.shortDescription}" />
-				</p:column>
-				<p:column headerText="Type" sortBy="#{vdt.scriptType.descriptor}"
-					styleClass="pc10 txctr">
-					<h:outputText value="#{vdt.scriptType.descriptor}" />
-				</p:column>
-				<p:column headerText="RegExp / Options / Script Code"
-					sortBy="#{vdt.scriptCode}" styleClass="pc40">
+				</rich:column>
+				<rich:column sortBy="#{vdt.scriptCode}" styleClass="pc40">
+					<f:facet name="header">RegExp / Options / Script Code</f:facet>
 					<h:outputText value="#{vdt.codeResume()}" />
-				</p:column>
-			</p:dataTable>
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller fastStep="3" />
+				</f:facet>
+
+			</rich:dataTable>
+
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

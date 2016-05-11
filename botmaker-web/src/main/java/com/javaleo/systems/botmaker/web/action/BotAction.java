@@ -21,6 +21,8 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 @ConversationScoped
 public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 
+	private static final String CANCEL_KEY = "/cancel";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -43,8 +45,10 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private List<Bot> bots;
 
 	public String startNew() {
+		msgAction.clear();
 		startNewConversation();
 		bot = new Bot();
+		bot.setCancelKey(CANCEL_KEY);
 		filter = new BotFilter();
 		return "/pages/bot/bot1.jsf?faces-redirect=true";
 	}
@@ -62,8 +66,10 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 
 	public String save() {
 		try {
+			Bot botOld = facade.validateBotTelegram(bot.getToken());
+			bot.setName(botOld.getName());
 			facade.saveBot(bot);
-			msgAction.addMessage(MessageType.INFO, "Bot salvo corretamente");
+			msgAction.addMessage(MessageType.INFO, "Bot saved");
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}

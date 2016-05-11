@@ -16,8 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
@@ -34,10 +36,13 @@ public class Bot implements IEntityBasic {
 	private String token;
 	private BotType botType;
 	private Boolean active;
+	private String description;
 	private String closedBotMessage;
 	private String unknownCommadMessage;
 	private Boolean listCommands;
 	private String endOfDialogMessage;
+	private String cancelKey;
+	private String cancelMessage;
 	private Company company;
 	private List<Command> commands;
 
@@ -93,6 +98,15 @@ public class Bot implements IEntityBasic {
 		this.active = active;
 	}
 
+	@Column(name = "description", length = 255, nullable = true)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Column(name = "closed_message", length = 255)
 	public String getClosedBotMessage() {
 		return closedBotMessage;
@@ -111,7 +125,7 @@ public class Bot implements IEntityBasic {
 		this.unknownCommadMessage = unknownCommadMessage;
 	}
 
-	@Column(name="list_commands")
+	@Column(name = "list_commands")
 	public Boolean getListCommands() {
 		return listCommands;
 	}
@@ -120,12 +134,31 @@ public class Bot implements IEntityBasic {
 		this.listCommands = listCommands;
 	}
 
+	@Column(name = "end_of_dialog", length = 255, nullable = true)
 	public String getEndOfDialogMessage() {
 		return endOfDialogMessage;
 	}
 
 	public void setEndOfDialogMessage(String endOfDialogMessage) {
 		this.endOfDialogMessage = endOfDialogMessage;
+	}
+
+	@Column(name = "cancel_key", length = 40, nullable = true)
+	public String getCancelKey() {
+		return cancelKey;
+	}
+
+	public void setCancelKey(String cancelKey) {
+		this.cancelKey = cancelKey;
+	}
+
+	@Column(name = "cancel_message", length = 255, nullable = true)
+	public String getCancelMessage() {
+		return cancelMessage;
+	}
+
+	public void setCancelMessage(String cancelMessage) {
+		this.cancelMessage = cancelMessage;
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -147,29 +180,23 @@ public class Bot implements IEntityBasic {
 		this.commands = commands;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Transient
+	public String getMaskedToken() {
+		return StringUtils.overlay(token, "********************", 6, 40);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((active == null) ? 0 : active.hashCode());
 		result = prime * result + ((botType == null) ? 0 : botType.hashCode());
-		result = prime * result + ((closedBotMessage == null) ? 0 : closedBotMessage.hashCode());
-		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
-		result = prime * result + ((unknownCommadMessage == null) ? 0 : unknownCommadMessage.hashCode());
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -186,16 +213,6 @@ public class Bot implements IEntityBasic {
 			return false;
 		if (botType != other.botType)
 			return false;
-		if (closedBotMessage == null) {
-			if (other.closedBotMessage != null)
-				return false;
-		} else if (!closedBotMessage.equals(other.closedBotMessage))
-			return false;
-		if (company == null) {
-			if (other.company != null)
-				return false;
-		} else if (!company.equals(other.company))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -210,11 +227,6 @@ public class Bot implements IEntityBasic {
 			if (other.token != null)
 				return false;
 		} else if (!token.equals(other.token))
-			return false;
-		if (unknownCommadMessage == null) {
-			if (other.unknownCommadMessage != null)
-				return false;
-		} else if (!unknownCommadMessage.equals(other.unknownCommadMessage))
 			return false;
 		return true;
 	}

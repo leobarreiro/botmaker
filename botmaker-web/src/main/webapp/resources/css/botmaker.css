@@ -1,15 +1,43 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: Arial, Helvetica !important;;
-	font-size: 11pt;
+	font-family: Arial, Helvetica !important;
+	font-size: 12pt;
 	color: #000000;
 }
 
 body.page {
-	background-image: url("../img/botmaker-bck.png.jsf");
 	background-position: left top;
 	background-repeat: repeat-x;
+	overflow: auto;
+	margin: 0px;
+}
+
+div.head {
+	display: inline-block;
+	width: 100%;
+	height: 40px !important;
+	background-color: purple;
+	background-image: url("../img/botmaker-screen.png.jsf");
+	background-position: left top;
+	background-repeat: no-repeat;
+}
+
+div.head h1 {
+	width: 40% !important;
+	margin: 0px 0px 0px 220px !important;
+	display: block;
+	float: left;
+	font-size: 32pt;
+}
+
+div.head table.menubar {
+	margin: 4px 0px 0px 200px !important;
+	height: 30px !important;
+	width: 40% !important;
+	border: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
 }
 
 a {
@@ -17,137 +45,145 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #643c83;
+	color: purple;
 	display: block;
+	margin: auto;
+	width: 98% !important;
 }
 
 h1 {
 	font-size: 36px;
-	margin: 4px;
 }
 
 h2 {
 	font-size: 30px;
-	margin: 2px !important;
 }
 
 h3 {
 	font-size: 22px;
-	margin: 4px 2px 0px 2px !important;
-	padding: 4px !important;
 }
 
-/*input:not ([type] ), input[type="text"], input[type="password"]*/
-input {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 1.1em;
-	padding: 4px;
-	border-radius: 2px;
-	background: #ffffff none repeat scroll 0 0;
-	border: 1px solid #a1c4d8;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-	cursor: text;
-	transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-}
-
-.frm-crud, .frm-login {
-	margin: auto;
-	margin-top: 20px;
-	padding: 4px;
-}
-
-.ui-dialog {
-	padding: 4px;
-	border: 1px solid #c4c4c4;
-	border-radius: 12px;
-}
-
-.frm-crud {
-	border: 1px solid #643c83;
-	border-radius: 4px;
+input, select, textarea {
+	padding: 4pt !important;
+	font-size: 12pt !important;
 }
 
 .frm-login {
+	margin: auto;
+	margin-top: 20px;
+	padding: 4px;
 	width: 300px;
 	margin-top: 10px;
 	border: none;
 }
 
-.frm-login input {
-	display: block;
-	width: 96%;
-	padding: 6pt;
-	border: 1px solid #a1c4d8;
-	font-size: 16pt;
-	border-radius: 4px;
-}
-
 .frm-login label {
 	margin-top: 12pt;
 	display: block;
+	padding: 4pt !important;
+	font-size: 12pt !important;
 }
 
-.frm-login button {
-	margin-top: 14pt !important;
+.frm-login input {
+	width: 100% !important;
+	padding: 6pt !important;
+	font-size: 16pt !important;
+	border-radius: 4pt !important;
 }
 
-.frm-title, .ui-dialog-titlebar {
+.frm-login input[type="submit"] {
+	margin-top: 16pt !important;
+}
+
+.frm-crud {
+	width: 98% !important;
+	margin: auto !important;
+	margin-top: 6px !important;
+	padding: 0px !important;
+	border: 1px solid #DFA5A5 !important;
+}
+
+.frm-crud table.rf-dt {
+	width: 100% !important;
+}
+
+.frm-crud div.rf-p-b {
+	padding: 2px !important;
+}
+
+.frm-crud .frm-title {
 	padding: 2px;
 	margin: 0px 0px 4px 0px;
 	text-align: left;
-	font-size: 16px;
+	font-size: 14pt;
 	font-weight: bold;
 	color: #ffffff;
-	background-color: #643c83 !important;
-	border-radius: 4px !important;
+	background-color: purple !important;
+	border-radius: 0px !important;
 }
 
-.ui-dialog.ui-widget-content {
-	border-radius: 6px !important;
-}
-
-.ui-dialog-titlebar .ui-dialog-titlebar-close {
-	margin: 2px;
-}
-
-.ui-fieldset {
-	padding: 4px !important;
-}
-
-.ui-fieldset .ui-fieldset-legend {
-	color: #006699 !important;
-	padding: 8px !important;
-	border: none !important;
-	background: transparent !important;
-}
-
-.ui-datatable-tablewrapper {
-	border-radius: 8px !important;
-}
-
-.ui-datatable table {
-	border-collapse: separate !important;
-	table-layout: auto !important F;
+.frm-crud .frm-line {
+	display: inline-block;
+	margin: 2px !important;
+	padding: 1px;
 	width: 100%;
+	font-size: 11pt;
+	vertical-align: middle;
 }
 
-.frm-line {
-	padding: 4px;
-	margin: 4px;
-}
-
-.frm-line label {
+.frm-crud .frm-line label {
+	padding: 2pt !important;
+	font-size: 11pt !important;
 	display: inline-block;
 	float: left;
-	width: 15%;
+	width: 25%;
 	text-align: right;
-	margin-right: 12px;
-	color: gray !important;
-	font-style: italic !important;
+	margin-right: 8px;
+	color: purple;
 }
 
-.frm-line div, .frm-line table, .frm-line input, .frm-line textarea {
-	width: 80% !important;
+span.txt {
+	display: inline-block;
+	padding: 2pt !important;
+	font-size: 12pt !important;
+}
+
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
+	{
+	width: 70%;
+}
+
+.frm-line select {
+	
+}
+
+.frm-line input[type="checkbox"] {
+	margin-top: 6px !important;
+}
+
+.frm-line div.scripting {
+	display: inline-block;
+	width: 73%;
+	padding: 0px;
+	margin: 0px;
+}
+
+span.explain {
+	display: inline-block;
+	font-size: 11pt;
+	margin: 0px 0px 6px 0px;
+	color: gray;
+	font-style: italic;
+}
+
+.frm-line div div.themeBox {
+	float: right;
+	width: 25%;
+}
+
+.frm-line div.CodeMirror {
+	/*width: 100% !important;*/
+	
 }
 
 .frm-submit {
@@ -158,24 +194,30 @@ input {
 }
 
 input.primary, button.primary {
-	background: #54326f !important;
+	background: purple !important;
+	border: 1px solid purple !important;
 	color: #ffffff !important;
-	padding: 6px !important;
-	font-weight: bold;
+	padding: 6px 12px 6px 12px !important;
+	font-weight: normal !important;
 	border-radius: 4px !important;
 	text-shadow: none !important;
-	margin: 4px;
+	margin: 4px 6px 4px 6px !important;
+	cursor: default !important;
 }
 
 input.secondary, button.secondary {
-	padding: 6px !important;
+	background: #666666 !important;
+	border: 1px solid #666666 !important;
 	border-radius: 4px !important;
-	background: #cecece !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
 	margin: 4px;
+	padding: 6px !important;
 }
 
-button.primary:hover {
-	color: #ccffff !important;
+input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
+	{
+	color: yellow !important;
 }
 
 .required {
@@ -184,6 +226,22 @@ button.primary:hover {
 
 .mrauto {
 	margin: auto;
+}
+
+.wd100 {
+	width: 100px !important;
+}
+
+.wd200 {
+	width: 150px !important;
+}
+
+.wd200 {
+	width: 200px !important;
+}
+
+.wd250 {
+	width: 250px !important;
 }
 
 .pc5 {
@@ -234,8 +292,25 @@ button.primary:hover {
 	width: 100% !important;
 }
 
+textarea.script {
+	color: green !important;
+	font-family: monospace !important;
+	background-image: none !important;
+	background-color: #333333 !important;
+}
+
+textarea[disabled].script {
+	color: #222222 !important;
+	background-color: #888888 !important;
+	border: 1px solid purple !important;
+}
+
 .green {
 	color: green;
+}
+
+.blue {
+	color: blue;
 }
 
 .purple {
@@ -278,40 +353,62 @@ button.primary:hover {
 	margin-bottom: 4px !important;
 }
 
-div.head {
-	display: inline-block;
-	width: 100%;
-	height: 78px !important; background-image :
-	url("../img/botmaker-screen.png.jsf");
-	background-position: left top;
-	background-repeat: no-repeat;
-	background-image: url("../img/botmaker-screen.png.jsf");
+.rf-ddm-lbl-dec {
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	font-size: 11pt !important;
 }
 
-div.head h1 {
-	width: 40% !important;
-	margin: 0px 0px 0px 220px !important;
-	display: block;
-	float: left;
-	font-size: 32pt;
+.rf-ddm-lbl-dec:hover {
+	color: yellow !important;
 }
 
-div.head div.ui-menubar {
-	margin: 4px 0px 0px 0px !important;
-	height: 30px !important;
-	width: 40% !important;
-	display: block !important;
-	float: right !important;
+.rf-ddm-sel {
 	border: none !important;
 	background: transparent !important;
-	box-shadow: none !important;
 }
 
-div.head .ui-menu.ui-menubar.ui-widget.ui-widget-content.ui-corner-all.ui-helper-clearfix ul.ui-menu-list.ui-helper-reset li.ui-widget.ui-menuitem.ui-corner-all.ui-menu-parent a.ui-menuitem-link.ui-submenu-link.ui-corner-all span.ui-menuitem-text
-	{
+.rf-ddm-lbl-dec:hover {
+	background: transparent !important;
+}
+
+.rf-dt-shdr-c, .rf-dt-c, input, select, textarea, button, keygen,
+	isindex, legend, a {
+	font-size: 12pt !important;
+}
+
+.rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
+	background-color: purple !important;
+	border: 1px solid #FFFFFF !important;
+	font-size: 10pt !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	padding: 4px !important;
+	background-image: none !important;
+}
+
+.rf-dt-c-srt {
+	cursor: pointer;
 	color: #FFFFFF !important;
 }
 
-div.head div.ui-menubar ul {
-	float: right !important;
+.rf-dt-c-srt:hover {
+	color: #FFFFFF !important;
+}
+
+.rf-dt-shdr-c {
+	border: none !important;
+	background-color: purple !important;
+	background-image: none !important;
+	color: #FFFFFF;
+	padding: 4px;
+	text-align: center;
+}
+
+.statPane {
+	margin: auto;
+	width: 200px;
+	height: 100px;
+	display: block;
+	border: 1px solid green;
 }

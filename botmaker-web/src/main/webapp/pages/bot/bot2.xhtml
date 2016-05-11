@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	 xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h:panelGroup layout="block" styleClass="frm-crud pc70">
+	
+		<h1>Bot</h1>
+	
+		<h:panelGroup layout="block" styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Review information" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot Type" />
-				<h:outputText value="#{botAction.bot.botType.name}" />
+				<h:outputText styleClass="txt #{botAction.bot.botType.name eq 'Telegram' ? 'blue' : 'green'}" value="#{botAction.bot.botType.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Token" />
-				<h:outputText value="#{botAction.bot.token}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
@@ -24,11 +27,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="List commands when unknown command is received" />
@@ -36,10 +39,18 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" styleClass="pc80" rows="4" />
+				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" styleClass="pc70" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
+				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc70" readonly="true"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Cancel Message" styleClass="txtop" />
+				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton value="Save" action="#{botAction.save()}" styleClass="primary" />
+				<a4j:commandButton value="Save Bot" action="#{botAction.save()}" styleClass="primary" render="notify" />
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 			</h:panelGroup>
 		</h:panelGroup>

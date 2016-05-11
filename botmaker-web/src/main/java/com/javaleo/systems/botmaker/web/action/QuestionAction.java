@@ -1,6 +1,5 @@
 package com.javaleo.systems.botmaker.web.action;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -13,7 +12,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -34,6 +33,9 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private IBotMakerFacade facade;
 
 	@Inject
+	private UserPreferenceAction userPreferencesAction;
+
+	@Inject
 	private MsgAction msgAction;
 
 	@Inject
@@ -42,13 +44,13 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private Command command;
 	private Question question;
 	private List<Validator> validators;
-	private List<ScriptType> scriptTypeOpt;
 
 	public String startNew(Command command) {
 		startOrResumeConversation();
 		this.command = command;
 		this.question = new Question();
 		loadOptions();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
 
@@ -57,6 +59,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = question;
 		this.command = question.getCommand();
 		loadOptions();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
 	}
 
@@ -64,6 +67,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		this.question = question;
 		this.command = question.getCommand();
+		userPreferencesAction.loadPreferences();
 		return "/pages/question/question-detail.jsf?faces-redirect=true";
 	}
 
@@ -71,7 +75,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		try {
 			question.setCommand(this.command);
 			facade.saveQuestion(question);
-			msgAction.addMessage(MessageType.INFO, "Registro salvo corretamente");
+			msgAction.addMessage(MessageType.INFO, "Question saved");
 			return commandAction.detail(this.command);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
@@ -86,13 +90,21 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			commandAction.setQuestions(facade.listQuestionsFromCommand(command));
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			msgAction.showInDialog();
+		}
+	}
+
+	public void answerTypeListener() {
+		if (question.getAnswerType().equals(AnswerType.PHOTO) || question.getAnswerType().equals(AnswerType.DOCUMENT)) {
+			question.setValidator(null);
 		}
 	}
 
 	private void loadOptions() {
 		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
-		this.scriptTypeOpt = Arrays.asList(ScriptType.values());
+	}
+
+	public boolean getEnableValidator() {
+		return (question.getAnswerType().equals(AnswerType.STRING) || question.getAnswerType().equals(AnswerType.NUMERIC));
 	}
 
 	@Override
@@ -127,14 +139,6 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	public void setValidators(List<Validator> validators) {
 		this.validators = validators;
-	}
-
-	public List<ScriptType> getScriptTypeOpt() {
-		return scriptTypeOpt;
-	}
-
-	public void setScriptTypeOpt(List<ScriptType> scriptTypeOpt) {
-		this.scriptTypeOpt = scriptTypeOpt;
 	}
 
 }

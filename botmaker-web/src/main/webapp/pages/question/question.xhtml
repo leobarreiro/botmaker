@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
 		<h2>Question</h2>
 
-		<p:fieldset styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot / Command" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot" />
-				<h:outputText value="#{questionAction.command.bot.name}" />
+				<h:outputText styleClass="txt" value="#{questionAction.command.bot.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Command" />
-				<h:outputText value="#{questionAction.command.key}" />
+				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
 			</h:panelGroup>
-		</p:fieldset>
-		
-		<p:fieldset styleClass="frm-crud">
+		</rich:panel>
+
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.instruction}" styleClass="pc80" rows="3" />
+				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" styleClass="pc70" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Answer Type" />
+				<h:selectOneMenu value="#{questionAction.question.answerType}" converter="#{entityConverter}">
+					<f:selectItem itemValue="#{null}" itemLabel="Select..." />
+					<f:selectItems value="#{auxAction.answerTypeOpt}" var="atOpt" itemValue="#{atOpt}" />
+					<f:ajax event="change" listener="#{questionAction.answerTypeListener()}" execute="@this" render="validatorId" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
-				<h:selectOneMenu value="#{questionAction.question.validator}" converter="#{entityConverter}">
-					<f:selectItem itemValue="#{null}" itemLabel="Select..."/>
+				<h:selectOneMenu id="validatorId" value="#{questionAction.question.validator}" converter="#{entityConverter}" disabled="#{not questionAction.enableValidator}">
+					<f:selectItem itemValue="#{null}" itemLabel="None" />
 					<f:selectItems value="#{questionAction.validators}" var="snp" itemLabel="#{snp.name}" itemValue="#{snp}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" styleClass="pc80" rows="3" />
+				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Success Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.successMessage}" styleClass="pc80" rows="3" />
+				<h:inputTextarea value="#{questionAction.question.successMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
-				<h:inputText value="#{questionAction.question.varName}" />
+				<h:inputText value="#{questionAction.question.varName}" styleClass="wd150" maxlength="20" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
@@ -50,20 +58,41 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Type" />
 				<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
-					<f:selectItem itemValue="#{null}" itemLabel="None"/>
-					<f:selectItems value="#{questionAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:selectOneMenu value="#{questionAction.question.parseMode}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.postProcessScript}" styleClass="pc80" rows="8" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:outputText styleClass="explain" value="Question Post Scripts must return a String (that will be presented to final Users)" />
+					<ui:include src="/pages/aux/defaultvars.xhtml" />
+					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
+		</rich:panel>
 
-		</p:fieldset>
+		<script type="text/javascript">
+			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}",  
+			    lineNumbers: true, 
+			    indentWithTabs: true, 
+			    lineWrapping: true
+			});
+			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+		</script>
 
 	</ui:define>
 </ui:composition>

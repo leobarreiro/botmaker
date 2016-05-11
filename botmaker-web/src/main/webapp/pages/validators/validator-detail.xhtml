@@ -3,38 +3,49 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/default.xhtml"
+	xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
 		<h2>Validator Details</h2>
 
-		<p:fieldset styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{validatorAction.validator.name}" />
+				<h:outputText styleClass="txt" value="#{validatorAction.validator.name}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Description" styleClass="txtop" />
-				<h:outputText value="#{validatorAction.validator.description}"
-					styleClass="pc80" rows="3" />
+				<h:outputText styleClass="txt" value="#{validatorAction.validator.description}" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{validatorAction.validator.scriptType.descriptor}" styleClass="purple" />
+				<h:outputText styleClass="txt" value="#{validatorAction.validator.scriptType.descriptor}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:outputText value="#{validatorAction.validator.scriptCode}" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="postProcessScript" value="#{validatorAction.validator.scriptCode}" rows="4" readonly="true" styleClass="script" rendered="#{validatorAction.validator.scriptType ne null}" />
+					<h:outputText value="--" styleClass="purple txt" rendered="#{validatorAction.validator.scriptType eq null}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{validatorAction.cancel()}" value="Go Back"
-					styleClass="secondary" />
-				<h:commandButton action="#{validatorAction.edit()}" value="Edit"
-					styleClass="primary" />
+				<h:commandButton action="#{validatorAction.cancel()}" value="Go Back" styleClass="secondary" />
+				<h:commandButton action="#{validatorAction.edit()}" value="Edit" styleClass="primary" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
+
+		<script type="text/javascript">
+			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    readOnly: true, 
+			    indentWithTabs: true, 
+			});
+	
+			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+		</script>
 
 	</ui:define>
 </ui:composition>

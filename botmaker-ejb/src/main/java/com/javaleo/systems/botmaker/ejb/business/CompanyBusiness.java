@@ -37,6 +37,7 @@ public class CompanyBusiness implements ICompanyBusiness {
 			throw new BusinessException("Name of Company don't be null or empty.");
 		}
 		persistence.saveOrUpdate(company);
+		persistence.getEntityManager().flush();
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import javax.ejb.Local;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 
 @Local
 public interface ICommandBusiness extends Serializable {
@@ -17,7 +18,11 @@ public interface ICommandBusiness extends Serializable {
 	void saveCommand(Command command) throws BusinessException;
 
 	Command getCommandByBotAndKey(Bot bot, String text);
-	
+
 	List<List<String>> convertCommandsToOptions(Bot bot);
+
+	void dropCommand(Command command);
+	
+	void postProcessCommand(Dialog dialog, Command command);
 
 }

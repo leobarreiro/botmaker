@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Search Bots</h2>
-		<p:fieldset legend="Filtro" styleClass="frm-crud">
+		<rich:panel header="Filtro" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
 				<h:outputText value="Name" />
 				<h:inputText value="#{botAction.filter.name}" />
@@ -13,27 +13,34 @@
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
 				</h:selectOneMenu>
-				<p:commandButton action="#{botAction.search()}" value="Pesquisar" update="dtBots" styleClass="primary" />
+				<h:commandButton action="#{botAction.search()}" value="Pesquisar" update="dtBots" styleClass="primary" />
 			</h:panelGrid>
-		</p:fieldset>
+		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
-			<p:dataTable id="dtBots" widgetVar="dtBots" value="#{botAction.bots}" var="bt" rows="10" paginatorAlwaysVisible="false" paginatorPosition="bottom" styleClass="pc100">
-				<p:column headerText="Id" sortBy="#{bt.id}" styleClass="pc5 txctr">
+
+			<rich:dataTable id="dtBots" value="#{botAction.bots}" var="bt" rows="10" styleClass="pc100">
+				<rich:column sortBy="#{bt.id}" styleClass="pc5 txctr">
+					<f:facet name="header">Id</f:facet>
 					<h:outputText value="#{bt.id}" />
-				</p:column>
-				<p:column headerText="Name" sortBy="#{bt.name}" styleClass="txlft">
+				</rich:column>
+				<rich:column sortBy="#{bt.name}" styleClass="txlft">
+					<f:facet name="header">Name</f:facet>
 					<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" />
-				</p:column>
-				<p:column headerText="Type" sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
+				</rich:column>
+				<rich:column sortBy="#{bt.botType.name}" styleClass="pc20 txctr">
+					<f:facet name="header">Type</f:facet>
 					<h:commandLink action="#{botAction.filter.setBotType(bt.botType)}" value="#{bt.botType.name}" actionListener="#{botAction.search()}" />
-				</p:column>
-				<p:column headerText="List Commands" sortBy="#{bt.listCommands}" styleClass="pc10 txctr">
+				</rich:column>
+				<rich:column sortBy="#{bt.listCommands}" styleClass="pc15 txctr">
+					<f:facet name="header">List Commands</f:facet>
 					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" />
-				</p:column>
-				<p:column headerText="Active" sortBy="#{bt.active}" styleClass="pc10 txctr">
+				</rich:column>
+				<rich:column headerText="Active" sortBy="#{bt.active}" styleClass="pc10 txctr">
+					<f:facet name="header">Active</f:facet>
 					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" />
-				</p:column>
-			</p:dataTable>
+				</rich:column>
+			</rich:dataTable>
+
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

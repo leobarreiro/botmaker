@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
@@ -95,8 +96,9 @@ public class BotBusiness implements IBotBusiness {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);
 		Root<Bot> from = cq.from(Bot.class);
-		Join<Bot, Command> joinCommand = from.join("commands", JoinType.INNER);
-		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.INNER);
+		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
+		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
+		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.equal(from.get("active"), true));
 		return persistence.getResultList(cq);
 	}

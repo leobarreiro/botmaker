@@ -1,57 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Command</h2>
 
-		<p:fieldset styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
-				<h:outputText value="#{botAction.bot.name}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
 
-		<p:fieldset styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Key" />
-				<h:outputText value="#{commandAction.command.key}" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.key}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Short Description" />
-				<h:outputText value="#{commandAction.command.shortDescription}" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Process Answers" />
+				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Type" />
+				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="gray txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Return Parse Mode" />
+				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="gray txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Post Script Code" styleClass="txtop" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
+					<h:outputText value="--" styleClass="gray txt" rendered="#{not commandAction.command.postProcess}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<p:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
-				<p:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit Command" styleClass="secondary" />
-				<p:commandButton action="#{questionAction.startNew(commandAction.command)}" value="New Question"
-					styleClass="secondary" />
+				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
+				<h:commandButton action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
+				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
+				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="New Question" styleClass="secondary" />
 			</h:panelGroup>
-		</p:fieldset>
+		</rich:panel>
 
-		<p:fieldset styleClass="frm-crud">
-			<p:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions">
-				<p:column headerText="#" styleClass="pc5">
-					<p:commandLink action="#{questionAction.upQuestion(qst)}" value="up" update="dataTableQuestions"/>
-				</p:column>
-				<p:column headerText="Order" styleClass="pc5">
+		<rich:panel styleClass="frm-crud">
+			<rich:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions">
+				<rich:column styleClass="pc5">
+					<f:facet name="header">#</f:facet>
+					<h:commandLink action="#{questionAction.upQuestion(qst)}" value="up">
+						<a4j:ajax render="dataTableQuestions" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column styleClass="pc5">
+					<f:facet name="header">Order</f:facet>
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.order}" />
-				</p:column>
-				<p:column headerText="Question">
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">Question</f:facet>
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
-				</p:column>
-				<p:column headerText="Expected Answer" styleClass="pc20 txctr">
-					<h:outputText value="#{qst.validator.name}" />
-				</p:column>
-				<p:column headerText="Var Name" styleClass="pc10">
+				</rich:column>
+				<rich:column styleClass="pc15 txctr">
+					<f:facet name="header">Answer Type</f:facet>
+					<h:outputText value="#{qst.answerType}" />
+				</rich:column>
+				<rich:column styleClass="pc15 txctr">
+					<f:facet name="header">Validator</f:facet>
+					<h:outputText value="#{(not empty qst.validator.name) ? qst.validator.name : 'None'}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Var Name</f:facet>
 					<h:outputText value="#{qst.varName}" />
-				</p:column>
-			</p:dataTable>
-		</p:fieldset>
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Post Process Answer</f:facet>
+					<h:outputText value="#{(qst.processAnswer eq true) ? 'Yes' : 'No'}" styleClass="#{(qst.processAnswer eq true) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Parse Mode</f:facet>
+					<h:outputText value="#{qst.parseMode}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Script Type</f:facet>
+					<h:outputText value="#{qst.scriptType.descriptor}" />
+				</rich:column>
+			</rich:dataTable>
+		</rich:panel>
+
+		<script type="text/javascript">
+			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    readOnly: true, 
+			    height: 50, 
+			    indentWithTabs: true
+			});
+			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+		</script>
 
 	</ui:define>
 </ui:composition>

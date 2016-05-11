@@ -3,7 +3,6 @@ package com.javaleo.systems.botmaker.ejb.pojos;
 import java.io.Serializable;
 import java.util.List;
 
-import org.javaleo.libs.botgram.model.Message;
 import org.javaleo.libs.botgram.model.Update;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
@@ -13,37 +12,45 @@ public class Dialog implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int idChat;
-	private Update update;
-	private Command command;
+	private int id;
+	private Update lastUpdate;
+	private Command lastCommand;
+	private String postProcessedResult;
 	private Question lastQuestion;
 	private boolean pendingServer;
 	private boolean finish;
-	private List<Message> messages;
 	private List<Answer> answers;
 
-	public int getIdChat() {
-		return idChat;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdChat(int idChat) {
-		this.idChat = idChat;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public Update getUpdate() {
-		return update;
+	public Update getLastUpdate() {
+		return lastUpdate;
 	}
 
-	public void setUpdate(Update update) {
-		this.update = update;
+	public void setLastUpdate(Update lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 
-	public Command getCommand() {
-		return command;
+	public Command getLastCommand() {
+		return lastCommand;
 	}
 
-	public void setCommand(Command command) {
-		this.command = command;
+	public void setLastCommand(Command lastCommand) {
+		this.lastCommand = lastCommand;
+	}
+
+	public String getPostProcessedResult() {
+		return postProcessedResult;
+	}
+
+	public void setProcessedResult(String postProcessedResult) {
+		this.postProcessedResult = postProcessedResult;
 	}
 
 	public Question getLastQuestion() {
@@ -70,20 +77,46 @@ public class Dialog implements Serializable {
 		this.finish = finish;
 	}
 
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
-	}
-
 	public List<Answer> getAnswers() {
 		return answers;
 	}
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (finish ? 1231 : 1237);
+		result = prime * result + id;
+		result = prime * result + (pendingServer ? 1231 : 1237);
+		result = prime * result + ((postProcessedResult == null) ? 0 : postProcessedResult.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Dialog other = (Dialog) obj;
+		if (finish != other.finish)
+			return false;
+		if (id != other.id)
+			return false;
+		if (pendingServer != other.pendingServer)
+			return false;
+		if (postProcessedResult == null) {
+			if (other.postProcessedResult != null)
+				return false;
+		} else if (!postProcessedResult.equals(other.postProcessedResult))
+			return false;
+		return true;
 	}
 
 }

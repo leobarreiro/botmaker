@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 	
 		<h2 class="pc50">Bot registry</h2>
@@ -17,7 +17,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Token" styleClass="required" />
-				<h:inputSecret value="#{botAction.token}" size="70" />
+				<h:inputSecret value="#{botAction.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />

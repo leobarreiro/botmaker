@@ -17,16 +17,21 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.model.Document;
+import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
-import org.slf4j.Logger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
-import com.javaleo.systems.botmaker.ejb.utils.ScriptRunnerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -34,13 +39,10 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Logger LOG;
-
-	@Inject
 	private IPersistenceBasic<Question> persistence;
 
 	@Inject
-	private ScriptRunnerUtils scriptRunner;
+	private GroovyScriptRunnerUtils scriptRunner;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -119,30 +121,64 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public boolean validateAnswer(Question question, Answer answer) {
-		if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
-			Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
-			Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
-			return m.matches();
-		} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
-			Binding binding = new Binding();
-			// TODO: usar o nome da variavel tal como definido na question, ao inves de bmAnswer fixo
-			binding.setVariable("bmAnswer", answer.getAnswer());
-			return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+	public boolean validateAnswer(Dialog dialog, Question question) {
+		if (question.getAnswerType().equals(AnswerType.PHOTO)) {
+			List<PhotoSize> photoSizes = dialog.getLastUpdate().getMessage().getPhotosizes();
+			return (photoSizes != null && !photoSizes.isEmpty());
+		} else if (question.getAnswerType().equals(AnswerType.DOCUMENT)) {
+			Document document = dialog.getLastUpdate().getMessage().getDocument();
+			return (document != null && document.getSize() > 0);
 		} else {
-			return true;
+			if (question.getValidator() == null || question.getValidator().getScriptType() == null) {
+				return true;
+			} else {
+				if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
+					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
+					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
+					return m.matches();
+				} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
+					Binding binding = new Binding();
+					binding.setVariable("idChat", dialog.getId());
+					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
+					binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
+					binding.setVariable("userAnswer", dialog.getLastUpdate().getMessage().getText());
+					binding.setVariable(question.getVarName(), dialog.getLastUpdate().getMessage().getText());
+					return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+				} else {
+					return true;
+				}
+			}
 		}
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public void postProduceAnswer(Question question, Answer answer) {
+	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
-				binding.setVariable(question.getVarName(), answer.getAnswer());
+				binding.setVariable("idChat", dialog.getId());
+				binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
+				binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
+
+				GsonBuilder gsonBuilder = new GsonBuilder();
+				gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+				Gson gson = gsonBuilder.create();
+				for (Answer a : dialog.getAnswers()) {
+					if (a.isAccepted()) {
+						if (a.getAnswerType().equals(AnswerType.DOCUMENT)) {
+							String content = gson.toJson(a.getUrlFiles().get(0));
+							binding.setVariable(a.getVarName(), content);
+						} else if (a.getAnswerType().equals(AnswerType.PHOTO)) {
+							String content = gson.toJson(a.getUrlFiles());
+							binding.setVariable(a.getVarName(), content);
+						} else { // a.getAnswer().equals(AnswerType.STRING) || a.getAnswer().equals(AnswerType.NUMERIC)
+							binding.setVariable(a.getVarName(), a.getAnswer());
+						}
+					}
+				}
 				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
-				answer.setCodeProduced(postProcessed);
+				answer.setPostProcessedAnswer(postProcessed);
 			}
 		}
 	}

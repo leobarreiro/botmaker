@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
+
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = EntityUtils.COMMAND)
@@ -30,6 +35,10 @@ public class Command implements IEntityBasic {
 	private Bot bot;
 	private Boolean active;
 	private List<Question> questions;
+	private Boolean postProcess;
+	private ParseMode parseMode;
+	private ScriptType postProcessScriptType;
+	private String postProcessScript;
 
 	@Override
 	@Id
@@ -98,13 +107,58 @@ public class Command implements IEntityBasic {
 		this.questions = questions;
 	}
 
+	@Column(name = "post_process")
+	public Boolean getPostProcess() {
+		return postProcess;
+	}
+
+	public void setPostProcess(Boolean postProcess) {
+		this.postProcess = postProcess;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "parse_mode", length = 20, nullable = true)
+	public ParseMode getParseMode() {
+		return parseMode;
+	}
+
+	public void setParseMode(ParseMode parseMode) {
+		this.parseMode = parseMode;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "script_type", length = 30)
+	public ScriptType getPostProcessScriptType() {
+		return postProcessScriptType;
+	}
+
+	public void setPostProcessScriptType(ScriptType postProcessScriptType) {
+		this.postProcessScriptType = postProcessScriptType;
+	}
+
+	@Column(name = "post_process_script", columnDefinition = "text", nullable = true)
+	public String getPostProcessScript() {
+		return postProcessScript;
+	}
+
+	public void setPostProcessScript(String postProcessScript) {
+		this.postProcessScript = postProcessScript;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((active == null) ? 0 : active.hashCode());
 		result = prime * result + ((bot == null) ? 0 : bot.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
+		result = prime * result + ((postProcess == null) ? 0 : postProcess.hashCode());
+		result = prime * result + ((postProcessScript == null) ? 0 : postProcessScript.hashCode());
+		result = prime * result + ((postProcessScriptType == null) ? 0 : postProcessScriptType.hashCode());
+		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
+		result = prime * result + ((shortDescription == null) ? 0 : shortDescription.hashCode());
 		result = prime * result + ((welcomeMessage == null) ? 0 : welcomeMessage.hashCode());
 		return result;
 	}
@@ -118,6 +172,11 @@ public class Command implements IEntityBasic {
 		if (getClass() != obj.getClass())
 			return false;
 		Command other = (Command) obj;
+		if (active == null) {
+			if (other.active != null)
+				return false;
+		} else if (!active.equals(other.active))
+			return false;
 		if (bot == null) {
 			if (other.bot != null)
 				return false;
@@ -132,6 +191,30 @@ public class Command implements IEntityBasic {
 			if (other.key != null)
 				return false;
 		} else if (!key.equals(other.key))
+			return false;
+		if (parseMode != other.parseMode)
+			return false;
+		if (postProcess == null) {
+			if (other.postProcess != null)
+				return false;
+		} else if (!postProcess.equals(other.postProcess))
+			return false;
+		if (postProcessScript == null) {
+			if (other.postProcessScript != null)
+				return false;
+		} else if (!postProcessScript.equals(other.postProcessScript))
+			return false;
+		if (postProcessScriptType != other.postProcessScriptType)
+			return false;
+		if (questions == null) {
+			if (other.questions != null)
+				return false;
+		} else if (!questions.equals(other.questions))
+			return false;
+		if (shortDescription == null) {
+			if (other.shortDescription != null)
+				return false;
+		} else if (!shortDescription.equals(other.shortDescription))
 			return false;
 		if (welcomeMessage == null) {
 			if (other.welcomeMessage != null)

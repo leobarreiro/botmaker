@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/blank.xhtml">
+	template="/WEB-INF/templates/blank.xhtml">
 	<ui:define name="content">
 		<h:panelGroup layout="block" styleClass="frm-login">
 			<h:panelGroup layout="block">
@@ -8,14 +8,14 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block">
 				<h:outputLabel value="Username" styleClass="txleft" />
-				<p:inputText value="#{userAction.username}" />
+				<h:inputText value="#{userAction.username}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block">
 				<h:outputLabel value="Password" styleClass="txleft" />
 				<h:inputSecret value="#{userAction.plainPassword}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="txctr">
-				<p:commandButton action="#{userAction.login()}" value="Login" styleClass="primary" />
+				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="primary pc100 mtop30 mgauto" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>
