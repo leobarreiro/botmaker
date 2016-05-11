@@ -46,6 +46,7 @@
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
 				<h:panelGroup layout="block" styleClass="scripting">
 					<h:outputText styleClass="explain" value="Command Post Scripts must return a String (that will be presented to final Users)" />
+					<ui:include src="/pages/aux/defaultvars.xhtml" />
 					<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" />
 				</h:panelGroup>
 			</h:panelGroup>

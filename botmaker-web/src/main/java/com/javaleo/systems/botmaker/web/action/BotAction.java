@@ -66,7 +66,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 
 	public String save() {
 		try {
-			Bot botOld = facade.validateBotTelegram(token);
+			Bot botOld = facade.validateBotTelegram(bot.getToken());
 			bot.setName(botOld.getName());
 			facade.saveBot(bot);
 			msgAction.addMessage(MessageType.INFO, "Bot saved");

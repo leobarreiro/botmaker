@@ -24,8 +24,7 @@
 				<h:outputLabel value="Script Code" />
 				<h:panelGroup layout="block" styleClass="scripting">
 					<h:outputText styleClass="explain" value="Validator scripts must return a boolean value (true or false)" />
-					idChat
-					
+					<ui:include src="/pages/aux/defaultvars.xhtml" />
 					<h:inputTextarea id="scriptCode" value="#{validatorAction.validator.scriptCode}" />
 				</h:panelGroup>
 			</h:panelGroup>

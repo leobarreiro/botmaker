@@ -121,7 +121,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public boolean validateAnswer(Dialog dialog, Question question, Answer answer) {
+	public boolean validateAnswer(Dialog dialog, Question question) {
 		if (question.getAnswerType().equals(AnswerType.PHOTO)) {
 			List<PhotoSize> photoSizes = dialog.getLastUpdate().getMessage().getPhotosizes();
 			return (photoSizes != null && !photoSizes.isEmpty());
@@ -134,15 +134,15 @@ public class QuestionBusiness implements IQuestionBusiness {
 			} else {
 				if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
 					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
-					Matcher m = pattern.matcher(StringUtils.lowerCase(answer.getAnswer()));
+					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
 					return m.matches();
 				} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
 					Binding binding = new Binding();
 					binding.setVariable("idChat", dialog.getId());
 					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
 					binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
-					binding.setVariable("userAnswer", answer.getAnswer());
-					binding.setVariable(answer.getQuestion().getVarName(), answer.getAnswer());
+					binding.setVariable("userAnswer", dialog.getLastUpdate().getMessage().getText());
+					binding.setVariable(question.getVarName(), dialog.getLastUpdate().getMessage().getText());
 					return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
 				} else {
 					return true;

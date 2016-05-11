@@ -159,7 +159,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		answers.add(ans);
 		dialog.setAnswers(answers);
 		dialog.setPendingServer(true);
-		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion(), ans)) {
+		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion())) {
 			fillAnswer(bot, dialog, ans);
 			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
 				successAnswer(bot, dialog);
@@ -199,7 +199,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			List<UrlFile> urlFiles = sendMessageUtils.getUrlFiles(bot.getToken(), photoSizes);
 			ans.setUrlFiles(urlFiles);
 		} else {
-			ans.setAnswer(StringUtils.trim(dialog.getLastUpdate().getMessage().getText()));
+			ans.setAnswer(dialog.getLastUpdate().getMessage().getText());
 		}
 		ans.setVarName(dialog.getLastQuestion().getVarName());
 		ans.setAccepted(true);
