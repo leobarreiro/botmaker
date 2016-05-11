@@ -21,6 +21,8 @@ import org.javaleo.libs.botgram.model.Document;
 import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
@@ -136,9 +138,10 @@ public class QuestionBusiness implements IQuestionBusiness {
 					return m.matches();
 				} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
 					Binding binding = new Binding();
-					binding.setVariable("bmIdChat", dialog.getId());
-					binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
-					binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
+					binding.setVariable("idChat", dialog.getId());
+					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
+					binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
+					binding.setVariable("userAnswer", answer.getAnswer());
 					binding.setVariable(answer.getQuestion().getVarName(), answer.getAnswer());
 					return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
 				} else {
@@ -154,12 +157,24 @@ public class QuestionBusiness implements IQuestionBusiness {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
 				Binding binding = new Binding();
-				binding.setVariable("bmIdChat", dialog.getId());
-				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
-				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
+				binding.setVariable("idChat", dialog.getId());
+				binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
+				binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
+
+				GsonBuilder gsonBuilder = new GsonBuilder();
+				gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+				Gson gson = gsonBuilder.create();
 				for (Answer a : dialog.getAnswers()) {
 					if (a.isAccepted()) {
-						binding.setVariable(a.getVarName(), a.getAnswer());
+						if (a.getAnswerType().equals(AnswerType.DOCUMENT)) {
+							String content = gson.toJson(a.getUrlFiles().get(0));
+							binding.setVariable(a.getVarName(), content);
+						} else if (a.getAnswerType().equals(AnswerType.PHOTO)) {
+							String content = gson.toJson(a.getUrlFiles());
+							binding.setVariable(a.getVarName(), content);
+						} else { // a.getAnswer().equals(AnswerType.STRING) || a.getAnswer().equals(AnswerType.NUMERIC)
+							binding.setVariable(a.getVarName(), a.getAnswer());
+						}
 					}
 				}
 				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);

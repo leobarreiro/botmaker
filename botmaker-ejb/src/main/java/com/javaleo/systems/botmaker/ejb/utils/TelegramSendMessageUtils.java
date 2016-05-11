@@ -1,10 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.utils;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Asynchronous;
@@ -12,12 +10,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.exceptions.BotGramException;
+import org.javaleo.libs.botgram.model.Document;
+import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.botgram.model.ReplyKeyboardHide;
 import org.javaleo.libs.botgram.model.ReplyKeyboardMarkup;
+import org.javaleo.libs.botgram.model.TelegramFile;
 import org.javaleo.libs.botgram.request.SendMessageRequest;
 import org.javaleo.libs.botgram.response.GetFileResponse;
 import org.javaleo.libs.botgram.response.SendMessageResponse;
@@ -26,8 +27,8 @@ import org.javaleo.libs.botgram.service.BotGramService;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
-import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.pojos.UrlFile;
 
 @Named
 @Stateless
@@ -82,7 +83,37 @@ public class TelegramSendMessageUtils implements Serializable {
 		}
 	}
 
-	public GetFileResponse getFileMessage(String token, String fileId) {
+	public UrlFile getUrlFile(String token, Document document) {
+		UrlFile urlFile = new UrlFile();
+		GetFileResponse rsp = getFileMessage(token, document.getId());
+		TelegramFile tgf = rsp.getFile();
+		urlFile.setMimeType(document.getMimeType());
+		urlFile.setOriginalId(tgf.getId());
+		urlFile.setName(FilenameUtils.getBaseName(tgf.getPath()));
+		urlFile.setSize(tgf.getSize());
+		urlFile.setUrl(getUrlFile(token, tgf.getPath()));
+		return urlFile;
+	}
+
+	public List<UrlFile> getUrlFiles(String token, List<PhotoSize> photoSizes) {
+		List<UrlFile> urlFiles = new ArrayList<UrlFile>();
+		for (PhotoSize photo : photoSizes) {
+			GetFileResponse rsp = getFileMessage(token, photo.getId());
+			TelegramFile tgf = rsp.getFile();
+			UrlFile uf = new UrlFile();
+			uf.setHeight(photo.getHeight());
+			uf.setWidth(photo.getWidth());
+			uf.setName(FilenameUtils.getBaseName(tgf.getPath()));
+			uf.setSize(tgf.getSize());
+			uf.setOriginalId(tgf.getId());
+			uf.setUrl(getUrlFile(token, tgf.getPath()));
+			// uf.setMimeType(mimeType);
+			urlFiles.add(uf);
+		}
+		return urlFiles;
+	}
+
+	private GetFileResponse getFileMessage(String token, String fileId) {
 		BotGramConfig config = new BotGramConfig();
 		config.setToken(token);
 		BotGramService service = new BotGramService(config);
@@ -108,28 +139,28 @@ public class TelegramSendMessageUtils implements Serializable {
 		return response;
 	}
 
-	public void saveFileFromUserBot(Bot bot, Dialog dialog, String url) {
-		StringBuilder str = new StringBuilder(System.getProperty("botmaker.companies.dir"));
-		str.append(File.separator);
-		str.append(bot.getCompany().getId());
-		str.append(File.separator);
-		str.append(bot.getId());
-		str.append(File.separator);
-		str.append(dialog.getId());
-		try {
-			URL file = new URL(url);
-			File fileDir = new File(str.toString());
-			FileUtils.forceMkdir(fileDir);
-			str.append(File.separator);
-			List<Answer> answers = dialog.getAnswers();
-			Answer answer = answers.get(answers.size() - 1);
-			str.append(answer.getFileId());
-			File fileName = new File(str.toString());
-			FileUtils.copyURLToFile(file, fileName);
-		} catch (IOException e) {
-			LOG.error(e.getMessage());
-		}
-	}
+	// public void saveFileFromUserBot(Bot bot, Dialog dialog, String url) {
+	// StringBuilder str = new StringBuilder(System.getProperty("botmaker.companies.dir"));
+	// str.append(File.separator);
+	// str.append(bot.getCompany().getId());
+	// str.append(File.separator);
+	// str.append(bot.getId());
+	// str.append(File.separator);
+	// str.append(dialog.getId());
+	// try {
+	// URL file = new URL(url);
+	// File fileDir = new File(str.toString());
+	// FileUtils.forceMkdir(fileDir);
+	// str.append(File.separator);
+	// List<Answer> answers = dialog.getAnswers();
+	// Answer answer = answers.get(answers.size() - 1);
+	// str.append(answer.getFileId());
+	// File fileName = new File(str.toString());
+	// FileUtils.copyURLToFile(file, fileName);
+	// } catch (IOException e) {
+	// LOG.error(e.getMessage());
+	// }
+	// }
 
 	private SendMessageResponse sendMessage(String token, SendMessageRequest message) throws BotGramException {
 		BotGramConfig config = new BotGramConfig();

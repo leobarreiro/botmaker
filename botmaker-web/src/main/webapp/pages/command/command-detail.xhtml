@@ -73,7 +73,7 @@
 				</rich:column>
 				<rich:column styleClass="pc15 txctr">
 					<f:facet name="header">Validator</f:facet>
-					<h:outputText value="#{qst.validator.name}" />
+					<h:outputText value="#{(not empty qst.validator.name) ? qst.validator.name : 'None'}" />
 				</rich:column>
 				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Var Name</f:facet>

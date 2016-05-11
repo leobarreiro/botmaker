@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
@@ -74,9 +73,8 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.answerType = answerType;
 	}
 
-	@NotNull
-	@ManyToOne()
-	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", foreignKey = @ForeignKey(name = "fk_question_validator"), nullable = false)
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", foreignKey = @ForeignKey(name = "fk_question_validator"), nullable = true)
 	public Validator getValidator() {
 		return validator;
 	}

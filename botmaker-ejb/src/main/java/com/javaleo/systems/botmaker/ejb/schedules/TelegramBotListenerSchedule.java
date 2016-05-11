@@ -19,7 +19,6 @@ import org.javaleo.libs.botgram.exceptions.BotGramException;
 import org.javaleo.libs.botgram.model.Document;
 import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.botgram.model.Update;
-import org.javaleo.libs.botgram.response.GetFileResponse;
 import org.javaleo.libs.botgram.response.GetUpdatesResponse;
 import org.javaleo.libs.botgram.service.BotGramConfig;
 import org.javaleo.libs.botgram.service.BotGramService;
@@ -34,6 +33,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.pojos.UrlFile;
 import com.javaleo.systems.botmaker.ejb.utils.TelegramSendMessageUtils;
 
 @Named
@@ -161,7 +161,6 @@ public class TelegramBotListenerSchedule implements Serializable {
 		dialog.setPendingServer(true);
 		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion(), ans)) {
 			fillAnswer(bot, dialog, ans);
-
 			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
 				successAnswer(bot, dialog);
 			}
@@ -191,23 +190,14 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void fillAnswer(Bot bot, Dialog dialog, Answer ans) {
 		if (ans.getAnswerType().equals(AnswerType.DOCUMENT)) {
 			Document document = dialog.getLastUpdate().getMessage().getDocument();
-			GetFileResponse response = sendMessageUtils.getFileMessage(bot.getToken(), document.getId());
-			if (response != null) {
-				ans.setFileId(response.getFile().getId());
-				String url = sendMessageUtils.getUrlFile(bot.getToken(), response.getFile().getPath());
-				ans.setUrl(url);
-				sendMessageUtils.saveFileFromUserBot(bot, dialog, url);
-			}
+			UrlFile uFile = sendMessageUtils.getUrlFile(bot.getToken(), document);
+			List<UrlFile> urlFiles = new ArrayList<UrlFile>();
+			urlFiles.add(uFile);
+			ans.setUrlFiles(urlFiles);
 		} else if (ans.getAnswerType().equals(AnswerType.PHOTO)) {
 			List<PhotoSize> photoSizes = dialog.getLastUpdate().getMessage().getPhotosizes();
-			PhotoSize photo = photoSizes.get(photoSizes.size() - 1);
-			GetFileResponse response = sendMessageUtils.getFileMessage(bot.getToken(), photo.getId());
-			if (response != null) {
-				ans.setFileId(response.getFile().getId());
-				String url = sendMessageUtils.getUrlFile(bot.getToken(), response.getFile().getPath());
-				ans.setUrl(url);
-				sendMessageUtils.saveFileFromUserBot(bot, dialog, url);
-			}
+			List<UrlFile> urlFiles = sendMessageUtils.getUrlFiles(bot.getToken(), photoSizes);
+			ans.setUrlFiles(urlFiles);
 		} else {
 			ans.setAnswer(StringUtils.trim(dialog.getLastUpdate().getMessage().getText()));
 		}
@@ -224,7 +214,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	private void instructQuestionToUser(Bot bot, Dialog dialog) {
 		if (dialog.getLastQuestion() != null) {
-			if (dialog.getLastQuestion().getValidator().getScriptType().isSetOfOptions()) {
+			if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getScriptType().isSetOfOptions()) {
 				List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
 				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getParseMode(), options);
 			} else {

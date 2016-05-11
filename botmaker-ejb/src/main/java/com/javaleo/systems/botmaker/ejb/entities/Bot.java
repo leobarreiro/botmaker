@@ -16,8 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
@@ -176,6 +178,11 @@ public class Bot implements IEntityBasic {
 
 	public void setCommands(List<Command> commands) {
 		this.commands = commands;
+	}
+
+	@Transient
+	public String getMaskedToken() {
+		return StringUtils.overlay(token, "********************", 6, 40);
 	}
 
 	@Override

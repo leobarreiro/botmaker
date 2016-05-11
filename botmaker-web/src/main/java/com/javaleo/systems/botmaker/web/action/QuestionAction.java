@@ -12,6 +12,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -92,8 +93,18 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		}
 	}
 
+	public void answerTypeListener() {
+		if (question.getAnswerType().equals(AnswerType.PHOTO) || question.getAnswerType().equals(AnswerType.DOCUMENT)) {
+			question.setValidator(null);
+		}
+	}
+
 	private void loadOptions() {
 		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
+	}
+
+	public boolean getEnableValidator() {
+		return (question.getAnswerType().equals(AnswerType.STRING) || question.getAnswerType().equals(AnswerType.NUMERIC));
 	}
 
 	@Override
