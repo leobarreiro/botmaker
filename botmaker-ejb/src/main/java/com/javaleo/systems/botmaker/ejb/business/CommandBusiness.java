@@ -20,6 +20,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
@@ -66,6 +67,7 @@ public class CommandBusiness implements ICommandBusiness {
 		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
 		Root<Command> fromCommand = cq.from(Command.class);
 		Join<Command, Bot> joinBot = fromCommand.join("bot", JoinType.INNER);
+		Join<Question, Command> joinQuestions = fromCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.and(cb.equal(joinBot.get("id"), bot.getId()), cb.equal(fromCommand.get("key"), clearText)));
 		cq.select(fromCommand);
 		return persistence.getSingleResult(cq);

@@ -2,6 +2,8 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +124,13 @@ public class TelegramBotListenerSchedule implements Serializable {
 		dialog.setAnswers(new ArrayList<Answer>());
 		dialog.setPendingServer(true);
 		dialog.setFinish(false);
-		Command command = commandBusiness.getCommandByBotAndKey(bot, update.getMessage().getText());
+		
+		String[] userTextParts = StringUtils.split(update.getMessage().getText(), "_");
+		if (userTextParts == null) {
+			return;
+		}
+		List<String> userInput = new ArrayList<String>(Arrays.asList(userTextParts));
+		Command command = commandBusiness.getCommandByBotAndKey(bot, userInput.get(0));
 		// Command unknown
 		if (command == null) {
 			unknowCommand(bot, dialog);
@@ -134,11 +142,20 @@ public class TelegramBotListenerSchedule implements Serializable {
 			dialog.setAnswers(new ArrayList<Answer>());
 			dialog.setLastUpdate(update);
 			dialog.setPendingServer(false);
-			Question question = questionBusiness.getNextQuestion(command, 0);
-			if (question != null) {
+			if (command.getQuestions() != null && !command.getQuestions().isEmpty()) {
+				List<Question> questions = new ArrayList<Question>(command.getQuestions());
+				Collections.sort(questions);
+				Question question = command.getQuestions().get(0);
 				dialog.setLastQuestion(question);
-				instructQuestionToUser(bot, dialog);
 				managerUtils.addDialogToBot(bot, dialog);
+				if (userInput.size() > 1) {
+					userInput.remove(0);
+					String joined = StringUtils.join(userInput.toArray(), " ");
+					dialog.getLastUpdate().getMessage().setText(joined);
+					proceedDialog(bot, dialog);
+				} else {
+					instructQuestionToUser(bot, dialog);
+				}
 			} else {
 				endOfCommand(bot, dialog);
 				managerUtils.removeDialog(bot, dialog);

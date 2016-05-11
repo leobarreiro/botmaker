@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,7 +22,6 @@ import org.javaleo.libs.botgram.response.GetMeResponse;
 import org.javaleo.libs.botgram.service.BotGramConfig;
 import org.javaleo.libs.botgram.service.IBotGramService;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
-import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
@@ -29,6 +30,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
+import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Stateless
 public class BotBusiness implements IBotBusiness {
@@ -36,7 +38,10 @@ public class BotBusiness implements IBotBusiness {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private Logger LOG;
+	private ICompanyBusiness companyBusiness;
+
+	@Inject
+	private BotMakerCredentials credentials;
 
 	@Inject
 	private IPersistenceBasic<Bot> persistence;
@@ -45,6 +50,7 @@ public class BotBusiness implements IBotBusiness {
 	private IBotGramService botgramService;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public Bot validateBotTelegram(String token) throws BusinessException {
 		if (StringUtils.isBlank(token)) {
 			throw new BusinessException("Token não pode ser nulo ou estar em branco.");
@@ -66,11 +72,15 @@ public class BotBusiness implements IBotBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveBot(Bot bot) throws BusinessException {
+		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
+		bot.setCompany(company);
 		persistence.saveOrUpdate(bot);
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Bot> searchBot(BotFilter filter) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> query = cb.createQuery(Bot.class);
@@ -92,6 +102,7 @@ public class BotBusiness implements IBotBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Bot> listActiveBots() {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);

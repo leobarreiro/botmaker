@@ -12,6 +12,8 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 public interface ICompanyBusiness extends Serializable {
 
 	List<Company> listAllCompanies();
+	
+	Company getCompanyById(Long id);
 
 	void saveCompany(Company company) throws BusinessException;
 
