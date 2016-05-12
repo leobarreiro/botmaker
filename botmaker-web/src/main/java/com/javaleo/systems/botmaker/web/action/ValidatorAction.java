@@ -13,6 +13,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -47,7 +48,7 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 		startNewConversation();
 		loadOptions();
 		validator = new Validator();
-		validator.setScriptType(ScriptType.REGEXP);
+		validator.setValidatorType(ValidatorType.REGEXP);
 		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator.jsf?faces-redirect=true";
 	}

@@ -1,28 +1,22 @@
 package com.javaleo.systems.botmaker.ejb.filters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 
 public class ValidatorFilter {
 
 	private String name;
 	private String description;
-	private ScriptType scriptType;
-	private List<ScriptType> scriptTypeOptions;
+	private ValidatorType validatorType;
+	private List<ValidatorType> validatorTypeOptions;
 
 	public ValidatorFilter() {
 		super();
-		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
-	}
-
-	public ScriptType getScriptType() {
-		return scriptType;
-	}
-
-	public void setScriptType(ScriptType scriptType) {
-		this.scriptType = scriptType;
+		this.validatorTypeOptions = new ArrayList<ValidatorType>(Arrays.asList(ValidatorType.values()));
 	}
 
 	public String getName() {
@@ -41,12 +35,20 @@ public class ValidatorFilter {
 		this.description = description;
 	}
 
-	public List<ScriptType> getScriptTypeOptions() {
-		return scriptTypeOptions;
+	public ValidatorType getValidatorType() {
+		return validatorType;
 	}
 
-	public void setScriptTypeOptions(List<ScriptType> scriptTypeOptions) {
-		this.scriptTypeOptions = scriptTypeOptions;
+	public void setValidatorType(ValidatorType validatorType) {
+		this.validatorType = validatorType;
+	}
+
+	public List<ValidatorType> getValidatorTypeOptions() {
+		return validatorTypeOptions;
+	}
+
+	public void setValidatorTypeOptions(List<ValidatorType> validatorTypeOptions) {
+		this.validatorTypeOptions = validatorTypeOptions;
 	}
 
 }

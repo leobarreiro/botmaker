@@ -129,14 +129,14 @@ public class QuestionBusiness implements IQuestionBusiness {
 			Document document = dialog.getLastUpdate().getMessage().getDocument();
 			return (document != null && document.getSize() > 0);
 		} else {
-			if (question.getValidator() == null || question.getValidator().getScriptType() == null) {
+			if (question.getValidator() == null || question.getValidator().getValidatorType() == null) {
 				return true;
 			} else {
-				if (question.getValidator().getScriptType().equals(ScriptType.REGEXP)) {
+				if (question.getValidator().getValidatorType().equals(ScriptType.REGEXP)) {
 					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
 					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
 					return m.matches();
-				} else if (question.getValidator().getScriptType().equals(ScriptType.GROOVY)) {
+				} else if (question.getValidator().getValidatorType().equals(ScriptType.GROOVY)) {
 					Binding binding = new Binding();
 					binding.setVariable("idChat", dialog.getId());
 					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());

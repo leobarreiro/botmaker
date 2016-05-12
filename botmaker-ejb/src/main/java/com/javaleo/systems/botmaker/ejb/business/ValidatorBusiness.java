@@ -23,7 +23,7 @@ import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Stateless
-public class SnippetBusiness implements ISnippetBusiness {
+public class ValidatorBusiness implements IValidatorBusiness {
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,8 +53,8 @@ public class SnippetBusiness implements ISnippetBusiness {
 		} else {
 			predicates.add(cb.isNull(joinCompany.get("id")));
 		}
-		if (filter.getScriptType() != null) {
-			predicates.add(cb.equal(fromSnippet.get("scriptType"), filter.getScriptType()));
+		if (filter.getValidatorType() != null) {
+			predicates.add(cb.equal(fromSnippet.get("scriptType"), filter.getValidatorType()));
 		}
 		Predicate[] predicateArray = new Predicate[predicates.size()];
 		predicates.toArray(predicateArray);
