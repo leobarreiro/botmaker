@@ -10,7 +10,7 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 
 @Local
-public interface ISnippetBusiness extends Serializable {
+public interface IValidatorBusiness extends Serializable {
 
 	void saveValidator(Validator snippetCode) throws BusinessException;
 

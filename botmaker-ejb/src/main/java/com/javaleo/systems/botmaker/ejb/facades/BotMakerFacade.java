@@ -10,7 +10,7 @@ import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
-import com.javaleo.systems.botmaker.ejb.business.ISnippetBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
@@ -43,7 +43,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	private IQuestionBusiness questionBusiness;
 
 	@Inject
-	private ISnippetBusiness snippetBusiness;
+	private IValidatorBusiness validatorBusiness;
 
 	@Inject
 	private IUserBusiness userBusiness;
@@ -240,7 +240,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 */
 	@Override
 	public void saveValidator(Validator validator) throws BusinessException {
-		snippetBusiness.saveValidator(validator);
+		validatorBusiness.saveValidator(validator);
 	}
 
 	/*
@@ -252,7 +252,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	 */
 	@Override
 	public List<Validator> searchValidatorByFilter(ValidatorFilter filter) {
-		return snippetBusiness.searchValidatorByFilter(filter);
+		return validatorBusiness.searchValidatorByFilter(filter);
 	}
 
 	/*

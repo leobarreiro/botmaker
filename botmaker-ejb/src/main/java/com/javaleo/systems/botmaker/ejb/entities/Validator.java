@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
+import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "validator")
@@ -30,7 +30,7 @@ public class Validator implements IEntityBasic {
 	private Company company;
 	private String name;
 	private String description;
-	private ScriptType scriptType;
+	private ValidatorType validatorType;
 	private String scriptCode;
 
 	@Override
@@ -74,13 +74,13 @@ public class Validator implements IEntityBasic {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "script_type", length = 30, nullable = false)
-	public ScriptType getScriptType() {
-		return scriptType;
+	@Column(name = "validator_type", length = 20, nullable = false)
+	public ValidatorType getValidatorType() {
+		return validatorType;
 	}
 
-	public void setScriptType(ScriptType scriptType) {
-		this.scriptType = scriptType;
+	public void setValidatorType(ValidatorType validatorType) {
+		this.validatorType = validatorType;
 	}
 
 	@Column(name = "script_code", columnDefinition = "text")
@@ -101,7 +101,7 @@ public class Validator implements IEntityBasic {
 	public String getShortDescription() {
 		return StringUtils.abbreviate(description, 50);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,7 +111,7 @@ public class Validator implements IEntityBasic {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((scriptCode == null) ? 0 : scriptCode.hashCode());
-		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
+		result = prime * result + ((validatorType == null) ? 0 : validatorType.hashCode());
 		return result;
 	}
 
@@ -149,7 +149,7 @@ public class Validator implements IEntityBasic {
 				return false;
 		} else if (!scriptCode.equals(other.scriptCode))
 			return false;
-		if (scriptType != other.scriptType)
+		if (validatorType != other.validatorType)
 			return false;
 		return true;
 	}

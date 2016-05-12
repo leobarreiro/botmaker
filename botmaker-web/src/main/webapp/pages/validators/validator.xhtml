@@ -16,8 +16,8 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />
-				<h:selectOneMenu value="#{validatorAction.validator.scriptType}" immediate="true">
-					<f:selectItems value="#{validatorAction.filter.scriptTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
+				<h:selectOneMenu value="#{validatorAction.validator.validatorType}" immediate="true">
+					<f:selectItems value="#{validatorAction.filter.validatorTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">

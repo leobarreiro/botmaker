@@ -20,13 +20,13 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText styleClass="txt" value="#{validatorAction.validator.scriptType.descriptor}" />
+				<h:outputText styleClass="txt" value="#{validatorAction.validator.validatorType.descriptor}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:panelGroup layout="block" styleClass="scripting">
-					<h:inputTextarea id="postProcessScript" value="#{validatorAction.validator.scriptCode}" rows="4" readonly="true" styleClass="script" rendered="#{validatorAction.validator.scriptType ne null}" />
-					<h:outputText value="--" styleClass="purple txt" rendered="#{validatorAction.validator.scriptType eq null}" />
+					<h:inputTextarea id="postProcessScript" value="#{validatorAction.validator.scriptCode}" rows="4" readonly="true" styleClass="script" rendered="#{validatorAction.validator.validatorType ne null}" />
+					<h:outputText value="--" styleClass="purple txt" rendered="#{validatorAction.validator.validatorType eq null}" />
 				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
