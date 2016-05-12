@@ -133,11 +133,19 @@ public class QuestionBusiness implements IQuestionBusiness {
 			if (question.getValidator() == null || question.getValidator().getValidatorType() == null) {
 				return true;
 			} else {
+<<<<<<< HEAD
 				if (question.getValidator().getValidatorType().equals(ValidatorType.REGEXP)) {
 					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
 					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
 					return m.matches();
 				} else if (question.getValidator().getValidatorType().equals(ValidatorType.GROOVY)) {
+=======
+				if (question.getValidator().getValidatorType().equals(ScriptType.REGEXP)) {
+					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
+					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
+					return m.matches();
+				} else if (question.getValidator().getValidatorType().equals(ScriptType.GROOVY)) {
+>>>>>>> 9897368793f89a293eeb3afadcf7ecb942cc9c95
 					Binding binding = new Binding();
 					binding.setVariable("idChat", dialog.getId());
 					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
