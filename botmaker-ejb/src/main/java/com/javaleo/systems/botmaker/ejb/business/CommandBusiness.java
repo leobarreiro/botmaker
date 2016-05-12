@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
@@ -38,6 +39,9 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Inject
 	private GroovyScriptRunnerUtils scriptRunner;
+
+	@Inject
+	private Logger LOG;
 
 	@Override
 	public List<Command> listCommandsByBot(Bot bot) {
@@ -95,17 +99,21 @@ public class CommandBusiness implements ICommandBusiness {
 	public void postProcessCommand(Dialog dialog, Command command) {
 		if (command.getPostProcess()) {
 			if (command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
-				Binding binding = new Binding();
-				binding.setVariable("bmIdChat", dialog.getId());
-				binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
-				binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
-				for (Answer a : dialog.getAnswers()) {
-					if (a.isAccepted() && a.getQuestion().getCommand().getId().equals(command.getId())) {
-						binding.setVariable(a.getVarName(), a.getAnswer());
+				try {
+					Binding binding = new Binding();
+					binding.setVariable("bmIdChat", dialog.getId());
+					binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
+					binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
+					for (Answer a : dialog.getAnswers()) {
+						if (a.isAccepted() && a.getQuestion().getCommand().getId().equals(command.getId())) {
+							binding.setVariable(a.getVarName(), a.getAnswer());
+						}
 					}
+					String postProcessed = (String) scriptRunner.evaluateGroovy(command.getPostProcessScript(), binding);
+					dialog.setProcessedResult(postProcessed);
+				} catch (Exception e) {
+					LOG.error(e.getMessage());
 				}
-				String postProcessed = (String) scriptRunner.evaluateGroovy(command.getPostProcessScript(), binding);
-				dialog.setProcessedResult(postProcessed);
 			}
 		}
 	}

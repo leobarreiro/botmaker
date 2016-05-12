@@ -104,7 +104,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	}
 
 	public boolean getEnableValidator() {
-		return (question.getAnswerType().equals(AnswerType.STRING) || question.getAnswerType().equals(AnswerType.NUMERIC));
+		return ((question.getAnswerType() != null) && (question.getAnswerType().equals(AnswerType.STRING) || question.getAnswerType().equals(AnswerType.NUMERIC)));
 	}
 
 	@Override

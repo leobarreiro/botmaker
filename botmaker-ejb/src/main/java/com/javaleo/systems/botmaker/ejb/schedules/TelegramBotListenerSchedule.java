@@ -145,7 +145,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			if (command.getQuestions() != null && !command.getQuestions().isEmpty()) {
 				List<Question> questions = new ArrayList<Question>(command.getQuestions());
 				Collections.sort(questions);
-				Question question = command.getQuestions().get(0);
+				Question question = questions.get(0);
 				dialog.setLastQuestion(question);
 				managerUtils.addDialogToBot(bot, dialog);
 				if (userInput.size() > 1) {
