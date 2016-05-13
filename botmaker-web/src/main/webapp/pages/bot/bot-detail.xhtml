@@ -8,34 +8,28 @@
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGrid columns="4" columnClasses="pc20,pc30,pc20,pc30" styleClass="pc100">
 				<h:outputLabel value="Name" />
 				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Bot Type" />
 				<h:outputText styleClass="txt" value="#{botAction.bot.botType.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Token" />
 				<h:outputText styleClass="txt" value="#{botAction.bot.maskedToken}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Maintenance Message" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.closedBotMessage}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Unknown Command Message" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.unknownCommadMessage}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
 				<h:outputText value="#{botAction.bot.active ? 'Yes' : 'No'}" styleClass="txt #{botAction.bot.active ? 'green' : 'red'}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Maintenance Message" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.closedBotMessage}" />
+				<h:outputLabel value="Unknown Command Message" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.unknownCommadMessage}" />
 				<h:outputLabel value="List commands when unknown command" />
 				<h:outputText value="#{botAction.bot.listCommands ? 'Yes' : 'No'}" styleClass="txt #{botAction.bot.listCommands ? 'green' : 'red'}" />
-			</h:panelGroup>
+				<h:outputLabel value="End of dialog Message" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.endOfDialogMessage}" />
+				<h:outputLabel value="Cancel command Key" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.cancelKey}" />
+				<h:outputLabel value="Cancel Message" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.cancelMessage}" />
+			</h:panelGrid>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 				<h:commandButton action="#{botAction.edit()}" value="Edit Bot" styleClass="secondary" />

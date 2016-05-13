@@ -10,9 +10,9 @@ import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
-import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
@@ -141,6 +141,16 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public User findUserByUsernameAndPassword(String username, String passphrase) {
 		return userBusiness.findUserByUsernameAndPassphrase(username, passphrase);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#listLastBotsFromCompanyUser()
+	 */
+	@Override
+	public List<Bot> listLastBotsFromCompanyUser() {
+		return botBusiness.listLastBotsFromCompanyUser();
 	}
 
 	/*

@@ -103,6 +103,20 @@ public class BotBusiness implements IBotBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Bot> listLastBotsFromCompanyUser() {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);
+		Root<Bot> from = cq.from(Bot.class);
+		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
+		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
+		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
+		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
+		cq.where(cb.equal(from.get("active"), true));
+		return persistence.getResultList(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Bot> listActiveBots() {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);

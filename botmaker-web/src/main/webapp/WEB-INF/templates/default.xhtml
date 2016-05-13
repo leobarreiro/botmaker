@@ -39,8 +39,16 @@
 						<f:facet name="label">
 							<h:outputText value="Bots" />
 						</f:facet>
-						<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
+						<rich:menuItem>
+							<h:dataTable value="#{auxAction.bots}" var="bt">
+								<h:column>
+									<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" styleClass="menuitem"/>
+								</h:column>
+							</h:dataTable>
+						</rich:menuItem>
+						<rich:menuSeparator />
 						<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
+						<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
 					</rich:dropDownMenu>
 					<rich:dropDownMenu mode="ajax">
 						<f:facet name="label">

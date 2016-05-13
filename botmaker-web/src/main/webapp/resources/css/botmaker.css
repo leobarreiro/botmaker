@@ -6,6 +6,17 @@ body {
 	color: #000000;
 }
 
+table tr td label {
+    color: purple;
+    display: inline-block;
+    float: left;
+    font-size: 11pt !important;
+    margin-right: 12px !important;
+    padding: 2pt !important;
+    text-align: right;
+    width: 100%;
+}
+
 body.page {
 	background-position: left top;
 	background-repeat: repeat-x;
@@ -411,4 +422,9 @@ textarea[disabled].script {
 	height: 100px;
 	display: block;
 	border: 1px solid green;
+}
+
+a.menuitem {
+	font-size: 12px !important;
+	text-decoration: none !important;
 }

@@ -114,6 +114,12 @@ public interface IBotMakerFacade extends Serializable {
 	 */
 	List<User> listAllUsers();
 
+	/**
+	 * @return
+	 * @see com.javaleo.systems.botmaker.ejb.business.IBotBusiness#listLastBotsFromCompanyUser()
+	 */
+	List<Bot> listLastBotsFromCompanyUser();
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -24,6 +24,9 @@ public class UserAction implements Serializable {
 	private BotAction botAction;
 
 	@Inject
+	private AuxAction auxAction;
+
+	@Inject
 	private MsgAction msgAction;
 
 	private String username;
@@ -32,6 +35,7 @@ public class UserAction implements Serializable {
 	public String login() {
 		try {
 			authenticator.authenticate(username, plainPassword);
+			auxAction.init();
 			return botAction.list();
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
