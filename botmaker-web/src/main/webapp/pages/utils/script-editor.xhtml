@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:popupPanel id="scriptEditor" modal="true" moveable="true" header="Script Editor" height="600" width="800">
+		<h:panelGroup layout="block" styleClass="pc100">
+			<b>Available Environment Variables</b>
+			<br />
+			<ul>
+				<li><i>idChat</i> : Integer value from Telegram Chat who origins the Dialog.</li>
+				<li><i>dateInMilis</i> : Integer value who represents the datetime (in milliseconds) that the Dialog starts.</li>
+				<li><i>userId</i> : Integer value from Telegram User.</li>
+				<li><i>userAnswer</i> : String value with the user answer content.</li>
+			</ul>
+		</h:panelGroup>
+
+		<rich:panel styleClass="frm-crud pc100">
+
+			<h:panelGrid columns="4" columnClasses="pc25,pc25,pc25,pc25" styleClass="pc100">
+				<h:outputLabel value="Script Type" />
+				<h:selectOneMenu value="#{commandAction.command.postProcessScriptType}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="Parse Mode" />
+				<h:selectOneMenu value="#{commandAction.command.parseMode}" immediate="true">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:inputTextarea id="scriptCode" value="#{commandAction.command.postProcessScript}" rows="12" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" />
+			</h:panelGroup>
+
+		</rich:panel>
+
+	</rich:popupPanel>
+
+	<script type="text/javascript">
+		var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+		    mode: "groovy",
+		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+		    lineNumbers: true, 
+		    height: 500, 
+		    indentWithTabs: true
+		});
+		//readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+		scriptCodeMirror.setSize('100%', 360);
+	</script>
+
+</ui:composition>

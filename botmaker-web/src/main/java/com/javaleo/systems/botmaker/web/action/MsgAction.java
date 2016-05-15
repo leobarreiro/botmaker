@@ -25,6 +25,14 @@ public class MsgAction implements Serializable {
 		this.mustShow = true;
 	}
 
+	public void addInfoMessage(String msg) {
+		addMessage(MessageType.INFO, msg);
+	}
+
+	public void addErrorMessage(String msg) {
+		addMessage(MessageType.ERROR, msg);
+	}
+
 	public void clear() {
 		msg = null;
 	}

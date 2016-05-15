@@ -81,6 +81,13 @@ public class BotBusiness implements IBotBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void deactivateBot(Bot bot) throws BusinessException {
+		bot.setActive(false);
+		persistence.saveOrUpdate(bot);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Bot> searchBot(BotFilter filter) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> query = cb.createQuery(Bot.class);
@@ -111,7 +118,7 @@ public class BotBusiness implements IBotBusiness {
 		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
 		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
-		cq.where(cb.equal(from.get("active"), true));
+		// cq.where(cb.equal(from.get("active"), true));
 		return persistence.getResultList(cq);
 	}
 

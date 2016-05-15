@@ -38,10 +38,10 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:panelGroup layout="block" styleClass="scripting">
-					<h:inputTextarea id="postProcessScript" value="#{commandAction.command.postProcessScript}" rows="6" readonly="true" disabled="true" rendered="#{commandAction.command.postProcess}" />
-					<h:outputText value="--" styleClass="gray txt" rendered="#{not commandAction.command.postProcess}" />
-				</h:panelGroup>
+				<h:commandLink value="Show Code" rendered="#{commandAction.command.postProcess}">
+					<rich:componentControl target="scriptEditor" operation="show" />
+				</h:commandLink>
+				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt"/>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
@@ -94,17 +94,7 @@
 			</rich:dataTable>
 		</rich:panel>
 
-		<script type="text/javascript">
-			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    lineNumbers: true, 
-			    readOnly: true, 
-			    height: 50, 
-			    indentWithTabs: true
-			});
-			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
-		</script>
+		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>
 </ui:composition>

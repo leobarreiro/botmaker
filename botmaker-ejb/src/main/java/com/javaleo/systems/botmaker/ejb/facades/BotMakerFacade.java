@@ -113,6 +113,18 @@ public class BotMakerFacade implements IBotMakerFacade {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#deactivateBot(com.javaleo.systems.botmaker.ejb.entities
+	 * .Bot)
+	 */
+	@Override
+	public void deactivateBot(Bot bot) throws BusinessException {
+		botBusiness.deactivateBot(bot);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#searchBot(com.javaleo.systems.botrise.ejb
 	 * .filters.BotFilter )
 	 */

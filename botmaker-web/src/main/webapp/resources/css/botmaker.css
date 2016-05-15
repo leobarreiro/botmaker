@@ -7,14 +7,14 @@ body {
 }
 
 table tr td label {
-    color: purple;
-    display: inline-block;
-    float: left;
-    font-size: 11pt !important;
-    margin-right: 12px !important;
-    padding: 2pt !important;
-    text-align: right;
-    width: 100%;
+	color: purple;
+	display: inline-block;
+	float: left;
+	font-size: 11pt !important;
+	margin-right: 12px !important;
+	padding: 2pt !important;
+	text-align: right;
+	width: 100%;
 }
 
 body.page {
@@ -201,7 +201,20 @@ span.explain {
 	text-align: center;
 	display: block;
 	margin-top: 12px;
-	padding: 2px;
+	padding: 4px;
+}
+
+span.primary, a.primary, a.secondary, span.secondary {
+	display: inline-block;
+	margin: 6px;
+	padding: 4px 12px;
+	font-size: 11pt;
+}
+
+a.primary {
+	color: magenta !important;
+	font-size: 12pt !important;
+	font-weight: bold !important;
 }
 
 input.primary, button.primary {
@@ -226,9 +239,17 @@ input.secondary, button.secondary {
 	padding: 6px !important;
 }
 
-input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
-	{
+input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
 	color: yellow !important;
+}
+
+.popupExplain {
+	display: inline-block;
+	margin: auto;
+	padding: 20px 2px 20px 2px;
+	width: 100%;
+	height: 60px;
+	font-size: 12pt;
 }
 
 .required {
@@ -269,6 +290,10 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .pc20 {
 	width: 20% !important;
+}
+
+.pc25 {
+	width: 25% !important;
 }
 
 .pc30 {
