@@ -49,37 +49,31 @@
 				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="txt #{questionAction.question.processAnswer ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Type" />
+				<h:outputLabel value="Script Type" />
 				<h:outputText value="#{(questionAction.question.scriptType ne null) ? questionAction.question.scriptType.descriptor : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Return Parse Mode" />
+				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:panelGroup layout="block" styleClass="scripting">
-					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" readonly="true" styleClass="script" rendered="#{questionAction.question.scriptType ne null}" />
-					<h:outputText value="--" styleClass="purple txt" rendered="#{questionAction.question.scriptType eq null}" />
-				</h:panelGroup>
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:commandLink value="View Code" rendered="#{questionAction.question.processAnswer}">
+					<rich:componentControl event="click" operation="show" target="scriptEditor" />
+				</h:commandLink>
+				<h:outputText value="None" rendered="#{not questionAction.question.processAnswer}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
 			</h:panelGroup>
-
 		</rich:panel>
 
-		<script type="text/javascript">
-			var readonlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    lineNumbers: true, 
-			    readOnly: true, 
-			    indentWithTabs: true, 
-			});
-			readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
-		</script>
+		<ui:param name="scriptCode" value="#{questionAction.question.postProcessScript}" />
+		<ui:param name="scriptType" value="#{questionAction.question.scriptType}" />
+		<ui:param name="parseMode" value="#{questionAction.question.parseMode}" />
+		<ui:param name="readOnly" value="#{questionAction.readOnly}" />
+		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>
 </ui:composition>

@@ -3,6 +3,10 @@ package com.javaleo.systems.botmaker.ejb.security;
 
 public class ScriptSecurityManager extends SecurityManager {
 
+	public ScriptSecurityManager() {
+		//super();
+	}
+
 	@Override
 	public void checkExit(int status) {
 		throw new SecurityException("Instruction not allowed by BotMaker.");

@@ -44,11 +44,13 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private Command command;
 	private Question question;
 	private List<Validator> validators;
+	private Boolean readOnly;
 
 	public String startNew(Command command) {
 		startOrResumeConversation();
 		this.command = command;
 		this.question = new Question();
+		this.readOnly = false;
 		loadOptions();
 		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
@@ -58,6 +60,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		this.question = question;
 		this.command = question.getCommand();
+		this.readOnly = false;
 		loadOptions();
 		userPreferencesAction.loadPreferences();
 		return "/pages/question/question.jsf?faces-redirect=true";
@@ -67,6 +70,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		this.question = question;
 		this.command = question.getCommand();
+		this.readOnly = true;
 		userPreferencesAction.loadPreferences();
 		return "/pages/question/question-detail.jsf?faces-redirect=true";
 	}
@@ -139,6 +143,14 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 
 	public void setValidators(List<Validator> validators) {
 		this.validators = validators;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 }

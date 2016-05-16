@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/blank.xhtml">
+	<ui:define name="content">
+		<h:panelGroup layout="block" styleClass="frm-login">
+			<h1 class="txctr">Error 500</h1>
+			<h3 class="txctr">#{msgAction.showMsg()}</h3>
+			<h:panelGroup layout="block">
+				<h:graphicImage value="/resources/img/botmaker-login.png" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="txctr">
+				<h:commandLink value="Back to BotMaker" action="/index.jsf?faces-redirect=true" />
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

@@ -176,6 +176,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		answers.add(ans);
 		dialog.setAnswers(answers);
 		dialog.setPendingServer(true);
+		
 		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion())) {
 			fillAnswer(bot, dialog, ans);
 			if (StringUtils.isNotBlank(dialog.getLastQuestion().getSuccessMessage())) {
@@ -202,6 +203,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			dialog.setPendingServer(false);
 			managerUtils.updateDialogToBot(bot, dialog);
 		}
+		
 	}
 
 	private void fillAnswer(Bot bot, Dialog dialog, Answer ans) {

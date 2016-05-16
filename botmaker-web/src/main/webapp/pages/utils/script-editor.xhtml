@@ -10,7 +10,7 @@
 			</h:commandLink>
 		</f:facet>
 
-		<h:panelGroup layout="block" styleClass="pc100" rendered="#{not commandAction.readOnly}">
+		<h:panelGroup layout="block" styleClass="pc100" rendered="#{not readOnly}">
 			<b>Available Environment Variables</b>
 			<br />
 			<ul>
@@ -25,21 +25,21 @@
 
 			<h:panelGrid columns="4" columnClasses="pc25,pc25,pc25,pc25" styleClass="pc100">
 				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu id="scriptTypeId" value="#{commandAction.command.postProcessScriptType}" readonly="#{commandAction.readOnly}" disabled="#{commandAction.readOnly}" immediate="true">
-					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}" readonly="#{readOnly}" disabled="#{readOnly}" immediate="true">
 					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
 				</h:selectOneMenu>
 				<h:outputLabel value="Parse Mode" />
-				<h:selectOneMenu id="parseModeId" value="#{commandAction.command.parseMode}" readonly="#{commandAction.readOnly}" disabled="#{commandAction.readOnly}" immediate="true">
-					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
+				<h:selectOneMenu id="parseModeId" value="#{parseMode}" readonly="#{readOnly}" disabled="#{readOnly}" immediate="true">
 					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:inputTextarea id="scriptCode" value="#{commandAction.command.postProcessScript}" readonly="#{commandAction.readOnly}" rows="12" />
+				<h:inputTextarea id="scriptCode" value="#{scriptCode}" readonly="#{readOnly}" rows="12" immediate="true" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" />
+				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary">
+					<f:ajax execute="scriptEditor scriptCode" event="click" />
+				</h:commandLink>
 			</h:panelGroup>
 
 		</rich:panel>
@@ -56,8 +56,8 @@
 		});
 		//readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		scriptCodeMirror.setSize('100%', 360);
-		scriptCodeMirror.setOption("readOnly", #{commandAction.readOnly});
-		if (#{commandAction.readOnly}) {
+		scriptCodeMirror.setOption("readOnly", #{readOnly});
+		if (#{readOnly}) {
 			scriptCodeMirror.setOption("theme", "eclipse");
 			scriptCodeMirror.setSize('98%', 440);
 		}

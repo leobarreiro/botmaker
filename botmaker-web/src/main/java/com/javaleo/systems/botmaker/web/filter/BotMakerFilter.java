@@ -57,7 +57,7 @@ public class BotMakerFilter implements Filter {
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 			if (e.getMessage() != null) {
-				msgAction.addMessage(MessageType.ERROR, e.getMessage());
+				msgAction.addErrorMessage(e.getMessage());
 			}
 			goToError500(httpResponse);
 		}

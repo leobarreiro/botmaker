@@ -10,7 +10,7 @@
 				<h:outputText styleClass="txt" value="Name" />
 				<h:inputText value="#{validatorAction.filter.name}" />
 				<h:outputText styleClass="txt" value="Type" />
-				<h:selectOneMenu value="#{validatorAction.filter.scriptType}">
+				<h:selectOneMenu value="#{validatorAction.filter.validatorType}">
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{validatorAction.filter.validatorTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				</h:selectOneMenu>

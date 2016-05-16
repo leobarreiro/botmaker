@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.model.Document;
 import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.slf4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,6 +39,9 @@ import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 public class QuestionBusiness implements IQuestionBusiness {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private Logger LOG;
 
 	@Inject
 	private IPersistenceBasic<Question> persistence;
@@ -144,7 +148,13 @@ public class QuestionBusiness implements IQuestionBusiness {
 					binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
 					binding.setVariable("userAnswer", dialog.getLastUpdate().getMessage().getText());
 					binding.setVariable(question.getVarName(), dialog.getLastUpdate().getMessage().getText());
-					return (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+					try {
+						Boolean valid = (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+						return valid;
+					} catch (Exception e) {
+						LOG.error(e.getMessage());
+						return false;
+					}
 				} else {
 					return true;
 				}
@@ -178,8 +188,12 @@ public class QuestionBusiness implements IQuestionBusiness {
 						}
 					}
 				}
-				String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
-				answer.setPostProcessedAnswer(postProcessed);
+				try {
+					String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
+					answer.setPostProcessedAnswer(postProcessed);
+				} catch (BusinessException e) {
+					LOG.error(e.getMessage());
+				}
 			}
 		}
 	}

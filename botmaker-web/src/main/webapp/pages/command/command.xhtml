@@ -3,9 +3,9 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1 class="pc90">Command</h1>
+		<h1>Command</h1>
 
-		<rich:panel styleClass="frm-crud pc90">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
 			</h:panelGroup>
@@ -15,7 +15,7 @@
 			</h:panelGroup>
 		</rich:panel>
 
-		<rich:panel styleClass="frm-crud pc90">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Key" />
 				<h:inputText value="#{commandAction.command.key}" />
@@ -41,7 +41,7 @@
 				<h:commandLink value="Edit Code" rendered="#{commandAction.command.postProcess}">
 					<rich:componentControl target="scriptEditor" operation="show" />
 				</h:commandLink>
-				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt"/>
+				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandLink action="#{botAction.detail(commandAction.bot)}" value="Go Back" styleClass="secondary" />
@@ -49,6 +49,10 @@
 			</h:panelGroup>
 		</rich:panel>
 
+		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
+		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
+		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />
+		<ui:param name="readOnly" value="#{commandAction.readOnly}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>

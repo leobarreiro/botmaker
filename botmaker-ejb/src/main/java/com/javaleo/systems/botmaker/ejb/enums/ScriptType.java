@@ -2,7 +2,7 @@ package com.javaleo.systems.botmaker.ejb.enums;
 
 public enum ScriptType {
 
-	NONE("None"), GROOVY("Groovy");
+	GROOVY("Groovy"), JAVASCRIPT("Javascript"), PYTHON("Python");
 
 	private ScriptType(String descriptor) {
 		this.descriptor = descriptor;

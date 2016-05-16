@@ -44,10 +44,10 @@
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
-				<h:commandLink action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
+				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
+				<h:commandLink action="#{commandAction.dropCommand()}" value="Drop Command" styleClass="secondary" />
 				<h:commandLink action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
-				<h:commandLink action="#{questionAction.startNew(commandAction.command)}" value="New Question" styleClass="secondary" />
+				<h:commandLink action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="secondary" />
 			</h:panelGroup>
 		</rich:panel>
 
@@ -94,6 +94,10 @@
 			</rich:dataTable>
 		</rich:panel>
 
+		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
+		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
+		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />
+		<ui:param name="readOnly" value="#{commandAction.readOnly}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>

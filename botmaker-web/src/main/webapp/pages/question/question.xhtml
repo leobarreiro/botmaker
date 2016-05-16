@@ -56,26 +56,18 @@
 				<h:selectBooleanCheckbox value="#{questionAction.question.processAnswer}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Type" />
-				<h:selectOneMenu value="#{questionAction.question.scriptType}" immediate="true">
-					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-				</h:selectOneMenu>
+				<h:outputLabel value="Script Type" />
+				<h:outputText value="#{(questionAction.question.scriptType ne null) ? questionAction.question.scriptType.descriptor : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Return Parse Mode" />
-				<h:selectOneMenu value="#{questionAction.question.parseMode}" immediate="true">
-					<f:selectItem itemLabel="Select..." itemValue="#{null}" />
-					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
-				</h:selectOneMenu>
+				<h:outputLabel value="Parse Mode" />
+				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:panelGroup layout="block" styleClass="scripting">
-					<h:outputText styleClass="explain" value="Question Post Scripts must return a String (that will be presented to final Users)" />
-					<ui:include src="/pages/utils/defaultvars.xhtml" />
-					<h:inputTextarea id="postProcessScript" value="#{questionAction.question.postProcessScript}" rows="6" />
-				</h:panelGroup>
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:commandLink value="Edit Code">
+					<rich:componentControl target="scriptEditor" operation="show" />
+				</h:commandLink>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
@@ -83,16 +75,11 @@
 			</h:panelGroup>
 		</rich:panel>
 
-		<script type="text/javascript">
-			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}",  
-			    lineNumbers: true, 
-			    indentWithTabs: true, 
-			    lineWrapping: true
-			});
-			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
-		</script>
+		<ui:param name="scriptCode" value="#{questionAction.question.postProcessScript}" />
+		<ui:param name="scriptType" value="#{questionAction.question.scriptType}" />
+		<ui:param name="parseMode" value="#{questionAction.question.parseMode}" />
+		<ui:param name="readOnly" value="#{questionAction.readOnly}" />
+		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>
 </ui:composition>
