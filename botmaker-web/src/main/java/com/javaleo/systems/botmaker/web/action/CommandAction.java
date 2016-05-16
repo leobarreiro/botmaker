@@ -85,6 +85,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String save() {
 		try {
 			facade.saveCommand(command);
+			this.readOnly = true;
 			msgAction.addMessage(MessageType.INFO, "Command saved");
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());

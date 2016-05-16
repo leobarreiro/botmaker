@@ -57,6 +57,11 @@
 		//readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
 		scriptCodeMirror.setSize('100%', 360);
 		scriptCodeMirror.setOption("readOnly", #{commandAction.readOnly});
+		if (#{commandAction.readOnly}) {
+			scriptCodeMirror.setOption("theme", "eclipse");
+			scriptCodeMirror.setSize('98%', 440);
+		}
+		
 	</script>
 
 </ui:composition>
