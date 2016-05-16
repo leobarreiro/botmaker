@@ -4,6 +4,8 @@ body {
 	font-family: Arial, Helvetica !important;
 	font-size: 12pt;
 	color: #000000;
+	width: auto;
+	height: auto;
 }
 
 table tr td label {
@@ -342,19 +344,23 @@ textarea[disabled].script {
 }
 
 .green {
-	color: green;
+	color: green !important;
 }
 
 .blue {
-	color: blue;
+	color: blue !important;
 }
 
 .purple {
-	color: purple;
+	color: purple !important;
 }
 
 .red {
-	color: red;
+	color: red !important;
+}
+
+.gray {
+	color: gray !important;
 }
 
 .txctr {

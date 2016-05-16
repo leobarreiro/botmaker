@@ -42,7 +42,7 @@
 						<rich:menuItem>
 							<h:dataTable value="#{auxAction.bots}" var="bt">
 								<h:column>
-									<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" styleClass="menuitem"/>
+									<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}"/>
 								</h:column>
 							</h:dataTable>
 						</rich:menuItem>

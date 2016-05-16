@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -14,7 +13,6 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
@@ -42,6 +40,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private List<Command> commands;
 	private List<Question> questions;
 	private Bot bot;
+	private Boolean readOnly;
 
 	@Override
 	public Conversation getConversation() {
@@ -50,6 +49,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String startNew() {
 		startOrResumeConversation();
+		this.readOnly = false;
 		command = new Command();
 		command.setBot(bot);
 		userPreferenceAction.loadPreferences();
@@ -68,12 +68,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = pojo;
+		this.readOnly = false;
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
 	public String detail(Command command) {
 		startOrResumeConversation();
+		this.readOnly = true;
 		this.command = command;
 		questions = facade.listQuestionsFromCommand(command);
 		userPreferenceAction.loadPreferences();
@@ -131,6 +133,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public Boolean getReadOnly() {
+		return readOnly;
+	}
+
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 }

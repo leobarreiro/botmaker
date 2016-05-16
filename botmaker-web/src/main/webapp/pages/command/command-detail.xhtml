@@ -29,25 +29,25 @@
 				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Type" />
+				<h:outputLabel value="Script Type" />
 				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="gray txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Return Parse Mode" />
+				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="gray txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Post Script Code" styleClass="txtop" />
-				<h:commandLink value="Show Code" rendered="#{commandAction.command.postProcess}">
-					<rich:componentControl target="scriptEditor" operation="show" />
+				<h:outputLabel value="Script Code" styleClass="txtop" />
+				<h:commandLink value="View Code" rendered="#{commandAction.command.postProcess}">
+					<rich:componentControl event="click" operation="show" target="scriptEditor" />
 				</h:commandLink>
-				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt"/>
+				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
-				<h:commandButton action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
-				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
-				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="New Question" styleClass="secondary" />
+				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Go Back" styleClass="secondary" />
+				<h:commandLink action="#{commandAction.dropCommand()}" value="Drop" styleClass="secondary" />
+				<h:commandLink action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
+				<h:commandLink action="#{questionAction.startNew(commandAction.command)}" value="New Question" styleClass="secondary" />
 			</h:panelGroup>
 		</rich:panel>
 
