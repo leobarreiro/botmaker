@@ -1,6 +1,7 @@
 package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +26,9 @@ import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 @Singleton
 @ApplicationScoped
 public class ManagerUtils implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private Logger LOG;
 
@@ -105,6 +106,21 @@ public class ManagerUtils implements Serializable {
 
 	public Set<Dialog> getDialogsFromBot(Bot bot) {
 		return (dialogsPerBotMap.containsKey(bot.getId())) ? dialogsPerBotMap.get(bot.getId()) : new HashSet<Dialog>();
+	}
+
+	public void removeOldDialogWithoutInteraction() {
+		for (Long idBot : dialogsPerBotMap.keySet()) {
+			Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(idBot));
+			for (Dialog d : dialogs) {
+				// 2 days ago
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.DAY_OF_MONTH, -2);
+				if (d.getLastInteraction() < cal.getTimeInMillis()) {
+					dialogs.remove(d);
+				}
+			}
+			dialogsPerBotMap.put(idBot, dialogs);
+		}
 	}
 
 	public void cleanDialogsFinished() {

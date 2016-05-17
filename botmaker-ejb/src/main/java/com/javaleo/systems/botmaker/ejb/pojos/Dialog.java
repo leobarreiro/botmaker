@@ -17,6 +17,7 @@ public class Dialog implements Serializable {
 	private Command lastCommand;
 	private String postProcessedResult;
 	private Question lastQuestion;
+	private long lastInteraction;
 	private boolean pendingServer;
 	private boolean finish;
 	private List<Answer> answers;
@@ -49,7 +50,7 @@ public class Dialog implements Serializable {
 		return postProcessedResult;
 	}
 
-	public void setProcessedResult(String postProcessedResult) {
+	public void setPostProcessedResult(String postProcessedResult) {
 		this.postProcessedResult = postProcessedResult;
 	}
 
@@ -59,6 +60,14 @@ public class Dialog implements Serializable {
 
 	public void setLastQuestion(Question lastQuestion) {
 		this.lastQuestion = lastQuestion;
+	}
+
+	public long getLastInteraction() {
+		return lastInteraction;
+	}
+
+	public void setLastInteraction(long lastInteraction) {
+		this.lastInteraction = lastInteraction;
 	}
 
 	public boolean isPendingServer() {

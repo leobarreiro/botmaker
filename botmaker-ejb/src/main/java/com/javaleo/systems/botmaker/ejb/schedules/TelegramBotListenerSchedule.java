@@ -3,6 +3,7 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 			processDialogsToBot(bot);
 		}
 	}
+	
+	@Schedule(dayOfWeek = "*", hour = "*/1", minute = "00,30", second = "00", persistent = false)
+	public void cleanDialogsWithoutInteraction() {
+		LOG.info("Removing old dialogs without interaction.");
+		managerUtils.removeOldDialogWithoutInteraction();
+	}
 
 	public void processDialogsToBot(Bot bot) {
 		if (managerUtils.isProcessingBot(bot)) {
@@ -124,6 +131,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		dialog.setAnswers(new ArrayList<Answer>());
 		dialog.setPendingServer(true);
 		dialog.setFinish(false);
+		setLastInteraction(dialog);
 		
 		String[] userTextParts = StringUtils.split(update.getMessage().getText(), "_");
 		if (userTextParts == null) {
@@ -158,7 +166,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 				}
 			} else {
 				endOfCommand(bot, dialog);
-				managerUtils.removeDialog(bot, dialog);
+				// managerUtils.removeDialog(bot, dialog);
 			}
 		}
 	}
@@ -176,6 +184,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		answers.add(ans);
 		dialog.setAnswers(answers);
 		dialog.setPendingServer(true);
+		setLastInteraction(dialog);
 		
 		if (questionBusiness.validateAnswer(dialog, dialog.getLastQuestion())) {
 			fillAnswer(bot, dialog, ans);
@@ -195,7 +204,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 				managerUtils.updateDialogToBot(bot, dialog);
 			} else {
 				endOfCommand(bot, dialog);
-				managerUtils.removeDialog(bot, dialog);
+				// managerUtils.removeDialog(bot, dialog);
 			}
 		} else {
 			ans.setAccepted(false);
@@ -228,7 +237,8 @@ public class TelegramBotListenerSchedule implements Serializable {
 		if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
 			sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage(), ParseMode.HTML);
 		}
-		managerUtils.removeDialog(bot, dialog);
+		setLastInteraction(dialog);
+		// managerUtils.removeDialog(bot, dialog);
 	}
 
 	private void instructQuestionToUser(Bot bot, Dialog dialog) {
@@ -251,6 +261,11 @@ public class TelegramBotListenerSchedule implements Serializable {
 				sendMessageUtils.sendMessageWithOptions(bot, dialog, bot.getUnknownCommadMessage(), ParseMode.HTML, options);
 			}
 		}
+	}
+	
+	private void setLastInteraction(Dialog dialog) {
+		Calendar cal = Calendar.getInstance();
+		dialog.setLastInteraction(cal.getTimeInMillis());
 	}
 
 	private void endOfCommand(Bot bot, Dialog dialog) {

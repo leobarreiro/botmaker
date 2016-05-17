@@ -110,7 +110,7 @@ public class CommandBusiness implements ICommandBusiness {
 						}
 					}
 					String postProcessed = (String) scriptRunner.evaluateGroovy(command.getPostProcessScript(), binding);
-					dialog.setProcessedResult(postProcessed);
+					dialog.setPostProcessedResult(postProcessed);
 				} catch (Exception e) {
 					LOG.error(e.getMessage());
 				}
