@@ -26,7 +26,9 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answers" />
-				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}" />
+				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
+					<f:ajax event="click" execute="@this" render="frm:scriptlinkId" />
+				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
@@ -36,12 +38,12 @@
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="green txt" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line" id="scriptlinkId">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink value="Edit Code" rendered="#{commandAction.command.postProcess}">
 					<rich:componentControl target="scriptEditor" operation="show" />
 				</h:commandLink>
-				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
+				<h:outputText id="nonescriptId" value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandLink action="#{botAction.detail(commandAction.bot)}" value="Go Back" styleClass="secondary" />
