@@ -147,10 +147,10 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public void removeDialog(Bot bot, Dialog dialog) {
-		if (dialogsPerBotMap.containsKey(bot.getId())) {
-			dialogsPerBotMap.get(bot.getId()).remove(dialog);
-		}
-	}
+	// public void removeDialog(Bot bot, Dialog dialog) {
+	// if (dialogsPerBotMap.containsKey(bot.getId())) {
+	// dialogsPerBotMap.get(bot.getId()).remove(dialog);
+	// }
+	// }
 
 }
