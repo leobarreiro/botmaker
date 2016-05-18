@@ -45,7 +45,9 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
-				<h:commandLink action="#{commandAction.dropCommand()}" value="Drop Command" styleClass="secondary" />
+				<h:commandLink value="Drop Command" styleClass="secondary">
+					<rich:componentControl event="click" target="dropCommandConfirmId" operation="show" />
+				</h:commandLink>
 				<h:commandLink action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
 				<h:commandLink action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="secondary" />
 			</h:panelGroup>
@@ -93,6 +95,24 @@
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
+
+		<rich:popupPanel id="dropCommandConfirmId" maxHeight="300" maxWidth="500">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputText value="Confirm?" />
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:commandButton action="#{commandAction.dropCommand()}" value="Confirm Drop" />
+				<h:commandButton value="Cancel">
+					<rich:componentControl event="click" target="dropCommandConfirmId" operation="hide" />
+				</h:commandButton>
+			</h:panelGroup>
+			
+			
+			
+			
+		
+		</rich:popupPanel>
 
 		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
 		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />

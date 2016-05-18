@@ -1,8 +1,7 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import groovy.lang.Binding;
-
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,14 +141,10 @@ public class QuestionBusiness implements IQuestionBusiness {
 					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
 					return m.matches();
 				} else if (question.getValidator().getValidatorType().equals(ValidatorType.GROOVY)) {
-					Binding binding = new Binding();
-					binding.setVariable("idChat", dialog.getId());
-					binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
-					binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
-					binding.setVariable("userAnswer", dialog.getLastUpdate().getMessage().getText());
-					binding.setVariable(question.getVarName(), dialog.getLastUpdate().getMessage().getText());
+					Map<String, String> contextVars = dialog.getContextVars();
+					contextVars.put("userAnswer", dialog.getLastUpdate().getMessage().getText());
 					try {
-						Boolean valid = (Boolean) scriptRunner.evaluateGroovy(question.getValidator().getScriptCode(), binding);
+						Boolean valid = (Boolean) scriptRunner.evaluateScript(question.getValidator().getScriptCode(), contextVars);
 						return valid;
 					} catch (Exception e) {
 						LOG.error(e.getMessage());
@@ -167,11 +162,6 @@ public class QuestionBusiness implements IQuestionBusiness {
 	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) {
 		if (question.getProcessAnswer()) {
 			if (question.getScriptType().equals(ScriptType.GROOVY)) {
-				Binding binding = new Binding();
-				binding.setVariable("idChat", dialog.getId());
-				binding.setVariable("dateInMilis", dialog.getLastUpdate().getMessage().getDate());
-				binding.setVariable("userId", dialog.getLastUpdate().getMessage().getFrom().getId());
-
 				GsonBuilder gsonBuilder = new GsonBuilder();
 				gsonBuilder.excludeFieldsWithoutExposeAnnotation();
 				Gson gson = gsonBuilder.create();
@@ -179,17 +169,17 @@ public class QuestionBusiness implements IQuestionBusiness {
 					if (a.isAccepted()) {
 						if (a.getAnswerType().equals(AnswerType.DOCUMENT)) {
 							String content = gson.toJson(a.getUrlFiles().get(0));
-							binding.setVariable(a.getVarName(), content);
+							dialog.addContextVar(a.getVarName(), content);
 						} else if (a.getAnswerType().equals(AnswerType.PHOTO)) {
 							String content = gson.toJson(a.getUrlFiles());
-							binding.setVariable(a.getVarName(), content);
+							dialog.addContextVar(a.getVarName(), content);
 						} else { // a.getAnswer().equals(AnswerType.STRING) || a.getAnswer().equals(AnswerType.NUMERIC)
-							binding.setVariable(a.getVarName(), a.getAnswer());
+							dialog.addContextVar(a.getVarName(), a.getAnswer());
 						}
 					}
 				}
 				try {
-					String postProcessed = (String) scriptRunner.evaluateGroovy(question.getPostProcessScript(), binding);
+					String postProcessed = (String) scriptRunner.evaluateScript(question.getPostProcessScript(), dialog.getContextVars());
 					answer.setPostProcessedAnswer(postProcessed);
 				} catch (BusinessException e) {
 					LOG.error(e.getMessage());

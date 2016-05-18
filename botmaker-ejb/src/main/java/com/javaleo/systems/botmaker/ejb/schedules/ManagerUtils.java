@@ -123,18 +123,6 @@ public class ManagerUtils implements Serializable {
 		}
 	}
 
-	public void cleanDialogsFinished() {
-		for (Long idBot : dialogsPerBotMap.keySet()) {
-			Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(idBot));
-			for (Dialog d : dialogs) {
-				if (d.isFinish()) {
-					dialogs.remove(d);
-				}
-			}
-			dialogsPerBotMap.put(idBot, dialogs);
-		}
-	}
-
 	public void updateDialogToBot(Bot bot, Dialog dialog) {
 		Set<Dialog> dialogs = new CopyOnWriteArraySet<Dialog>(dialogsPerBotMap.get(bot.getId()));
 		for (Dialog d : dialogs) {
@@ -146,11 +134,5 @@ public class ManagerUtils implements Serializable {
 		}
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
-
-	// public void removeDialog(Bot bot, Dialog dialog) {
-	// if (dialogsPerBotMap.containsKey(bot.getId())) {
-	// dialogsPerBotMap.get(bot.getId()).remove(dialog);
-	// }
-	// }
 
 }

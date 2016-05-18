@@ -40,12 +40,17 @@
 							<h:outputText value="Bots" />
 						</f:facet>
 						<rich:menuItem>
-							<h:dataTable value="#{auxAction.bots}" var="bt">
-								<h:column>
-									<h:commandLink action="#{botAction.detail(bt)}" value="#{bt.name}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}"/>
-								</h:column>
-							</h:dataTable>
+							<rich:menuGroup>
+								<ui:repeat var="bt" value="#{auxAction.bots}">
+									<rich:menuItem value="#{bt.name}" action="#{botAction.detail(bt)}" />
+								</ui:repeat>
+							</rich:menuGroup>
 						</rich:menuItem>
+						<rich:dataGrid var="bt" value="#{auxAction.bots}" columns="1" styleClass="pc100">
+							<rich:column>
+								<h:commandLink value="#{bt.name}" action="#{botAction.detail(bt)}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}" />
+							</rich:column>
+						</rich:dataGrid>
 						<rich:menuSeparator />
 						<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
 						<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />

@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: purple;
 	display: block;
 	margin: auto;
-	width: 80% !important;
+	width: 70% !important;
 }
 
 h1 {
@@ -110,7 +110,7 @@ input, select, textarea {
 }
 
 .frm-crud {
-	width: 80% !important;
+	width: 70% !important;
 	margin: auto !important;
 	margin-top: 6px !important;
 	padding: 0px !important;

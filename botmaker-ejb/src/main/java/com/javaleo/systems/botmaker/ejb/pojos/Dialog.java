@@ -1,7 +1,10 @@
 package com.javaleo.systems.botmaker.ejb.pojos;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.javaleo.libs.botgram.model.Update;
 
@@ -19,8 +22,16 @@ public class Dialog implements Serializable {
 	private Question lastQuestion;
 	private long lastInteraction;
 	private boolean pendingServer;
-	private boolean finish;
+	private boolean pendingCommand;
 	private List<Answer> answers;
+	private Map<String, String> contextVars;
+
+	public void addContextVar(String name, String value) {
+		if (contextVars == null) {
+			contextVars = new LinkedHashMap<String, String>();
+		}
+		contextVars.put(name, value);
+	}
 
 	public int getId() {
 		return id;
@@ -78,12 +89,12 @@ public class Dialog implements Serializable {
 		this.pendingServer = pendingServer;
 	}
 
-	public boolean isFinish() {
-		return finish;
+	public boolean isPendingCommand() {
+		return pendingCommand;
 	}
 
-	public void setFinish(boolean finish) {
-		this.finish = finish;
+	public void setPendingCommand(boolean pendingCommand) {
+		this.pendingCommand = pendingCommand;
 	}
 
 	public List<Answer> getAnswers() {
@@ -94,11 +105,19 @@ public class Dialog implements Serializable {
 		this.answers = answers;
 	}
 
+	public Map<String, String> getContextVars() {
+		return (contextVars != null) ? contextVars : new HashMap<String, String>();
+	}
+
+	public void setContextVars(Map<String, String> contextVars) {
+		this.contextVars = contextVars;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (finish ? 1231 : 1237);
+		result = prime * result + (pendingCommand ? 1231 : 1237);
 		result = prime * result + id;
 		result = prime * result + (pendingServer ? 1231 : 1237);
 		result = prime * result + ((postProcessedResult == null) ? 0 : postProcessedResult.hashCode());
@@ -114,7 +133,7 @@ public class Dialog implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Dialog other = (Dialog) obj;
-		if (finish != other.finish)
+		if (pendingCommand != other.isPendingServer())
 			return false;
 		if (id != other.id)
 			return false;

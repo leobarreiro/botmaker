@@ -1,7 +1,5 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import groovy.lang.Binding;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +19,8 @@ import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
-import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
-import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
@@ -71,7 +67,8 @@ public class CommandBusiness implements ICommandBusiness {
 		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
 		Root<Command> fromCommand = cq.from(Command.class);
 		Join<Command, Bot> joinBot = fromCommand.join("bot", JoinType.INNER);
-		Join<Question, Command> joinQuestions = fromCommand.join("questions", JoinType.LEFT);
+		// Join<Question, Command> joinQuestions = fromCommand.join("questions", JoinType.LEFT);
+		fromCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.and(cb.equal(joinBot.get("id"), bot.getId()), cb.equal(fromCommand.get("key"), clearText)));
 		cq.select(fromCommand);
 		return persistence.getSingleResult(cq);
@@ -97,23 +94,12 @@ public class CommandBusiness implements ICommandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void postProcessCommand(Dialog dialog, Command command) {
-		if (command.getPostProcess()) {
-			if (command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
-				try {
-					Binding binding = new Binding();
-					binding.setVariable("bmIdChat", dialog.getId());
-					binding.setVariable("bmMessageDateInMilis", dialog.getLastUpdate().getMessage().getDate());
-					binding.setVariable("bmTelegramUserId", dialog.getLastUpdate().getMessage().getFrom().getId());
-					for (Answer a : dialog.getAnswers()) {
-						if (a.isAccepted() && a.getQuestion().getCommand().getId().equals(command.getId())) {
-							binding.setVariable(a.getVarName(), a.getAnswer());
-						}
-					}
-					String postProcessed = (String) scriptRunner.evaluateGroovy(command.getPostProcessScript(), binding);
-					dialog.setPostProcessedResult(postProcessed);
-				} catch (Exception e) {
-					LOG.error(e.getMessage());
-				}
+		if (command.getPostProcess() && command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
+			try {
+				String postProcessed = (String) scriptRunner.evaluateScript(command.getPostProcessScript(), dialog.getContextVars());
+				dialog.setPostProcessedResult(postProcessed);
+			} catch (Exception e) {
+				LOG.error(e.getMessage());
 			}
 		}
 	}
