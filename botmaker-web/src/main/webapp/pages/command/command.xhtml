@@ -38,23 +38,31 @@
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="green txt" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" id="scriptlinkId">
+
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink value="Edit Code" rendered="#{commandAction.command.postProcess}">
-					<rich:componentControl target="scriptEditor" operation="show" />
+				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code">
+					<h:graphicImage value="/resources/img/icons/view.png" />
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(false)" />
 				</h:commandLink>
-				<h:outputText id="nonescriptId" value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code">
+					<h:graphicImage value="/resources/img/icons/edit.png" />
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(true)" />
+				</h:commandLink>
+				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
+
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandLink action="#{botAction.detail(commandAction.bot)}" value="Go Back" styleClass="secondary" />
 				<h:commandLink action="#{commandAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
 
+		<ui:param name="saveCodeBean" value="#{commandAction}" />
+		<ui:param name="saveCodeMethod" value="save" />
 		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
 		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
 		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />
-		<ui:param name="readOnly" value="#{commandAction.readOnly}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>

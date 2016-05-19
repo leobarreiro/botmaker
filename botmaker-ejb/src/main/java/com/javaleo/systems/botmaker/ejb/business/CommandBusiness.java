@@ -1,6 +1,5 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
-import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
 
@@ -42,6 +40,7 @@ public class CommandBusiness implements ICommandBusiness {
 	private Logger LOG;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Command> listCommandsByBot(Bot bot) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
@@ -63,24 +62,12 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveCommandPostScript(Long idCommand, String scriptCode, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
-		Command command = persistence.find(Command.class, idCommand);
-		if (command == null) {
-			throw new BusinessException(MessageFormat.format("Command with Id {0} not found.", idCommand.toString()));
-		}
-
-		if (scriptType.equals(ScriptType.GROOVY)) {
-			scriptRunner.validateScript(scriptCode);
-		}
-
-		command.setPostProcessScript(scriptCode);
-		command.setPostProcessScriptType(scriptType);
-		command.setParseMode(parseMode);
-		persistence.saveOrUpdate(command);
-		persistence.getEntityManager().flush();
+	public Command getCommandById(Long id) {
+		return persistence.find(Command.class, id);
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Command getCommandByBotAndKey(Bot bot, String text) {
 		String clearText = StringUtils.lowerCase(StringUtils.replace(text, "/", ""));
 		if (clearText == null) {
@@ -98,6 +85,7 @@ public class CommandBusiness implements ICommandBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<List<String>> convertCommandsToOptions(Bot bot) {
 		List<Command> commands = listCommandsByBot(bot);
 		List<String> keyCommands = new ArrayList<String>();

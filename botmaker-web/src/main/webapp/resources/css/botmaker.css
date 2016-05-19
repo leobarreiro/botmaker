@@ -195,11 +195,6 @@ span.explain {
 	width: 25%;
 }
 
-.frm-line div.CodeMirror {
-	/*width: 100% !important;*/
-	
-}
-
 .frm-submit {
 	text-align: center;
 	display: block;
@@ -224,7 +219,7 @@ input.primary, button.primary {
 	background: purple !important;
 	border: 1px solid purple !important;
 	color: #ffffff !important;
-	padding: 6px 12px 6px 12px !important;
+	padding: 4px 6px 4px 6px !important;
 	font-weight: normal !important;
 	border-radius: 4px !important;
 	text-shadow: none !important;
@@ -239,7 +234,7 @@ input.secondary, button.secondary {
 	color: #FFFFFF !important;
 	font-weight: normal !important;
 	margin: 4px;
-	padding: 6px !important;
+	padding: 2px 6px 2px 6px !important;
 }
 
 input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
@@ -261,6 +256,35 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .mrauto {
 	margin: auto;
+}
+
+
+.brd-green {
+	border: 1px solid green !important; 
+}
+
+.brd-magenta {
+	border: 1px solid magenta !important; 
+}
+
+.brd-blue {
+	border: 1px solid blue !important; 
+}
+
+.hg500 {
+	height: 500px !important;
+}
+
+.hg600 {
+	height: 600px !important;
+}
+
+.hg100pc {
+	height: 100% !important;
+}
+
+.links-script-code {
+	margin: 1px 20px 1px 1px !important;
 }
 
 .wd100 {
@@ -297,6 +321,10 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .pc25 {
 	width: 25% !important;
+}
+
+.pc28 {
+	width: 28% !important;
 }
 
 .pc30 {
@@ -384,11 +412,11 @@ textarea[disabled].script {
 	vertical-align: middle;
 }
 
-.fltrgt {
+.fltrgt, .fright {
 	float: right;
 }
 
-.fltlft {
+.fltlft, .fleft {
 	float: left;
 }
 
@@ -459,4 +487,24 @@ textarea[disabled].script {
 a.menuitem {
 	font-size: 12px !important;
 	text-decoration: none !important;
+}
+
+div.CodeMirror {
+	margin: auto !important;
+}
+
+.markdown {
+	color: green !important;
+}
+
+.html {
+	color: blue !important;
+}
+
+.groovy {
+	color: purple !important;
+}
+
+.javascript {
+	color: orange !important;
 }

@@ -171,6 +171,16 @@ public class BotMakerFacade implements IBotMakerFacade {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#getCommandById(java.lang.Long)
+	 */
+	@Override
+	public Command getCommandById(Long id) {
+		return commandBusiness.getCommandById(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.javaleo.systems.botrise.ejb.facades.IBotRiseFacade#listCommandsByBot(com.javaleo.systems.
 	 * botrise.ejb.entities .Bot)
 	 */
@@ -188,17 +198,6 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void saveCommand(Command command) throws BusinessException {
 		commandBusiness.saveCommand(command);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#saveCommandPostScript(java.lang.Long,
-	 * java.lang.String, org.javaleo.libs.botgram.enums.ParseMode, com.javaleo.systems.botmaker.ejb.enums.ScriptType)
-	 */
-	@Override
-	public void saveCommandPostScript(Long idCommand, String scriptCode, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
-		commandBusiness.saveCommandPostScript(idCommand, scriptCode, parseMode, scriptType);
 	}
 
 	/*

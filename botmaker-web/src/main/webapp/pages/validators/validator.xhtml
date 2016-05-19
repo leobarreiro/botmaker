@@ -38,11 +38,11 @@
 			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
 			    mode: "groovy",
 			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    lineNumbers: true, 
 			    indentWithTabs: true,
-			    lineWrapping: true 
+			    lineNumbers: true, 
+			    lineWrapping: true  
 			});
-			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+			scriptEditor.setSize('100%', 100);
 		</script>
 
 	</ui:define>

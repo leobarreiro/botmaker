@@ -2,15 +2,14 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:popupPanel id="scriptEditor" modal="true" moveable="true" header="Script Editor" height="600" width="800">
+	<rich:popupPanel id="scriptEditor" modal="true" moveable="true" header="Script Editor" height="560" width="1000">
 		<f:facet name="controls">
 			<h:commandLink>
 				<h:graphicImage value="/resources/img/close-popup.png" />
 				<rich:componentControl target="scriptEditor" operation="hide" />
 			</h:commandLink>
 		</f:facet>
-
-		<h:panelGroup layout="block" styleClass="pc100" rendered="#{not readOnly}">
+		<h:panelGroup layout="block" styleClass="pc28 fleft hg500 brd-magenta">
 			<b>Available Environment Variables</b>
 			<br />
 			<ul>
@@ -20,29 +19,30 @@
 				<li><i>userAnswer</i> : String value with the user answer content.</li>
 			</ul>
 		</h:panelGroup>
-
-		<rich:panel styleClass="pc100">
-			<h:panelGrid columns="4" columnClasses="pc25,pc25,pc25,pc25" styleClass="pc100">
+		<h:panelGroup layout="block" styleClass="pc70 fright hg500 brd-magenta">
+			<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40" styleClass="pc100">
 				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}" immediate="true">
+				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}">
 					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+					<f:ajax event="change" execute="@this" />
 				</h:selectOneMenu>
 				<h:outputLabel value="Parse Mode" />
-				<h:selectOneMenu id="parseModeId" value="#{parseMode}" immediate="true">
+				<h:selectOneMenu id="parseModeId" value="#{parseMode}">
 					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+					<f:ajax event="change" execute="@this" />
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:inputTextarea id="scriptCode" value="#{scriptCode}" readonly="#{readOnly}" rows="12" immediate="true" />
+				<h:inputTextarea id="scriptCode" value="#{scriptCode}" rows="16" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" immediate="true">
-					<f:ajax execute="scriptEditor scriptCode" event="click" />
-				</h:commandLink>
-				<h:commandButton id="btScriptSaveId" value="Save and Close" action="#{commandAction.saveCommandPostScript()}" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" />
+				<h:commandButton id="btScriptCloseId" value="Close" styleClass="secondary">
+					<rich:componentControl event="click" target="scriptEditor" operation="hide" />
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandButton>
+				<h:commandButton id="btScriptSaveId" value="Save and Close" action="#{saveCodeBean[saveCodeMethod]}" styleClass="primary" onclick="#{rich:component('scriptEditor')}.hide()" />
 			</h:panelGroup>
-		</rich:panel>
-
+		</h:panelGroup>
 	</rich:popupPanel>
 
 	<script type="text/javascript">
@@ -50,28 +50,35 @@
 			mode: "groovy",
 		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 		    lineNumbers: true, 
-		    height: 500,
-		    widht: '90%',  
+		    lineWrapping: true, 
+		    height: 800,
+		    widht: '100%',  
 		    indentWithTabs: true
 		});
 
 		function editableMode(editable) {
+			scriptCodeMirror.setSize('98%', 400);
 			if (editable) {
+				scriptCodeMirror.setOption('readOnly', false);
 				document.getElementById("frm:scriptTypeId").readOnly = false;
 				document.getElementById("frm:scriptTypeId").disabled = false;
 				document.getElementById("frm:parseModeId").readOnly = false;
 				document.getElementById("frm:parseModeId").disabled = false;
 				document.getElementById("frm:btScriptSaveId").style.visibility = 'visible';
 				document.getElementById("frm:btScriptSaveId").style.display = 'inline-block';
+				document.getElementById("frm:btScriptCloseId").style.visibility = 'hidden';
+				document.getElementById("frm:btScriptCloseId").style.display = 'none';
 			} else {
+				scriptCodeMirror.setOption('readOnly', true);
 				document.getElementById("frm:scriptTypeId").readOnly = true;
 				document.getElementById("frm:scriptTypeId").disabled = true;
 				document.getElementById("frm:parseModeId").readOnly = true;
 				document.getElementById("frm:parseModeId").disabled = true;
 				document.getElementById("frm:btScriptSaveId").style.visibility = 'hidden';
 				document.getElementById("frm:btScriptSaveId").style.display = 'none';
+				document.getElementById("frm:btScriptCloseId").style.visibility = 'visible';
+				document.getElementById("frm:btScriptCloseId").style.display = 'inline-block';
 			}
 		}
 	</script>
-
 </ui:composition>

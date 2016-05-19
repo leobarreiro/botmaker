@@ -42,11 +42,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private List<Command> commands;
 	private List<Question> questions;
 	private Bot bot;
-	private Boolean readOnly;
-
-	private String scriptCode;
-	private ParseMode parseMode;
-	private ScriptType scriptType;
 
 	@Override
 	public Conversation getConversation() {
@@ -55,7 +50,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String startNew() {
 		startOrResumeConversation();
-		this.readOnly = false;
 		command = new Command();
 		command.setBot(bot);
 		userPreferenceAction.loadPreferences();
@@ -74,14 +68,12 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = pojo;
-		this.readOnly = false;
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
 	public String detail(Command command) {
 		startOrResumeConversation();
-		this.readOnly = true;
 		this.command = command;
 		questions = facade.listQuestionsFromCommand(command);
 		userPreferenceAction.loadPreferences();
@@ -91,23 +83,13 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String save() {
 		try {
 			facade.saveCommand(command);
-			this.readOnly = true;
 			msgAction.addMessage(MessageType.INFO, "Command saved");
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
-
-	public void saveCommandPostScript() {
-		try {
-			facade.saveCommandPostScript(command.getId(), command.getPostProcessScript(), command.getParseMode(), command.getPostProcessScriptType());
-			msgAction.addInfoMessage("Command post script was saved");
-		} catch (BusinessException e) {
-			msgAction.addErrorMessage(e.getMessage());
-		}
-	}
-
+	
 	public String dropCommand() {
 		facade.dropCommand(command);
 		search();
@@ -149,38 +131,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
-	}
-
-	public Boolean getReadOnly() {
-		return readOnly;
-	}
-
-	public void setReadOnly(Boolean readOnly) {
-		this.readOnly = readOnly;
-	}
-
-	public String getScriptCode() {
-		return scriptCode;
-	}
-
-	public void setScriptCode(String scriptCode) {
-		this.scriptCode = scriptCode;
-	}
-
-	public ParseMode getParseMode() {
-		return parseMode;
-	}
-
-	public void setParseMode(ParseMode parseMode) {
-		this.parseMode = parseMode;
-	}
-
-	public ScriptType getScriptType() {
-		return scriptType;
-	}
-
-	public void setScriptType(ScriptType scriptType) {
-		this.scriptType = scriptType;
 	}
 
 }

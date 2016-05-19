@@ -19,13 +19,9 @@
 		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="10" styleClass="pc100">
-				<rich:column sortBy="#{vdt.id}" styleClass="pc5 txctr">
-					<f:facet name="header">Id</f:facet>
-					<h:outputText value="#{vdt.id}" />
-				</rich:column>
-				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc10">
-					<f:facet name="header">Mame</f:facet>
-					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" />
+				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc15">
+					<f:facet name="header">Name</f:facet>
+					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" styleClass="tx10" />
 				</rich:column>
 				<rich:column sortBy="#{vdt.description}" styleClass="txlft pc25">
 					<f:facet name="header">Description</f:facet>

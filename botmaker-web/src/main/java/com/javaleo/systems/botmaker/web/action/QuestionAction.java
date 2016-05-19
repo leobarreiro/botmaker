@@ -80,7 +80,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			question.setCommand(this.command);
 			facade.saveQuestion(question);
 			msgAction.addMessage(MessageType.INFO, "Question saved");
-			return commandAction.detail(this.command);
+			return "/pages/question/question-detail.jsf?faces-redirect=true";
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/question/question.jsf?faces-redirect=true";

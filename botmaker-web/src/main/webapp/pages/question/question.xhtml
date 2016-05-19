@@ -63,22 +63,31 @@
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
-			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
+			
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink value="Edit Code">
-					<rich:componentControl target="scriptEditor" operation="show" />
+				<h:commandLink title="View Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code">
+					<h:graphicImage value="/resources/img/icons/view.png" />
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(false)" />
 				</h:commandLink>
+				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code">
+					<h:graphicImage value="/resources/img/icons/edit.png" />
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(true)" />
+				</h:commandLink>
+				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
+
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
 
+		<ui:param name="saveCodeBean" value="#{questionAction}" />
+		<ui:param name="saveCodeMethod" value="save" />
 		<ui:param name="scriptCode" value="#{questionAction.question.postProcessScript}" />
 		<ui:param name="scriptType" value="#{questionAction.question.scriptType}" />
 		<ui:param name="parseMode" value="#{questionAction.question.parseMode}" />
-		<ui:param name="readOnly" value="#{questionAction.readOnly}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>
