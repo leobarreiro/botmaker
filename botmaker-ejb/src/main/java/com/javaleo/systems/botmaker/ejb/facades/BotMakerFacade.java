@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.javaleo.libs.botgram.enums.ParseMode;
+
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
@@ -20,6 +22,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -190,6 +193,17 @@ public class BotMakerFacade implements IBotMakerFacade {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#saveCommandPostScript(java.lang.Long,
+	 * java.lang.String, org.javaleo.libs.botgram.enums.ParseMode, com.javaleo.systems.botmaker.ejb.enums.ScriptType)
+	 */
+	@Override
+	public void saveCommandPostScript(Long idCommand, String scriptCode, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
+		commandBusiness.saveCommandPostScript(idCommand, scriptCode, parseMode, scriptType);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see
 	 * com.javaleo.systems.botmaker.ejb.business.ICommandBusiness#dropCommand(com.javaleo.systems.botmaker.ejb.entities
 	 * .Command)
@@ -208,6 +222,17 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void saveQuestion(Question question) throws BusinessException {
 		questionBusiness.saveQuestion(question);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#saveQuestionCode(java.lang.Long, java.lang.String,
+	 * org.javaleo.libs.botgram.enums.ParseMode, com.javaleo.systems.botmaker.ejb.enums.ScriptType)
+	 */
+	@Override
+	public void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
+		questionBusiness.saveQuestionCode(idQuestion, code, parseMode, scriptType);
 	}
 
 	/*

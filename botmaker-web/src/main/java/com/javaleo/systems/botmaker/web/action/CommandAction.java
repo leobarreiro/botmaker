@@ -8,11 +8,13 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
@@ -41,6 +43,10 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private List<Question> questions;
 	private Bot bot;
 	private Boolean readOnly;
+
+	private String scriptCode;
+	private ParseMode parseMode;
+	private ScriptType scriptType;
 
 	@Override
 	public Conversation getConversation() {
@@ -93,6 +99,15 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
+	public void saveCommandPostScript() {
+		try {
+			facade.saveCommandPostScript(command.getId(), command.getPostProcessScript(), command.getParseMode(), command.getPostProcessScriptType());
+			msgAction.addInfoMessage("Command post script was saved");
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+		}
+	}
+
 	public String dropCommand() {
 		facade.dropCommand(command);
 		search();
@@ -142,6 +157,30 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setReadOnly(Boolean readOnly) {
 		this.readOnly = readOnly;
+	}
+
+	public String getScriptCode() {
+		return scriptCode;
+	}
+
+	public void setScriptCode(String scriptCode) {
+		this.scriptCode = scriptCode;
+	}
+
+	public ParseMode getParseMode() {
+		return parseMode;
+	}
+
+	public void setParseMode(ParseMode parseMode) {
+		this.parseMode = parseMode;
+	}
+
+	public ScriptType getScriptType() {
+		return scriptType;
+	}
+
+	public void setScriptType(ScriptType scriptType) {
+		this.scriptType = scriptType;
 	}
 
 }

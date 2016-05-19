@@ -39,13 +39,6 @@
 						<f:facet name="label">
 							<h:outputText value="Bots" />
 						</f:facet>
-						<rich:menuItem>
-							<rich:menuGroup>
-								<ui:repeat var="bt" value="#{auxAction.bots}">
-									<rich:menuItem value="#{bt.name}" action="#{botAction.detail(bt)}" />
-								</ui:repeat>
-							</rich:menuGroup>
-						</rich:menuItem>
 						<rich:dataGrid var="bt" value="#{auxAction.bots}" columns="1" styleClass="pc100">
 							<rich:column>
 								<h:commandLink value="#{bt.name}" action="#{botAction.detail(bt)}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}" />

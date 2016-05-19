@@ -36,13 +36,18 @@
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="gray txt" />
 			</h:panelGroup>
+			
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink value="View Code" rendered="#{commandAction.command.postProcess}">
-					<rich:componentControl event="click" operation="show" target="scriptEditor" />
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(false)" />
+				</h:commandLink>
+				<h:commandLink value="Edit Code" rendered="#{commandAction.command.postProcess}">
+					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(true)" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
+			
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
 				<h:commandLink value="Drop Command" styleClass="secondary">
@@ -100,20 +105,15 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputText value="Confirm?" />
 			</h:panelGroup>
-			
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:commandButton action="#{commandAction.dropCommand()}" value="Confirm Drop" />
 				<h:commandButton value="Cancel">
 					<rich:componentControl event="click" target="dropCommandConfirmId" operation="hide" />
 				</h:commandButton>
 			</h:panelGroup>
-			
-			
-			
-			
-		
 		</rich:popupPanel>
 
+		<ui:param name="saveCodeMethod" value="#{commandAction.saveCommandPostScript()}" />
 		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
 		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
 		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />

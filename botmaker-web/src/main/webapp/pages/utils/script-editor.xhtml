@@ -21,15 +21,14 @@
 			</ul>
 		</h:panelGroup>
 
-		<rich:panel styleClass="frm-crud pc100">
-
+		<rich:panel styleClass="pc100">
 			<h:panelGrid columns="4" columnClasses="pc25,pc25,pc25,pc25" styleClass="pc100">
 				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}" readonly="#{readOnly}" disabled="#{readOnly}" immediate="true">
+				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}" immediate="true">
 					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
 				</h:selectOneMenu>
 				<h:outputLabel value="Parse Mode" />
-				<h:selectOneMenu id="parseModeId" value="#{parseMode}" readonly="#{readOnly}" disabled="#{readOnly}" immediate="true">
+				<h:selectOneMenu id="parseModeId" value="#{parseMode}" immediate="true">
 					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
 				</h:selectOneMenu>
 			</h:panelGrid>
@@ -37,11 +36,11 @@
 				<h:inputTextarea id="scriptCode" value="#{scriptCode}" readonly="#{readOnly}" rows="12" immediate="true" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary">
+				<h:commandLink value="Close" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" immediate="true">
 					<f:ajax execute="scriptEditor scriptCode" event="click" />
 				</h:commandLink>
+				<h:commandButton id="btScriptSaveId" value="Save and Close" action="#{commandAction.saveCommandPostScript()}" onclick="#{rich:component('scriptEditor')}.hide()" styleClass="secondary" />
 			</h:panelGroup>
-
 		</rich:panel>
 
 	</rich:popupPanel>
@@ -51,17 +50,28 @@
 			mode: "groovy",
 		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 		    lineNumbers: true, 
-		    height: 500, 
+		    height: 500,
+		    widht: '90%',  
 		    indentWithTabs: true
 		});
-		//readonlyCodeMirror.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
-		scriptCodeMirror.setSize('100%', 360);
-		scriptCodeMirror.setOption("readOnly", #{readOnly});
-		if (#{readOnly}) {
-			scriptCodeMirror.setOption("theme", "eclipse");
-			scriptCodeMirror.setSize('98%', 440);
+
+		function editableMode(editable) {
+			if (editable) {
+				document.getElementById("frm:scriptTypeId").readOnly = false;
+				document.getElementById("frm:scriptTypeId").disabled = false;
+				document.getElementById("frm:parseModeId").readOnly = false;
+				document.getElementById("frm:parseModeId").disabled = false;
+				document.getElementById("frm:btScriptSaveId").style.visibility = 'visible';
+				document.getElementById("frm:btScriptSaveId").style.display = 'inline-block';
+			} else {
+				document.getElementById("frm:scriptTypeId").readOnly = true;
+				document.getElementById("frm:scriptTypeId").disabled = true;
+				document.getElementById("frm:parseModeId").readOnly = true;
+				document.getElementById("frm:parseModeId").disabled = true;
+				document.getElementById("frm:btScriptSaveId").style.visibility = 'hidden';
+				document.getElementById("frm:btScriptSaveId").style.display = 'none';
+			}
 		}
-		
 	</script>
 
 </ui:composition>

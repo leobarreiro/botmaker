@@ -16,6 +16,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.model.Document;
 import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
@@ -83,6 +84,21 @@ public class QuestionBusiness implements IQuestionBusiness {
 			question.setOrder(thisOrder);
 		}
 		persistence.saveOrUpdate(question);
+		persistence.getEntityManager().flush();
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
+		Question question = persistence.find(Question.class, idQuestion);
+		if (scriptType.equals(ScriptType.GROOVY)) {
+			scriptRunner.validateScript(code);
+		}
+		question.setPostProcessScript(code);
+		question.setParseMode(parseMode);
+		question.setScriptType(scriptType);
+		persistence.saveOrUpdate(question);
+		persistence.getEntityManager().flush();
 	}
 
 	@Override
