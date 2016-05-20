@@ -513,3 +513,22 @@ div.CodeMirror {
 .javascript {
 	color: orange !important;
 }
+
+.tip-left {
+	margin-right: 4px !important;
+}
+
+.console {
+	display: inline-block !important;
+	background-color: #cecece !important;
+	color: #000000 !important;
+	font-size: 9pt !important;
+	font-style: inherit;
+	width: 96% !important;
+	height: 140px !important;
+	overflow: auto;
+	word-break: break-all;
+	padding: 10px 4px 10px 4px !important;
+	margin: 10px 2px 2px 2px !important;
+	
+}

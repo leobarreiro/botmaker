@@ -18,6 +18,8 @@ import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 
 @Local
 public interface IBotMakerFacade extends Serializable {
@@ -202,5 +204,18 @@ public interface IBotMakerFacade extends Serializable {
 	void saveCompany(Company company) throws BusinessException;
 
 	void deactivateCompany(Company company) throws BusinessException;
+
+	/**
+	 * @return
+	 * @see com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness#getListDialogContextVars()
+	 */
+	List<DialogContextVar> getListDialogContextVars();
+
+	/**
+	 * @param dialog
+	 * @return
+	 * @see com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness#getContextVarsFromDialog(com.javaleo.systems.botmaker.ejb.pojos.Dialog)
+	 */
+	List<DialogContextVar> getContextVarsFromDialog(Dialog dialog);
 
 }

@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Command</h2>
+		<h2 class="pc70">Command</h2>
 
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
@@ -117,6 +117,9 @@
 
 		<ui:param name="saveCodeBean" value="#{commandAction}" />
 		<ui:param name="saveCodeMethod" value="save" />
+		<ui:param name="testCodeBean" value="#{commandAction}" />
+		<ui:param name="testCodeMethod" value="testScript" />
+		<ui:param name="debugContent" value="#{commandAction.debugContent}" />
 		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
 		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
 		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />

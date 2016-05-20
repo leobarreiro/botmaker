@@ -1,14 +1,16 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
@@ -17,6 +19,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
+import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
@@ -35,6 +38,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private UserPreferenceAction userPreferenceAction;
 
 	@Inject
+	private GroovyScriptRunnerUtils groovyScriptRunner;
+
+	@Inject
 	private MsgAction msgAction;
 
 	private CRUD crudOp;
@@ -43,6 +49,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private List<Question> questions;
 	private Bot bot;
 	private List<DialogContextVar> contextVars;
+	private String debugContent;
 
 	@Override
 	public Conversation getConversation() {
@@ -93,6 +100,20 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
+	public void testScript() {
+		try {
+			Map<String, String> mapVars = new HashMap<String, String>();
+			for (DialogContextVar ctx : contextVars) {
+				if (StringUtils.isNotEmpty(ctx.getValue())) {
+					mapVars.put(ctx.getName(), ctx.getValue());
+				}
+			}
+			debugContent = (String) groovyScriptRunner.testScript(command.getPostProcessScript(), mapVars);
+		} catch (BusinessException e) {
+			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+		}
+	}
+
 	public String dropCommand() {
 		facade.dropCommand(command);
 		search();
@@ -100,11 +121,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	}
 
 	public void loadQuestionsAndContextVars() {
-		this.contextVars = new ArrayList<DialogContextVar>();
-		this.contextVars.add(new DialogContextVar("idChat", "", "Integer value from Telegram Chat who origins the Dialog."));
-		this.contextVars.add(new DialogContextVar("dateInMilis", "", "Integer value who represents the datetime (in milliseconds) that the Dialog starts."));
-		this.contextVars.add(new DialogContextVar("userId", "", "Integer value from Telegram User."));
-		this.contextVars.add(new DialogContextVar("userAnswer", "", "String value with the user answer content."));
+		this.contextVars = facade.getListDialogContextVars();
 		if (this.command.getId() != null) {
 			questions = facade.listQuestionsFromCommand(command);
 			for (Question q : questions) {
@@ -156,6 +173,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setContextVars(List<DialogContextVar> contextVars) {
 		this.contextVars = contextVars;
+	}
+
+	public String getDebugContent() {
+		return debugContent;
+	}
+
+	public void setDebugContent(String debugContent) {
+		this.debugContent = debugContent;
 	}
 
 }

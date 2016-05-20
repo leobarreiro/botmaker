@@ -9,22 +9,31 @@
 				<rich:componentControl target="scriptEditor" operation="hide" />
 			</h:commandLink>
 		</f:facet>
-		<h:panelGroup layout="block" styleClass="pc28 fleft brd-magenta">
-			<h5 class="mrauto">Available Environment Variables</h5>
-			<h:dataTable var="ctx" value="#{contextVars}">
+		<h:panelGroup layout="block" styleClass="pc28 fleft">
+			<h5 class="mrauto">Available Variables</h5>
+			<h:dataTable id="contextVarsId" var="ctx" value="#{contextVars}">
 				<h:column>
 					<f:facet name="header">Var Name</f:facet>
-					<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" />
-					<h:inputText value="#{ctx.name}" size="6" maxlength="12" styleClass="tx9" readonly="true" disabled="true"/>
+					<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
+					<h:inputText value="#{ctx.name}" size="6" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Value</f:facet>
-					<h:inputText value="#{ctx.value}" size="14" maxlength="120" />
+					<h:inputText value="#{ctx.value}" size="16" maxlength="120" />
 				</h:column>
 			</h:dataTable>
+			<br />
+			<hr />
+
+			<h5 class="mrauto">Output Console</h5>
+			<h:panelGroup styleClass="pc100 console brd-magenta">
+				<pre id="consoleOutputId">#{debugContent}</pre>
+			</h:panelGroup>
+
 		</h:panelGroup>
 
-		<h:panelGroup layout="block" styleClass="pc70 fright hg500 brd-magenta">
+		<h:panelGroup layout="block" styleClass="pc70 fright hg500">
+			<h5 class="mrauto">Script Editor</h5>
 			<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40" styleClass="pc100">
 				<h:outputLabel value="Script Type" />
 				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}">
@@ -45,7 +54,18 @@
 					<rich:componentControl event="click" target="scriptEditor" operation="hide" />
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
+				
+				<h:commandLink value="Ready" actionListener="#{testCodeBean[testCodeMethod]}">
+
+					<a4j:ajax execute="@form scriptEditor contextVarsId"></a4j:ajax>
+				</h:commandLink>
+				
+				<h:commandLink id="btScriptTestId" value="Test" styleClass="secondary" >
+					<f:ajax execute="frm:scriptEditor" render="consoleOutputId" />
+				</h:commandLink>
+				
 				<h:commandButton id="btScriptSaveId" value="Save and Close" action="#{saveCodeBean[saveCodeMethod]}" styleClass="primary" onclick="#{rich:component('scriptEditor')}.hide()" />
+				
 			</h:panelGroup>
 		</h:panelGroup>
 	</rich:popupPanel>
@@ -71,6 +91,8 @@
 				document.getElementById("frm:parseModeId").disabled = false;
 				document.getElementById("frm:btScriptSaveId").style.visibility = 'visible';
 				document.getElementById("frm:btScriptSaveId").style.display = 'inline-block';
+				document.getElementById("frm:btScriptTestId").style.visibility = 'visible';
+				document.getElementById("frm:btScriptTestId").style.display = 'inline-block';
 				document.getElementById("frm:btScriptCloseId").style.visibility = 'hidden';
 				document.getElementById("frm:btScriptCloseId").style.display = 'none';
 			} else {
@@ -81,6 +103,8 @@
 				document.getElementById("frm:parseModeId").disabled = true;
 				document.getElementById("frm:btScriptSaveId").style.visibility = 'hidden';
 				document.getElementById("frm:btScriptSaveId").style.display = 'none';
+				document.getElementById("frm:btScriptTestId").style.visibility = 'hidden';
+				document.getElementById("frm:btScriptTestId").style.display = 'none';
 				document.getElementById("frm:btScriptCloseId").style.visibility = 'visible';
 				document.getElementById("frm:btScriptCloseId").style.display = 'inline-block';
 			}

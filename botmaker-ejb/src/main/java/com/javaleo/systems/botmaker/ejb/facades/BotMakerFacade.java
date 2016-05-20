@@ -11,6 +11,7 @@ import org.javaleo.libs.botgram.enums.ParseMode;
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
@@ -26,6 +27,8 @@ import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 
 @Named
 @Stateless
@@ -53,6 +56,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IUserPreferenceBusiness userPreferenceBusiness;
+
+	@Inject
+	private IDialogContextVarBusiness dialogcontextVarBusiness;
 
 	/**
 	 * @return
@@ -347,6 +353,28 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void removePreference(UserPreference userPreference) {
 		userPreferenceBusiness.removePreference(userPreference);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#getListDialogContextVars()
+	 */
+	@Override
+	public List<DialogContextVar> getListDialogContextVars() {
+		return dialogcontextVarBusiness.getListDialogContextVars();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#getContextVarsFromDialog(com.javaleo.systems.botmaker
+	 * .ejb.pojos.Dialog)
+	 */
+	@Override
+	public List<DialogContextVar> getContextVarsFromDialog(Dialog dialog) {
+		return dialogcontextVarBusiness.getContextVarsFromDialog(dialog);
 	}
 
 }
