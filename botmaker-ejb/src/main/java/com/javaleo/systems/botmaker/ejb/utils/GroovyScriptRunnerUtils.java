@@ -4,7 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 import java.io.Serializable;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
-import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 
 @Named
 @Stateless
@@ -33,8 +32,16 @@ public class GroovyScriptRunnerUtils implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void validateScript(String script) throws BusinessException {
-		if (StringUtils.containsIgnoreCase(script, "System.exit") || StringUtils.containsIgnoreCase(script, "System.exec")) {
-			throw new BusinessException("Instructions not allowed in script source. It will not be executed.");
+		List<String> blackListSnippets = new ArrayList<String>();
+		blackListSnippets.add("System.exit");
+		blackListSnippets.add("System.exec");
+		blackListSnippets.add("Runtime.getRuntime().exec");
+		blackListSnippets.add("System.getenv()");
+
+		for (String snippet : blackListSnippets) {
+			if (StringUtils.containsIgnoreCase(script, snippet)) {
+				throw new BusinessException("Instructions not allowed in script source. It will not be executed.");
+			}
 		}
 	}
 

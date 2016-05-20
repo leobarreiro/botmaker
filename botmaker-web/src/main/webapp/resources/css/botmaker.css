@@ -2,7 +2,7 @@
 
 body {
 	font-family: Arial, Helvetica !important;
-	font-size: 12pt;
+	font-size: 11pt;
 	color: #000000;
 	width: auto;
 	height: auto;
@@ -12,7 +12,6 @@ table tr td label {
 	color: purple;
 	display: inline-block;
 	float: left;
-	font-size: 11pt !important;
 	margin-right: 12px !important;
 	padding: 2pt !important;
 	text-align: right;
@@ -41,7 +40,7 @@ div.head h1 {
 	margin: 0px 0px 0px 220px !important;
 	display: block;
 	float: left;
-	font-size: 32pt;
+	font-size: 30pt;
 }
 
 div.head table.menubar {
@@ -61,53 +60,63 @@ h1, h2, h3, h4, h5, h6 {
 	color: purple;
 	display: block;
 	margin: auto;
-	width: 70% !important;
 }
 
 h1 {
-	font-size: 36px;
+	font-size: 28pt;
 }
 
 h2 {
-	font-size: 30px;
+	font-size: 24pt;
 }
 
 h3 {
 	margin-top: 20px;
-	font-size: 22px;
+	font-size: 20pt;
+}
+
+h4 {
+	font-size: 14pt;
+}
+
+h5 {
+	font-size: 12pt;
 }
 
 input, select, textarea {
 	padding: 4pt !important;
-	font-size: 12pt !important;
+	font-size: 11pt !important;
 }
 
 .frm-login {
 	margin: auto;
-	margin-top: 20px;
+	margin-top: 60px !important;
 	padding: 4px;
-	width: 300px;
+	width: 200px;
 	margin-top: 10px;
 	border: none;
 }
 
 .frm-login label {
-	margin-top: 12pt;
+	margin-top: 4pt;
 	display: block;
 	padding: 4pt !important;
-	font-size: 12pt !important;
+	font-size: 11pt !important;
 }
 
 .frm-login input {
-	width: 100% !important;
+	width: auto !important;
 	padding: 6pt !important;
-	font-size: 16pt !important;
+	font-size: 12pt !important;
 	border-radius: 4pt !important;
 }
 
 .frm-login input[type="submit"] {
-	margin-top: 16pt !important;
+	margin-top: 12pt !important;
+	width: 100% !important;
+	padding: 10pt 2pt 10pt 2pt !important;
 }
+
 
 .frm-crud {
 	width: 70% !important;
@@ -141,13 +150,12 @@ input, select, textarea {
 	margin: 2px !important;
 	padding: 1px;
 	width: 100%;
-	font-size: 11pt;
+	font-size: 11pt !important;
 	vertical-align: middle;
 }
 
 .frm-crud .frm-line label {
 	padding: 2pt !important;
-	font-size: 11pt !important;
 	display: inline-block;
 	float: left;
 	width: 25%;
@@ -159,11 +167,9 @@ input, select, textarea {
 span.txt {
 	display: inline-block;
 	padding: 2pt !important;
-	font-size: 12pt !important;
 }
 
-.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
-	{
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
 	width: 70%;
 }
 
@@ -255,7 +261,7 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 }
 
 .mrauto {
-	margin: auto;
+	margin: auto !important;
 }
 
 
@@ -443,15 +449,14 @@ textarea[disabled].script {
 	background: transparent !important;
 }
 
-.rf-dt-shdr-c, .rf-dt-c, input, select, textarea, button, keygen,
-	isindex, legend, a {
-	font-size: 12pt !important;
+label, input, select, textarea, button, keygen, isindex, legend, a, span.txt, .rf-p-b, .rf-dt-c {
+	font-size: 10pt !important;
 }
 
 .rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
 	background-color: purple !important;
 	border: 1px solid #FFFFFF !important;
-	font-size: 10pt !important;
+	font-size: 11pt !important;
 	color: #FFFFFF !important;
 	font-weight: normal !important;
 	padding: 4px !important;

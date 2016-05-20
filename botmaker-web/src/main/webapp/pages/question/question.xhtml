@@ -49,7 +49,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
-				<h:inputText value="#{questionAction.question.varName}" styleClass="wd150" maxlength="20" />
+				<h:inputText value="#{questionAction.question.varName}" styleClass="wd150" maxlength="12" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
@@ -63,7 +63,7 @@
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
-			
+
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink title="View Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code">

@@ -14,6 +14,12 @@ public class DialogContextVar implements Serializable {
 		this.value = value;
 	}
 
+	public DialogContextVar(String name, String value, String description) {
+		this.name = name;
+		this.value = value;
+		this.description = description;
+	}
+
 	@Expose
 	@SerializedName("name")
 	private String name;
@@ -21,6 +27,8 @@ public class DialogContextVar implements Serializable {
 	@Expose
 	@SerializedName("value")
 	private String value;
+
+	private String description;
 
 	public String getName() {
 		return name;
@@ -36,6 +44,14 @@ public class DialogContextVar implements Serializable {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

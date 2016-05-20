@@ -9,16 +9,21 @@
 				<rich:componentControl target="scriptEditor" operation="hide" />
 			</h:commandLink>
 		</f:facet>
-		<h:panelGroup layout="block" styleClass="pc28 fleft hg500 brd-magenta">
-			<b>Available Environment Variables</b>
-			<br />
-			<ul>
-				<li><i>idChat</i> : Integer value from Telegram Chat who origins the Dialog.</li>
-				<li><i>dateInMilis</i> : Integer value who represents the datetime (in milliseconds) that the Dialog starts.</li>
-				<li><i>userId</i> : Integer value from Telegram User.</li>
-				<li><i>userAnswer</i> : String value with the user answer content.</li>
-			</ul>
+		<h:panelGroup layout="block" styleClass="pc28 fleft brd-magenta">
+			<h5 class="mrauto">Available Environment Variables</h5>
+			<h:dataTable var="ctx" value="#{contextVars}">
+				<h:column>
+					<f:facet name="header">Var Name</f:facet>
+					<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" />
+					<h:inputText value="#{ctx.name}" size="6" maxlength="12" styleClass="tx9" readonly="true" disabled="true"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Value</f:facet>
+					<h:inputText value="#{ctx.value}" size="14" maxlength="120" />
+				</h:column>
+			</h:dataTable>
 		</h:panelGroup>
+
 		<h:panelGroup layout="block" styleClass="pc70 fright hg500 brd-magenta">
 			<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40" styleClass="pc100">
 				<h:outputLabel value="Script Type" />
