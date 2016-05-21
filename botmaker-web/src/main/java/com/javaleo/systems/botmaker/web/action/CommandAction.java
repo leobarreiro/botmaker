@@ -50,6 +50,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	private Bot bot;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
+	private boolean debugging;
 
 	@Override
 	public Conversation getConversation() {
@@ -94,10 +95,15 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		try {
 			facade.saveCommand(command);
 			msgAction.addMessage(MessageType.INFO, "Command saved");
+			debugMode(false);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
+	}
+
+	public void debugMode(boolean mode) {
+		this.debugging = mode;
 	}
 
 	public void testScript() {
@@ -108,8 +114,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 					mapVars.put(ctx.getName(), ctx.getValue());
 				}
 			}
+			debugMode(true);
 			debugContent = (String) groovyScriptRunner.testScript(command.getPostProcessScript(), mapVars);
-		} catch (BusinessException e) {
+		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 	}
@@ -181,6 +188,14 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void setDebugContent(String debugContent) {
 		this.debugContent = debugContent;
+	}
+
+	public boolean isDebugging() {
+		return debugging;
+	}
+
+	public void setDebugging(boolean debugging) {
+		this.debugging = debugging;
 	}
 
 }

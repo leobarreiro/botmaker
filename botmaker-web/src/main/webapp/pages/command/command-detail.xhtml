@@ -39,13 +39,13 @@
 
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code">
+				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
 					<h:graphicImage value="/resources/img/icons/view.png" />
-					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(false)" />
+					<f:ajax event="click" listener="#{commandAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code">
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
 					<h:graphicImage value="/resources/img/icons/edit.png" />
-					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(true)" />
+					<f:ajax event="click" listener="#{commandAction.debugMode(true)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
@@ -115,6 +115,7 @@
 			</h:panelGroup>
 		</rich:popupPanel>
 
+		<ui:param name="debugging" value="#{commandAction.debugging}" />
 		<ui:param name="saveCodeBean" value="#{commandAction}" />
 		<ui:param name="saveCodeMethod" value="save" />
 		<ui:param name="testCodeBean" value="#{commandAction}" />

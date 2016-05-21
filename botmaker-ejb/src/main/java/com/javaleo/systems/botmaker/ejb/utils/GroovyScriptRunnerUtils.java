@@ -37,6 +37,7 @@ public class GroovyScriptRunnerUtils implements Serializable {
 		blackListSnippets.add("System.exec");
 		blackListSnippets.add("Runtime.getRuntime().exec");
 		blackListSnippets.add("System.getenv()");
+		blackListSnippets.add("println");
 
 		for (String snippet : blackListSnippets) {
 			if (StringUtils.containsIgnoreCase(script, snippet)) {
