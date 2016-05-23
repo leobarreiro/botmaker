@@ -271,8 +271,6 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .brd-magenta {
 	border: 1px solid magenta !important;
-	display: inline-block !important;
-	clear: both !important; 
 }
 
 .brd-blue {
@@ -347,12 +345,8 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	width: 50% !important;
 }
 
-.pc56 {
-	width: 56% !important;
-}
-
-.pc58 {
-	width: 58% !important;
+.pc55 {
+	width: 55% !important;
 }
 
 .pc60 {
@@ -532,17 +526,23 @@ div.CodeMirror {
 	margin-right: 4px !important;
 }
 
+.bck-script-editor {
+	background-color: #dfdfdf;
+}
+
 .console {
 	display: inline-block !important;
-	background-color: #cecece !important;
+	border: 1px solid gray !important;
+	background-color: #ffffff !important;
 	color: #000000 !important;
 	font-size: 9pt !important;
-	width: 90% !important;
-	height: 410px !important;
+	width: 88% !important;
 	overflow: auto;
+	height: 320px !important;
+	max-height: 320px !important;
 	white-space: wrap;
 	word-break: default;
-	padding: 10px !important;
-	margin: 10px 4px 2px 4px !important;
+	padding: 6px !important;
+	margin: 4px !important;
 	
 }
