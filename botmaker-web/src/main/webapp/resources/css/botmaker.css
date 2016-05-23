@@ -91,10 +91,11 @@ input, select, textarea {
 .frm-login {
 	margin: auto;
 	margin-top: 60px !important;
-	padding: 4px;
+	padding: 8px;
 	width: 200px;
 	margin-top: 10px;
-	border: none;
+	border: 1px solid purple;
+	border-radius: 4pt !important;
 }
 
 .frm-login label {
@@ -105,16 +106,15 @@ input, select, textarea {
 }
 
 .frm-login input {
-	width: auto !important;
-	padding: 6pt !important;
+	width: 186px !important;
+	padding: 6px !important;
 	font-size: 12pt !important;
 	border-radius: 4pt !important;
 }
 
 .frm-login input[type="submit"] {
 	margin-top: 12pt !important;
-	width: 100% !important;
-	padding: 10pt 2pt 10pt 2pt !important;
+	padding: 12px 6px 12px 6px !important;
 }
 
 
@@ -229,7 +229,7 @@ input.primary, button.primary {
 	font-weight: normal !important;
 	border-radius: 4px !important;
 	text-shadow: none !important;
-	margin: 4px 6px 4px 6px !important;
+	margin: 6px !important;
 	cursor: default !important;
 }
 
@@ -270,7 +270,9 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 }
 
 .brd-magenta {
-	border: 1px solid magenta !important; 
+	border: 1px solid magenta !important;
+	display: inline-block !important;
+	clear: both !important; 
 }
 
 .brd-blue {
@@ -345,6 +347,14 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	width: 50% !important;
 }
 
+.pc56 {
+	width: 56% !important;
+}
+
+.pc58 {
+	width: 58% !important;
+}
+
 .pc60 {
 	width: 60% !important;
 }
@@ -416,6 +426,10 @@ textarea[disabled].script {
 
 .txmiddle {
 	vertical-align: middle;
+}
+
+.tx9 {
+	font-size: 9pt !important;
 }
 
 .fltrgt, .fright {
@@ -523,11 +537,11 @@ div.CodeMirror {
 	background-color: #cecece !important;
 	color: #000000 !important;
 	font-size: 9pt !important;
-	width: 94% !important;
-	height: 180px !important;
-	overflow: hidden;
+	width: 90% !important;
+	height: 410px !important;
+	overflow: auto;
 	white-space: wrap;
-	word-break: break-all;
+	word-break: default;
 	padding: 10px !important;
 	margin: 10px 4px 2px 4px !important;
 	

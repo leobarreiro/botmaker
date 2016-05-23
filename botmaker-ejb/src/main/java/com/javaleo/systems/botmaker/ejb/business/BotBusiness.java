@@ -104,7 +104,6 @@ public class BotBusiness implements IBotBusiness {
 			predicates.add(cb.equal(from.get("active"), filter.getActive()));
 		}
 		query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
-		persistence.logQuery(query);
 		return persistence.getResultList(query);
 	}
 

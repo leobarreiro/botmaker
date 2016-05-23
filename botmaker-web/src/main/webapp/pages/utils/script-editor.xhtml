@@ -2,68 +2,70 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:popupPanel id="scriptEditor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="560" width="1000">
+	<rich:popupPanel id="scriptEditor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="580" width="1200">
 		<f:facet name="controls">
 			<h:commandLink>
 				<h:graphicImage value="/resources/img/close-popup.png" />
 				<rich:componentControl target="scriptEditor" operation="hide" />
 			</h:commandLink>
 		</f:facet>
-		<h:panelGroup layout="block" styleClass="pc28 fleft">
-			<h5 class="mrauto">Available Variables</h5>
-			<h:dataTable id="contextVarsId" var="ctx" value="#{contextVars}">
-				<h:column>
-					<f:facet name="header">Var Name</f:facet>
-					<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
-					<h:inputText value="#{ctx.name}" size="6" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Value</f:facet>
-					<h:inputText value="#{ctx.value}" size="16" maxlength="120" />
-				</h:column>
-			</h:dataTable>
-			<br />
-			<hr />
 
-			<h5 class="mrauto">Output Console</h5>
-			<h:panelGroup id="consoleOutputId" styleClass="pc100 console brd-magenta">
-				#{debugContent}
+		<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100 hg500">
+
+			<h:panelGroup layout="block" styleClass="brd-magenta pc100">
+				<h5 class="mrauto">Available Variables</h5>
+				<h:dataTable id="contextVarsId" var="ctx" value="#{contextVars}">
+					<h:column>
+						<f:facet name="header">Var Name</f:facet>
+						<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
+						<h:inputText value="#{ctx.name}" size="7" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Value</f:facet>
+						<h:inputText value="#{ctx.value}" size="13" maxlength="120" />
+					</h:column>
+				</h:dataTable>
 			</h:panelGroup>
 
-		</h:panelGroup>
-
-		<h:panelGroup id="lorenzoId" layout="block" styleClass="pc70 fright hg500">
-			<h5 class="mrauto">Script Editor</h5>
-			<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40" styleClass="pc100">
-				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu id="scriptTypeId" value="#{scriptType}">
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-					<f:ajax event="change" execute="@this" />
-				</h:selectOneMenu>
-				<h:outputLabel value="Parse Mode" />
-				<h:selectOneMenu id="parseModeId" value="#{parseMode}">
-					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
-					<f:ajax event="change" execute="@this" />
-				</h:selectOneMenu>
-			</h:panelGrid>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:inputTextarea id="scriptCode" value="#{scriptCode}" rows="16" />
+			<h:panelGroup layout="block" styleClass="brd-magenta">
+				<h5 class="mrauto">Script Editor</h5>
+				<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40" styleClass="pc100">
+					<h:outputLabel value="Script Type" />
+					<h:selectOneMenu id="scriptTypeId" value="#{scriptType}">
+						<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+						<f:ajax event="change" execute="@this" />
+					</h:selectOneMenu>
+					<h:outputLabel value="Parse Mode" />
+					<h:selectOneMenu id="parseModeId" value="#{parseMode}">
+						<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+						<f:ajax event="change" execute="@this" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGroup layout="block" styleClass="frm-line">
+					<h:inputTextarea id="scriptCode" value="#{scriptCode}" rows="16" />
+				</h:panelGroup>
+				<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
+					<h:commandButton id="btScriptCloseId" rendered="#{not debugging}" value="Close" styleClass="secondary">
+						<rich:componentControl event="click" target="scriptEditor" operation="hide" />
+						<f:ajax execute="@this" immediate="true" />
+					</h:commandButton>
+					<h:commandButton id="btScriptTestId" value="Test" rendered="#{debugging}" actionListener="#{testCodeBean[testCodeMethod]}" styleClass="secondary">
+						<f:ajax execute="frm:scriptEditor" render="frm:outputHiddenId" onevent="scriptCodeMirror.save()" />
+						<a4j:ajax oncomplete="treatConsoleOutput()" />
+					</h:commandButton>
+					<h:commandButton id="btScriptSaveId" value="Save and Close" rendered="#{debugging}" action="#{saveCodeBean[saveCodeMethod]}" styleClass="primary"
+						onclick="#{rich:component('scriptEditor')}.hide()" />
+				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
 
-				<h:commandButton id="btScriptCloseId" rendered="#{not debugging}" value="Close" styleClass="secondary">
-					<rich:componentControl event="click" target="scriptEditor" operation="hide" />
-					<f:ajax execute="@this" immediate="true" />
-				</h:commandButton>
-
-				<h:commandButton id="btScriptTestId" value="Test" rendered="#{debugging}" actionListener="#{testCodeBean[testCodeMethod]}" styleClass="secondary">
-					<f:ajax execute="frm:lorenzoId frm:scriptEditor" render="frm:consoleOutputId" onevent="scriptCodeMirror.save()"/>
-				</h:commandButton>
-
-				<h:commandButton id="btScriptSaveId" value="Save and Close" rendered="#{debugging}" action="#{saveCodeBean[saveCodeMethod]}" styleClass="primary" onclick="#{rich:component('scriptEditor')}.hide()" />
-
+			<h:panelGroup layout="block" styleClass="brd-magenta pc100">
+				<h5 class="mrauto">Output Console</h5>
+				<h:panelGroup layout="block" id="consoleOutputId" styleClass="console"></h:panelGroup>
+				<h:inputHidden id="outputHiddenId" value="#{debugContent}" />
 			</h:panelGroup>
-		</h:panelGroup>
+
+		</h:panelGrid>
+
 	</rich:popupPanel>
 
 	<script type="text/javascript">
@@ -82,8 +84,17 @@
 		}
 		
 		function editableMode(editable) {
-			alert(editable);
 			scriptCodeMirror.setOption('readOnly', editable);
+		}
+
+		function treatConsoleOutput() {
+			var treatedContent = '';
+			if (document.getElementById('frm:parseModeId').value == 'MARKDOWN') {
+				treatedContent = markdown.toHTML(document.getElementById('frm:outputHiddenId').value);
+			} else {
+				treatedContent = document.getElementById('frm:outputHiddenId').value;
+			}
+			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
 		}
 
 		configureCodeMirror();
