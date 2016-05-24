@@ -26,7 +26,6 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
-import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
@@ -56,15 +55,20 @@ public class BotBusiness implements IBotBusiness {
 			throw new BusinessException("Token não pode ser nulo ou estar em branco.");
 		}
 		Bot bot = new Bot();
+		bot.setValid(false);
 		BotGramConfig config = new BotGramConfig();
 		config.setToken(token);
 		botgramService.setConfiguration(config);
 		try {
 			GetMeResponse response = botgramService.getMe();
+			if (!response.getOk()) {
+				throw new BusinessException(response.getDescription());
+			}
 			User user = response.getUser();
 			bot.setBotType(BotType.TELEGRAM);
 			bot.setName(user.getFirstName());
 			bot.setToken(token);
+			bot.setValid(true);
 		} catch (BotGramException e) {
 			throw new BusinessException("O Token informado não foi validado no Telegram.", e);
 		}
@@ -115,7 +119,8 @@ public class BotBusiness implements IBotBusiness {
 		Root<Bot> from = cq.from(Bot.class);
 		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
 		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
-		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
+		// Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
+		joinCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
 		// cq.where(cb.equal(from.get("active"), true));
 		return persistence.getResultList(cq);
@@ -123,14 +128,16 @@ public class BotBusiness implements IBotBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Bot> listActiveBots() {
+	public List<Bot> listValidAndActiveBots() {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> cq = cb.createQuery(Bot.class);
 		Root<Bot> from = cq.from(Bot.class);
-		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
+		// Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
+		// Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
+		from.join("company", JoinType.INNER);
 		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
-		Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
-		cq.where(cb.equal(from.get("active"), true));
+		joinCommand.join("questions", JoinType.LEFT);
+		cq.where(cb.and(cb.equal(from.get("active"), true), cb.equal(from.get("valid"), true)));
 		return persistence.getResultList(cq);
 	}
 

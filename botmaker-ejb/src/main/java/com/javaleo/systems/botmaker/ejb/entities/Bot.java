@@ -36,6 +36,7 @@ public class Bot implements IEntityBasic {
 	private String token;
 	private BotType botType;
 	private Boolean active;
+	private Boolean valid;
 	private String description;
 	private String closedBotMessage;
 	private String unknownCommadMessage;
@@ -96,6 +97,15 @@ public class Bot implements IEntityBasic {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@Column(name = "valid")
+	public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
 	}
 
 	@Column(name = "description", length = 255, nullable = true)

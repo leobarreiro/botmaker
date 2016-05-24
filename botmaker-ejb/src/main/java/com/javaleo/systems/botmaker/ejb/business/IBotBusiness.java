@@ -22,6 +22,6 @@ public interface IBotBusiness extends Serializable {
 
 	List<Bot> listLastBotsFromCompanyUser();
 
-	List<Bot> listActiveBots();
+	List<Bot> listValidAndActiveBots();
 
 }

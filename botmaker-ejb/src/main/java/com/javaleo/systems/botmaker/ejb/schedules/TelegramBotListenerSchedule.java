@@ -68,7 +68,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/1", persistent = false)
 	public void listenBotUpdates() {
-		List<Bot> bots = botBusiness.listActiveBots();
+		List<Bot> bots = botBusiness.listValidAndActiveBots();
 		for (Bot bot : bots) {
 			processDialogsToBot(bot);
 		}
@@ -242,8 +242,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 		if (StringUtils.isNotEmpty(bot.getCancelMessage())) {
 			sendMessageUtils.sendSimpleMessage(bot, dialog, bot.getCancelMessage(), ParseMode.HTML);
 		}
+		dialog.setLastCommand(null);
+		dialog.setLastQuestion(null);
+		dialog.setPendingServer(false);
+		dialog.setPendingCommand(false);
+		managerUtils.updateDialogToBot(bot, dialog);
 		setLastInteraction(dialog);
-		// managerUtils.removeDialog(bot, dialog);
 	}
 
 	private void instructQuestionToUser(Bot bot, Dialog dialog) {

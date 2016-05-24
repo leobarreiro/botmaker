@@ -35,9 +35,13 @@
 					<f:facet name="header">List Commands</f:facet>
 					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" />
 				</rich:column>
+				<rich:column headerText="Valid" sortBy="#{bt.valid}" styleClass="pc10 txctr">
+					<f:facet name="header">Valid</f:facet>
+					<h:outputText value="#{(bt.valid) ? 'Yes' : 'No'}" styleClass="#{(bt.valid) ? 'green' : 'red'}" />
+				</rich:column>
 				<rich:column headerText="Active" sortBy="#{bt.active}" styleClass="pc10 txctr">
 					<f:facet name="header">Active</f:facet>
-					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" />
+					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" styleClass="#{(bt.active) ? 'green' : 'red'}" />
 				</rich:column>
 			</rich:dataTable>
 

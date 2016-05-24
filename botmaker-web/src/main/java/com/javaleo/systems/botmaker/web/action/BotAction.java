@@ -108,8 +108,24 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			bot = facade.validateBotTelegram(token);
 			return "/pages/bot/bot2.jsf?faces-redirect=true";
 		} catch (BusinessException e) {
+			bot.setName("Bot token is not valid");
+			bot.setValid(false);
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/bot/bot1.jsf?faces-redirect=true";
+		}
+	}
+	
+	public void validateNewToken() {
+		try {
+			Bot validBot = facade.validateBotTelegram(bot.getToken());
+			bot.setName(validBot.getName());
+			bot.setToken(validBot.getToken());
+			bot.setBotType(validBot.getBotType());
+			bot.setValid(validBot.getValid());
+		} catch(BusinessException e) {
+			bot.setName("Bot token is not valid");
+			bot.setValid(false);
+			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
 	}
 
