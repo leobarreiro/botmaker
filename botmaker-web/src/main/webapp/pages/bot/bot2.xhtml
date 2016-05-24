@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	 xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-	
-		<h1>Bot</h1>
-	
+
+		<h2 class="pc70">Bot</h2>
+
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Review information" />
@@ -43,7 +43,7 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
-				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc70" readonly="true"/>
+				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Cancel Message" styleClass="txtop" />
