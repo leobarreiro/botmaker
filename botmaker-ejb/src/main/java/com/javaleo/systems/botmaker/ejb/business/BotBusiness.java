@@ -89,6 +89,13 @@ public class BotBusiness implements IBotBusiness {
 		bot.setActive(false);
 		persistence.saveOrUpdate(bot);
 	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void reactivateBot(Bot bot) throws BusinessException {
+		bot.setActive(true);
+		persistence.saveOrUpdate(bot);
+	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)

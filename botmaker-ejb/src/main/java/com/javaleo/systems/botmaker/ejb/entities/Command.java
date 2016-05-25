@@ -2,6 +2,7 @@ package com.javaleo.systems.botmaker.ejb.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -98,7 +99,7 @@ public class Command implements IEntityBasic {
 		this.active = active;
 	}
 
-	@OneToMany(mappedBy = "command")
+	@OneToMany(mappedBy = "command", cascade = { CascadeType.REMOVE, CascadeType.REFRESH })
 	public List<Question> getQuestions() {
 		return questions;
 	}

@@ -17,6 +17,8 @@ public interface IBotBusiness extends Serializable {
 	void saveBot(Bot bot) throws BusinessException;
 
 	void deactivateBot(Bot bot) throws BusinessException;
+	
+	void reactivateBot(Bot bot) throws BusinessException;
 
 	List<Bot> searchBot(BotFilter filter);
 

@@ -90,6 +90,16 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		}
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
+	
+	public String reactivateBot() {
+		try {
+			facade.reactivateBot(bot);
+			msgAction.addMessage(MessageType.INFO, "Bot is active now");
+		} catch (BusinessException e) {
+			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+		}
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+	}
 
 	public String detail(Bot bot) {
 		this.bot = bot;

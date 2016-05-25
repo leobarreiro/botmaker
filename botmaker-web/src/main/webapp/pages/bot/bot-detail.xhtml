@@ -33,9 +33,10 @@
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.list()}" value="List Bots" styleClass="secondary" />
 				<h:commandButton action="#{botAction.edit()}" value="Edit Bot" styleClass="secondary" />
-				<h:commandButton value="Deactivate Bot" styleClass="secondary" disabled="#{not botAction.bot.active}">
-					<rich:componentControl target="deactBotPanel" operation="show" />
+				<h:commandButton value="Deactivate Bot" styleClass="secondary" rendered="#{botAction.bot.active}">
+					<rich:componentControl target="popupConfirmId" operation="show" />
 				</h:commandButton>
+				<h:commandButton value="Activate Bot" styleClass="secondary" rendered="#{not botAction.bot.active}" action="#{botAction.reactivateBot()}" />
 				<h:commandButton action="#{commandAction.startNew()}" value="New Command" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
@@ -66,23 +67,11 @@
 			</rich:dataTable>
 		</rich:panel>
 
-		<rich:popupPanel modal="true" id="deactBotPanel" width="380" height="240">
-			<f:facet name="header">
-				<h:panelGroup>
-					<h:outputText value="Confirm Deactivation" />
-				</h:panelGroup>
-			</f:facet>
-			<f:facet name="controls">
-			</f:facet>
-			<h:panelGroup styleClass="popupExplain">
-				<h:outputText value="Do you confirm deactivation of Bot?" />
-				<h:outputText value=" If you wish, you can reactivate it later." />
-			</h:panelGroup>
-			<h:panelGroup styleClass="frm-submit">
-				<h:commandLink action="#{botAction.deactivateBot()}" value="Confirm Deactivation" styleClass="primary" />
-				<h:commandLink value="Cancel" onclick="#{rich:component('deactBotPanel')}.hide()" styleClass="secondary" />
-			</h:panelGroup>
-		</rich:popupPanel>
+		<ui:param name="confirmTitle" value="Deactivate this Bot" />
+		<ui:param name="confirmDescription" value="Are you sure to deactivate this bot? You can reactivate it later." />
+		<ui:param name="confirmBean" value="#{botAction}" />
+		<ui:param name="confirmMethod" value="deactivateBot" />
+		<ui:include src="/pages/utils/confirm-action.xhtml" />
 
 	</ui:define>
 </ui:composition>

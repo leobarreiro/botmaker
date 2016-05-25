@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:popupPanel id="popupConfirmId" modal="true" moveable="true" header="Confirm this operation" height="200" width="300" maxHeight="200" maxWidth="300">
+		<h:panelGroup layout="block" styleClass="frm-confirm">
+			<h4 class="confirm-title">
+				<h:outputText value="#{confirmTitle}" />
+			</h4>
+			<h:panelGroup layout="block" styleClass="confirm-descr">
+				<h:outputText value="#{confirmDescription}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton value="Confirm" action="#{confirmBean[confirmMethod]}" styleClass="primary" onclick="#{rich:component('popupConfirmId')}.hide()" />
+				<h:commandButton value="Cancel" styleClass="secondary">
+					<rich:componentControl event="click" target="popupConfirmId" operation="hide" />
+				</h:commandButton>
+			</h:panelGroup>
+		</h:panelGroup>
+	</rich:popupPanel>
+
+</ui:composition>

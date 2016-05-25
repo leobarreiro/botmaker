@@ -47,6 +47,13 @@ public interface IBotMakerFacade extends Serializable {
 	void deactivateBot(Bot bot) throws BusinessException;
 
 	/**
+	 * @param bot
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botmaker.ejb.business.IBotBusiness#reactivateBot(com.javaleo.systems.botmaker.ejb.entities.Bot)
+	 */
+	void reactivateBot(Bot bot) throws BusinessException;
+	
+	/**
 	 * @param filter
 	 * @return
 	 * @see com.javaleo.systems.botmaker.ejb.business.IBotBusiness#searchBot(com.javaleo.systems.botmaker.ejb.filters.BotFilter)

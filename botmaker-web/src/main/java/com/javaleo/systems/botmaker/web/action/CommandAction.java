@@ -124,6 +124,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String dropCommand() {
 		facade.dropCommand(command);
 		search();
+		msgAction.addInfoMessage("Command droped.");
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 

@@ -53,7 +53,7 @@
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
 				<h:commandButton value="Drop Command" styleClass="secondary">
-					<rich:componentControl event="click" target="dropCommandConfirmId" operation="show" />
+					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
 				</h:commandButton>
 				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
 				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="secondary" />
@@ -102,18 +102,12 @@
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
-
-		<rich:popupPanel id="dropCommandConfirmId" maxHeight="300" maxWidth="500">
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputText value="Confirm?" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:commandButton action="#{commandAction.dropCommand()}" value="Confirm Drop" />
-				<h:commandButton value="Cancel">
-					<rich:componentControl event="click" target="dropCommandConfirmId" operation="hide" />
-				</h:commandButton>
-			</h:panelGroup>
-		</rich:popupPanel>
+		
+		<ui:param name="confirmTitle" value="Drop Command: [#{commandAction.command.key}]" />
+		<ui:param name="confirmDescription" value="Are you sure to delete this command? You can't undo this action. All the questions related to this command will be deleted too." />
+		<ui:param name="confirmBean" value="#{commandAction}" />
+		<ui:param name="confirmMethod" value="dropCommand" />
+		<ui:include src="/pages/utils/confirm-action.xhtml" />
 
 		<ui:param name="debugging" value="#{commandAction.debugging}" />
 		<ui:param name="saveCodeBean" value="#{commandAction}" />

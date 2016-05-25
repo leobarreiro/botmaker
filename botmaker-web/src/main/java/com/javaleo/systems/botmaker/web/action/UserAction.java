@@ -51,6 +51,10 @@ public class UserAction implements Serializable {
 		}
 		return "/index.jsf?faces-redirect=true";
 	}
+	
+	public String forgotMyPassword() {
+		return "/index.jsf?faces-redirect=true"; 
+	}
 
 	public String getUsername() {
 		return username;
