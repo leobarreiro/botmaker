@@ -1,6 +1,7 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
+		questions = new ArrayList<Question>();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command.jsf?faces-redirect=true";

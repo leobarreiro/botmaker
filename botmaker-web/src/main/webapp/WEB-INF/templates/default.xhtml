@@ -28,38 +28,40 @@
 		<a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
 		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
-				<rich:toolbar rendered="#{botMakerAuthenticator.authenticated}" styleClass="menubar">
-					<rich:dropDownMenu mode="ajax">
-						<f:facet name="label">
-							<h:outputText value="Validators" />
-						</f:facet>
-						<rich:menuItem label="New validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
-						<rich:menuItem label="Search validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
-					</rich:dropDownMenu>
-					<rich:dropDownMenu mode="ajax">
-						<f:facet name="label">
-							<h:outputText value="Bots" />
-						</f:facet>
-						<rich:dataGrid var="bt" value="#{auxAction.bots}" columns="1" styleClass="pc100">
-							<rich:column>
-								<h:commandLink value="#{bt.name}" action="#{botAction.detail(bt)}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}" />
-							</rich:column>
-						</rich:dataGrid>
-						<rich:menuSeparator />
-						<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
-						<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
-					</rich:dropDownMenu>
-				</rich:toolbar>
-				<rich:toolbar styleClass="userbar">
-					<rich:dropDownMenu mode="ajax">
-						<f:facet name="label">
-							<h:outputText value="#{botMakerCredentials.user.name}" />
-						</f:facet>
-						<rich:menuItem label="Preferences" action="#{userPreferenceAction.init()}" immediate="true" execute="@this" />
-						<rich:menuSeparator />
-						<rich:menuItem label="Logout" action="#{userAction.logoff()}" immediate="true" />
-					</rich:dropDownMenu>
-				</rich:toolbar>
+				<h:panelGroup layout="block" styleClass="topmenu">
+					<rich:toolbar rendered="#{botMakerAuthenticator.authenticated}" styleClass="menubar">
+						<rich:dropDownMenu mode="ajax">
+							<f:facet name="label">
+								<h:outputText value="Validators" />
+							</f:facet>
+							<rich:menuItem label="New validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
+							<rich:menuItem label="Search validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
+						</rich:dropDownMenu>
+						<rich:dropDownMenu mode="ajax">
+							<f:facet name="label">
+								<h:outputText value="Bots" />
+							</f:facet>
+							<rich:dataGrid var="bt" value="#{auxAction.bots}" columns="1" styleClass="pc100">
+								<rich:column>
+									<h:commandLink value="#{bt.name}" action="#{botAction.detail(bt)}" styleClass="menuitem #{(bt.active ? 'green' : 'gray')}" />
+								</rich:column>
+							</rich:dataGrid>
+							<rich:menuSeparator />
+							<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
+							<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
+						</rich:dropDownMenu>
+					</rich:toolbar>
+					<rich:toolbar styleClass="userbar">
+						<rich:dropDownMenu mode="ajax">
+							<f:facet name="label">
+								<h:outputText value="#{botMakerCredentials.user.name}" />
+							</f:facet>
+							<rich:menuItem label="Preferences" action="#{userPreferenceAction.init()}" immediate="true" execute="@this" />
+							<rich:menuSeparator />
+							<rich:menuItem label="Logout" action="#{userAction.logoff()}" immediate="true" />
+						</rich:dropDownMenu>
+					</rich:toolbar>
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block">
 				<ui:insert name="content">

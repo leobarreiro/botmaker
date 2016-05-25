@@ -58,13 +58,13 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink title="View Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code">
+				<h:commandLink title="View Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
 					<h:graphicImage value="/resources/img/icons/view.png" />
-					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(false)" />
+					<f:ajax event="click" listener="#{questionAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code">
+				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
 					<h:graphicImage value="/resources/img/icons/edit.png" />
-					<rich:componentControl event="click" operation="show" target="scriptEditor" onbeforeoperation="editableMode(true)" />
+					<f:ajax event="click" listener="#{questionAction.debugMode(true)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>
@@ -74,11 +74,16 @@
 			</h:panelGroup>
 		</rich:panel>
 
+		<ui:param name="debugging" value="#{questionAction.debugging}" />
 		<ui:param name="saveCodeBean" value="#{questionAction}" />
 		<ui:param name="saveCodeMethod" value="save" />
+		<ui:param name="testCodeBean" value="#{questionAction}" />
+		<ui:param name="testCodeMethod" value="testScript" />
+		<ui:param name="debugContent" value="#{questionAction.debugContent}" />
 		<ui:param name="scriptCode" value="#{questionAction.question.postProcessScript}" />
 		<ui:param name="scriptType" value="#{questionAction.question.scriptType}" />
 		<ui:param name="parseMode" value="#{questionAction.question.parseMode}" />
+		<ui:param name="contextVars" value="#{questionAction.contextVars}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 
 	</ui:define>
