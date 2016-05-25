@@ -73,7 +73,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return list();
+		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
 
 	public String edit() {
@@ -114,7 +114,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			return "/pages/bot/bot1.jsf?faces-redirect=true";
 		}
 	}
-	
+
 	public void validateNewToken() {
 		try {
 			Bot validBot = facade.validateBotTelegram(bot.getToken());
@@ -122,7 +122,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			bot.setToken(validBot.getToken());
 			bot.setBotType(validBot.getBotType());
 			bot.setValid(validBot.getValid());
-		} catch(BusinessException e) {
+		} catch (BusinessException e) {
 			bot.setName("Bot token is not valid");
 			bot.setValid(false);
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());

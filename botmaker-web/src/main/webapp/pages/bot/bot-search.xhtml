@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc70">Search Bots</h2>
+		<h2>Search Bots</h2>
 		<rich:panel header="Filtro" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
 				<h:outputText value="Name" />
@@ -17,7 +17,6 @@
 			</h:panelGrid>
 		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
-
 			<rich:dataTable id="dtBots" value="#{botAction.bots}" var="bt" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{bt.id}" styleClass="pc5 txctr">
 					<f:facet name="header">Id</f:facet>
@@ -44,7 +43,6 @@
 					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" styleClass="#{(bt.active) ? 'green' : 'red'}" />
 				</rich:column>
 			</rich:dataTable>
-
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

@@ -2,7 +2,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:popupPanel id="scriptEditor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="520" width="1200">
+	<rich:popupPanel id="scriptEditor" styleClass="script-editor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="500" width="1200">
 		<f:facet name="controls">
 			<h:commandLink>
 				<h:graphicImage value="/resources/img/close-popup.png" />
@@ -16,14 +16,14 @@
 				<h4>Available Variables</h4>
 				<br />
 				<h:dataTable id="contextVarsId" var="ctx" value="#{contextVars}">
-					<h:column>
+					<h:column headerClass="tx11">
 						<f:facet name="header">Var Name</f:facet>
 						<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
-						<h:inputText value="#{ctx.name}" size="10" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
+						<h:inputText value="#{ctx.name}" size="8" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
 					</h:column>
 					<h:column>
 						<f:facet name="header">Value</f:facet>
-						<h:inputText value="#{ctx.value}" size="18" maxlength="120" />
+						<h:inputText value="#{ctx.value}" size="16" maxlength="120" />
 					</h:column>
 				</h:dataTable>
 			</h:panelGroup>

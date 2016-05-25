@@ -49,6 +49,8 @@
 						<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
 						<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
 					</rich:dropDownMenu>
+				</rich:toolbar>
+				<rich:toolbar styleClass="userbar">
 					<rich:dropDownMenu mode="ajax">
 						<f:facet name="label">
 							<h:outputText value="#{botMakerCredentials.user.name}" />

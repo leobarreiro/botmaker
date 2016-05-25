@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc70">Bot</h2>
+		<h2>Bot</h2>
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot" />
@@ -31,16 +31,16 @@
 				<h:outputText styleClass="txt" value="#{botAction.bot.cancelMessage}" />
 			</h:panelGrid>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink action="#{botAction.list()}" value="List Bots" styleClass="secondary" />
-				<h:commandLink action="#{botAction.edit()}" value="Edit Bot" styleClass="secondary" />
-				<h:commandLink value="Deactivate Bot" styleClass="secondary" disabled="#{not botAction.bot.active}">
+				<h:commandButton action="#{botAction.list()}" value="List Bots" styleClass="secondary" />
+				<h:commandButton action="#{botAction.edit()}" value="Edit Bot" styleClass="secondary" />
+				<h:commandButton value="Deactivate Bot" styleClass="secondary" disabled="#{not botAction.bot.active}">
 					<rich:componentControl target="deactBotPanel" operation="show" />
-				</h:commandLink>
-				<h:commandLink action="#{commandAction.startNew()}" value="New Command" styleClass="primary" />
+				</h:commandButton>
+				<h:commandButton action="#{commandAction.startNew()}" value="New Command" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
 
-		<h3 class="pc70">Commands for this Bot</h3>
+		<h3>Commands for this Bot</h3>
 		<rich:panel styleClass="frm-crud">
 			<rich:dataTable value="#{commandAction.commands}" var="cmd" styleClass="pc100">
 				<rich:column styleClass="pc30">

@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc70">Search Validators</h2>
+		<h2>Search Validators</h2>
 
 		<rich:panel legend="Filter" styleClass="frm-crud">
 			<h:panelGrid columns="5" styleClass="pc100">
@@ -31,13 +31,10 @@
 					<f:facet name="header">RegExp / Options / Script Code</f:facet>
 					<h:outputText value="#{vdt.codeResume()}" />
 				</rich:column>
-
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
-
 			</rich:dataTable>
-
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>

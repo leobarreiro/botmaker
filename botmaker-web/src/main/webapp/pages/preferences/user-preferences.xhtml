@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h3 class="pc90">User Preferences for #{botMakerCredentials.user.name}</h3>
+		<h3>User Preferences for #{botMakerCredentials.user.name}</h3>
 
 		<rich:panel styleClass="frm-crud pc90">
 			<h:panelGroup layout="block" styleClass="frm-line">
@@ -43,8 +43,6 @@
 				<a4j:commandButton action="#{userPreferenceAction.savePreferences()}" value="Save Prefs" styleClass="primary" render="bmNotify" />
 			</h:panelGroup>
 		</rich:panel>
-
-		<hr style="" />
 
 		<rich:panel styleClass="frm-crud pc90">
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">

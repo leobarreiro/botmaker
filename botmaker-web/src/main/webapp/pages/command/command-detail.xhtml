@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc70">Command</h2>
+		<h2>Command</h2>
 
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
@@ -30,11 +30,11 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="gray txt" />
+				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="txt #{(commandAction.command.postProcessScriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postProcessScriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Parse Mode" />
-				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="gray txt" />
+				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="txt #{(commandAction.command.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="frm-line">
@@ -51,12 +51,12 @@
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandLink action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
-				<h:commandLink value="Drop Command" styleClass="secondary">
+				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" />
+				<h:commandButton value="Drop Command" styleClass="secondary">
 					<rich:componentControl event="click" target="dropCommandConfirmId" operation="show" />
-				</h:commandLink>
-				<h:commandLink action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
-				<h:commandLink action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="secondary" />
+				</h:commandButton>
+				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
+				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="secondary" />
 			</h:panelGroup>
 		</rich:panel>
 
