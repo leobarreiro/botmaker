@@ -19,6 +19,7 @@ import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
@@ -104,7 +105,10 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 					mapVars.put(ctx.getName(), ctx.getValue());
 				}
 			}
-			debugContent = (String) groovyScriptRunner.testScript(question.getPostProcessScript(), mapVars);
+			Dialog dialog = new Dialog();
+			dialog.setBotId(question.getCommand().getBot().getId());
+			dialog.setId(0);
+			debugContent = (String) groovyScriptRunner.testScript(dialog, question.getPostProcessScript(), mapVars);
 		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}

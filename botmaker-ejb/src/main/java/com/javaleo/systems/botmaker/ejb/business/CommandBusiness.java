@@ -108,7 +108,7 @@ public class CommandBusiness implements ICommandBusiness {
 	public void postProcessCommand(Dialog dialog, Command command) {
 		if (command.getPostProcess() && command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
 			try {
-				String postProcessed = (String) scriptRunner.evaluateScript(command.getPostProcessScript(), dialog.getContextVars());
+				String postProcessed = (String) scriptRunner.evaluateScript(dialog, command.getPostProcessScript());
 				dialog.setPostProcessedResult(postProcessed);
 			} catch (Exception e) {
 				LOG.error(e.getMessage());

@@ -160,7 +160,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 					Map<String, String> contextVars = dialog.getContextVars();
 					contextVars.put("userAnswer", dialog.getLastUpdate().getMessage().getText());
 					try {
-						Boolean valid = (Boolean) scriptRunner.evaluateScript(question.getValidator().getScriptCode(), contextVars);
+						Boolean valid = (Boolean) scriptRunner.evaluateScript(dialog, question.getValidator().getScriptCode());
 						return valid;
 					} catch (Exception e) {
 						LOG.error(e.getMessage());
@@ -195,7 +195,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 					}
 				}
 				try {
-					String postProcessed = (String) scriptRunner.evaluateScript(question.getPostProcessScript(), dialog.getContextVars());
+					String postProcessed = (String) scriptRunner.evaluateScript(dialog, question.getPostProcessScript());
 					answer.setPostProcessedAnswer(postProcessed);
 				} catch (BusinessException e) {
 					LOG.error(e.getMessage());

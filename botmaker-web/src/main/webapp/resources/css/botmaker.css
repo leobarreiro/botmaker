@@ -97,7 +97,7 @@
 		width: 200px;
 		margin-top: 10px;
 		border: none;
-		background-color: #ffbaff;
+		background-color: transparent;
 		border-radius: 4pt !important;
 	}
 	.frm-login label {

@@ -19,6 +19,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
@@ -117,7 +118,10 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 				}
 			}
 			debugMode(true);
-			debugContent = (String) groovyScriptRunner.testScript(command.getPostProcessScript(), mapVars);
+			Dialog dialog = new Dialog();
+			dialog.setBotId(command.getBot().getId());
+			dialog.setId(0);
+			debugContent = (String) groovyScriptRunner.testScript(dialog, command.getPostProcessScript(), mapVars);
 		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}

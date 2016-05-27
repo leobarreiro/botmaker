@@ -16,6 +16,7 @@ public class Dialog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
+	private Long botId;
 	private Update lastUpdate;
 	private Command lastCommand;
 	private String postProcessedResult;
@@ -39,6 +40,14 @@ public class Dialog implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Long getBotId() {
+		return botId;
+	}
+
+	public void setBotId(Long botId) {
+		this.botId = botId;
 	}
 
 	public Update getLastUpdate() {

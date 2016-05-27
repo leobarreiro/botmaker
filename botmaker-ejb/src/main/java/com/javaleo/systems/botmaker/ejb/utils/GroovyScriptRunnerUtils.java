@@ -20,12 +20,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 
 @Named
 @Stateless
 public class GroovyScriptRunnerUtils implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private DevUtils devUtils;
 
 	@Inject
 	private Logger LOG;
@@ -48,12 +52,15 @@ public class GroovyScriptRunnerUtils implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
-	public Object testScript(String script, Map<String, String> contextVars) throws BusinessException {
+	public Object testScript(Dialog dialog, String script, Map<String, String> contextVars) throws BusinessException {
 		try {
 			validateScript(script);
 			Binding binding = mountBinding(contextVars);
+			devUtils.configureBotAndDialog(dialog.getBotId(), dialog.getId());
 			GroovyShell shell = new GroovyShell(binding);
-			return shell.evaluate(script);
+			Object result = shell.evaluate(script);
+			Binding postBinding = shell.getContext();
+			return result;
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 			return new String(e.getMessage());
@@ -62,12 +69,25 @@ public class GroovyScriptRunnerUtils implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
-	public Object evaluateScript(String script, Map<String, String> contextVars) throws BusinessException {
+	public Object evaluateScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			validateScript(script);
+			Map<String, String> contextVars = dialog.getContextVars();
 			Binding binding = mountBinding(contextVars);
 			GroovyShell shell = new GroovyShell(binding);
-			return shell.evaluate(script);
+			Object result = shell.evaluate(script);
+
+			Binding postBinding = shell.getContext();
+			for (Object key : postBinding.getVariables().keySet()) {
+				String varName = (String) key;
+				if (postBinding.getVariable(varName) instanceof Integer) {
+					contextVars.put(varName, Integer.toString((Integer) postBinding.getVariable(varName)));
+				} else {
+					contextVars.put(varName, (String) postBinding.getVariable(varName));
+				}
+			}
+			dialog.setContextVars(contextVars);
+			return result;
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 			throw new BusinessException(e.getMessage());
