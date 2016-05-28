@@ -22,7 +22,9 @@ public interface IQuestionBusiness extends Serializable {
 	Question getLastQuestionFromCommand(Command command);
 
 	void saveQuestion(Question question) throws BusinessException;
-	
+
+	void dropQuestion(Question question) throws BusinessException;
+
 	void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException;
 
 	void upQuestionOrder(Question question) throws BusinessException;

@@ -2,7 +2,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:popupPanel id="scriptEditor" styleClass="script-editor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="500" width="1200">
+	<rich:popupPanel id="scriptEditor" styleClass="script-editor" show="#{debugging}" onshow="configureCodeMirror()" domElementAttachment="form" header="Script Editor" height="500" width="960">
 		<f:facet name="controls">
 			<h:commandLink>
 				<h:graphicImage value="/resources/img/close-popup.png" />
@@ -10,27 +10,24 @@
 			</h:commandLink>
 		</f:facet>
 
-		<h:panelGrid columns="3" columnClasses="pc25 txtop,pc55 txtop,pc20 txtop" styleClass="pc100">
+		<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100">
 
 			<h:panelGroup layout="block" styleClass="pc100 hg100pc">
-				<h4>Available Variables</h4>
-				<br />
-				<h:dataTable id="contextVarsId" var="ctx" value="#{contextVars}">
+				<h5 class="mrauto">Available Context</h5>
+				<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{contextVars}">
 					<h:column headerClass="tx11">
-						<f:facet name="header">Var Name</f:facet>
+						<f:facet name="header">Var Name / Value</f:facet>
 						<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
-						<h:inputText value="#{ctx.name}" size="8" maxlength="12" styleClass="tx9" readonly="true" disabled="true" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Value</f:facet>
-						<h:inputText value="#{ctx.value}" size="16" maxlength="120" />
+						<h:outputText value="#{ctx.name}" styleClass="tx9 green" />
+						<br />
+						<h:inputText value="#{ctx.value}" size="20" maxlength="120" />
 					</h:column>
 				</h:dataTable>
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="hg100pc bck-script-editor">
 				<h:panelGrid styleClass="pc100" columns="2" columnClasses="pc30 txtop,pc70">
-					<h4 class="mrauto">Script Editor</h4>
+					<h5 class="mrauto">Script Editor</h5>
 					<h:panelGrid columns="4" columnClasses="pc20,pc20,pc20,pc40">
 						<h:outputLabel value="Script Type" />
 						<h:selectOneMenu id="scriptTypeId" value="#{scriptType}">
@@ -51,7 +48,7 @@
 			</h:panelGroup>
 
 			<h:panelGroup layout="block" styleClass="pc100 hg100pc">
-				<h4>Output Console</h4>
+				<h5 class="mrauto">Output Console</h5>
 				<br />
 				<h:panelGroup layout="block" id="consoleOutputId" styleClass="console"></h:panelGroup>
 				<h:inputHidden id="outputHiddenId" value="#{debugContent}" />

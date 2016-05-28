@@ -244,6 +244,18 @@ public class BotMakerFacade implements IBotMakerFacade {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#dropQuestion(com.javaleo.systems.botmaker.ejb.entities
+	 * .Question)
+	 */
+	@Override
+	public void dropQuestion(Question question) throws BusinessException {
+		questionBusiness.dropQuestion(question);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#saveQuestionCode(java.lang.Long, java.lang.String,
 	 * org.javaleo.libs.botgram.enums.ParseMode, com.javaleo.systems.botmaker.ejb.enums.ScriptType)
 	 */

@@ -88,6 +88,13 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
+	public void dropQuestion(Question question) throws BusinessException {
+		Question deleteQuestion = persistence.find(Question.class, question.getId());
+		persistence.remove(deleteQuestion);
+		persistence.getEntityManager().flush();
+	}
+
+	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
 		Question question = persistence.find(Question.class, idQuestion);

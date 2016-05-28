@@ -99,10 +99,11 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			facade.saveCommand(command);
 			msgAction.addMessage(MessageType.INFO, "Command saved");
 			debugMode(false);
+			return "/pages/command/command-detail.jsf?faces-redirect=true";
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+			return "/pages/command/command.jsf";
 		}
-		return "/pages/command/command-detail.jsf?faces-redirect=true";
 	}
 
 	public void debugMode(boolean mode) {

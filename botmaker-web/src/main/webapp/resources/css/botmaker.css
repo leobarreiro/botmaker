@@ -1,33 +1,163 @@
 @CHARSET "UTF-8";
 
+body {
+	font-family: Arial, Helvetica !important;
+	color: #000000;
+	width: auto;
+	height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #440044;
+	display: block;
+	margin: auto;
+}
+
+a {
+	color: blue !important;
+}
+
+body.page {
+	background-position: left top;
+	background-repeat: repeat-x;
+	overflow: auto;
+	margin: 0px;
+}
+
+div.head {
+	display: inline-block;
+	background-color: #440044;
+}
+
+div.head h1 {
+	display: block;
+	float: left;
+}
+
+table tr td label {
+	color: #440044;
+	display: inline-block;
+	float: left;
+	text-align: right;
+}
+
+.topmenu {
+	margin: auto !important;
+	border: none !important;
+}
+
+.menubar {
+	float: left;
+	box-shadow: none !important;
+	border: none !important;
+}
+
+.userbar {
+	display: inline-block;
+	float: right;
+	display: inline-block !important;
+	border: none !important;
+}
+
+.frm-login {
+	margin: auto;
+	border: none;
+	background-color: transparent;
+}
+
+.frm-login label {
+	display: block;
+}
+
+.frm-login input {
+	
+}
+
+.frm-crud {
+	margin: auto !important;
+}
+
+.frm-crud .frm-title {
+	text-align: left;
+	font-weight: bold;
+	color: #ffffff;
+	background-color: #440044 !important;
+}
+
+.frm-crud .frm-line {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.frm-crud .frm-line label {
+	display: inline-block;
+	float: left;
+	text-align: right;
+	color: #440044;
+}
+
+.frm-confirm {
+	margin: auto;
+}
+
+.confirm-title {
+	text-align: center !important;
+}
+
+.confirm-descr {
+	margin: auto !important;
+	text-align: justify !important;
+}
+
+span.txt {
+	display: inline-block;
+}
+
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
+	{
+	
+}
+
+.frm-line select {
+	
+}
+
+.frm-line div.scripting {
+	display: inline-block;
+}
+
+span.explain {
+	display: inline-block;
+	color: gray;
+	font-style: italic;
+}
+
+.frm-line div div.themeBox {
+	float: right;
+}
+
+.frm-submit {
+	text-align: center;
+	display: block;
+}
+
+span.primary, a.primary, a.secondary, span.secondary {
+	display: inline-block;
+}
+
 @media ( min-width : 800px) {
 	body {
-		font-family: Arial, Helvetica !important;
 		font-size: 11pt;
-		color: #000000;
-		width: auto;
-		height: auto;
 	}
 	table tr td label {
-		color: #440044;
-		display: inline-block;
-		float: left;
 		margin-right: 12px !important;
 		padding: 2pt !important;
-		text-align: right;
 		width: 100%;
-	}
-	body.page {
-		background-position: left top;
-		background-repeat: repeat-x;
-		overflow: auto;
-		margin: 0px;
 	}
 	div.head {
 		display: inline-block;
 		width: 100%;
 		height: 50px !important;
-		background-color: #440044;
 		background-image: url("../img/botmaker-screen-white.png.jsf");
 		background-position: left 4px top 4px;
 		background-repeat: no-repeat;
@@ -35,74 +165,51 @@
 	div.head h1 {
 		width: 40% !important;
 		margin: 0px 0px 0px 220px !important;
-		display: block;
-		float: left;
 		font-size: 30pt;
 	}
-	
 	.topmenu {
 		width: 70% !important;
-		margin: auto !important;
 		height: 30px;
 		padding-top: 20px;
-		border: none !important;
 	}
-	
 	.menubar {
-		float: left;
-		box-shadow: none !important;
 		width: 40% !important;
-		border: none !important;
 	}
 	.userbar {
-		display: inline-block;
-		float: right;
 		width: auto !important;
-		display: inline-block !important;
-		border: none !important;
-	}
-	a {
-		color: blue !important;
 	}
 	h1, h2, h3, h4, h5, h6 {
-		color: #440044;
-		display: block;
-		margin: auto;
 		width: 70%;
 	}
 	h1 {
 		font-size: 28pt;
 	}
 	h2 {
-		font-size: 24pt;
+		font-size: 20pt;
 	}
 	h3 {
 		margin-top: 20px;
-		font-size: 20pt;
+		font-size: 16pt;
 	}
 	h4 {
-		font-size: 14pt;
+		font-size: 12pt;
 	}
 	h5 {
-		font-size: 12pt;
+		font-size: 10pt;
 	}
 	input, select, textarea {
 		padding: 4pt !important;
 		font-size: 11pt !important;
 	}
 	.frm-login {
-		margin: auto;
 		margin-top: 60px !important;
 		padding: 8px;
 		width: 200px;
 		margin-top: 10px;
-		border: none;
-		background-color: transparent;
 		border-radius: 4pt !important;
 	}
 	.frm-login label {
 		margin-top: 4pt;
-		display: block;
 		padding: 4pt !important;
 		font-size: 11pt !important;
 	}
@@ -118,7 +225,6 @@
 	}
 	.frm-crud {
 		width: 70% !important;
-		margin: auto !important;
 		margin-top: 6px !important;
 		padding: 0px !important;
 		border: 1px solid #DFA5A5 !important;
@@ -132,53 +238,35 @@
 	.frm-crud .frm-title {
 		padding: 2px;
 		margin: 0px 0px 4px 0px;
-		text-align: left;
 		font-size: 14pt;
-		font-weight: bold;
-		color: #ffffff;
-		background-color: #440044 !important;
 		border-radius: 0px !important;
 	}
 	.frm-crud .frm-line {
-		display: inline-block;
 		margin: 2px !important;
 		padding: 1px;
 		width: 100%;
 		font-size: 11pt !important;
-		vertical-align: middle;
 	}
 	.frm-crud .frm-line label {
 		padding: 2pt !important;
-		display: inline-block;
-		float: left;
 		width: 25%;
-		text-align: right;
 		margin-right: 8px;
-		color: #440044;
 	}
 	.frm-confirm {
-		margin: auto;
 		padding: 4px !important;
 		margin-top: 8px !important;
 		width: 90%;
 		border: 1 px solid magenta;
 	}
-	
 	.confirm-title {
 		width: 100% !important;
-		text-align: center !important;
 	}
-	
 	.confirm-descr {
-		margin: auto !important;
 		width: 100% !important;
 		font-size: 10pt !important;
 		padding: 8px 2px 0px 2px !important;
-		text-align: justify !important;
 	}
-	
 	span.txt {
-		display: inline-block;
 		padding: 2pt !important;
 	}
 	.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
@@ -192,30 +280,22 @@
 		margin-top: 6px !important;
 	}
 	.frm-line div.scripting {
-		display: inline-block;
 		width: 73%;
 		padding: 0px;
 		margin: 0px;
 	}
 	span.explain {
-		display: inline-block;
 		font-size: 11pt;
 		margin: 0px 0px 6px 0px;
-		color: gray;
-		font-style: italic;
 	}
 	.frm-line div div.themeBox {
-		float: right;
 		width: 25%;
 	}
 	.frm-submit {
-		text-align: center;
-		display: block;
 		margin-top: 12px;
 		padding: 4px;
 	}
 	span.primary, a.primary, a.secondary, span.secondary {
-		display: inline-block;
 		margin: 6px;
 		padding: 4px 12px;
 		font-size: 11pt;
@@ -226,8 +306,8 @@
 		font-weight: bold !important;
 	}
 	input.primary, button.primary {
-	    background: #67ab49 !important;
-	    border: 1px solid #67ab49 !important;
+		background: #67ab49 !important;
+		border: 1px solid #67ab49 !important;
 		/*background: #440044 !important;*/
 		/*border: 1px solid #440044 !important;*/
 		color: #ffffff !important;
@@ -495,13 +575,21 @@
 		padding: 6px !important;
 		margin: 4px !important;
 	}
-	
 	.rf-tb {
 		background-color: transparent !important;
-	    background-image: none !important;
-    }
-	
-	
+		background-image: none !important;
+	}
 }
 
+@media ( max-width : 480px) {
+body {
+	background-color: green !important;
+}
 
+.frm-crud {
+	width: 100% !important;
+	margin-top: 6px !important;
+	padding: 0px !important;
+	border: 1px solid #DFA5A5 !important;
+}
+}

@@ -28,6 +28,12 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 @ConversationScoped
 public class QuestionAction extends AbstractCrudAction<Question> {
 
+	private static final String PAGE_COMMAND_DETAIL = "/pages/command/command-detail.jsf?faces-redirect=true";
+
+	private static final String PAGE_QUESTION = "/pages/question/question.jsf?faces-redirect=true";
+
+	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.jsf?faces-redirect=true";
+
 	private static final long serialVersionUID = 1L;
 
 	private CRUD crud;
@@ -63,7 +69,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = new Question();
 		loadOptions();
 		userPreferencesAction.loadPreferences();
-		return "/pages/question/question.jsf?faces-redirect=true";
+		return PAGE_QUESTION;
 	}
 
 	public String edit(Question question) {
@@ -72,7 +78,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.command = question.getCommand();
 		loadOptions();
 		userPreferencesAction.loadPreferences();
-		return "/pages/question/question.jsf?faces-redirect=true";
+		return PAGE_QUESTION;
 	}
 
 	public String detail(Question question) {
@@ -81,7 +87,18 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		this.question = question;
 		this.command = question.getCommand();
 		userPreferencesAction.loadPreferences();
-		return "/pages/question/question-detail.jsf?faces-redirect=true";
+		return PAGE_QUESTION_DETAIL;
+	}
+
+	public String dropQuestion() {
+		try {
+			facade.dropQuestion(question);
+			msgAction.addInfoMessage("Question droped.");
+			return PAGE_COMMAND_DETAIL;
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+			return PAGE_QUESTION_DETAIL;
+		}
 	}
 
 	public String save() {
@@ -90,10 +107,10 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			facade.saveQuestion(question);
 			debugMode(false);
 			msgAction.addMessage(MessageType.INFO, "Question saved");
-			return "/pages/question/question-detail.jsf?faces-redirect=true";
+			return PAGE_QUESTION_DETAIL;
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			return "/pages/question/question.jsf?faces-redirect=true";
+			return PAGE_QUESTION;
 		}
 	}
 
@@ -138,7 +155,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	public boolean getEnableValidator() {
 		return ((question.getAnswerType() != null) && (question.getAnswerType().equals(AnswerType.STRING) || question.getAnswerType().equals(AnswerType.NUMERIC)));
 	}
-	
+
 	public void debugMode(boolean mode) {
 		this.debugging = mode;
 	}

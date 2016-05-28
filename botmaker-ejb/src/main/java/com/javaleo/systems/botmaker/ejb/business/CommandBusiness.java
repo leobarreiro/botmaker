@@ -55,6 +55,13 @@ public class CommandBusiness implements ICommandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveCommand(Command command) throws BusinessException {
+		if (StringUtils.isBlank(command.getKey())) {
+			throw new BusinessException("Command key must be filled.");
+		}
+		Command otherCommand = getCommandByBotAndKey(command.getBot(), command.getKey());
+		if (otherCommand != null && (command.getId() == null || !otherCommand.getId().equals(command.getId()))) {
+			throw new BusinessException("There is another command for this bot with the same Key. Please choose other Key name.");
+		}
 		command.setKey(StringUtils.lowerCase(command.getKey()));
 		persistence.saveOrUpdate(command);
 		persistence.getEntityManager().flush();

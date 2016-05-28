@@ -46,7 +46,7 @@
 			<rich:dataTable value="#{commandAction.commands}" var="cmd" styleClass="pc100">
 				<rich:column styleClass="pc30">
 					<f:facet name="header">Command</f:facet>
-					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{cmd.key}" />
+					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{(not empty cmd.key) ? cmd.key : cmd.id}" />
 				</rich:column>
 				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Post Process</f:facet>

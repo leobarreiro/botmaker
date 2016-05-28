@@ -4,6 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class GroovyScriptRunnerUtils implements Serializable {
 
 		for (String snippet : blackListSnippets) {
 			if (StringUtils.containsIgnoreCase(script, snippet)) {
-				throw new BusinessException("Instructions not allowed in script source. It will not be executed.");
+				throw new BusinessException(MessageFormat.format("Instruction not allowed in script source [{0}]. It will not be executed.", snippet));
 			}
 		}
 	}

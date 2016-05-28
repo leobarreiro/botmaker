@@ -166,7 +166,7 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.order = order;
 	}
 
-	@ManyToOne(optional = false, cascade = { CascadeType.REMOVE })
+	@ManyToOne(optional = false, cascade = { CascadeType.REFRESH })
 	@JoinColumn(name = "command_id", referencedColumnName = "command_id", foreignKey = @ForeignKey(name = "fk_question_command"))
 	public Command getCommand() {
 		return command;

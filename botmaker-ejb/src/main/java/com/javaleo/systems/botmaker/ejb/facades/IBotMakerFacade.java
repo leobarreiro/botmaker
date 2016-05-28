@@ -52,7 +52,7 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IBotBusiness#reactivateBot(com.javaleo.systems.botmaker.ejb.entities.Bot)
 	 */
 	void reactivateBot(Bot bot) throws BusinessException;
-	
+
 	/**
 	 * @param filter
 	 * @return
@@ -105,6 +105,13 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness#saveQuestion(com.javaleo.systems.botmaker.ejb.entities.Question)
 	 */
 	void saveQuestion(Question question) throws BusinessException;
+
+	/**
+	 * @param question
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness#dropQuestion(com.javaleo.systems.botmaker.ejb.entities.Question)
+	 */
+	void dropQuestion(Question question) throws BusinessException;
 
 	/**
 	 * @param idQuestion
