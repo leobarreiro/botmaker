@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -34,7 +35,7 @@ public class CommandBusiness implements ICommandBusiness {
 	private IPersistenceBasic<Command> persistence;
 
 	@Inject
-	private GroovyScriptRunnerUtils scriptRunner;
+	private GroovyScriptRunnerUtils groovyScriptRunner;
 
 	@Inject
 	private Logger LOG;
@@ -61,6 +62,21 @@ public class CommandBusiness implements ICommandBusiness {
 		Command otherCommand = getCommandByBotAndKey(command.getBot(), command.getKey());
 		if (otherCommand != null && (command.getId() == null || !otherCommand.getId().equals(command.getId()))) {
 			throw new BusinessException("There is another command for this bot with the same Key. Please choose other Key name.");
+		}
+
+		if (command.getPostProcess()) {
+			if (command.getPostScript() != null) {
+				Script postScript = command.getPostScript();
+				postScript.setCommand(command);
+				postScript.setEnabled(true);
+				try {
+					groovyScriptRunner.validateScript(postScript.getCode());
+					postScript.setValid(true);
+				} catch (Exception e) {
+					postScript.setValid(false);
+				}
+				command.setPostScript(postScript);
+			}
 		}
 		command.setKey(StringUtils.lowerCase(command.getKey()));
 		persistence.saveOrUpdate(command);
@@ -113,9 +129,9 @@ public class CommandBusiness implements ICommandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void postProcessCommand(Dialog dialog, Command command) {
-		if (command.getPostProcess() && command.getPostProcessScriptType().equals(ScriptType.GROOVY)) {
+		if (command.getPostProcess() && command.getPostScript().getScriptType().equals(ScriptType.GROOVY)) {
 			try {
-				String postProcessed = (String) scriptRunner.evaluateScript(dialog, command.getPostProcessScript());
+				String postProcessed = (String) groovyScriptRunner.evaluateScript(dialog, command.getPostScript().getCode());
 				dialog.setPostProcessedResult(postProcessed);
 			} catch (Exception e) {
 				LOG.error(e.getMessage());

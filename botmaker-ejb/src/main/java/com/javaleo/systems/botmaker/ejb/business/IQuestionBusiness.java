@@ -5,11 +5,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import org.javaleo.libs.botgram.enums.ParseMode;
-
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -24,8 +21,6 @@ public interface IQuestionBusiness extends Serializable {
 	void saveQuestion(Question question) throws BusinessException;
 
 	void dropQuestion(Question question) throws BusinessException;
-
-	void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException;
 
 	void upQuestionOrder(Question question) throws BusinessException;
 

@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import org.javaleo.libs.botgram.enums.ParseMode;
-
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
@@ -14,7 +12,6 @@ import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -112,18 +109,6 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness#dropQuestion(com.javaleo.systems.botmaker.ejb.entities.Question)
 	 */
 	void dropQuestion(Question question) throws BusinessException;
-
-	/**
-	 * @param idQuestion
-	 * @param code
-	 * @param parseMode
-	 * @param scriptType
-	 * @throws BusinessException
-	 * @see com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness#saveQuestionCode(java.lang.Long,
-	 *      java.lang.String, org.javaleo.libs.botgram.enums.ParseMode,
-	 *      com.javaleo.systems.botmaker.ejb.enums.ScriptType)
-	 */
-	void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException;
 
 	/**
 	 * 

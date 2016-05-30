@@ -14,6 +14,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
@@ -125,7 +126,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			Dialog dialog = new Dialog();
 			dialog.setBotId(question.getCommand().getBot().getId());
 			dialog.setId(0);
-			debugContent = (String) groovyScriptRunner.testScript(dialog, question.getPostProcessScript(), mapVars);
+			debugContent = (String) groovyScriptRunner.testScript(dialog, question.getPostScript().getCode(), mapVars);
 		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
@@ -150,6 +151,17 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private void loadOptions() {
 		this.contextVars = facade.getListDialogContextVars();
 		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
+		if (this.question.getPostScript() == null) {
+			Script postScript = new Script();
+			postScript.setQuestion(this.question);
+			this.question.setPostScript(postScript);
+		}
+	}
+
+	public void enablePostScript() {
+		if (question.getProcessAnswer() && question.getPostScript() == null) {
+			question.setPostScript(new Script());
+		}
 	}
 
 	public boolean getEnableValidator() {

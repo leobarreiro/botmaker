@@ -54,16 +54,16 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
 				<h:selectBooleanCheckbox value="#{questionAction.question.processAnswer}">
-					<f:ajax event="change" execute="frm:questionCrudId" render="frm:questionCrudId frm:blockScriptTypeId frm:blockParseModeId frm:blockScriptCodeId" />
+					<f:ajax event="change" listener="#{questionAction.enablePostScript()}" execute="@this frm:questionCrudId" render="frm:questionCrudId frm:blockScriptTypeId frm:blockParseModeId frm:blockScriptCodeId" />
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup id="blockScriptTypeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{(questionAction.question.scriptType ne null) ? questionAction.question.scriptType.descriptor : 'None'}" styleClass="purple txt" />
+				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.scriptType.descriptor : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup id="blockParseModeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Parse Mode" />
-				<h:outputText value="#{(questionAction.question.parseMode ne null) ? questionAction.question.parseMode : 'None'}" styleClass="purple txt" />
+				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
 			<h:panelGroup id="blockScriptCodeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
@@ -90,9 +90,9 @@
 		<ui:param name="testCodeBean" value="#{questionAction}" />
 		<ui:param name="testCodeMethod" value="testScript" />
 		<ui:param name="debugContent" value="#{questionAction.debugContent}" />
-		<ui:param name="scriptCode" value="#{questionAction.question.postProcessScript}" />
-		<ui:param name="scriptType" value="#{questionAction.question.scriptType}" />
-		<ui:param name="parseMode" value="#{questionAction.question.parseMode}" />
+		<ui:param name="scriptCode" value="#{questionAction.question.postScript.code}" />
+		<ui:param name="scriptType" value="#{questionAction.question.postScript.scriptType}" />
+		<ui:param name="parseMode" value="#{questionAction.question.postScript.parseMode}" />
 		<ui:param name="contextVars" value="#{questionAction.contextVars}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 

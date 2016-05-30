@@ -27,16 +27,16 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answers" />
 				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
-					<f:ajax event="click" execute="@this" render="frm:scriptlinkId" />
+					<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="@this" render="frm:scriptlinkId" />
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{(commandAction.command.postProcessScriptType ne null) ? commandAction.command.postProcessScriptType.descriptor : 'None'}" styleClass="txt #{(commandAction.command.postProcessScriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postProcessScriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
+				<h:outputText value="#{(commandAction.command.postScript.scriptType ne null) ? commandAction.command.postScript.scriptType.descriptor : 'None'}" styleClass="txt #{(commandAction.command.postScript.scriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Parse Mode" />
-				<h:outputText value="#{(commandAction.command.parseMode ne null) ? commandAction.command.parseMode : 'None'}" styleClass="txt #{(commandAction.command.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
+				<h:outputText value="#{(commandAction.command.postScript.parseMode ne null) ? commandAction.command.postScript.parseMode : 'None'}" styleClass="txt #{(commandAction.command.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
 			</h:panelGroup>
 			
 			<h:panelGroup layout="block" styleClass="frm-line">
@@ -64,9 +64,9 @@
 		<ui:param name="testCodeBean" value="#{commandAction}" />
 		<ui:param name="testCodeMethod" value="testScript" />
 		<ui:param name="debugContent" value="#{commandAction.debugContent}" />
-		<ui:param name="scriptCode" value="#{commandAction.command.postProcessScript}" />
-		<ui:param name="scriptType" value="#{commandAction.command.postProcessScriptType}" />
-		<ui:param name="parseMode" value="#{commandAction.command.parseMode}" />
+		<ui:param name="scriptCode" value="#{commandAction.command.postScript.code}" />
+		<ui:param name="scriptType" value="#{commandAction.command.postScript.scriptType}" />
+		<ui:param name="parseMode" value="#{commandAction.command.postScript.parseMode}" />
 		<ui:param name="contextVars" value="#{commandAction.contextVars}" />
 		<ui:include src="/pages/utils/script-editor.xhtml" />
 		

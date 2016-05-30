@@ -17,6 +17,7 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -63,6 +64,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
+		Script postScript = new Script();
+		postScript.setCommand(command);
+		command.setPostScript(postScript);
 		questions = new ArrayList<Question>();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
@@ -81,6 +85,11 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = pojo;
+		if (this.command.getPostProcess() && this.command.getPostScript() == null) {
+			Script postScript = new Script();
+			postScript.setCommand(this.command);
+			this.command.setPostScript(postScript);
+		}
 		userPreferenceAction.loadPreferences();
 		loadQuestionsAndContextVars();
 		return "/pages/command/command.jsf?faces-redirect=true";
@@ -89,6 +98,11 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	public String detail(Command command) {
 		startOrResumeConversation();
 		this.command = command;
+		if (this.command.getPostProcess() && this.command.getPostScript() == null) {
+			Script postScript = new Script();
+			postScript.setCommand(this.command);
+			this.command.setPostScript(postScript);
+		}
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		return "/pages/command/command-detail.jsf?faces-redirect=true";
@@ -122,9 +136,11 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			Dialog dialog = new Dialog();
 			dialog.setBotId(command.getBot().getId());
 			dialog.setId(0);
-			debugContent = (String) groovyScriptRunner.testScript(dialog, command.getPostProcessScript(), mapVars);
+			debugContent = (String) groovyScriptRunner.testScript(dialog, command.getPostScript().getCode(), mapVars);
+			command.getPostScript().setValid(true);
 		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+			command.getPostScript().setValid(false);
 		}
 	}
 
@@ -142,6 +158,12 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			for (Question q : questions) {
 				this.contextVars.add(new DialogContextVar(q.getVarName(), "", q.getInstruction()));
 			}
+		}
+	}
+
+	public void enablePostScript() {
+		if (command.getPostProcess() && command.getPostScript() == null) {
+			command.setPostScript(new Script());
 		}
 	}
 

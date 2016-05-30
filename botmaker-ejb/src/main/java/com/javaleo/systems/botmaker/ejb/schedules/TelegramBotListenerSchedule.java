@@ -193,7 +193,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 			}
 			if (dialog.getLastQuestion().getProcessAnswer()) {
 				questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
-				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer(), dialog.getLastQuestion().getParseMode());
+				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer(), dialog.getLastQuestion().getPostScript().getParseMode());
 			}
 			Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
 			if (nextQuestion != null) {
@@ -254,9 +254,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 		if (dialog.getLastQuestion() != null) {
 			if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
 				List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
-				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getParseMode(), options);
+				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode(), options);
 			} else {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getParseMode());
+				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode());
 			}
 		}
 	}
@@ -280,7 +280,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 	private void endOfCommand(Bot bot, Dialog dialog) {
 		if (dialog.getLastCommand().getPostProcess()) {
 			commandBusiness.postProcessCommand(dialog, dialog.getLastCommand());
-			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult(), dialog.getLastCommand().getParseMode());
+			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult(), dialog.getLastCommand().getPostScript().getParseMode());
 		}
 		List<List<String>> options = getAvailableCommands(bot);
 		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {

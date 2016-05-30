@@ -11,14 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = "question")
@@ -31,14 +30,11 @@ public class Question implements IEntityBasic, Comparable<Question> {
 	private String instruction;
 	private AnswerType answerType;
 	private Validator validator;
-	private String options;
 	private String errorFormatMessage;
 	private String successMessage;
 	private String varName;
 	private Boolean processAnswer;
-	private ParseMode parseMode;
-	private ScriptType scriptType;
-	private String postProcessScript;
+	private Script postScript;
 	private Integer order;
 	private Command command;
 
@@ -83,15 +79,6 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.validator = validator;
 	}
 
-	@Column(name = "answer_options", length = 255, nullable = true)
-	public String getOptions() {
-		return options;
-	}
-
-	public void setOptions(String options) {
-		this.options = options;
-	}
-
 	@Column(name = "error_message", length = 255)
 	public String getErrorFormatMessage() {
 		return errorFormatMessage;
@@ -128,33 +115,13 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.processAnswer = processAnswer;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "parse_mode", length = 20, nullable = true)
-	public ParseMode getParseMode() {
-		return parseMode;
+	@OneToOne(mappedBy = "question", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	public Script getPostScript() {
+		return postScript;
 	}
 
-	public void setParseMode(ParseMode parseMode) {
-		this.parseMode = parseMode;
-	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "script_type", length = 30)
-	public ScriptType getScriptType() {
-		return scriptType;
-	}
-
-	public void setScriptType(ScriptType scriptType) {
-		this.scriptType = scriptType;
-	}
-
-	@Column(name = "post_process_script", columnDefinition = "text", nullable = true)
-	public String getPostProcessScript() {
-		return postProcessScript;
-	}
-
-	public void setPostProcessScript(String postProcessScript) {
-		this.postProcessScript = postProcessScript;
+	public void setPostScript(Script postScript) {
+		this.postScript = postScript;
 	}
 
 	@Column(name = "order_number", nullable = false)
@@ -199,7 +166,6 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
 		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		result = prime * result + ((varName == null) ? 0 : varName.hashCode());
 		return result;
@@ -235,8 +201,6 @@ public class Question implements IEntityBasic, Comparable<Question> {
 			if (other.order != null)
 				return false;
 		} else if (!order.equals(other.order))
-			return false;
-		if (parseMode != other.parseMode)
 			return false;
 		if (validator == null) {
 			if (other.validator != null)

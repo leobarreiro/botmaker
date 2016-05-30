@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,13 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
-
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 
 @Entity
 @Table(schema = EntityUtils.SCHEMA, name = EntityUtils.COMMAND)
@@ -37,12 +33,10 @@ public class Command implements IEntityBasic {
 	private Boolean active;
 	private List<Question> questions;
 	private Boolean postProcess;
-	private ParseMode parseMode;
-	private ScriptType postProcessScriptType;
-	private String postProcessScript;
+	private Script postScript;
 
-	@Override
 	@Id
+	@Override
 	@Column(name = "command_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "command_seq")
 	public Long getId() {
@@ -117,33 +111,13 @@ public class Command implements IEntityBasic {
 		this.postProcess = postProcess;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "parse_mode", length = 20, nullable = true)
-	public ParseMode getParseMode() {
-		return parseMode;
+	@OneToOne(mappedBy = "command", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	public Script getPostScript() {
+		return postScript;
 	}
 
-	public void setParseMode(ParseMode parseMode) {
-		this.parseMode = parseMode;
-	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "script_type", length = 30)
-	public ScriptType getPostProcessScriptType() {
-		return postProcessScriptType;
-	}
-
-	public void setPostProcessScriptType(ScriptType postProcessScriptType) {
-		this.postProcessScriptType = postProcessScriptType;
-	}
-
-	@Column(name = "post_process_script", columnDefinition = "text", nullable = true)
-	public String getPostProcessScript() {
-		return postProcessScript;
-	}
-
-	public void setPostProcessScript(String postProcessScript) {
-		this.postProcessScript = postProcessScript;
+	public void setPostScript(Script postScript) {
+		this.postScript = postScript;
 	}
 
 	@Override
@@ -154,10 +128,7 @@ public class Command implements IEntityBasic {
 		result = prime * result + ((bot == null) ? 0 : bot.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
 		result = prime * result + ((postProcess == null) ? 0 : postProcess.hashCode());
-		result = prime * result + ((postProcessScript == null) ? 0 : postProcessScript.hashCode());
-		result = prime * result + ((postProcessScriptType == null) ? 0 : postProcessScriptType.hashCode());
 		result = prime * result + ((questions == null) ? 0 : questions.hashCode());
 		result = prime * result + ((shortDescription == null) ? 0 : shortDescription.hashCode());
 		result = prime * result + ((welcomeMessage == null) ? 0 : welcomeMessage.hashCode());
@@ -193,19 +164,10 @@ public class Command implements IEntityBasic {
 				return false;
 		} else if (!key.equals(other.key))
 			return false;
-		if (parseMode != other.parseMode)
-			return false;
 		if (postProcess == null) {
 			if (other.postProcess != null)
 				return false;
 		} else if (!postProcess.equals(other.postProcess))
-			return false;
-		if (postProcessScript == null) {
-			if (other.postProcessScript != null)
-				return false;
-		} else if (!postProcessScript.equals(other.postProcessScript))
-			return false;
-		if (postProcessScriptType != other.postProcessScriptType)
 			return false;
 		if (questions == null) {
 			if (other.questions != null)

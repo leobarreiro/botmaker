@@ -16,7 +16,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
-import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.botgram.model.Document;
 import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
@@ -26,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
@@ -47,7 +47,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private IPersistenceBasic<Question> persistence;
 
 	@Inject
-	private GroovyScriptRunnerUtils scriptRunner;
+	private GroovyScriptRunnerUtils groovyScriptRunner;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -83,6 +83,22 @@ public class QuestionBusiness implements IQuestionBusiness {
 			int thisOrder = (previousQuestion == null) ? 1 : (previousQuestion.getOrder() + 1);
 			question.setOrder(thisOrder);
 		}
+
+		if (question.getProcessAnswer()) {
+			if (question.getPostScript() != null) {
+				Script postScript = question.getPostScript();
+				postScript.setQuestion(question);
+				postScript.setEnabled(true);
+				try {
+					groovyScriptRunner.validateScript(postScript.getCode());
+					postScript.setValid(true);
+				} catch (Exception e) {
+					postScript.setValid(false);
+				}
+				question.setPostScript(postScript);
+			}
+		}
+
 		persistence.saveOrUpdate(question);
 		persistence.getEntityManager().flush();
 	}
@@ -91,20 +107,6 @@ public class QuestionBusiness implements IQuestionBusiness {
 	public void dropQuestion(Question question) throws BusinessException {
 		Question deleteQuestion = persistence.find(Question.class, question.getId());
 		persistence.remove(deleteQuestion);
-		persistence.getEntityManager().flush();
-	}
-
-	@Override
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveQuestionCode(Long idQuestion, String code, ParseMode parseMode, ScriptType scriptType) throws BusinessException {
-		Question question = persistence.find(Question.class, idQuestion);
-		if (scriptType.equals(ScriptType.GROOVY)) {
-			scriptRunner.validateScript(code);
-		}
-		question.setPostProcessScript(code);
-		question.setParseMode(parseMode);
-		question.setScriptType(scriptType);
-		persistence.saveOrUpdate(question);
 		persistence.getEntityManager().flush();
 	}
 
@@ -167,7 +169,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 					Map<String, String> contextVars = dialog.getContextVars();
 					contextVars.put("userAnswer", dialog.getLastUpdate().getMessage().getText());
 					try {
-						Boolean valid = (Boolean) scriptRunner.evaluateScript(dialog, question.getValidator().getScriptCode());
+						Boolean valid = (Boolean) groovyScriptRunner.evaluateScript(dialog, question.getValidator().getScriptCode());
 						return valid;
 					} catch (Exception e) {
 						LOG.error(e.getMessage());
@@ -184,7 +186,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) {
 		if (question.getProcessAnswer()) {
-			if (question.getScriptType().equals(ScriptType.GROOVY)) {
+			if (question.getPostScript().getScriptType().equals(ScriptType.GROOVY)) {
 				GsonBuilder gsonBuilder = new GsonBuilder();
 				gsonBuilder.excludeFieldsWithoutExposeAnnotation();
 				Gson gson = gsonBuilder.create();
@@ -202,7 +204,7 @@ public class QuestionBusiness implements IQuestionBusiness {
 					}
 				}
 				try {
-					String postProcessed = (String) scriptRunner.evaluateScript(dialog, question.getPostProcessScript());
+					String postProcessed = (String) groovyScriptRunner.evaluateScript(dialog, question.getPostScript().getCode());
 					answer.setPostProcessedAnswer(postProcessed);
 				} catch (BusinessException e) {
 					LOG.error(e.getMessage());
