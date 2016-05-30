@@ -64,9 +64,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
-		Script postScript = new Script();
-		postScript.setCommand(command);
-		command.setPostScript(postScript);
 		questions = new ArrayList<Question>();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
@@ -84,10 +81,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	}
 
 	public String edit(Command pojo) {
-		this.command = pojo;
+		this.command = facade.getCommandById(pojo.getId());
 		if (this.command.getPostProcess() && this.command.getPostScript() == null) {
 			Script postScript = new Script();
-			postScript.setCommand(this.command);
 			this.command.setPostScript(postScript);
 		}
 		userPreferenceAction.loadPreferences();
@@ -95,12 +91,12 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
-	public String detail(Command command) {
+	public String detail(Command pojo) {
 		startOrResumeConversation();
-		this.command = command;
-		if (this.command.getPostProcess() && this.command.getPostScript() == null) {
+		// TODO: recuperar command e questions da base novamente, para carregar dados atualizados.
+		this.command = facade.getCommandById(pojo.getId());
+		if (this.command.getPostScript() == null) {
 			Script postScript = new Script();
-			postScript.setCommand(this.command);
 			this.command.setPostScript(postScript);
 		}
 		loadQuestionsAndContextVars();
@@ -113,7 +109,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			facade.saveCommand(command);
 			msgAction.addMessage(MessageType.INFO, "Command saved");
 			debugMode(false);
-			return "/pages/command/command-detail.jsf?faces-redirect=true";
+			return detail(command);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return "/pages/command/command.jsf";

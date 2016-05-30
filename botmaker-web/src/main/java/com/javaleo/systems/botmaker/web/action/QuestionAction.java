@@ -29,10 +29,7 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 @ConversationScoped
 public class QuestionAction extends AbstractCrudAction<Question> {
 
-	private static final String PAGE_COMMAND_DETAIL = "/pages/command/command-detail.jsf?faces-redirect=true";
-
 	private static final String PAGE_QUESTION = "/pages/question/question.jsf?faces-redirect=true";
-
 	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.jsf?faces-redirect=true";
 
 	private static final long serialVersionUID = 1L;
@@ -68,6 +65,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		this.command = command;
 		this.question = new Question();
+		this.question.setPostScript(new Script());
 		loadOptions();
 		userPreferencesAction.loadPreferences();
 		return PAGE_QUESTION;
@@ -76,6 +74,9 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	public String edit(Question question) {
 		startOrResumeConversation();
 		this.question = question;
+		if (this.question.getPostScript() == null) {
+			this.question.setPostScript(new Script());
+		}
 		this.command = question.getCommand();
 		loadOptions();
 		userPreferencesAction.loadPreferences();
@@ -86,6 +87,9 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		startOrResumeConversation();
 		loadOptions();
 		this.question = question;
+		if (this.question.getPostScript() == null) {
+			this.question.setPostScript(new Script());
+		}
 		this.command = question.getCommand();
 		userPreferencesAction.loadPreferences();
 		return PAGE_QUESTION_DETAIL;
@@ -95,7 +99,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 		try {
 			facade.dropQuestion(question);
 			msgAction.addInfoMessage("Question droped.");
-			return PAGE_COMMAND_DETAIL;
+			return commandAction.detail(command);
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
 			return PAGE_QUESTION_DETAIL;
@@ -108,7 +112,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			facade.saveQuestion(question);
 			debugMode(false);
 			msgAction.addMessage(MessageType.INFO, "Question saved");
-			return PAGE_QUESTION_DETAIL;
+			return detail(question);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 			return PAGE_QUESTION;
@@ -151,11 +155,6 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	private void loadOptions() {
 		this.contextVars = facade.getListDialogContextVars();
 		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
-		if (this.question.getPostScript() == null) {
-			Script postScript = new Script();
-			postScript.setQuestion(this.question);
-			this.question.setPostScript(postScript);
-		}
 	}
 
 	public void enablePostScript() {

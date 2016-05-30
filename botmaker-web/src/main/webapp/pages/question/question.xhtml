@@ -54,28 +54,8 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answer" />
 				<h:selectBooleanCheckbox value="#{questionAction.question.processAnswer}">
-					<f:ajax event="change" listener="#{questionAction.enablePostScript()}" execute="@this frm:questionCrudId" render="frm:questionCrudId frm:blockScriptTypeId frm:blockParseModeId frm:blockScriptCodeId" />
+					<f:ajax event="change" listener="#{questionAction.enablePostScript()}" execute="frm:questionCrudId" render="frm:questionCrudId" />
 				</h:selectBooleanCheckbox>
-			</h:panelGroup>
-			<h:panelGroup id="blockScriptTypeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
-				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.scriptType.descriptor : 'None'}" styleClass="purple txt" />
-			</h:panelGroup>
-			<h:panelGroup id="blockParseModeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
-				<h:outputLabel value="Parse Mode" />
-				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.parseMode : 'None'}" styleClass="purple txt" />
-			</h:panelGroup>
-			<h:panelGroup id="blockScriptCodeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
-				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink title="View Code" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
-					<h:graphicImage value="/resources/img/icons/view.png" />
-					<f:ajax event="click" listener="#{questionAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
-				</h:commandLink>
-				<h:commandLink title="Edit Code" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
-					<h:graphicImage value="/resources/img/icons/edit.png" />
-					<f:ajax event="click" listener="#{questionAction.debugMode(true)}" execute="@this" render="frm:panelScriptControlsId" />
-				</h:commandLink>
-				<h:outputText value="None" rendered="#{not questionAction.question.processAnswer}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{questionAction.detail(questionAction.question)}" value="Cancel" styleClass="secondary" rendered="#{not empty questionAction.question.id}" />
@@ -83,18 +63,5 @@
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-
-		<ui:param name="debugging" value="#{questionAction.debugging}" />
-		<ui:param name="saveCodeBean" value="#{questionAction}" />
-		<ui:param name="saveCodeMethod" value="save" />
-		<ui:param name="testCodeBean" value="#{questionAction}" />
-		<ui:param name="testCodeMethod" value="testScript" />
-		<ui:param name="debugContent" value="#{questionAction.debugContent}" />
-		<ui:param name="scriptCode" value="#{questionAction.question.postScript.code}" />
-		<ui:param name="scriptType" value="#{questionAction.question.postScript.scriptType}" />
-		<ui:param name="parseMode" value="#{questionAction.question.postScript.parseMode}" />
-		<ui:param name="contextVars" value="#{questionAction.contextVars}" />
-		<ui:include src="/pages/utils/script-editor.xhtml" />
-
 	</ui:define>
 </ui:composition>

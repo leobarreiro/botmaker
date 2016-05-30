@@ -32,10 +32,12 @@ import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
+import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.UrlFile;
@@ -56,6 +58,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Inject
 	private IQuestionBusiness questionBusiness;
+	
+	@Inject
+	private IScriptBusiness scriptBusiness;
 
 	@Inject
 	private TelegramSendMessageUtils sendMessageUtils;
@@ -192,8 +197,12 @@ public class TelegramBotListenerSchedule implements Serializable {
 				successAnswer(bot, dialog);
 			}
 			if (dialog.getLastQuestion().getProcessAnswer()) {
-				questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
-				sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer(), dialog.getLastQuestion().getPostScript().getParseMode());
+				try {
+					questionBusiness.postProcessAnswer(dialog, dialog.getLastQuestion(), ans);
+					sendMessageUtils.sendSimpleMessage(bot, dialog, ans.getPostProcessedAnswer(), dialog.getLastQuestion().getPostScript().getParseMode());
+				} catch (BusinessException e) {
+					LOG.error(e.getMessage());
+				}
 			}
 			Question nextQuestion = questionBusiness.getNextQuestion(dialog.getLastCommand(), dialog.getLastQuestion().getOrder());
 			if (nextQuestion != null) {
@@ -251,13 +260,17 @@ public class TelegramBotListenerSchedule implements Serializable {
 	}
 
 	private void instructQuestionToUser(Bot bot, Dialog dialog) {
-		if (dialog.getLastQuestion() != null) {
-			if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
-				List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
-				sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode(), options);
-			} else {
-				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode());
+		try {
+			if (dialog.getLastQuestion() != null) {
+				if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
+					List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
+					sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode(), options);
+				} else {
+					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.HTML);
+				}
 			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -278,9 +291,14 @@ public class TelegramBotListenerSchedule implements Serializable {
 	}
 
 	private void endOfCommand(Bot bot, Dialog dialog) {
-		if (dialog.getLastCommand().getPostProcess()) {
-			commandBusiness.postProcessCommand(dialog, dialog.getLastCommand());
-			sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult(), dialog.getLastCommand().getPostScript().getParseMode());
+		Command command = commandBusiness.getCommandById(dialog.getLastCommand().getId());
+		if (command.getPostProcess()) {
+			try {
+				commandBusiness.postProcessCommand(dialog, command);
+				sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getPostProcessedResult(), command.getPostScript().getParseMode());
+			} catch (BusinessException e) {
+				LOG.error(e.getMessage());
+			}
 		}
 		List<List<String>> options = getAvailableCommands(bot);
 		if (StringUtils.isNotBlank(bot.getEndOfDialogMessage())) {

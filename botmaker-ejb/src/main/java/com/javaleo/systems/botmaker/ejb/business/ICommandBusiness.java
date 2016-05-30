@@ -25,6 +25,6 @@ public interface ICommandBusiness extends Serializable {
 
 	void dropCommand(Command command);
 
-	void postProcessCommand(Dialog dialog, Command command);
+	void postProcessCommand(Dialog dialog, Command command) throws BusinessException;
 
 }

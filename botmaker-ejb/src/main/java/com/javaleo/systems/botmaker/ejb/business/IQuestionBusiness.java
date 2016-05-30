@@ -30,6 +30,6 @@ public interface IQuestionBusiness extends Serializable {
 
 	List<List<String>> convertOptions(Question question);
 
-	void postProcessAnswer(Dialog dialog, Question question, Answer answer);
+	void postProcessAnswer(Dialog dialog, Question question, Answer answer) throws BusinessException;
 
 }

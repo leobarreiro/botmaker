@@ -1,6 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -20,11 +22,10 @@ import org.slf4j.Logger;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
-import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 
 @Stateless
 public class CommandBusiness implements ICommandBusiness {
@@ -35,7 +36,13 @@ public class CommandBusiness implements ICommandBusiness {
 	private IPersistenceBasic<Command> persistence;
 
 	@Inject
-	private GroovyScriptRunnerUtils groovyScriptRunner;
+	private IPersistenceBasic<Script> scriptPersistence;
+
+	@Inject
+	private IScriptBusiness scriptBiz;
+
+	@Inject
+	private BotMakerCredentials credentials;
 
 	@Inject
 	private Logger LOG;
@@ -64,19 +71,23 @@ public class CommandBusiness implements ICommandBusiness {
 			throw new BusinessException("There is another command for this bot with the same Key. Please choose other Key name.");
 		}
 
-		if (command.getPostProcess()) {
-			if (command.getPostScript() != null) {
-				Script postScript = command.getPostScript();
-				postScript.setCommand(command);
-				postScript.setEnabled(true);
-				try {
-					groovyScriptRunner.validateScript(postScript.getCode());
-					postScript.setValid(true);
-				} catch (Exception e) {
-					postScript.setValid(false);
-				}
-				command.setPostScript(postScript);
+		Calendar cal = Calendar.getInstance();
+		if (command.getPostProcess() && command.getPostScript() != null && StringUtils.isNotEmpty(command.getPostScript().getCode())) {
+			Script script = command.getPostScript();
+			if (script.getId() == null) {
+				script.setAuthor(credentials.getUser());
+				script.setCreated(cal.getTime());
 			}
+			script.setModified(cal.getTime());
+
+			script.setValid(scriptBiz.isValidScript(script));
+			script.setEnabled(scriptBiz.isValidScript(script));
+
+			script.setCommand(command);
+			scriptPersistence.saveOrUpdate(script);
+			command.setPostScript(script);
+		} else {
+			command.setPostScript(null);
 		}
 		command.setKey(StringUtils.lowerCase(command.getKey()));
 		persistence.saveOrUpdate(command);
@@ -86,7 +97,14 @@ public class CommandBusiness implements ICommandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Command getCommandById(Long id) {
-		return persistence.find(Command.class, id);
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Command> cq = cb.createQuery(Command.class);
+		Root<Command> fromCommand = cq.from(Command.class);
+		fromCommand.join("questions", JoinType.LEFT);
+		fromCommand.join("postScript", JoinType.LEFT);
+		cq.where(cb.equal(fromCommand.get("id"), id));
+		cq.select(fromCommand);
+		return persistence.getSingleResult(cq);
 	}
 
 	@Override
@@ -102,6 +120,7 @@ public class CommandBusiness implements ICommandBusiness {
 		Join<Command, Bot> joinBot = fromCommand.join("bot", JoinType.INNER);
 		// Join<Question, Command> joinQuestions = fromCommand.join("questions", JoinType.LEFT);
 		fromCommand.join("questions", JoinType.LEFT);
+		fromCommand.join("postScript", JoinType.LEFT);
 		cq.where(cb.and(cb.equal(joinBot.get("id"), bot.getId()), cb.equal(fromCommand.get("key"), clearText)));
 		cq.select(fromCommand);
 		return persistence.getSingleResult(cq);
@@ -128,15 +147,19 @@ public class CommandBusiness implements ICommandBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public void postProcessCommand(Dialog dialog, Command command) {
-		if (command.getPostProcess() && command.getPostScript().getScriptType().equals(ScriptType.GROOVY)) {
-			try {
-				String postProcessed = (String) groovyScriptRunner.evaluateScript(dialog, command.getPostScript().getCode());
-				dialog.setPostProcessedResult(postProcessed);
-			} catch (Exception e) {
-				LOG.error(e.getMessage());
-			}
+	public void postProcessCommand(Dialog dialog, Command command) throws BusinessException {
+		if (!scriptBiz.isReadyToExecution(command.getPostScript())) {
+			throw new BusinessException(
+					MessageFormat.format("Trying to execute a Post Script not ready [Bot:{0}|Command:{1}]", command.getBot().getId().toString(), command.getId().toString()));
 		}
+		
+		if (!scriptBiz.isValidScript(command.getPostScript())) {
+			throw new BusinessException(
+					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", command.getBot().getId().toString(), command.getId().toString()));
+		}
+		
+		String postProcessed = scriptBiz.executeScript(dialog, command.getPostScript());
+		dialog.setPostProcessedResult(postProcessed);
 	}
 
 }

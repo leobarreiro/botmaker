@@ -1,7 +1,8 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.text.MessageFormat;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,19 +22,16 @@ import org.javaleo.libs.botgram.model.PhotoSize;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
-import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
-import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -47,7 +45,13 @@ public class QuestionBusiness implements IQuestionBusiness {
 	private IPersistenceBasic<Question> persistence;
 
 	@Inject
-	private GroovyScriptRunnerUtils groovyScriptRunner;
+	private IPersistenceBasic<Script> scriptPersistence;
+
+	@Inject
+	private BotMakerCredentials credentials;
+
+	@Inject
+	private IScriptBusiness scriptBiz;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -83,22 +87,23 @@ public class QuestionBusiness implements IQuestionBusiness {
 			int thisOrder = (previousQuestion == null) ? 1 : (previousQuestion.getOrder() + 1);
 			question.setOrder(thisOrder);
 		}
-
-		if (question.getProcessAnswer()) {
-			if (question.getPostScript() != null) {
-				Script postScript = question.getPostScript();
-				postScript.setQuestion(question);
-				postScript.setEnabled(true);
-				try {
-					groovyScriptRunner.validateScript(postScript.getCode());
-					postScript.setValid(true);
-				} catch (Exception e) {
-					postScript.setValid(false);
-				}
-				question.setPostScript(postScript);
+		Calendar cal = Calendar.getInstance();
+		if (question.getProcessAnswer() && question.getPostScript() != null && StringUtils.isNotEmpty(question.getPostScript().getCode())) {
+			Script script = question.getPostScript();
+			if (script.getId() == null) {
+				script.setAuthor(credentials.getUser());
+				script.setCreated(cal.getTime());
 			}
+			script.setModified(cal.getTime());
+			// TODO: testar validade para outros tipos de linguagens de script alem de groovy
+			script.setValid(scriptBiz.isValidScript(script));
+			script.setEnabled(scriptBiz.isValidScript(script));
+			script.setQuestion(question);
+			question.setPostScript(script);
+			scriptPersistence.saveOrUpdate(script);
+		} else {
+			question.setPostScript(null);
 		}
-
 		persistence.saveOrUpdate(question);
 		persistence.getEntityManager().flush();
 	}
@@ -166,10 +171,9 @@ public class QuestionBusiness implements IQuestionBusiness {
 					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
 					return m.matches();
 				} else if (question.getValidator().getValidatorType().equals(ValidatorType.GROOVY)) {
-					Map<String, String> contextVars = dialog.getContextVars();
-					contextVars.put("userAnswer", dialog.getLastUpdate().getMessage().getText());
+					dialog.addContextVar("userAnswer", dialog.getLastUpdate().getMessage().getText());
 					try {
-						Boolean valid = (Boolean) groovyScriptRunner.evaluateScript(dialog, question.getValidator().getScriptCode());
+						Boolean valid = scriptBiz.evaluateBooleanScript(dialog, question.getPostScript());
 						return valid;
 					} catch (Exception e) {
 						LOG.error(e.getMessage());
@@ -184,33 +188,18 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) {
-		if (question.getProcessAnswer()) {
-			if (question.getPostScript().getScriptType().equals(ScriptType.GROOVY)) {
-				GsonBuilder gsonBuilder = new GsonBuilder();
-				gsonBuilder.excludeFieldsWithoutExposeAnnotation();
-				Gson gson = gsonBuilder.create();
-				for (Answer a : dialog.getAnswers()) {
-					if (a.isAccepted()) {
-						if (a.getAnswerType().equals(AnswerType.DOCUMENT)) {
-							String content = gson.toJson(a.getUrlFiles().get(0));
-							dialog.addContextVar(a.getVarName(), content);
-						} else if (a.getAnswerType().equals(AnswerType.PHOTO)) {
-							String content = gson.toJson(a.getUrlFiles());
-							dialog.addContextVar(a.getVarName(), content);
-						} else { // a.getAnswer().equals(AnswerType.STRING) || a.getAnswer().equals(AnswerType.NUMERIC)
-							dialog.addContextVar(a.getVarName(), a.getAnswer());
-						}
-					}
-				}
-				try {
-					String postProcessed = (String) groovyScriptRunner.evaluateScript(dialog, question.getPostScript().getCode());
-					answer.setPostProcessedAnswer(postProcessed);
-				} catch (BusinessException e) {
-					LOG.error(e.getMessage());
-				}
-			}
+	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) throws BusinessException {
+		if (!scriptBiz.isReadyToExecution(question.getPostScript())) {
+			throw new BusinessException(
+					MessageFormat.format("Trying to execute a Post Script not ready [Bot:{0}|Command:{1}|Question:{2}]", question.getCommand().getBot().getId().toString(), question.getCommand().getId().toString(), question.getId().toString()));
 		}
+		if (!scriptBiz.isValidScript(question.getPostScript())) {
+			throw new BusinessException(
+					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", question.getCommand().getBot().getId().toString(), question.getCommand().getId().toString(), question.getId().toString()));
+		}
+		String postProcessed = scriptBiz.executeScript(dialog, question.getPostScript());
+		dialog.setPostProcessedResult(postProcessed);
+		answer.setPostProcessedAnswer(postProcessed);
 	}
 
 	@Override

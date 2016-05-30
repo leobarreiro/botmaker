@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -115,7 +116,8 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		this.processAnswer = processAnswer;
 	}
 
-	@OneToOne(mappedBy = "question", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	@JoinColumn(name = "post_script_id", referencedColumnName = "script_id", nullable = true)
 	public Script getPostScript() {
 		return postScript;
 	}

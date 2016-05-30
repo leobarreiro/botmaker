@@ -3,7 +3,7 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
-		<h2>Question</h2>
+		<h2>Question detail</h2>
 
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
@@ -76,7 +76,7 @@
 				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-		
+
 		<ui:param name="confirmTitle" value="Drop Question" />
 		<ui:param name="confirmDescription" value="Are you sure to delete this question? You can't undo this action." />
 		<ui:param name="confirmBean" value="#{questionAction}" />
