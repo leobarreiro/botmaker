@@ -9,9 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.PythonScriptRunnerUtils;
 
 @Stateless
 public class ScriptBusiness implements IScriptBusiness {
@@ -24,15 +26,22 @@ public class ScriptBusiness implements IScriptBusiness {
 	@Inject
 	private GroovyScriptRunnerUtils groovyRunner;
 
+	@Inject
+	private PythonScriptRunnerUtils pythonRunner;
+
 	@Override
 	public boolean isReadyToExecution(Script script) {
-		return (script != null && script.getEnabled() && script.getValid() && StringUtils.isNotEmpty(script.getCode()));
+		return (script != null && script.getEnabled() != null && script.getEnabled() && StringUtils.isNotEmpty(script.getCode()) && isValidScript(script));
 	}
 
 	@Override
 	public boolean isValidScript(Script script) {
 		try {
-			groovyRunner.validateScript(script.getCode());
+			if (script.getScriptType().equals(ScriptType.GROOVY)) {
+				groovyRunner.validateScript(script.getCode());
+			} else { // ScriptType.PYTHON
+				pythonRunner.validateScript(script.getCode());
+			}
 			return true;
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
@@ -49,8 +58,15 @@ public class ScriptBusiness implements IScriptBusiness {
 			throw new BusinessException(MessageFormat.format("Script is not ready to execution [Id:{0}|Valid:{1}|Enabled:{2}|Author:{3}]", script.getId(), script.getValid(), script.getEnabled(),
 					script.getAuthor().getId()));
 		}
-		groovyRunner.validateScript(script.getCode());
-		return (String) groovyRunner.evaluateScript(dialog, script.getCode());
+		String result = "";
+		if (script.getScriptType().equals(ScriptType.GROOVY)) {
+			groovyRunner.validateScript(script.getCode());
+			result = (String) groovyRunner.evaluateScript(dialog, script.getCode());
+		} else { // ScriptType.PYTHON
+			pythonRunner.validateScript(script.getCode());
+			result = (String) pythonRunner.evaluateScript(dialog, script.getCode());
+		}
+		return result;
 	}
 
 	@Override
@@ -59,7 +75,13 @@ public class ScriptBusiness implements IScriptBusiness {
 			throw new BusinessException(MessageFormat.format("Script is not ready to execution [Id:{0}|Valid:{1}|Enabled:{2}|Author:{3}]", script.getId(), script.getValid(), script.getEnabled(),
 					script.getAuthor().getId()));
 		}
-		return (Boolean) groovyRunner.evaluateScript(dialog, script.getCode());
+		Boolean result = false;
+		if (script.getScriptType().equals(ScriptType.GROOVY)) {
+			result = (Boolean) groovyRunner.evaluateScript(dialog, script.getCode());
+		} else { // ScriptType.PYTHON
+			result = (Boolean) pythonRunner.evaluateScript(dialog, script.getCode());
+		}
+		return result;
 	}
 
 }

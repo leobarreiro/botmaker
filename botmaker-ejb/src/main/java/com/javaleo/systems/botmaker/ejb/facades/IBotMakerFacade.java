@@ -9,6 +9,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
@@ -216,5 +217,25 @@ public interface IBotMakerFacade extends Serializable {
 	 * @see com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness#getContextVarsFromDialog(com.javaleo.systems.botmaker.ejb.pojos.Dialog)
 	 */
 	List<DialogContextVar> getContextVarsFromDialog(Dialog dialog);
+
+	/**
+	 * @param dialog
+	 * @param script
+	 * @return
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botmaker.ejb.business.IScriptBusiness#executeScript(com.javaleo.systems.botmaker.ejb.pojos.Dialog,
+	 *      com.javaleo.systems.botmaker.ejb.entities.Script)
+	 */
+	String executeScript(Dialog dialog, Script script) throws BusinessException;
+
+	/**
+	 * @param dialog
+	 * @param script
+	 * @return
+	 * @throws BusinessException
+	 * @see com.javaleo.systems.botmaker.ejb.business.IScriptBusiness#evaluateBooleanScript(com.javaleo.systems.botmaker.ejb.pojos.Dialog,
+	 *      com.javaleo.systems.botmaker.ejb.entities.Script)
+	 */
+	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
 
 }

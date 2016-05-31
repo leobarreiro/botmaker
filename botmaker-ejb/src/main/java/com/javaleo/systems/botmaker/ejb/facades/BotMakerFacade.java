@@ -11,6 +11,7 @@ import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
@@ -18,6 +19,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
@@ -56,6 +58,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IDialogContextVarBusiness dialogcontextVarBusiness;
+
+	@Inject
+	private IScriptBusiness scriptBusiness;
 
 	/**
 	 * @return
@@ -385,6 +390,30 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public List<DialogContextVar> getContextVarsFromDialog(Dialog dialog) {
 		return dialogcontextVarBusiness.getContextVarsFromDialog(dialog);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#executeScript(com.javaleo.systems.botmaker.ejb.pojos
+	 * .Dialog, com.javaleo.systems.botmaker.ejb.entities.Script)
+	 */
+	@Override
+	public String executeScript(Dialog dialog, Script script) throws BusinessException {
+		return scriptBusiness.executeScript(dialog, script);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade#evaluateBooleanScript(com.javaleo.systems.botmaker.ejb
+	 * .pojos.Dialog, com.javaleo.systems.botmaker.ejb.entities.Script)
+	 */
+	@Override
+	public Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException {
+		return scriptBusiness.evaluateBooleanScript(dialog, script);
 	}
 
 }

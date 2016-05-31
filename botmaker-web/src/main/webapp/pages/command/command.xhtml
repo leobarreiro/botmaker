@@ -27,7 +27,7 @@
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Process Answers" />
 				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
-					<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="@this frm:commandCrudId" render="frm:commandCrudId" />
+					<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="frm:commandCrudId" render="@form" />
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">

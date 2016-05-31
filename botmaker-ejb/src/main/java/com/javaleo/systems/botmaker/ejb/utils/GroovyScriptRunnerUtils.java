@@ -25,7 +25,7 @@ import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 
 @Named
 @Stateless
-public class GroovyScriptRunnerUtils implements Serializable {
+public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerUtils
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,6 @@ public class GroovyScriptRunnerUtils implements Serializable {
 			devUtils.configureBotAndDialog(dialog.getBotId(), dialog.getId());
 			GroovyShell shell = new GroovyShell(binding);
 			Object result = shell.evaluate(script);
-			Binding postBinding = shell.getContext();
 			return result;
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
