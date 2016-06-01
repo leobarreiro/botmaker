@@ -13,8 +13,8 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
+import org.python.icu.util.Calendar;
 
-import com.javaleo.systems.botmaker.ejb.business.ScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -24,7 +24,6 @@ import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
-import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
@@ -41,7 +40,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	@Inject
 	private UserPreferenceAction userPreferenceAction;
-	
+
 	@Inject
 	private BotMakerCredentials credentials;
 
@@ -66,6 +65,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 		startOrResumeConversation();
 		command = new Command();
 		command.setBot(bot);
+		fillPostScriptToCommand();
 		questions = new ArrayList<Question>();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
@@ -84,24 +84,28 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public String edit(Command pojo) {
 		this.command = facade.getCommandById(pojo.getId());
-		if (this.command.getPostProcess() && this.command.getPostScript() == null) {
-			Script postScript = new Script();
-			this.command.setPostScript(postScript);
-		}
+		fillPostScriptToCommand();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		debugMode(false);
 		return "/pages/command/command.jsf?faces-redirect=true";
 	}
 
+	private void fillPostScriptToCommand() {
+		if (command.getPostScript() == null) {
+			Script script = new Script();
+			script.setAuthor(credentials.getUser());
+			script.setCreated(Calendar.getInstance().getTime());
+			script.setEnabled(true);
+			command.setPostScript(script);
+		}
+	}
+
 	public String detail(Command pojo) {
 		startOrResumeConversation();
 		// TODO: recuperar command e questions da base novamente, para carregar dados atualizados.
 		this.command = facade.getCommandById(pojo.getId());
-		if (this.command.getPostScript() == null) {
-			Script postScript = new Script();
-			this.command.setPostScript(postScript);
-		}
+		fillPostScriptToCommand();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		debugMode(false);
@@ -136,12 +140,13 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			Dialog dialog = new Dialog();
 			dialog.setBotId(command.getBot().getId());
 			dialog.setId(0);
+			dialog.setContextVars(mapVars);
 			// debugContent = (String) groovyScriptRunner.testScript(dialog, command.getPostScript().getCode(),
 			// mapVars);
-			debugContent = (String) facade.executeScript(dialog, command.getPostScript());
+			debugContent = facade.executeScript(dialog, command.getPostScript());
 			command.getPostScript().setValid(true);
 		} catch (Exception e) {
-			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+			debugContent = e.getMessage();
 			command.getPostScript().setValid(false);
 		}
 	}
@@ -164,13 +169,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	}
 
 	public void enablePostScript() {
-		if (command.getPostProcess() && command.getPostScript() == null) {
-			Script script = new Script();
-			script.setAuthor(credentials.getUser());
-			script.setEnabled(true);
-			script.setValid(true);
-			command.setPostScript(new Script());
-		}
+		fillPostScriptToCommand();
 	}
 
 	@Override
