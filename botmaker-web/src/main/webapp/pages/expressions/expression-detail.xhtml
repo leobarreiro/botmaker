@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
+	<ui:define name="content">
+
+		<h2 class="pc50">BlackList Expression Detail</h2>
+
+		<rich:panel styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Script Type" />
+				<h:outputText styleClass="txt" value="#{blackListExpressionAction.expression.scriptType.descriptor}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Regexp" styleClass="txtop" />
+				<h:outputText styleClass="txt" value="#{(blackListExpressionAction.expression.regexp) ? 'Yes' : 'No'}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Content" />
+				<h:outputText styleClass="txt" value="#{blackListExpressionAction.expression.content}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{blackListExpressionAction.list()}" value="Go to List" styleClass="secondary" />
+				<h:commandButton action="#{blackListExpressionAction.edit(blackListExpressionAction.expression)}" value="Edit" styleClass="primary" />
+			</h:panelGroup>
+		</rich:panel>
+
+	</ui:define>
+</ui:composition>

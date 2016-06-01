@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc50">BlackList Expression</h2>
+
+		<rich:panel styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Script Type" />
+				<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true">
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Regexp" styleClass="txtop" />
+				<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}">
+					<f:selectItem itemValue="#{false}" itemLabel="No" />
+					<f:selectItem itemValue="#{true}" itemLabel="Yes" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Content" />
+				<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="60" rows="2" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" value="Cancel" styleClass="secondary" />
+				<h:commandButton action="#{blackListExpressionAction.save()}" value="Save" styleClass="primary" />
+			</h:panelGroup>
+		</rich:panel>
+
+		<rich:panel id="testExpressionId" styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Script to Test" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="scriptCode" value="#{blackListExpressionAction.exampleCode}" cols="60" rows="6" immediate="true" />
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton actionListener="#{blackListExpressionAction.clear()}" value="Clear Output" styleClass="secondary">
+					<f:ajax event="click" execute="@this" render="frm:testExpressionId" />
+				</h:commandButton>
+				<h:commandButton actionListener="#{blackListExpressionAction.testExpression()}" value="Test" styleClass="primary">
+					<f:ajax event="click" execute="frm:testExpressionId" render="frm:testExpressionId" />
+				</h:commandButton>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Output validation" />
+				<h:outputText value="#{blackListExpressionAction.debugContent}" />
+			</h:panelGroup>
+		</rich:panel>
+
+		<script type="text/javascript">
+			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    indentWithTabs: true,
+			    lineNumbers: true, 
+			    lineWrapping: true  
+			});
+			scriptEditor.setSize('94%', 120);
+		</script>
+
+	</ui:define>
+</ui:composition>

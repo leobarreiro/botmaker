@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.javaleo.systems.botmaker.ejb.entities.BlackListExpression;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
@@ -13,6 +14,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -237,5 +239,11 @@ public interface IBotMakerFacade extends Serializable {
 	 *      com.javaleo.systems.botmaker.ejb.entities.Script)
 	 */
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
+
+	void saveBlackListExpression(BlackListExpression expression) throws BusinessException;
+
+	List<BlackListExpression> listBlackListExpressionByScriptType(ScriptType scriptType);
+
+	void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException;
 
 }

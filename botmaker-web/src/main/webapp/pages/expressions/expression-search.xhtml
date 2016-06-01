@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc50">BlackList Expressions</h2>
+
+		<rich:panel legend="Filter" styleClass="frm-crud pc50">
+			<h:panelGrid columns="5" styleClass="pc100">
+				<h:outputText styleClass="txt" value="Script Type" />
+				<h:selectOneMenu value="#{blackListExpressionAction.scriptType}">
+					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
+				</h:selectOneMenu>
+				<h:commandButton action="#{blackListExpressionAction.list()}" value="List" update="expressionListId" styleClass="primary" />
+			</h:panelGrid>
+		</rich:panel>
+		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+			<rich:dataTable id="expressionListId" value="#{blackListExpressionAction.expressionList}" var="expr" rows="10" styleClass="pc100">
+				<rich:column sortBy="#{expr.scriptType}" styleClass="txlft pc20">
+					<f:facet name="header">Script Type</f:facet>
+					<h:commandLink action="#{blackListExpressionAction.detail(expr)}" value="#{expr.scriptType}" styleClass="tx11" />
+				</rich:column>
+				<rich:column sortBy="#{expr.regexp}" styleClass="txlft pc15">
+					<f:facet name="header">Regexp</f:facet>
+					<h:outputText value="#{(expr.regexp) ? 'Yes' : 'No'}" styleClass="#{(expr.regexp) ? 'green' : 'gray'}" />
+				</rich:column>
+				<rich:column sortBy="#{expr.content}">
+					<f:facet name="header">Content</f:facet>
+					<h:commandLink action="#{blackListExpressionAction.detail(expr)}" value="#{expr.content}" styleClass="tx11" />
+				</rich:column>
+				<f:facet name="footer">
+					<rich:dataScroller fastStep="3" />
+				</f:facet>
+			</rich:dataTable>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

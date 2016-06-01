@@ -32,6 +32,13 @@
 					<rich:toolbar rendered="#{botMakerAuthenticator.authenticated}" styleClass="menubar">
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
+								<h:outputText value="Expressions" />
+							</f:facet>
+							<rich:menuItem label="New Expression" action="#{blackListExpressionAction.startNew()}" immediate="true" execute="@this" />
+							<rich:menuItem label="List Expressions" action="#{blackListExpressionAction.list()}" immediate="true" execute="@this" />
+						</rich:dropDownMenu>
+						<rich:dropDownMenu mode="ajax">
+							<f:facet name="label">
 								<h:outputText value="Validators" />
 							</f:facet>
 							<rich:menuItem label="New validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
