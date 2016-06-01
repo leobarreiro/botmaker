@@ -34,33 +34,9 @@ public class BlackListExpressionBusiness implements IBlackListExpressionBusiness
 
 	@Override
 	public List<BlackListExpression> listBlackListExpressionByScriptType(ScriptType scriptType) {
-
-		// GROOVY
-		// System.exit
-		// System.exec
-		// Runtime.getRuntime().exec
-		// System.getenv()
-		// System.getenv
-		// println
-
-		// PYTHON
-		// import os
-		// import sys
-		// open(
-		// file(
-		// import threading
-		// __import__('threading')
-		// os.environ.get
-		// eval(
-		// exec(
-
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<BlackListExpression> query = cb.createQuery(BlackListExpression.class);
 		Root<BlackListExpression> from = query.from(BlackListExpression.class);
-		// List<Predicate> predicates = new ArrayList<Predicate>();
-		// Expression<String> path = from.get("name");
-		// predicates.add(cb.like(path, "%" + filter.getName() + "%"));
-		// query.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
 		query.where(cb.equal(from.get("scriptType"), scriptType));
 		return persistence.getResultList(query);
 	}
