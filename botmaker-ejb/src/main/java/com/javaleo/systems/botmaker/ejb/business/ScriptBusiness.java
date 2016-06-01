@@ -24,46 +24,33 @@ public class ScriptBusiness implements IScriptBusiness {
 	private Logger LOG;
 
 	@Inject
+	private IBlackListExpressionBusiness blackListBusiness;
+
+	@Inject
 	private GroovyScriptRunnerUtils groovyRunner;
 
 	@Inject
 	private PythonScriptRunnerUtils pythonRunner;
 
 	@Override
-	public boolean isReadyToExecution(Script script) {
-		return (script != null && StringUtils.isNotEmpty(script.getCode()));
-	}
-
-	@Override
-	public boolean isValidScript(Script script) {
-		try {
-			if (script.getScriptType().equals(ScriptType.GROOVY)) {
-				groovyRunner.validateScript(script.getCode());
-			} else { // ScriptType.PYTHON
-				pythonRunner.validateScript(script.getCode());
-			}
-			return true;
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-			return false;
+	public boolean isValidScript(Script script) throws BusinessException {
+		if (StringUtils.isBlank(script.getCode())) {
+			throw new BusinessException("Script code is empty.");
 		}
+		if (script.getScriptType() == null) {
+			throw new BusinessException("Script type is null.");
+		}
+		blackListBusiness.testScriptAgainstBlackListExpression(script.getCode(), script.getScriptType());
+		return true;
 	}
 
 	@Override
 	public String executeScript(Dialog dialog, Script script) throws BusinessException {
-		if (script == null) {
-			throw new BusinessException(MessageFormat.format("Trying to execute an empty script [Bot:{0}|Command:{1}]", dialog.getBotId().toString(), dialog.getLastCommand().getId().toString()));
-		}
-		if (!isReadyToExecution(script)) {
-			throw new BusinessException(MessageFormat.format("Script is not ready to execution [Id:{0}|Valid:{1}|Enabled:{2}|Author:{3}]", script.getId(), script.getValid(), script.getEnabled(),
-					script.getAuthor()));
-		}
+		isValidScript(script);
 		String result = "";
 		if (script.getScriptType().equals(ScriptType.GROOVY)) {
-			// groovyRunner.validateScript(script.getCode());
 			result = (String) groovyRunner.evaluateScript(dialog, script.getCode());
 		} else { // ScriptType.PYTHON
-			// pythonRunner.validateScript(script.getCode());
 			result = (String) pythonRunner.evaluateScript(dialog, script.getCode());
 		}
 		return result;
@@ -71,10 +58,7 @@ public class ScriptBusiness implements IScriptBusiness {
 
 	@Override
 	public Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException {
-		if (!isReadyToExecution(script)) {
-			throw new BusinessException(MessageFormat.format("Script is not ready to execution [Id:{0}|Valid:{1}|Enabled:{2}|Author:{3}]", script.getId(), script.getValid(), script.getEnabled(),
-					script.getAuthor().getId()));
-		}
+		isValidScript(script);
 		Boolean result = false;
 		if (script.getScriptType().equals(ScriptType.GROOVY)) {
 			result = (Boolean) groovyRunner.evaluateScript(dialog, script.getCode());

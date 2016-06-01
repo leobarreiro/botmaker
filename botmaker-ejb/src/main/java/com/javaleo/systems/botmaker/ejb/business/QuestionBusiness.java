@@ -189,10 +189,6 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) throws BusinessException {
-		if (!scriptBiz.isReadyToExecution(question.getPostScript())) {
-			throw new BusinessException(
-					MessageFormat.format("Trying to execute a Post Script not ready [Bot:{0}|Command:{1}|Question:{2}]", question.getCommand().getBot().getId().toString(), question.getCommand().getId().toString(), question.getId().toString()));
-		}
 		if (!scriptBiz.isValidScript(question.getPostScript())) {
 			throw new BusinessException(
 					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", question.getCommand().getBot().getId().toString(), question.getCommand().getId().toString(), question.getId().toString()));

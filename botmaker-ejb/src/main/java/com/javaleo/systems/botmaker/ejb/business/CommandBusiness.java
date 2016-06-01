@@ -148,16 +148,10 @@ public class CommandBusiness implements ICommandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void postProcessCommand(Dialog dialog, Command command) throws BusinessException {
-		if (!scriptBiz.isReadyToExecution(command.getPostScript())) {
-			throw new BusinessException(
-					MessageFormat.format("Trying to execute a Post Script not ready [Bot:{0}|Command:{1}]", command.getBot().getId().toString(), command.getId().toString()));
-		}
-		
 		if (!scriptBiz.isValidScript(command.getPostScript())) {
 			throw new BusinessException(
 					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", command.getBot().getId().toString(), command.getId().toString()));
 		}
-		
 		String postProcessed = scriptBiz.executeScript(dialog, command.getPostScript());
 		dialog.setPostProcessedResult(postProcessed);
 	}

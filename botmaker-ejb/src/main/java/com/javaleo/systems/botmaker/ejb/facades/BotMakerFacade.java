@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.javaleo.systems.botmaker.ejb.business.IBlackListExpressionBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
@@ -15,6 +16,7 @@ import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
+import com.javaleo.systems.botmaker.ejb.entities.BlackListExpression;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
@@ -23,6 +25,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
@@ -62,6 +65,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Inject
 	private IScriptBusiness scriptBusiness;
 
+	@Inject
+	private IBlackListExpressionBusiness blackListExpressionBusiness;
+	
 	/**
 	 * @return
 	 * @see com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness#listAllCompanies()
@@ -416,4 +422,18 @@ public class BotMakerFacade implements IBotMakerFacade {
 		return scriptBusiness.evaluateBooleanScript(dialog, script);
 	}
 
+	public void saveBlackListExpression(BlackListExpression expression) throws BusinessException {
+		blackListExpressionBusiness.saveBlackListExpression(expression);
+	}
+
+	public List<BlackListExpression> listBlackListExpressionByScriptType(ScriptType scriptType) {
+		return blackListExpressionBusiness.listBlackListExpressionByScriptType(scriptType);
+	}
+
+	public void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException {
+		blackListExpressionBusiness.testScriptAgainstBlackListExpression(scriptCode, scriptType);
+	}
+
+	
+	
 }
