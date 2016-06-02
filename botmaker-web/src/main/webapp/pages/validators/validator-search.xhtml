@@ -6,7 +6,7 @@
 		<h2>Search Validators</h2>
 
 		<rich:panel legend="Filter" styleClass="frm-crud">
-			<h:panelGrid columns="5" styleClass="pc100">
+			<h:panelGrid columns="6" styleClass="pc100">
 				<h:outputText styleClass="txt" value="Name" />
 				<h:inputText value="#{validatorAction.filter.name}" />
 				<h:outputText styleClass="txt" value="Type" />
@@ -15,6 +15,7 @@
 					<f:selectItems value="#{validatorAction.filter.validatorTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
 				<h:commandButton action="#{validatorAction.list()}" value="Search" update="snippetsId" styleClass="primary" />
+				<h:commandButton action="#{validatorAction.startNew()}" value="New validator" immediate="true" styleClass="secondary" />
 			</h:panelGrid>
 		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">

@@ -147,7 +147,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 
 @media ( min-width : 800px) {
 	body {
-		font-size: 11pt;
+		font-size: 10pt;
 	}
 	table tr td label {
 		margin-right: 12px !important;
@@ -168,7 +168,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		font-size: 30pt;
 	}
 	.topmenu {
-		width: 70% !important;
+		width: 50% !important;
 		height: 30px;
 		padding-top: 20px;
 	}
@@ -179,7 +179,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		width: auto !important;
 	}
 	h1, h2, h3, h4, h5, h6 {
-		width: 70%;
+		width: 50%;
 	}
 	h1 {
 		font-size: 28pt;
@@ -192,6 +192,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		font-size: 16pt;
 	}
 	h4 {
+		margin-top: 14px;
 		font-size: 12pt;
 	}
 	h5 {
@@ -224,7 +225,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		padding: 12px 6px 12px 6px !important;
 	}
 	.frm-crud {
-		width: 70% !important;
+		width: 50% !important;
 		margin-top: 6px !important;
 		padding: 0px !important;
 		border: 1px solid #DFA5A5 !important;
@@ -538,6 +539,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 	}
 	div.CodeMirror {
 		margin: auto !important;
+		font-size: 9pt !important;
 	}
 	.markdown {
 		color: green !important;
@@ -575,6 +577,21 @@ span.primary, a.primary, a.secondary, span.secondary {
 		padding: 6px !important;
 		margin: 4px !important;
 	}
+	.output-console {
+		border: 1px solid gray !important;
+		background-color: #ffffff !important;
+		color: #000000 !important;
+		font-size: 9pt !important;
+		overflow: auto;
+		white-space: wrap;
+		min-height: 20px !important;
+		word-break : default;
+		padding: 6px !important;
+		margin: 4px !important;
+		white-space: pre-wrap;
+		word-break: default;
+		word-break: default;
+	}
 	.rf-tb {
 		background-color: transparent !important;
 		background-image: none !important;
@@ -582,14 +599,13 @@ span.primary, a.primary, a.secondary, span.secondary {
 }
 
 @media ( max-width : 480px) {
-body {
-	background-color: green !important;
-}
-
-.frm-crud {
-	width: 100% !important;
-	margin-top: 6px !important;
-	padding: 0px !important;
-	border: 1px solid #DFA5A5 !important;
-}
+	body {
+		background-color: green !important;
+	}
+	.frm-crud {
+		width: 100% !important;
+		margin-top: 6px !important;
+		padding: 0px !important;
+		border: 1px solid #DFA5A5 !important;
+	}
 }

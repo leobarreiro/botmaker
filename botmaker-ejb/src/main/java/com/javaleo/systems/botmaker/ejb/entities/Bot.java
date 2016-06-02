@@ -33,6 +33,7 @@ public class Bot implements IEntityBasic {
 
 	private Long id;
 	private String name;
+	private String username;
 	private String token;
 	private BotType botType;
 	private Boolean active;
@@ -67,6 +68,15 @@ public class Bot implements IEntityBasic {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "username", length = 60, nullable = true)
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Column(name = "token")
@@ -193,6 +203,11 @@ public class Bot implements IEntityBasic {
 	@Transient
 	public String getMaskedToken() {
 		return StringUtils.overlay(token, "********************", 6, 40);
+	}
+	
+	@Transient
+	public String getUrlTelegramBot() {
+		return (StringUtils.isNotBlank(username)) ? "https://telegram.me/".concat(username) : "";
 	}
 
 	@Override

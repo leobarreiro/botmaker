@@ -30,19 +30,19 @@
 			<h:panelGroup layout="block" styleClass="head">
 				<h:panelGroup layout="block" styleClass="topmenu">
 					<rich:toolbar rendered="#{botMakerAuthenticator.authenticated}" styleClass="menubar">
-						<rich:dropDownMenu mode="ajax">
+						<rich:dropDownMenu mode="ajax" rendered="#{botMakerCredentials.user.admin}">
 							<f:facet name="label">
 								<h:outputText value="Expressions" />
 							</f:facet>
-							<rich:menuItem label="New Expression" action="#{blackListExpressionAction.startNew()}" immediate="true" execute="@this" />
 							<rich:menuItem label="List Expressions" action="#{blackListExpressionAction.list()}" immediate="true" execute="@this" />
+							<rich:menuItem label="New Expression" action="#{blackListExpressionAction.startNew()}" immediate="true" execute="@this" />
 						</rich:dropDownMenu>
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
 								<h:outputText value="Validators" />
 							</f:facet>
-							<rich:menuItem label="New validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
-							<rich:menuItem label="Search validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
+							<rich:menuItem label="List Validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
+							<rich:menuItem label="New Validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
 						</rich:dropDownMenu>
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
@@ -54,8 +54,8 @@
 								</rich:column>
 							</rich:dataGrid>
 							<rich:menuSeparator />
-							<rich:menuItem label="Search bots" action="#{botAction.list()}" immediate="true" />
-							<rich:menuItem label="New bot" action="#{botAction.startNew()}" immediate="true" />
+							<rich:menuItem label="List Bots" action="#{botAction.list()}" immediate="true" />
+							<rich:menuItem label="New Bot" action="#{botAction.startNew()}" immediate="true" />
 						</rich:dropDownMenu>
 					</rich:toolbar>
 					<rich:toolbar styleClass="userbar">

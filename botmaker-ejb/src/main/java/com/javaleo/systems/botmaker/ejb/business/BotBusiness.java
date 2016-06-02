@@ -67,6 +67,7 @@ public class BotBusiness implements IBotBusiness {
 			User user = response.getUser();
 			bot.setBotType(BotType.TELEGRAM);
 			bot.setName(user.getFirstName());
+			bot.setUsername(user.getUsername());
 			bot.setToken(token);
 			bot.setValid(true);
 		} catch (BotGramException e) {

@@ -30,6 +30,9 @@ public class BlackListExpressionAction implements Serializable {
 	private IBotMakerFacade facade;
 
 	@Inject
+	private UserPreferenceAction preferenceAction;
+	
+	@Inject
 	private MsgAction msgAction;
 
 	private BlackListExpression expression;
@@ -43,6 +46,8 @@ public class BlackListExpressionAction implements Serializable {
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}
+		expression = new BlackListExpression();
+		expression.setScriptType(scriptType);
 		return PAGE_EDIT;
 	}
 
@@ -81,8 +86,21 @@ public class BlackListExpressionAction implements Serializable {
 	public void testExpression() {
 		try {
 			facade.testScriptAgainstBlackListExpression(exampleCode, scriptType);
+			debugContent = "Ok! Approved.";
 		} catch (BusinessException e) {
 			debugContent = e.getMessage();
+		}
+	}
+	
+	public String dropExpression() {
+		try {
+			this.scriptType = expression.getScriptType();
+			facade.dropBlackListExpression(expression);
+			msgAction.addInfoMessage("Expression droped");
+			return list();
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+			return PAGE_DETAIL;
 		}
 	}
 	
@@ -91,6 +109,7 @@ public class BlackListExpressionAction implements Serializable {
 	}
 
 	private void loadOptions() {
+		preferenceAction.loadPreferences();
 		if (scriptType == null) {
 			scriptType = ScriptType.PYTHON;
 		}

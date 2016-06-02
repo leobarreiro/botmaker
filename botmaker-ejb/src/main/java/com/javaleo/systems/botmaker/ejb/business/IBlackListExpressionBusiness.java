@@ -18,4 +18,6 @@ public interface IBlackListExpressionBusiness extends Serializable {
 
 	void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException;
 
+	void dropBlackListExpression(BlackListExpression expression) throws BusinessException;
+
 }

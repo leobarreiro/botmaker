@@ -3,7 +3,7 @@
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Bot registry</h2>
+		<h2>New Bot</h2>
 
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
@@ -20,6 +20,7 @@
 				<h:inputSecret value="#{botAction.token}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{botAction.list()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />
 			</h:panelGroup>
 		</h:panelGroup>

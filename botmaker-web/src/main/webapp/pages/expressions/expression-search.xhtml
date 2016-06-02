@@ -3,20 +3,21 @@
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc50">BlackList Expressions</h2>
+		<h2>BlackList Expressions</h2>
 
-		<rich:panel legend="Filter" styleClass="frm-crud pc50">
-			<h:panelGrid columns="5" styleClass="pc100">
+		<rich:panel legend="Filter" styleClass="frm-crud">
+			<h:panelGrid columns="4" styleClass="pc100">
 				<h:outputText styleClass="txt" value="Script Type" />
 				<h:selectOneMenu value="#{blackListExpressionAction.scriptType}">
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
 				</h:selectOneMenu>
 				<h:commandButton action="#{blackListExpressionAction.list()}" value="List" update="expressionListId" styleClass="primary" />
+				<h:commandButton action="#{blackListExpressionAction.startNew()}" value="New Expression" styleClass="secondary" immediate="true" />
 			</h:panelGrid>
 		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud pc50">
-			<rich:dataTable id="expressionListId" value="#{blackListExpressionAction.expressionList}" var="expr" rows="10" styleClass="pc100">
+		<h:panelGroup layout="block" styleClass="frm-crud">
+			<rich:dataTable id="expressionListId" value="#{blackListExpressionAction.expressionList}" var="expr" rows="5" styleClass="pc100">
 				<rich:column sortBy="#{expr.scriptType}" styleClass="txlft pc20">
 					<f:facet name="header">Script Type</f:facet>
 					<h:commandLink action="#{blackListExpressionAction.detail(expr)}" value="#{expr.scriptType}" styleClass="tx11" />
@@ -34,5 +35,42 @@
 				</f:facet>
 			</rich:dataTable>
 		</h:panelGroup>
+
+		<h4>Test script</h4>
+
+		<rich:panel id="testExpressionId" styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Script to Test" />
+				<h:panelGroup layout="block" styleClass="scripting">
+					<h:inputTextarea id="scriptCode" value="#{blackListExpressionAction.exampleCode}" cols="60" rows="6" immediate="true" styleClass=" tx9" />
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton value="Clear Output" styleClass="secondary">
+					<f:ajax event="click" execute="@this" listener="#{blackListExpressionAction.clear()}" render="frm:outputValidationId" />
+				</h:commandButton>
+				<h:commandButton value="Test" styleClass="primary">
+					<f:ajax event="click" listener="#{blackListExpressionAction.testExpression()}" onevent="scriptEditor.save()" execute="frm:testExpressionId" render="frm:outputValidationId" />
+				</h:commandButton>
+			</h:panelGroup>
+			<h:panelGroup id="outputValidationId" layout="block" styleClass="frm-line">
+				<h:outputLabel value="Output validation" />
+				<h:panelGroup>
+					<pre class="output-console">#{blackListExpressionAction.debugContent}</pre>
+				</h:panelGroup>
+			</h:panelGroup>
+		</rich:panel>
+
+		<script type="text/javascript">
+			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+			    mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    indentWithTabs: true,
+			    lineNumbers: true, 
+			    lineWrapping: true  
+			});
+			scriptEditor.setSize('100%', 140);
+		</script>
+
 	</ui:define>
 </ui:composition>

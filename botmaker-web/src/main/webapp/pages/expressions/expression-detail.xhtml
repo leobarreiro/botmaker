@@ -3,9 +3,9 @@
 	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
-		<h2 class="pc50">BlackList Expression Detail</h2>
+		<h2>BlackList Expression Detail</h2>
 
-		<rich:panel styleClass="frm-crud pc50">
+		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
 				<h:outputText styleClass="txt" value="#{blackListExpressionAction.expression.scriptType.descriptor}" />
@@ -20,9 +20,18 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{blackListExpressionAction.list()}" value="Go to List" styleClass="secondary" />
+				<h:commandButton value="Drop Expression" styleClass="secondary">
+					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
+				</h:commandButton>
 				<h:commandButton action="#{blackListExpressionAction.edit(blackListExpressionAction.expression)}" value="Edit" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
+
+		<ui:param name="confirmTitle" value="Drop Expression" />
+		<ui:param name="confirmDescription" value="Are you sure to delete this expression? You can't undo this action." />
+		<ui:param name="confirmBean" value="#{blackListExpressionAction}" />
+		<ui:param name="confirmMethod" value="dropExpression" />
+		<ui:include src="/pages/utils/confirm-action.xhtml" />
 
 	</ui:define>
 </ui:composition>

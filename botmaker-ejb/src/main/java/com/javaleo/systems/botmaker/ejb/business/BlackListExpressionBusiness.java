@@ -6,6 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,12 +29,14 @@ public class BlackListExpressionBusiness implements IBlackListExpressionBusiness
 	private IPersistenceBasic<BlackListExpression> persistence;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveBlackListExpression(BlackListExpression expression) throws BusinessException {
 		testBlackListExpressionIntegrity(expression);
 		persistence.saveOrUpdate(expression);
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<BlackListExpression> listBlackListExpressionByScriptType(ScriptType scriptType) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<BlackListExpression> query = cb.createQuery(BlackListExpression.class);
@@ -42,6 +46,7 @@ public class BlackListExpressionBusiness implements IBlackListExpressionBusiness
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException {
 		if (StringUtils.isBlank(scriptCode)) {
 			throw new BusinessException("Script Code is empty or null.");
@@ -74,6 +79,13 @@ public class BlackListExpressionBusiness implements IBlackListExpressionBusiness
 			str.append("\nPlease, remove this expressions before save this script.");
 			throw new BusinessException(str.toString());
 		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void dropBlackListExpression(BlackListExpression expression) throws BusinessException {
+		BlackListExpression expressionDelete = persistence.find(BlackListExpression.class, expression.getId());
+		persistence.remove(expressionDelete);
 	}
 
 	private void testBlackListExpressionIntegrity(BlackListExpression expression) throws BusinessException {
