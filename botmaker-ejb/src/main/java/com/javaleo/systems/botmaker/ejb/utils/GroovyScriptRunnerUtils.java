@@ -39,10 +39,10 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
-	public Object testScript(Dialog dialog, String script, Map<String, String> contextVars) throws BusinessException {
+	public Object testScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
-			Binding binding = mountBinding(contextVars);
+			Binding binding = mountBinding(dialog.getContextVars());
 			devUtils.configureBotAndDialog(dialog.getBotId(), dialog.getId());
 			GroovyShell shell = new GroovyShell(binding);
 			Object result = shell.evaluate(script);

@@ -141,10 +141,9 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			dialog.setBotId(command.getBot().getId());
 			dialog.setId(0);
 			dialog.setContextVars(mapVars);
-			// debugContent = (String) groovyScriptRunner.testScript(dialog, command.getPostScript().getCode(),
-			// mapVars);
-			debugContent = facade.executeScript(dialog, command.getPostScript());
-			command.getPostScript().setValid(true);
+			debugContent = facade.debugScript(dialog, command.getPostScript());
+			boolean valid = facade.isValidScript(command.getPostScript());
+			command.getPostScript().setValid(valid);
 		} catch (Exception e) {
 			debugContent = e.getMessage();
 			command.getPostScript().setValid(false);

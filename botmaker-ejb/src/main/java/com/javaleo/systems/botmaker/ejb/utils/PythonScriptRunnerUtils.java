@@ -37,16 +37,16 @@ public class PythonScriptRunnerUtils implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
-	public Object testScript(Dialog dialog, String script, Map<String, String> contextVars) throws BusinessException {
+	public Object testScript(Dialog dialog, String script) throws BusinessException {
 		blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.PYTHON);
 		try {
 			PythonInterpreter py = new PythonInterpreter();
-			mountBinding(py, contextVars);
+			mountBinding(py, dialog.getContextVars());
 			PyObject result = py.eval(script);
 			return result;
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			LOG.error(e.getMessage());
-			return new String(e.getMessage());
+			return new String(e.toString());
 		}
 	}
 
@@ -60,13 +60,12 @@ public class PythonScriptRunnerUtils implements Serializable {
 			Map<String, String> contextVars = dialog.getContextVars();
 			mountBinding(py, contextVars);
 			py.exec(script);
-			PyObject result = py.get("result");
+			PyObject result = py.get("response");
 			py.cleanup();
 			// TODO: popular contextvars do Dialog apos execucao do script python.
 			return result.toString();
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
-			// e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}

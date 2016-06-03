@@ -82,6 +82,10 @@ public interface IBotMakerFacade extends Serializable {
 
 	List<DialogContextVar> getContextVarsFromDialog(Dialog dialog);
 
+	boolean isValidScript(Script script) throws BusinessException;
+
+	String debugScript(Dialog dialog, Script script);
+
 	String executeScript(Dialog dialog, Script script) throws BusinessException;
 
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
@@ -93,5 +97,7 @@ public interface IBotMakerFacade extends Serializable {
 	void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException;
 
 	void dropBlackListExpression(BlackListExpression expression) throws BusinessException;
+
+
 
 }

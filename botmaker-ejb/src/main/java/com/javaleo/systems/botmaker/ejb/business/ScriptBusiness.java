@@ -1,7 +1,5 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
-import java.text.MessageFormat;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -54,6 +52,22 @@ public class ScriptBusiness implements IScriptBusiness {
 			result = (String) pythonRunner.evaluateScript(dialog, script.getCode());
 		}
 		return result;
+	}
+
+	@Override
+	public String debugScript(Dialog dialog, Script script) {
+		try {
+			isValidScript(script);
+			String result = "";
+			if (script.getScriptType().equals(ScriptType.GROOVY)) {
+				result = (String) groovyRunner.testScript(dialog, script.getCode());
+			} else { // ScriptType.PYTHON
+				result = (String) pythonRunner.testScript(dialog, script.getCode());
+			}
+			return result;
+		} catch (Throwable e) {
+			return e.getMessage();
+		}
 	}
 
 	@Override

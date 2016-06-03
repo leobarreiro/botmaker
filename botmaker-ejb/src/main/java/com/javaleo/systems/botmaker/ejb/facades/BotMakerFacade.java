@@ -218,6 +218,16 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
+	public boolean isValidScript(Script script) throws BusinessException {
+		return scriptBusiness.isValidScript(script);
+	}
+
+	@Override
+	public String debugScript(Dialog dialog, Script script) {
+		return scriptBusiness.debugScript(dialog, script);
+	}
+
+	@Override
 	public String executeScript(Dialog dialog, Script script) throws BusinessException {
 		return scriptBusiness.executeScript(dialog, script);
 	}

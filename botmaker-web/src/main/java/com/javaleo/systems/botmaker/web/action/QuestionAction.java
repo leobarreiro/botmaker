@@ -130,7 +130,7 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 			Dialog dialog = new Dialog();
 			dialog.setBotId(question.getCommand().getBot().getId());
 			dialog.setId(0);
-			debugContent = (String) groovyScriptRunner.testScript(dialog, question.getPostScript().getCode(), mapVars);
+			debugContent = (String) groovyScriptRunner.testScript(dialog, question.getPostScript().getCode());
 		} catch (Exception e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
