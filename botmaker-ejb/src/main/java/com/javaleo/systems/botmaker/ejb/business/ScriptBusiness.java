@@ -2,6 +2,7 @@ package com.javaleo.systems.botmaker.ejb.business;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
 import com.javaleo.systems.botmaker.ejb.utils.PythonScriptRunnerUtils;
 
+@Named
 @Stateless
 public class ScriptBusiness implements IScriptBusiness {
 

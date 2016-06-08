@@ -264,9 +264,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 			if (dialog.getLastQuestion() != null) {
 				if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
 					List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
-					sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), dialog.getLastQuestion().getPostScript().getParseMode(), options);
+					sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN, options);
 				} else {
-					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.HTML);
+					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN);
 				}
 			}
 		} catch (Exception e) {
