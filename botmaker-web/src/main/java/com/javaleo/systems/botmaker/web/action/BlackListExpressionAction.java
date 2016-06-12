@@ -31,7 +31,7 @@ public class BlackListExpressionAction implements Serializable {
 
 	@Inject
 	private UserPreferenceAction preferenceAction;
-	
+
 	@Inject
 	private MsgAction msgAction;
 
@@ -91,7 +91,7 @@ public class BlackListExpressionAction implements Serializable {
 			debugContent = e.getMessage();
 		}
 	}
-	
+
 	public String dropExpression() {
 		try {
 			this.scriptType = expression.getScriptType();
@@ -103,7 +103,7 @@ public class BlackListExpressionAction implements Serializable {
 			return PAGE_DETAIL;
 		}
 	}
-	
+
 	public void clear() {
 		debugContent = "";
 	}
@@ -111,7 +111,7 @@ public class BlackListExpressionAction implements Serializable {
 	private void loadOptions() {
 		preferenceAction.loadPreferences();
 		if (scriptType == null) {
-			scriptType = ScriptType.PYTHON;
+			scriptType = ScriptType.GROOVY;
 		}
 	}
 

@@ -21,14 +21,14 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Content" />
-				<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="60" rows="2" />
+				<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" immediate="true" value="Cancel" styleClass="secondary"
-					rendered="#{blackListExpressionAction.expression ne null}">
+					rendered="#{blackListExpressionAction.expression.id ne null}">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
-				<h:commandButton action="#{blackListExpressionAction.list()}" value="Cancel" styleClass="secondary" rendered="#{blackListExpressionAction.expression eq null}">
+				<h:commandButton action="#{blackListExpressionAction.list()}" value="Cancel" styleClass="secondary" rendered="#{blackListExpressionAction.expression.id eq null}">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
 				<h:commandButton action="#{blackListExpressionAction.save()}" value="Save" styleClass="primary" />

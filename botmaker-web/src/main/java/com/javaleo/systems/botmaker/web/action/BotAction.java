@@ -90,7 +90,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		}
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
-	
+
 	public String reactivateBot() {
 		try {
 			facade.reactivateBot(bot);
@@ -131,6 +131,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			bot.setName(validBot.getName());
 			bot.setToken(validBot.getToken());
 			bot.setBotType(validBot.getBotType());
+			bot.setUsername(validBot.getUsername());
 			bot.setValid(validBot.getValid());
 		} catch (BusinessException e) {
 			bot.setName("Bot token is not valid");
