@@ -598,6 +598,12 @@ span.primary, a.primary, a.secondary, span.secondary {
 		background-color: transparent !important;
 		background-image: none !important;
 	}
+	.link-destac {
+		margin: 16px 0px 16px 0px !important;
+		font-size: 14pt !important;
+		font-weight: bold !important;
+	}
+	
 }
 
 @media ( max-width : 480px) {

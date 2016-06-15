@@ -62,6 +62,7 @@ public class UserAction implements Serializable {
 	public String logoff() {
 		try {
 			authenticator.logoff();
+			msgAction.addMessage(MessageType.INFO, "Log out performed.");
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}

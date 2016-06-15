@@ -31,23 +31,23 @@ public class UserBusiness implements IUserBusiness {
 	@Override
 	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
 		// name
-		Pattern namePattern = Pattern.compile("^(?=.*\\d).{4,10}$");
+		Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}[\\ ]{1}[A-Za-z]{2,}");
 		Matcher nameMatcher = namePattern.matcher(user.getName());
-
-		// username
-		Pattern usernamePattern = Pattern.compile("");
-		Matcher usernameMatcher = usernamePattern.matcher(user.getUsername());
-
-		// email
-		if (StringUtils.isBlank(user.getEmail())) {
-			throw new BusinessException("Yoy must inform a valid email.");
+		if (!nameMatcher.matches()) {
+			throw new BusinessException("Your name not contains first and last name. Please review and try again.");
 		}
-		Pattern mailPattern = Pattern.compile("	^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$");
+		// username
+		Pattern usernamePattern = Pattern.compile("^[A-Za-z0-9]{6,12}$");
+		Matcher usernameMatcher = usernamePattern.matcher(user.getUsername());
+		if (!usernameMatcher.matches()) {
+			throw new BusinessException("The username must be between 6 and 12 digits long. He should contains letters and numbers only.");
+		}
+		// email
+		Pattern mailPattern = Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$");
 		Matcher mailMatcher = mailPattern.matcher(user.getEmail());
 		if (!mailMatcher.matches()) {
 			throw new BusinessException("The email entered is not valid. Please review your email.");
 		}
-
 		// password
 		Pattern passwdPattern = Pattern.compile("^(?=.*\\d).{4,10}$");
 		Matcher m = passwdPattern.matcher(password);
