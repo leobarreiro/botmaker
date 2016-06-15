@@ -44,6 +44,9 @@ public class UserAction implements Serializable {
 	private String username;
 	private String plainPassword;
 	private String passwordReview;
+	private String firstName;
+	private String emailRecovery;
+	private String emailRecoveryReview;
 
 	private Company company;
 	private User user;
@@ -96,6 +99,13 @@ public class UserAction implements Serializable {
 	}
 
 	public String forgotMyPassword() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		return "/password-recovery.jsf?faces-redirect=true";
+	}
+
+	public String recoverPasswordFromUser() {
 		return "/index.jsf?faces-redirect=true";
 	}
 
@@ -128,6 +138,30 @@ public class UserAction implements Serializable {
 
 	public void setPasswordReview(String passwordReview) {
 		this.passwordReview = passwordReview;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getEmailRecovery() {
+		return emailRecovery;
+	}
+
+	public void setEmailRecovery(String emailRecovery) {
+		this.emailRecovery = emailRecovery;
+	}
+
+	public String getEmailRecoveryReview() {
+		return emailRecoveryReview;
+	}
+
+	public void setEmailRecoveryReview(String emailRecoveryReview) {
+		this.emailRecoveryReview = emailRecoveryReview;
 	}
 
 	public Company getCompany() {

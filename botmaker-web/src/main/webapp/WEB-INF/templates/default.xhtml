@@ -26,7 +26,7 @@
 	</h:head>
 	<h:body styleClass="page">
 		<a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-		<a4j:poll action="#{userAction.logoff()}" interval="10000" execute="@this" />
+		<a4j:poll action="#{userAction.logoff()}" interval="160000" execute="@this" />
 		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
 				<h:panelGroup layout="block" styleClass="topmenu">
