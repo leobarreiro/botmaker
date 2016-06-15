@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/templates/blank.xhtml">
+	template="/WEB-INF/templates/blank_logo.xhtml">
 	<ui:define name="content">
 		<h:panelGroup layout="block" styleClass="frm-login">
-			<h:panelGroup layout="block">
-				<h:graphicImage value="/resources/img/botmaker-logo-black.png" width="200" height="200" />
-			</h:panelGroup>
 			<h:panelGroup layout="block">
 				<h:outputLabel value="Username" styleClass="txleft" />
 				<h:inputText value="#{userAction.username}" />
