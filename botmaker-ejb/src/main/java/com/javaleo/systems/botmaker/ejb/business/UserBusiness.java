@@ -1,20 +1,21 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
-import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 
@@ -28,7 +29,39 @@ public class UserBusiness implements IUserBusiness {
 	private IPersistenceBasic<User> persistence;
 
 	@Override
-	public void saveUser(User user, String password) throws BusinessException {
+	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
+		// name
+		Pattern namePattern = Pattern.compile("^(?=.*\\d).{4,10}$");
+		Matcher nameMatcher = namePattern.matcher(user.getName());
+
+		// username
+		Pattern usernamePattern = Pattern.compile("");
+		Matcher usernameMatcher = usernamePattern.matcher(user.getUsername());
+
+		// email
+		if (StringUtils.isBlank(user.getEmail())) {
+			throw new BusinessException("Yoy must inform a valid email.");
+		}
+		Pattern mailPattern = Pattern.compile("	^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$");
+		Matcher mailMatcher = mailPattern.matcher(user.getEmail());
+		if (!mailMatcher.matches()) {
+			throw new BusinessException("The email entered is not valid. Please review your email.");
+		}
+
+		// password
+		Pattern passwdPattern = Pattern.compile("^(?=.*\\d).{4,10}$");
+		Matcher m = passwdPattern.matcher(password);
+		if (!m.matches()) {
+			throw new BusinessException("Your password must be between 4 and 10 digits long and include at least one numeric digit.");
+		}
+		if (!StringUtils.equals(password, passwordReview)) {
+			throw new BusinessException("Please type your password confirmation equals to password field. Try again.");
+		}
+	}
+
+	@Override
+	public void saveUser(User user, String password, String passwordReview) throws BusinessException {
+		validateUser(user, password, passwordReview);
 		user.setPassword(DigestUtils.sha1Hex(password));
 		persistence.saveOrUpdate(user);
 	}

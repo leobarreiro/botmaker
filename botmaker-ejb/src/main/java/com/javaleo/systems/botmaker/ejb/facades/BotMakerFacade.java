@@ -113,8 +113,13 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
-	public void saveUser(User user, String password) throws BusinessException {
-		userBusiness.saveUser(user, password);
+	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
+		userBusiness.validateUser(user, password, passwordReview);
+	}
+
+	@Override
+	public void saveUser(User user, String password, String passwordReview) throws BusinessException {
+		userBusiness.saveUser(user, password, passwordReview);
 	}
 
 	@Override

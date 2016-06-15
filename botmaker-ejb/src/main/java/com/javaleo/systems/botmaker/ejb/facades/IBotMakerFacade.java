@@ -34,7 +34,9 @@ public interface IBotMakerFacade extends Serializable {
 
 	List<Bot> searchBot(BotFilter filter);
 
-	void saveUser(User user, String password) throws BusinessException;
+	void validateUser(User user, String password, String passwordReview) throws BusinessException;
+
+	void saveUser(User user, String password, String passwordReview) throws BusinessException;
 
 	User findUserByUsernameAndPassword(String username, String passphrase);
 
@@ -97,7 +99,5 @@ public interface IBotMakerFacade extends Serializable {
 	void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException;
 
 	void dropBlackListExpression(BlackListExpression expression) throws BusinessException;
-
-
 
 }

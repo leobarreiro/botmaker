@@ -2,7 +2,6 @@ package com.javaleo.systems.botmaker.ejb.standalone;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,9 +19,7 @@ import org.slf4j.Logger;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
-import com.javaleo.systems.botmaker.ejb.entities.EntityUtils;
 import com.javaleo.systems.botmaker.ejb.entities.User;
-import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 
 @Startup
@@ -33,7 +30,7 @@ public class StartupLoader implements IStartupLoader {
 
 	@Inject
 	private EntityManager entityManager;
-	
+
 	@Inject
 	private ICompanyBusiness companyBusiness;
 
@@ -65,7 +62,7 @@ public class StartupLoader implements IStartupLoader {
 					user.setAdmin(true);
 					user.setActive(true);
 					String passwd = "admin@123";
-					userBusiness.saveUser(user, passwd);
+					userBusiness.saveUser(user, passwd, passwd);
 				}
 				mountCompanyRootDirectory(company.getId());
 			} else {
@@ -73,15 +70,14 @@ public class StartupLoader implements IStartupLoader {
 					mountCompanyRootDirectory(c.getId());
 				}
 			}
-			
+
 			String jpqlAnswerType = "UPDATE botmaker.question SET answer_type = \'STRING\' WHERE answer_type IS NULL";
 			Query qrAnswerType = entityManager.createNativeQuery(jpqlAnswerType);
 			qrAnswerType.executeUpdate();
-			
+
 			String jpqlParseMode = "UPDATE botmaker.question SET parse_mode = \'HTML\' WHERE parse_mode IS NULL";
 			Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
 			qrParseMode.executeUpdate();
-			
 
 		} catch (BusinessException e) {
 			LOG.warn(e.getMessage());

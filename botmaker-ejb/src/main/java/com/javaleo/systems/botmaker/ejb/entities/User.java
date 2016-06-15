@@ -30,6 +30,7 @@ public class User implements IEntityBasic {
 	private String username;
 	private String password;
 	private String email;
+	private Integer idTelegram;
 	private Company company;
 	private Boolean admin;
 	private Boolean active;
@@ -83,6 +84,15 @@ public class User implements IEntityBasic {
 		this.email = email;
 	}
 
+	@Column(name = "telegram_id", nullable = true)
+	public Integer getIdTelegram() {
+		return idTelegram;
+	}
+
+	public void setIdTelegram(Integer idTelegram) {
+		this.idTelegram = idTelegram;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_user_company"))
 	public Company getCompany() {
@@ -129,8 +139,8 @@ public class User implements IEntityBasic {
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idTelegram == null) ? 0 : idTelegram.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -169,15 +179,15 @@ public class User implements IEntityBasic {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (idTelegram == null) {
+			if (other.idTelegram != null)
+				return false;
+		} else if (!idTelegram.equals(other.idTelegram))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
 			return false;
 		if (username == null) {
 			if (other.username != null)

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc40">Create a new Account</h2>
+
+		<h:panelGroup layout="block" styleClass="frm-crud pc40">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Name" styleClass="required" />
+				<h:inputText value="#{userAction.user.name}" styleClass="pc60" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Username" styleClass="required" />
+				<h:inputText value="#{userAction.user.username}" styleClass="pc60" maxlength="12" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Password" styleClass="required" />
+				<h:inputSecret value="#{userAction.plainPassword}" styleClass="pc60" maxlength="10" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Repeat your password" styleClass="required" />
+				<h:inputSecret value="#{userAction.passwordReview}" styleClass="pc60" maxlength="10" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Email" styleClass="required" />
+				<h:inputText value="#{userAction.user.email}" styleClass="pc60" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-title">
+				<h:outputLabel value="Company information" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Name" />
+				<h:inputText value="#{userAction.company.name}" styleClass="pc60" maxlength="30" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Website" styleClass="txtop" />
+				<h:inputText value="#{userAction.company.website}" styleClass="pc60" maxlength="70" />
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="frm-crud pc40">
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton value="Create Account" action="#{userAction.saveNewUser()}" styleClass="primary" />
+				<h:commandButton value="Cancel" action="#{userAction.goToLogin()}" styleClass="secondary" />
+			</h:panelGroup>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

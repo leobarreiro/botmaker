@@ -11,7 +11,9 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 @Local
 public interface IUserBusiness extends Serializable {
 
-	void saveUser(User user, String password) throws BusinessException;
+	void validateUser(User user, String password, String passwordReview) throws BusinessException;
+
+	void saveUser(User user, String password, String passwordReview) throws BusinessException;
 
 	User findUserByUsernameAndPassphrase(String username, String passphrase);
 
