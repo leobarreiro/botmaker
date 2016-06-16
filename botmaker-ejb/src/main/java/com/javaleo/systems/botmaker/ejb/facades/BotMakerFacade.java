@@ -241,6 +241,11 @@ public class BotMakerFacade implements IBotMakerFacade {
 	public Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException {
 		return scriptBusiness.evaluateBooleanScript(dialog, script);
 	}
+	
+	@Override
+	public void saveScript(Script script) throws BusinessException {
+		scriptBusiness.saveScript(script);
+	}
 
 	@Override
 	public void saveBlackListExpression(BlackListExpression expression) throws BusinessException {

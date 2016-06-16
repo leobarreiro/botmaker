@@ -91,6 +91,8 @@ public interface IBotMakerFacade extends Serializable {
 	String executeScript(Dialog dialog, Script script) throws BusinessException;
 
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
+	
+	void saveScript(Script script) throws BusinessException;
 
 	void saveBlackListExpression(BlackListExpression expression) throws BusinessException;
 

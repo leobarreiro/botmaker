@@ -5,8 +5,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
 
+import com.javaleo.systems.botmaker.ejb.entities.Command;
+import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
@@ -26,6 +29,15 @@ public class ScriptBusiness implements IScriptBusiness {
 	@Inject
 	private IBlackListExpressionBusiness blackListBusiness;
 
+	@Inject
+	private IPersistenceBasic<Script> persistence;
+	
+	@Inject
+	private IPersistenceBasic<Command> commandPersistence;
+	
+	@Inject
+	private IPersistenceBasic<Question> questionPersistence;
+	
 	@Inject
 	private GroovyScriptRunnerUtils groovyRunner;
 
@@ -84,4 +96,25 @@ public class ScriptBusiness implements IScriptBusiness {
 		return result;
 	}
 
+	@Override
+	public void saveScript(Script script) throws BusinessException {
+		if (script.getCommand() == null && script.getQuestion() == null) {
+			throw new BusinessException("The script must be owned by a command or a question to be saved.");
+		}
+		if (script.getCommand() != null && script.getQuestion() != null) {
+			throw new BusinessException("The script should be owned by a command or a question. Only one of the two options.");
+		}
+		
+		if (script.getCommand() != null && script.getCommand().getId() != null) {
+			Command command = commandPersistence.find(Command.class, script.getCommand().getId());
+			script.setCommand(command);
+		}
+		
+		if (script.getQuestion() != null && script.getQuestion().getId() != null) {
+			Question question = questionPersistence.find(Question.class, script.getQuestion().getId());
+			script.setQuestion(question);
+		}
+		persistence.saveOrUpdate(script);
+	}
+	
 }

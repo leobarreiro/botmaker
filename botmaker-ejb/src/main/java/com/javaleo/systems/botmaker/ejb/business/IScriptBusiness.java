@@ -14,11 +14,13 @@ import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 public interface IScriptBusiness extends Serializable {
 
 	boolean isValidScript(Script script) throws BusinessException;
-	
+
 	String debugScript(Dialog dialog, Script script);
 
 	String executeScript(Dialog dialog, Script script) throws BusinessException;
-	
+
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
-	
+
+	void saveScript(Script script) throws BusinessException;
+
 }

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2 class="pc80">Script Editor</h2>
+
+		<rich:panel styleClass="frm-crud pc80">
+			<h:panelGroup styleClass="frm-line">
+				<h:outputLabel value="Bot" />
+				<h:outputText value="#{scriptAction.bot.name}" />
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line" rendered="#{scriptAction.script.command ne null}">
+				<h:outputLabel value="Command" />
+				<h:outputText value="#{scriptAction.script.command.key}" />
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line" rendered="#{scriptAction.script.question ne null}">
+				<h:outputLabel value="Command" />
+				<h:outputText value="#{scriptAction.script.question.command.key}" />
+				<h:outputLabel value="Question" />
+				<h:outputText value="#{scriptAction.script.question.instruction}" />
+				<h:outputLabel value="Script Type" />
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line">
+				<h:outputLabel value="Language" />
+				<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line">
+				<h:outputLabel value="Parse Mode" />
+				<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
+					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+		</rich:panel>
+
+		<rich:panel styleClass="frm-crud pc80">
+			<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100">
+
+				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
+					<h4 class="mrauto pc100">Available Context</h4>
+					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{contextVars}">
+						<h:column headerClass="tx11">
+							<f:facet name="header">Var Name / Value</f:facet>
+							<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
+							<h:outputText value="#{ctx.name}" styleClass="tx9 green" />
+							<br />
+							<h:inputText value="#{ctx.value}" size="20" maxlength="120" />
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" styleClass="hg100pc">
+					<h3 class="mrauto pc100">Script Editor</h3>
+					<h:panelGroup layout="block" styleClass="frm-line">
+						<h:inputTextarea id="scriptCode" value="#{scriptAction.script.code}" rows="16" />
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
+					<h4 class="mrauto pc100">Output Console</h4>
+					<h:panelGroup layout="block" id="consoleOutputId" styleClass="console"></h:panelGroup>
+					<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
+				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
+				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
+					<a4j:ajax execute="frm:scriptEditor" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+				</h:commandButton>
+				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary" />
+			</h:panelGroup>
+
+		</rich:panel>
+
+		<script type="text/javascript">
+		var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+			mode: "groovy",
+		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+		    lineNumbers: true, 
+		    lineWrapping: true, 
+		    indentWithTabs: true
+		});
+
+		function configureCodeMirror() {
+			scriptCodeMirror.setSize('98%', 400);
+			scriptCodeMirror.setOption('theme', '#{userPreferenceAction.scriptingTheme.value}');
+			scriptCodeMirror.setOption('readOnly', false);
+		}
+		
+		function treatConsoleOutput() {
+			var treatedContent = '';
+			if (document.getElementById('frm:parseModeId').value == 'MARKDOWN') {
+				treatedContent = markdown.toHTML(document.getElementById('frm:outputHiddenId').value);
+			} else {
+				treatedContent = document.getElementById('frm:outputHiddenId').value;
+			}
+			alert(treatedContent);
+			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
+		}
+		configureCodeMirror();
+	</script>
+
+	</ui:define>
+
+</ui:composition>
+

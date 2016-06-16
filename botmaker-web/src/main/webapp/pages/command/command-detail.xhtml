@@ -42,9 +42,8 @@
 					<h:graphicImage value="/resources/img/icons/view.png" />
 					<f:ajax event="click" listener="#{commandAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command.postScript)}" styleClass="links-script-code">
 					<h:graphicImage value="/resources/img/icons/edit.png" />
-					<f:ajax event="click" listener="#{commandAction.debugMode(true)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
 			</h:panelGroup>

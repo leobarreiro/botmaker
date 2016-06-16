@@ -1,0 +1,123 @@
+package com.javaleo.systems.botmaker.web.action;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
+import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
+import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
+
+@Named
+@ConversationScoped
+public class ScriptAction implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	private IBotMakerFacade facade;
+
+	@Inject
+	private Conversation conversation;
+
+	@Inject
+	private CommandAction commandAction;
+
+	@Inject
+	private MsgAction msgAction;
+
+	private Bot bot;
+	private Script script;
+	private List<DialogContextVar> contextVars;
+	private String debugContent;
+
+	public String startEditScript(Bot bot, Script script) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		this.bot = bot;
+		this.script = script;
+		this.contextVars = new ArrayList<DialogContextVar>();
+		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	public void testScript() {
+		try {
+			Map<String, String> mapVars = new HashMap<String, String>();
+			for (DialogContextVar ctx : contextVars) {
+				if (StringUtils.isNotEmpty(ctx.getValue())) {
+					mapVars.put(ctx.getName(), ctx.getValue());
+				}
+			}
+			Dialog dialog = new Dialog();
+			dialog.setBotId(this.bot.getId());
+			dialog.setId(0);
+			dialog.setContextVars(mapVars);
+			debugContent = facade.debugScript(dialog, script);
+			boolean valid = facade.isValidScript(script);
+			script.setValid(valid);
+		} catch (Exception e) {
+			debugContent = e.getMessage();
+			script.setValid(false);
+		}
+	}
+
+	public String saveScript() {
+		try {
+			facade.saveScript(script);
+			msgAction.addInfoMessage("Script saved!");
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+		}
+		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	public String goBackCommand() {
+		return commandAction.detail(script.getCommand());
+	}
+
+	public Bot getBot() {
+		return bot;
+	}
+
+	public void setBot(Bot bot) {
+		this.bot = bot;
+	}
+
+	public Script getScript() {
+		return script;
+	}
+
+	public void setScript(Script script) {
+		this.script = script;
+	}
+
+	public List<DialogContextVar> getContextVars() {
+		return contextVars;
+	}
+
+	public void setContextVars(List<DialogContextVar> contextVars) {
+		this.contextVars = contextVars;
+	}
+
+	public String getDebugContent() {
+		return debugContent;
+	}
+
+	public void setDebugContent(String debugContent) {
+		this.debugContent = debugContent;
+	}
+
+}
