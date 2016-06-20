@@ -122,11 +122,11 @@
 				<artifactId>groovy-all</artifactId>
 				<version>${version.groovy}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.codehaus.groovy.modules.http-builder</groupId>
-				<artifactId>http-builder</artifactId>
-				<version>${version.groovyx.httpbuilder}</version>
-			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>org.codehaus.groovy.modules.http-builder</groupId> -->
+			<!-- <artifactId>http-builder</artifactId> -->
+			<!-- <version>${version.groovyx.httpbuilder}</version> -->
+			<!-- </dependency> -->
 			<dependency>
 				<groupId>org.python</groupId>
 				<artifactId>jython-standalone</artifactId>
