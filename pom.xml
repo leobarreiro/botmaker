@@ -123,20 +123,10 @@
 				<version>${version.groovy}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.codehaus.groovy.modules.http-builder</groupId>
-				<artifactId>http-builder</artifactId>
-				<version>${version.groovyx.httpbuilder}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.python</groupId>
 				<artifactId>jython-standalone</artifactId>
 				<version>${version.jython}</version>
 			</dependency>
-			<!-- <dependency> -->
-			<!-- <groupId>org.python</groupId> -->
-			<!-- <artifactId>jython</artifactId> -->
-			<!-- <version>${version.jython}</version> -->
-			<!-- </dependency> -->
 			<dependency>
 				<groupId>org.jboss.ejb3</groupId>
 				<artifactId>jboss-ejb3-ext-api</artifactId>
