@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 @Stateless
 public class MessageUtils implements IMessageUtils {
 
-	//@Resource(mappedName = "java:jboss/mail/Javaleo")
+	@Resource(mappedName = "java:jboss/mail/Javaleo")
 	private Session mailSession;
 
 	@Inject
