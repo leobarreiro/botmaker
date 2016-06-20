@@ -45,7 +45,6 @@
 		<version.junit>4.10</version.junit>
 		<version.botgram>0.0.6</version.botgram>
 		<version.groovy>2.4.6</version.groovy>
-		<version.groovyx.httpbuilder>0.7.1</version.groovyx.httpbuilder>
 		<version.jython>2.7.0</version.jython>
 		<version.jboss.ext.ejb>2.2.0.Final</version.jboss.ext.ejb>
 		<version.richfaces>4.5.15.Final</version.richfaces>
