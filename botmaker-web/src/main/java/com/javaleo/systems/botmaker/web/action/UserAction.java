@@ -1,17 +1,21 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.exceptions.JavaleoException;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Company;
+import com.javaleo.systems.botmaker.ejb.entities.Token;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
@@ -41,12 +45,19 @@ public class UserAction implements Serializable {
 	@Inject
 	private MsgAction msgAction;
 
+	@Inject
+	private Logger LOG;
+
 	private String username;
 	private String plainPassword;
 	private String passwordReview;
 	private String firstName;
 	private String emailRecovery;
 	private String emailRecoveryReview;
+
+	private String uuidToken;
+	private Token token;
+	private Boolean validToken;
 
 	private Company company;
 	private User user;
@@ -73,7 +84,9 @@ public class UserAction implements Serializable {
 	}
 
 	public String createAccount() {
-		conversation.begin();
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		company = new Company();
 		user = new User();
 		return "/new-account.jsf?faces-redirect=true";
@@ -108,6 +121,9 @@ public class UserAction implements Serializable {
 	}
 
 	public String recoverPasswordFromUser() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 		try {
 			facade.sendMessageRecoveryLoginToUser(emailRecovery, emailRecoveryReview);
 			msgAction.addInfoMessage("A message will be sent to your e-mail. Please read it and follow the instructions.");
@@ -115,6 +131,37 @@ public class UserAction implements Serializable {
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
 			return "/password-recovery.jsf?faces-redirect=true";
+		}
+	}
+
+	public void startResetPassword() {
+		if (!conversation.isTransient()) {
+			conversation.end();
+		}
+		conversation.begin();
+
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String uniqueToken = params.get("uuidToken");
+
+		try {
+			token = facade.getTokenByUUID(uniqueToken);
+			validToken = (token != null);
+		} catch (BusinessException e) {
+			LOG.error(e.getMessage());
+		}
+		uuidToken = uniqueToken;
+		plainPassword = null;
+		passwordReview = null;
+	}
+
+	public String confirmResetPassword() {
+		try {
+			facade.saveUser(token.getUser(), plainPassword, passwordReview);
+			msgAction.addInfoMessage("Your new password was been saved!");
+			return "/index.jsf?faces-redirect=true";
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+			return "/reset-password.jsf?faces-redirect=true";
 		}
 	}
 
@@ -187,6 +234,30 @@ public class UserAction implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getUuidToken() {
+		return uuidToken;
+	}
+
+	public void setUuidToken(String uuidToken) {
+		this.uuidToken = uuidToken;
+	}
+
+	public Token getToken() {
+		return token;
+	}
+
+	public void setToken(Token token) {
+		this.token = token;
+	}
+
+	public Boolean getValidToken() {
+		return validToken;
+	}
+
+	public void setValidToken(Boolean validToken) {
+		this.validToken = validToken;
 	}
 
 }

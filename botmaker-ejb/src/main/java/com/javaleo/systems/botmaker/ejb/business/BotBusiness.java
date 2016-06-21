@@ -104,7 +104,9 @@ public class BotBusiness implements IBotBusiness {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Bot> query = cb.createQuery(Bot.class);
 		Root<Bot> from = query.from(Bot.class);
+		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
 		List<Predicate> predicates = new ArrayList<Predicate>();
+		predicates.add(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
 		if (StringUtils.isNotBlank(filter.getName())) {
 			Expression<String> path = from.get("name");
 			predicates.add(cb.like(path, "%" + filter.getName() + "%"));

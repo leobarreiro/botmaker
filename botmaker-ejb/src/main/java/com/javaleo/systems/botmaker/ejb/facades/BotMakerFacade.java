@@ -13,6 +13,7 @@ import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
+import com.javaleo.systems.botmaker.ejb.business.ITokenBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IUserPreferenceBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
@@ -22,6 +23,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.entities.Token;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
@@ -67,6 +69,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IBlackListExpressionBusiness blackListExpressionBusiness;
+	
+	@Inject
+	private ITokenBusiness tokenBusiness;
 
 	@Override
 	public List<Company> listAllCompanies() {
@@ -270,6 +275,11 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void dropBlackListExpression(BlackListExpression expression) throws BusinessException {
 		blackListExpressionBusiness.dropBlackListExpression(expression);
+	}
+
+	@Override
+	public Token getTokenByUUID(String uuid) throws BusinessException {
+		return tokenBusiness.getTokenByUUID(uuid);
 	}
 
 }

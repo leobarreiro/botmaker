@@ -40,7 +40,7 @@ public class UserBusiness implements IUserBusiness {
 	@Override
 	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
 		// name
-		Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}[\\ ]{1}[A-Za-z]{2,}");
+		Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}[\\ ]{1}[A-Za-z]{2,}.");
 		Matcher nameMatcher = namePattern.matcher(user.getName());
 		if (!nameMatcher.matches()) {
 			throw new BusinessException("Your name not contains first and last name. Please review and try again.");

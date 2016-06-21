@@ -85,13 +85,16 @@
 			</rich:dataTable>
 		</rich:panel>
 
-		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="300" width="360" maxHeight="300" maxWidth="360">
+		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="280" width="360" maxHeight="280" maxWidth="360">
 			<h:panelGroup layout="block" styleClass="pc100">
 				<h3 class="confirm-title">
 					<h:outputText value="#{botAction.bot.name}" />
 				</h3>
-				<h:panelGroup layout="block" styleClass="pc90 mrauto brd-magenta">
-					<pre class="console brd-green">#{botAction.rawCommands}</pre>
+				<h:panelGroup layout="block" styleClass="pc70 txctr mrauto">
+					<h:outputText value="Just click to copy" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="pc90 mrauto hg150 brd-green">
+					<pre class="console" onclick="clickCopy(this)">#{botAction.rawCommands}</pre>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="frm-submit">
 					<h:commandButton value="Close" styleClass="primary">

@@ -11,6 +11,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.entities.Token;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.UserPreference;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
@@ -103,5 +104,7 @@ public interface IBotMakerFacade extends Serializable {
 	void testScriptAgainstBlackListExpression(String scriptCode, ScriptType scriptType) throws BusinessException;
 
 	void dropBlackListExpression(BlackListExpression expression) throws BusinessException;
+
+	Token getTokenByUUID(String uuid) throws BusinessException;
 
 }

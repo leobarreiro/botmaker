@@ -365,14 +365,29 @@ span.primary, a.primary, a.secondary, span.secondary {
 	.brd-blue {
 		border: 1px solid blue !important;
 	}
+	.hg100 {
+		height: 100px !important;
+		max-height: 100px !important;
+	}
+	.hg150 {
+		height: 150px !important;
+		max-height: 150px !important;
+	}
+	.hg200 {
+		height: 200px !important;
+		max-height: 200px !important;
+	}
 	.hg300 {
 		height: 300px !important;
+		max-height: 300px !important;
 	}
 	.hg500 {
 		height: 500px !important;
+		max-height: 500px !important;
 	}
 	.hg600 {
 		height: 600px !important;
+		max-height: 600px !important;
 	}
 	.hg100pc {
 		height: 100% !important;
@@ -581,13 +596,12 @@ span.primary, a.primary, a.secondary, span.secondary {
 		background-color: #ffffff !important;
 		color: #000000 !important;
 		font-size: 9pt !important;
-		width: auto !important;
+		width: 96% !important;
 		max-width: 96% !important;
 		overflow: auto;
-		height: auto !important;
-		max-height: 320px !important;
-		white-space: wrap;
-		word-break: break;
+		height: 90% !important;
+		max-height: 96% !important;
+		white-space: pre-line !important;
 		padding: 6px !important;
 		margin: auto !important;
 	}
@@ -597,13 +611,10 @@ span.primary, a.primary, a.secondary, span.secondary {
 		color: #000000 !important;
 		font-size: 9pt !important;
 		overflow: auto;
-		white-space: wrap;
 		min-height: 380px !important;
-		word-break: default;
 		padding: 6px !important;
 		margin: 4px !important;
-		white-space: pre-wrap;
-		word-break: default;
+		white-space: pre-line !important;
 	}
 	.rf-tb {
 		background-color: transparent !important;

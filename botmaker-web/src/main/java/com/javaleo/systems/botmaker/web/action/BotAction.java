@@ -123,7 +123,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			} else {
 				str.append(" - No description");
 			}
-			str.append("\n");
+			str.append("\r\n");
 		}
 		this.rawCommands = str.toString();
 	}

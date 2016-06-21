@@ -48,6 +48,7 @@ public class ScriptAction implements Serializable {
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}
+		conversation.setTimeout(760000l);
 		this.bot = bot;
 		this.script = script;
 		loadQuestionsAndContextVars();
