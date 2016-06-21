@@ -61,6 +61,9 @@
 				</h:commandButton>
 				<h:commandButton value="Activate Bot" styleClass="secondary" rendered="#{not botAction.bot.active}" action="#{botAction.reactivateBot()}" />
 				<h:commandButton action="#{commandAction.startNew()}" value="New Command" styleClass="primary" />
+				<h:commandButton value="RAW Commands" styleClass="secondary">
+					<rich:componentControl event="click" target="popupRawCommandsId" operation="show" />
+				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
 
@@ -81,6 +84,22 @@
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
+
+		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="300" width="360" maxHeight="300" maxWidth="360">
+			<h:panelGroup layout="block" styleClass="pc100">
+				<h3 class="confirm-title">
+					<h:outputText value="#{botAction.bot.name}" />
+				</h3>
+				<h:panelGroup layout="block" styleClass="pc90 mrauto brd-magenta">
+					<pre class="console brd-green">#{botAction.rawCommands}</pre>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="frm-submit">
+					<h:commandButton value="Close" styleClass="primary">
+						<rich:componentControl event="click" target="popupRawCommandsId" operation="hide" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:panelGroup>
+		</rich:popupPanel>
 
 		<ui:param name="confirmTitle" value="Deactivate this Bot" />
 		<ui:param name="confirmDescription" value="Are you sure to deactivate this bot? You can reactivate it later." />

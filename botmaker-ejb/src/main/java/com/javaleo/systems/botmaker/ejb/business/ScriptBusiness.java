@@ -108,11 +108,13 @@ public class ScriptBusiness implements IScriptBusiness {
 		if (script.getCommand() != null && script.getCommand().getId() != null) {
 			Command command = commandPersistence.find(Command.class, script.getCommand().getId());
 			script.setCommand(command);
+			command.setPostScript(script);
 		}
 		
 		if (script.getQuestion() != null && script.getQuestion().getId() != null) {
 			Question question = questionPersistence.find(Question.class, script.getQuestion().getId());
 			script.setQuestion(question);
+			question.setPostScript(script);
 		}
 		persistence.saveOrUpdate(script);
 	}

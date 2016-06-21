@@ -8,9 +8,11 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.enums.BotType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
@@ -43,6 +45,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private CRUD crudOp;
 	private Bot bot;
 	private List<Bot> bots;
+	private String rawCommands;
 
 	public String startNew() {
 		msgAction.clear();
@@ -105,7 +108,24 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		this.bot = bot;
 		commandAction.setBot(bot);
 		commandAction.search();
+		mountRawCommandsFromBot();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+	}
+	
+	private void mountRawCommandsFromBot() {
+		List<Command> commands = commandAction.getCommands();
+		StringBuilder str = new StringBuilder();
+		for (Command comm : commands) {
+			str.append(comm.getKey());
+			if (StringUtils.isNotBlank(comm.getShortDescription())) {
+				str.append(" - ");
+				str.append(comm.getShortDescription());
+			} else {
+				str.append(" - No description");
+			}
+			str.append("\n");
+		}
+		this.rawCommands = str.toString();
 	}
 
 	@Override
@@ -183,6 +203,14 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 
 	public void setBots(List<Bot> bots) {
 		this.bots = bots;
+	}
+
+	public String getRawCommands() {
+		return rawCommands;
+	}
+
+	public void setRawCommands(String rawCommands) {
+		this.rawCommands = rawCommands;
 	}
 
 }

@@ -3,9 +3,9 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc80">Script Editor</h2>
+		<h2 class="pc90">Script Editor</h2>
 
-		<rich:panel styleClass="frm-crud pc80">
+		<rich:panel id="registryId" styleClass="frm-crud pc90">
 			<h:panelGroup styleClass="frm-line">
 				<h:outputLabel value="Bot" />
 				<h:outputText value="#{scriptAction.bot.name}" />
@@ -37,18 +37,23 @@
 			</h:panelGroup>
 		</rich:panel>
 
-		<rich:panel styleClass="frm-crud pc80">
+		<rich:panel styleClass="frm-crud pc90">
 			<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100">
 
 				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
-					<h4 class="mrauto pc100">Available Context</h4>
-					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{contextVars}">
-						<h:column headerClass="tx11">
-							<f:facet name="header">Var Name / Value</f:facet>
+					<h3 class="mrauto pc100">Available Context</h3>
+					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{scriptAction.contextVars}" styleClass="pc100">
+						<h:column headerClass="tx11 pc10">
+							<f:facet name="header">#</f:facet>
 							<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
+						</h:column>
+						<h:column headerClass="tx11 pc40">
+							<f:facet name="header">Var Name</f:facet>
 							<h:outputText value="#{ctx.name}" styleClass="tx9 green" />
-							<br />
-							<h:inputText value="#{ctx.value}" size="20" maxlength="120" />
+						</h:column>
+						<h:column headerClass="tx11 pc50">
+							<f:facet name="header">Value</f:facet>
+							<h:inputText value="#{ctx.value}" size="15" maxlength="120" />
 						</h:column>
 					</h:dataTable>
 				</h:panelGroup>
@@ -60,8 +65,8 @@
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
-					<h4 class="mrauto pc100">Output Console</h4>
-					<h:panelGroup layout="block" id="consoleOutputId" styleClass="console"></h:panelGroup>
+					<h3 class="mrauto pc100">Output Console</h3>
+					<h:panelGroup layout="block" id="consoleOutputId" styleClass="output-console" />
 					<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
 				</h:panelGroup>
 			</h:panelGrid>
@@ -69,9 +74,11 @@
 			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
 				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
 				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
-					<a4j:ajax execute="frm:scriptEditor" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
 				</h:commandButton>
-				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary" />
+				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
+					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+				</h:commandButton>
 			</h:panelGroup>
 
 		</rich:panel>
@@ -98,7 +105,6 @@
 			} else {
 				treatedContent = document.getElementById('frm:outputHiddenId').value;
 			}
-			alert(treatedContent);
 			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
 		}
 		configureCodeMirror();

@@ -30,11 +30,13 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
-				<h:outputText value="#{(commandAction.command.postScript.scriptType ne null) ? commandAction.command.postScript.scriptType : 'None'}" styleClass="txt #{(commandAction.command.postScript.scriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
+				<h:outputText value="#{(commandAction.command.postScript.scriptType ne null) ? commandAction.command.postScript.scriptType : 'None'}"
+					styleClass="txt #{(commandAction.command.postScript.scriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Parse Mode" />
-				<h:outputText value="#{(commandAction.command.postScript.parseMode ne null) ? commandAction.command.postScript.parseMode : 'None'}" styleClass="txt #{(commandAction.command.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
+				<h:outputText value="#{(commandAction.command.postScript.parseMode ne null) ? commandAction.command.postScript.parseMode : 'None'}"
+					styleClass="txt #{(commandAction.command.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
@@ -42,7 +44,8 @@
 					<h:graphicImage value="/resources/img/icons/view.png" />
 					<f:ajax event="click" listener="#{commandAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command.postScript)}" styleClass="links-script-code">
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command.postScript)}"
+					styleClass="links-script-code">
 					<h:graphicImage value="/resources/img/icons/edit.png" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
@@ -92,7 +95,7 @@
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
-		
+
 		<ui:param name="confirmTitle" value="Drop Command: [#{commandAction.command.key}]" />
 		<ui:param name="confirmDescription" value="Are you sure to delete this command? You can't undo this action. All the questions related to this command will be deleted too." />
 		<ui:param name="confirmBean" value="#{commandAction}" />

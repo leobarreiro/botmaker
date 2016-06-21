@@ -14,6 +14,7 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
@@ -49,8 +50,19 @@ public class ScriptAction implements Serializable {
 		}
 		this.bot = bot;
 		this.script = script;
-		this.contextVars = new ArrayList<DialogContextVar>();
+		loadQuestionsAndContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+	
+	private void loadQuestionsAndContextVars() {
+		this.contextVars = facade.getListDialogContextVars();
+		if (script.getCommand() != null && script.getCommand().getId() != null) {
+			List<Question> questions = facade.listQuestionsFromCommand(script.getCommand());
+			for (Question q : questions) {
+				this.contextVars.add(new DialogContextVar(q.getVarName(), "", q.getInstruction()));
+			}
+		}
+		// TODO fazer logica para script de uma question (sem command)
 	}
 
 	public void testScript() {

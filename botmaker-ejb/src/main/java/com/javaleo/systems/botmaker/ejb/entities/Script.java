@@ -2,6 +2,7 @@ package com.javaleo.systems.botmaker.ejb.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -131,7 +132,7 @@ public class Script implements IEntityBasic {
 		this.code = code;
 	}
 
-	@OneToOne(optional = true, mappedBy = "postScript")
+	@OneToOne(optional = true, mappedBy = "postScript", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "command_id", referencedColumnName = "command_id", nullable = true, foreignKey = @ForeignKey(name = "fk_script_command"))
 	public Command getCommand() {
 		return command;

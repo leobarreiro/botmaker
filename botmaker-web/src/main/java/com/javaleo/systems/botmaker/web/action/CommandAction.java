@@ -97,6 +97,7 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 			script.setAuthor(credentials.getUser());
 			script.setCreated(Calendar.getInstance().getTime());
 			script.setEnabled(true);
+			script.setCommand(command);
 			command.setPostScript(script);
 		}
 	}
