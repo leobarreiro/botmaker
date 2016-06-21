@@ -9,13 +9,14 @@
 	</h:head>
 	<h:body>
 		<h:form id="frm" acceptcharset="ISO-8859-1">
-
 			<h:panelGroup layout="block">
 				<ui:insert name="content">
 				[Template content will be inserted here]
 			</ui:insert>
 			</h:panelGroup>
 		</h:form>
+		<rich:notifyStack id="mainStack" position="topRight" direction="vertical" method="first" />
+		<rich:notify id="notify" stack="mainStack" summary="#{msgAction.showMsg()}" escape="false" rendered="#{msgAction.mustShow}" />
 	</h:body>
 </f:view>
 </html>

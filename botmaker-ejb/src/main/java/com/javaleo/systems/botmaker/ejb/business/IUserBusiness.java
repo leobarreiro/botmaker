@@ -17,6 +17,8 @@ public interface IUserBusiness extends Serializable {
 
 	User findUserByUsernameAndPassphrase(String username, String passphrase);
 
+	void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException;
+
 	List<User> listAllUsers();
 
 }

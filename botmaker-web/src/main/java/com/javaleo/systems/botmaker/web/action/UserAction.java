@@ -102,11 +102,20 @@ public class UserAction implements Serializable {
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}
+		emailRecovery = null;
+		emailRecoveryReview = null;
 		return "/password-recovery.jsf?faces-redirect=true";
 	}
 
 	public String recoverPasswordFromUser() {
-		return "/index.jsf?faces-redirect=true";
+		try {
+			facade.sendMessageRecoveryLoginToUser(emailRecovery, emailRecoveryReview);
+			msgAction.addInfoMessage("A message will be sent to your e-mail. Please read it and follow the instructions.");
+			return "/index.jsf?faces-redirect=true";
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+			return "/password-recovery.jsf?faces-redirect=true";
+		}
 	}
 
 	public String goToLogin() {
