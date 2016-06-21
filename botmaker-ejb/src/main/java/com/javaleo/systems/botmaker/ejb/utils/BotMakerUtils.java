@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,6 +30,15 @@ public class BotMakerUtils {
 		}
 		listOfLists.add(subList);
 		return listOfLists;
+	}
+
+	public static boolean validateEmail(final String email) {
+		if (StringUtils.isBlank(email)) {
+			return false;
+		}
+		Pattern mailPattern = Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$");
+		Matcher mailMatcher = mailPattern.matcher(email);
+		return mailMatcher.matches();
 	}
 
 }

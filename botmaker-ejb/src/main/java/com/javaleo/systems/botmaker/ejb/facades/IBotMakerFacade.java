@@ -38,6 +38,8 @@ public interface IBotMakerFacade extends Serializable {
 
 	void saveUser(User user, String password, String passwordReview) throws BusinessException;
 
+	void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException;
+
 	User findUserByUsernameAndPassword(String username, String passphrase);
 
 	Command getCommandById(Long id);
@@ -91,7 +93,7 @@ public interface IBotMakerFacade extends Serializable {
 	String executeScript(Dialog dialog, Script script) throws BusinessException;
 
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
-	
+
 	void saveScript(Script script) throws BusinessException;
 
 	void saveBlackListExpression(BlackListExpression expression) throws BusinessException;

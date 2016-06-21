@@ -123,6 +123,11 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
+	public void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException {
+		userBusiness.sendMessageRecoveryLoginToUser(email, emailReview);
+	}
+
+	@Override
 	public User findUserByUsernameAndPassword(String username, String passphrase) {
 		return userBusiness.findUserByUsernameAndPassphrase(username, passphrase);
 	}
@@ -241,7 +246,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	public Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException {
 		return scriptBusiness.evaluateBooleanScript(dialog, script);
 	}
-	
+
 	@Override
 	public void saveScript(Script script) throws BusinessException {
 		scriptBusiness.saveScript(script);
