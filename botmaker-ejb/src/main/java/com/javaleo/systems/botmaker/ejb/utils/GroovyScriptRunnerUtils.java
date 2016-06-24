@@ -29,13 +29,12 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 
 	@Inject
 	private IBlackListExpressionBusiness blackListBusiness;
-	
+
 	@Inject
 	private DevUtils devUtils;
 
 	@Inject
 	private Logger LOG;
-
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
@@ -67,7 +66,7 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 				String varName = (String) key;
 				if (postBinding.getVariable(varName) instanceof Integer) {
 					contextVars.put(varName, Integer.toString((Integer) postBinding.getVariable(varName)));
-				} else {
+				} else if (postBinding.getVariable(varName) instanceof String) {
 					contextVars.put(varName, (String) postBinding.getVariable(varName));
 				}
 			}
