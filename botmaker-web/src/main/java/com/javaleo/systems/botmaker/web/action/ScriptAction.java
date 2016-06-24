@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,8 @@ import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 @ConversationScoped
 public class ScriptAction implements Serializable {
 
+	private static final long CONVERSATION_EXPIRES = 760000l;
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -37,10 +38,14 @@ public class ScriptAction implements Serializable {
 	private CommandAction commandAction;
 
 	@Inject
+	private AuxAction auxAction;
+
+	@Inject
 	private MsgAction msgAction;
 
 	private Bot bot;
 	private Script script;
+	private List<Script> scripts;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
 
@@ -48,13 +53,36 @@ public class ScriptAction implements Serializable {
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}
-		conversation.setTimeout(760000l);
+		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = bot;
 		this.script = script;
 		loadQuestionsAndContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
-	
+
+	public String startNewGeneric() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		conversation.setTimeout(CONVERSATION_EXPIRES);
+		bot = null;
+		script = new Script();
+		script.setGeneric(true);
+		loadQuestionsAndContextVars();
+		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	public String startEditGeneric(Script script) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		conversation.setTimeout(CONVERSATION_EXPIRES);
+		this.bot = null;
+		this.script = script;
+		loadQuestionsAndContextVars();
+		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
 	private void loadQuestionsAndContextVars() {
 		this.contextVars = facade.getListDialogContextVars();
 		if (script.getCommand() != null && script.getCommand().getId() != null) {
@@ -75,7 +103,7 @@ public class ScriptAction implements Serializable {
 				}
 			}
 			Dialog dialog = new Dialog();
-			dialog.setBotId(this.bot.getId());
+			dialog.setBotId((bot != null) ? bot.getId() : 0L);
 			dialog.setId(0);
 			dialog.setContextVars(mapVars);
 			debugContent = facade.debugScript(dialog, script);
@@ -87,10 +115,16 @@ public class ScriptAction implements Serializable {
 		}
 	}
 
+	public String listGenericScripts() {
+		scripts = facade.listGenericScripts();
+		return "/pages/scripts/list-generic.jsf?faces-redirect=true";
+	}
+
 	public String saveScript() {
 		try {
 			facade.saveScript(script);
 			msgAction.addInfoMessage("Script saved!");
+			auxAction.updateLastGenericScripts();
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
 		}
@@ -115,6 +149,14 @@ public class ScriptAction implements Serializable {
 
 	public void setScript(Script script) {
 		this.script = script;
+	}
+
+	public List<Script> getScripts() {
+		return scripts;
+	}
+
+	public void setScripts(List<Script> scripts) {
+		this.scripts = scripts;
 	}
 
 	public List<DialogContextVar> getContextVars() {

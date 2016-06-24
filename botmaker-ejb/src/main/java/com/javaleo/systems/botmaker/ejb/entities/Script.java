@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,9 +40,13 @@ public class Script implements IEntityBasic {
 	private Boolean enabled;
 	private ScriptType scriptType;
 	private ParseMode parseMode;
+	private String name;
+	private String description;
+	private Boolean generic;
 	private String code;
 	private Command command;
 	private Question question;
+	private Script genericScript;
 
 	@Id
 	@Override
@@ -123,6 +128,33 @@ public class Script implements IEntityBasic {
 		this.parseMode = parseMode;
 	}
 
+	@Column(name = "name", length = 40, nullable = true)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "description", length = 255, nullable = true)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "generic", nullable = true)
+	public Boolean getGeneric() {
+		return generic;
+	}
+
+	public void setGeneric(Boolean generic) {
+		this.generic = generic;
+	}
+
 	@Column(name = "code", columnDefinition = "text", nullable = false)
 	public String getCode() {
 		return code;
@@ -152,6 +184,16 @@ public class Script implements IEntityBasic {
 		this.question = question;
 	}
 
+	@ManyToOne(fetch=FetchType.EAGER, optional = true, cascade={CascadeType.REFRESH})
+	@JoinColumn(name = "generic_script", referencedColumnName = "script_id", foreignKey = @ForeignKey(name = "fk_generic_script"))
+	public Script getGenericScript() {
+		return genericScript;
+	}
+
+	public void setGenericScript(Script genericScript) {
+		this.genericScript = genericScript;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -160,9 +202,12 @@ public class Script implements IEntityBasic {
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
+		result = prime * result + ((generic == null) ? 0 : generic.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
@@ -199,10 +244,20 @@ public class Script implements IEntityBasic {
 				return false;
 		} else if (!created.equals(other.created))
 			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (enabled == null) {
 			if (other.enabled != null)
 				return false;
 		} else if (!enabled.equals(other.enabled))
+			return false;
+		if (generic == null) {
+			if (other.generic != null)
+				return false;
+		} else if (!generic.equals(other.generic))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -213,6 +268,11 @@ public class Script implements IEntityBasic {
 			if (other.modified != null)
 				return false;
 		} else if (!modified.equals(other.modified))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
 		if (parseMode != other.parseMode)
 			return false;

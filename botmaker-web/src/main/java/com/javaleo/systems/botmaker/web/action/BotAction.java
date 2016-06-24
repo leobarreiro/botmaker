@@ -31,6 +31,9 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private IBotMakerFacade facade;
 
 	@Inject
+	private AuxAction auxAction;
+
+	@Inject
 	private MsgAction msgAction;
 
 	@Inject
@@ -73,6 +76,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			bot.setName(botOld.getName());
 			facade.saveBot(bot);
 			msgAction.addMessage(MessageType.INFO, "Bot saved");
+			auxAction.updateLastBotsFromCompanyUser();
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
@@ -111,7 +115,7 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		mountRawCommandsFromBot();
 		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
 	}
-	
+
 	private void mountRawCommandsFromBot() {
 		List<Command> commands = commandAction.getCommands();
 		StringBuilder str = new StringBuilder();
@@ -126,11 +130,10 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			str.append("\r\n");
 		}
 		if (StringUtils.isNotBlank(bot.getCancelKey())) {
-			str.append(bot.getCancelKey());
-			str.append(" - ");
-			str.append(StringUtils.isNotBlank(bot.getCancelMessage()) ? bot.getCancelMessage() : " No description");
+			str.append(bot.getCancelKey().replaceAll("/", ""));
+			str.append(" - Cancel a command");
 		}
-		
+
 		this.rawCommands = str.toString();
 	}
 

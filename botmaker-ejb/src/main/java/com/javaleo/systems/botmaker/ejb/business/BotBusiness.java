@@ -90,7 +90,7 @@ public class BotBusiness implements IBotBusiness {
 		bot.setActive(false);
 		persistence.saveOrUpdate(bot);
 	}
-	
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void reactivateBot(Bot bot) throws BusinessException {
@@ -129,10 +129,9 @@ public class BotBusiness implements IBotBusiness {
 		Root<Bot> from = cq.from(Bot.class);
 		Join<Bot, Company> joinCompany = from.join("company", JoinType.INNER);
 		Join<Bot, Command> joinCommand = from.join("commands", JoinType.LEFT);
-		// Join<Command, Question> joinQuestion = joinCommand.join("questions", JoinType.LEFT);
 		joinCommand.join("questions", JoinType.LEFT);
 		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
-		// cq.where(cb.equal(from.get("active"), true));
+		cq.orderBy(cb.desc(from.get("id")));
 		return persistence.getResultList(cq);
 	}
 

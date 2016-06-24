@@ -3,10 +3,10 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2 class="pc90">Script Editor</h2>
+		<h2 class="pc95">Script Editor</h2>
 
-		<rich:panel id="registryId" styleClass="frm-crud pc90">
-			<h:panelGroup styleClass="frm-line">
+		<rich:panel id="registryId" styleClass="frm-crud pc95">
+			<h:panelGroup styleClass="frm-line" rendered="#{scriptAction.bot ne null}">
 				<h:outputLabel value="Bot" />
 				<h:outputText value="#{scriptAction.bot.name}" />
 			</h:panelGroup>
@@ -20,6 +20,28 @@
 				<h:outputLabel value="Question" />
 				<h:outputText value="#{scriptAction.script.question.instruction}" />
 				<h:outputLabel value="Script Type" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{scriptAction.bot ne null}">
+				<h:outputLabel value="Generic Script" />
+				<h:selectOneMenu id="genericScriptId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
+					<f:selectItem itemLabel="None" itemValue="#{null}" />
+					<f:selectItems value="#{auxAction.companyGenericScripts}" var="gnSc" itemLabel="#{gnSc.name}" itemValue="#{gnSc}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line" rendered="#{scriptAction.bot eq null}">
+				<h:outputLabel value="Script Name" />
+				<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{scriptAction.bot eq null}">
+				<h:outputLabel value="Short description" styleClass="txtop" />
+				<h:inputTextarea value="#{scriptAction.script.description}" rows="2" styleClass="pc70" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{scriptAction.bot eq null}">
+				<h:outputLabel value="Is Generic" />
+				<h:selectBooleanCheckbox value="#{scriptAction.script.generic}">
+					<f:ajax event="click" execute="@this" />
+				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup styleClass="frm-line">
 				<h:outputLabel value="Language" />
@@ -37,9 +59,8 @@
 			</h:panelGroup>
 		</rich:panel>
 
-		<rich:panel styleClass="frm-crud pc90">
+		<rich:panel styleClass="frm-crud pc95">
 			<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100">
-
 				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
 					<h3 class="mrauto pc100">Available Context</h3>
 					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{scriptAction.contextVars}" styleClass="pc100">
@@ -57,7 +78,6 @@
 						</h:column>
 					</h:dataTable>
 				</h:panelGroup>
-
 				<h:panelGroup layout="block" styleClass="hg100pc">
 					<h3 class="mrauto pc100">Script Editor</h3>
 					<h:panelGroup layout="block" styleClass="frm-line">
@@ -70,7 +90,6 @@
 					<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
 				</h:panelGroup>
 			</h:panelGrid>
-
 			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
 				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
 				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
@@ -80,7 +99,6 @@
 					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
 				</h:commandButton>
 			</h:panelGroup>
-
 		</rich:panel>
 
 		<script type="text/javascript">

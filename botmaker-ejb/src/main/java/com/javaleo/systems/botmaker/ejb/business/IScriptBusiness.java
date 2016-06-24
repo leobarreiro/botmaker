@@ -21,6 +21,10 @@ public interface IScriptBusiness extends Serializable {
 
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
 
+	List<Script> listLastGenericScriptsFromUser();
+	
+	List<Script> listGenericScripts();
+	
 	void saveScript(Script script) throws BusinessException;
 
 }

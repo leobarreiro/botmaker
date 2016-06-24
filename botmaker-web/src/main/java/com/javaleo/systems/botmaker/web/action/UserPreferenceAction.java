@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -15,7 +17,7 @@ import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
-@ConversationScoped
+@SessionScoped
 public class UserPreferenceAction implements Serializable {
 
 	private static final String PAGE_PREFS = "/pages/preferences/user-preferences.jsf?faces-redirect=true";
@@ -49,6 +51,7 @@ public class UserPreferenceAction implements Serializable {
 		return PAGE_PREFS;
 	}
 
+	@PostConstruct
 	public void loadPreferences() {
 		initOptions();
 	}

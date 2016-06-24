@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,17 +14,17 @@ import javax.inject.Named;
 import org.javaleo.libs.botgram.enums.ParseMode;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
-import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Named
 @ConversationScoped
 public class AuxAction implements Serializable {
 
 	@Inject
-	private BotMakerCredentials credentials;
+	private Conversation conversation;
 
 	@Inject
 	private IBotMakerFacade facade;
@@ -30,9 +32,29 @@ public class AuxAction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Bot> bots;
+	private List<Script> lastGenericScripts;
+	private List<Script> companyGenericScripts;
 
+	@PostConstruct
 	public void init() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		updateLastBotsFromCompanyUser();
+		updateLastGenericScripts();
+		updateCompanyGenericScripts();
+	}
+
+	public void updateLastBotsFromCompanyUser() {
 		bots = facade.listLastBotsFromCompanyUser();
+	}
+
+	public void updateLastGenericScripts() {
+		lastGenericScripts = facade.listGenericScripts();
+	}
+
+	public void updateCompanyGenericScripts() {
+		companyGenericScripts = facade.listGenericScripts();
 	}
 
 	public List<ScriptType> getScriptTypeOpt() {
@@ -53,6 +75,22 @@ public class AuxAction implements Serializable {
 
 	public void setBots(List<Bot> bots) {
 		this.bots = bots;
+	}
+
+	public List<Script> getLastGenericScripts() {
+		return lastGenericScripts;
+	}
+
+	public void setLastGenericScripts(List<Script> lastGenericScripts) {
+		this.lastGenericScripts = lastGenericScripts;
+	}
+
+	public List<Script> getCompanyGenericScripts() {
+		return companyGenericScripts;
+	}
+
+	public void setCompanyGenericScripts(List<Script> companyGenericScripts) {
+		this.companyGenericScripts = companyGenericScripts;
 	}
 
 }

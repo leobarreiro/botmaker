@@ -449,6 +449,9 @@ span.primary, a.primary, a.secondary, span.secondary {
 	.pc90 {
 		width: 90% !important;
 	}
+	.pc95 {
+		width: 95% !important;
+	}
 	.pc100 {
 		width: 100% !important;
 	}
