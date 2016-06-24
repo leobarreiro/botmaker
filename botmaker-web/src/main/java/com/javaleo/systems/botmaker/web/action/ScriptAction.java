@@ -125,6 +125,7 @@ public class ScriptAction implements Serializable {
 			facade.saveScript(script);
 			msgAction.addInfoMessage("Script saved!");
 			auxAction.updateLastGenericScripts();
+			auxAction.updateCompanyGenericScripts();
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
 		}
