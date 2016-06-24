@@ -125,6 +125,12 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 			}
 			str.append("\r\n");
 		}
+		if (StringUtils.isNotBlank(bot.getCancelKey())) {
+			str.append(bot.getCancelKey());
+			str.append(" - ");
+			str.append(StringUtils.isNotBlank(bot.getCancelMessage()) ? bot.getCancelMessage() : " No description");
+		}
+		
 		this.rawCommands = str.toString();
 	}
 

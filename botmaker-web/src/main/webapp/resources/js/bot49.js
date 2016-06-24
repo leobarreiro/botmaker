@@ -22,7 +22,6 @@ function copySelectionText() {
 
 function clickCopy(element) {
 	element.addEventListener('mouseup', function(e) {
-		alert(e);
 		var e = e || event
 		var target = e.target || e.srcElement
 		if (target.className == 'console') {
