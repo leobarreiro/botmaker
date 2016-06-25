@@ -59,6 +59,7 @@ public class ValidatorBusiness implements IValidatorBusiness {
 		Predicate[] predicateArray = new Predicate[predicates.size()];
 		predicates.toArray(predicateArray);
 		cq.where(predicateArray);
+		cq.orderBy(cb.asc(fromSnippet.get("name")));
 		return persistence.getResultList(cq);
 	}
 
