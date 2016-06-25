@@ -50,11 +50,11 @@ public class AuxAction implements Serializable {
 	}
 
 	public void updateLastGenericScripts() {
-		lastGenericScripts = facade.listGenericScripts();
+		lastGenericScripts = facade.listLastGenericScriptsFromUser();
 	}
 
 	public void updateCompanyGenericScripts() {
-		companyGenericScripts = facade.listGenericScripts();
+		companyGenericScripts = facade.listAllGenericScriptsFromCompany();
 	}
 
 	public List<ScriptType> getScriptTypeOpt() {

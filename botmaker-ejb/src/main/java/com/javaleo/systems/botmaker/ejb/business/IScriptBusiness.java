@@ -6,9 +6,9 @@ import java.util.List;
 import javax.ejb.Local;
 
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
-import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 
 @Local
 public interface IScriptBusiness extends Serializable {
@@ -21,10 +21,14 @@ public interface IScriptBusiness extends Serializable {
 
 	Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException;
 
+	Script getScriptToEdition(Long id);
+
 	List<Script> listLastGenericScriptsFromUser();
-	
-	List<Script> listGenericScripts();
-	
+
+	List<Script> listGenericScriptsFromScriptType(ScriptType scriptType);
+
+	List<Script> listAllGenericScriptsFromCompany();
+
 	void saveScript(Script script) throws BusinessException;
 
 }

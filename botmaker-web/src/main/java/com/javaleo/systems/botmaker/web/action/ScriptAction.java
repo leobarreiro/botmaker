@@ -116,7 +116,7 @@ public class ScriptAction implements Serializable {
 	}
 
 	public String listGenericScripts() {
-		scripts = facade.listGenericScripts();
+		scripts = facade.listAllGenericScriptsFromCompany();
 		return "/pages/scripts/list-generic.jsf?faces-redirect=true";
 	}
 

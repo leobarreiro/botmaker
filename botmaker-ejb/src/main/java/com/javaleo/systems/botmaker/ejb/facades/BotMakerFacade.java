@@ -69,7 +69,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IBlackListExpressionBusiness blackListExpressionBusiness;
-	
+
 	@Inject
 	private ITokenBusiness tokenBusiness;
 
@@ -251,10 +251,25 @@ public class BotMakerFacade implements IBotMakerFacade {
 	public Boolean evaluateBooleanScript(Dialog dialog, Script script) throws BusinessException {
 		return scriptBusiness.evaluateBooleanScript(dialog, script);
 	}
-	
+
 	@Override
-	public List<Script> listGenericScripts() {
-		return scriptBusiness.listGenericScripts();
+	public List<Script> listGenericScriptsFromScriptType(ScriptType scriptType) {
+		return scriptBusiness.listGenericScriptsFromScriptType(scriptType);
+	}
+
+	@Override
+	public List<Script> listLastGenericScriptsFromUser() {
+		return scriptBusiness.listLastGenericScriptsFromUser();
+	}
+
+	@Override
+	public List<Script> listAllGenericScriptsFromCompany() {
+		return scriptBusiness.listAllGenericScriptsFromCompany();
+	}
+
+	@Override
+	public Script getScriptToEdition(Long id) {
+		return scriptBusiness.getScriptToEdition(id);
 	}
 
 	@Override

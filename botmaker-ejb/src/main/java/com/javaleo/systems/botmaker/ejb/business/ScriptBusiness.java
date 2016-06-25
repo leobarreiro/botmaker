@@ -113,7 +113,7 @@ public class ScriptBusiness implements IScriptBusiness {
 		}
 		return result;
 	}
-	
+
 	private String getCodeFromScript(Script script) {
 		StringBuilder strCode = new StringBuilder();
 		if (script.getGenericScript() != null && script.getScriptType().equals(script.getGenericScript().getScriptType())) {
@@ -124,7 +124,19 @@ public class ScriptBusiness implements IScriptBusiness {
 		strCode.append(script.getCode());
 		return strCode.toString();
 	}
-	
+
+	@Override
+	public Script getScriptToEdition(Long id) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Script> cq = cb.createQuery(Script.class);
+		Root<Script> from = cq.from(Script.class);
+		from.join("generic", JoinType.LEFT);
+		from.join("command", JoinType.LEFT);
+		from.join("question", JoinType.LEFT);
+		cq.where(cb.equal(from.get("id"), id));
+		return persistence.getSingleResult(cq);
+	}
+
 	@Override
 	public List<Script> listLastGenericScriptsFromUser() {
 		if (credentials.getCompany() == null) {
@@ -144,7 +156,26 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
-	public List<Script> listGenericScripts() {
+	public List<Script> listGenericScriptsFromScriptType(ScriptType scriptType) {
+		if (credentials.getCompany() == null) {
+			return null;
+		}
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Script> cq = cb.createQuery(Script.class);
+		Root<Script> from = cq.from(Script.class);
+		Join<Script, User> joinAuthor = from.join("author", JoinType.INNER);
+		Join<User, Company> joinCompany = joinAuthor.join("company", JoinType.INNER);
+		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
+		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), true);
+		Predicate whereScriptType = cb.equal(from.get("scriptType"), scriptType);
+		cq.where(cb.and(whereCompany, whereGeneric, whereScriptType));
+		cq.orderBy(cb.asc(from.get("name")));
+		cq.select(from);
+		return persistence.getResultList(cq);
+	}
+
+	@Override
+	public List<Script> listAllGenericScriptsFromCompany() {
 		if (credentials.getCompany() == null) {
 			return null;
 		}
@@ -190,13 +221,13 @@ public class ScriptBusiness implements IScriptBusiness {
 		if (script.getAuthor() == null) {
 			script.setAuthor(credentials.getUser());
 		}
-		
+
 		Calendar cal = Calendar.getInstance();
 		if (script.getCreated() == null) {
 			script.setCreated(cal.getTime());
 		}
 		script.setModified(cal.getTime());
-		
+
 		persistence.saveOrUpdate(script);
 	}
 
