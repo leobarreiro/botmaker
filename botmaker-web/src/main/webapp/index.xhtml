@@ -15,10 +15,14 @@
 				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="primary pc100 mtop30 mgauto" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="txctr link-destac">
-				<h:commandLink action="#{userAction.createAccount()}" value="Create new Account" />
+				<h:commandLink action="#{userAction.createAccount()}" value="Create new Account">
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandLink>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="txctr link-destac">
-				<h:commandLink action="#{userAction.forgotMyPassword()}" value="I forgot my password" />
+				<h:commandLink action="#{userAction.forgotMyPassword()}" value="I forgot my password">
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandLink>
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

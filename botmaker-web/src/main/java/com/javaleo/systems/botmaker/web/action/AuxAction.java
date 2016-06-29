@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.javaleo.libs.botgram.enums.ParseMode;
+import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
@@ -27,6 +28,9 @@ public class AuxAction implements Serializable {
 	private Conversation conversation;
 
 	@Inject
+	private IJavaleoAuthenticator authenticator;
+
+	@Inject
 	private IBotMakerFacade facade;
 
 	private static final long serialVersionUID = 1L;
@@ -37,12 +41,14 @@ public class AuxAction implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		if (conversation.isTransient()) {
-			conversation.begin();
+		if (authenticator.isAuthenticated()) {
+			if (conversation.isTransient()) {
+				conversation.begin();
+			}
+			updateLastBotsFromCompanyUser();
+			updateLastGenericScripts();
+			updateCompanyGenericScripts();
 		}
-		updateLastBotsFromCompanyUser();
-		updateLastGenericScripts();
-		updateCompanyGenericScripts();
 	}
 
 	public void updateLastBotsFromCompanyUser() {
