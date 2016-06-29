@@ -40,15 +40,15 @@ public class UserBusiness implements IUserBusiness {
 	@Override
 	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
 		// name
-		Pattern namePattern = Pattern.compile("^[A-Za-z]{2,}[\\ ]{1}[A-Za-z]{2,}.");
+		Pattern namePattern = Pattern.compile("([A-Za-z]{3,}[\\W]+[A-Za-z]{2,})");
 		Matcher nameMatcher = namePattern.matcher(user.getName());
-		if (!nameMatcher.matches()) {
+		if (!nameMatcher.find()) {
 			throw new BusinessException("Your name not contains first and last name. Please review and try again.");
 		}
 		// username
 		Pattern usernamePattern = Pattern.compile("^[A-Za-z0-9]{6,12}$");
 		Matcher usernameMatcher = usernamePattern.matcher(user.getUsername());
-		if (!usernameMatcher.matches()) {
+		if (!usernameMatcher.find()) {
 			throw new BusinessException("The username must be between 6 and 12 digits long. He should contains letters and numbers only.");
 		}
 		// email
