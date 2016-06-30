@@ -75,9 +75,9 @@ public class StartupLoader implements IStartupLoader {
 			Query qrAnswerType = entityManager.createNativeQuery(jpqlAnswerType);
 			qrAnswerType.executeUpdate();
 
-			String jpqlParseMode = "UPDATE botmaker.question SET parse_mode = \'HTML\' WHERE parse_mode IS NULL";
-			Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
-			qrParseMode.executeUpdate();
+			// String jpqlParseMode = "UPDATE botmaker.question SET parse_mode = \'HTML\' WHERE parse_mode IS NULL";
+			// Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
+			// qrParseMode.executeUpdate();
 
 		} catch (BusinessException e) {
 			LOG.warn(e.getMessage());
