@@ -165,7 +165,7 @@ public class Script implements IEntityBasic {
 		this.code = code;
 	}
 
-	@OneToOne(optional = true, mappedBy = "postScript", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "postScript", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "command_id", referencedColumnName = "command_id", nullable = true, foreignKey = @ForeignKey(name = "fk_script_command"))
 	public Command getCommand() {
 		return command;
@@ -175,7 +175,7 @@ public class Script implements IEntityBasic {
 		this.command = command;
 	}
 
-	@OneToOne(optional = true, mappedBy = "postScript")
+	@OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "postScript")
 	@JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = true, foreignKey = @ForeignKey(name = "fk_script_question"))
 	public Question getQuestion() {
 		return question;
@@ -185,7 +185,7 @@ public class Script implements IEntityBasic {
 		this.question = question;
 	}
 
-	@OneToOne(optional = true, mappedBy = "script")
+	@OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "script", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", nullable = true, foreignKey = @ForeignKey(name = "fk_script_validator"))
 	public Validator getValidator() {
 		return validator;

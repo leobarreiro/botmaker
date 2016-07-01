@@ -59,7 +59,7 @@ public class ScriptAction implements Serializable {
 		}
 		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = bot;
-		this.script = script;
+		this.script = facade.getScriptToEdition(script.getId());
 		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
@@ -82,7 +82,7 @@ public class ScriptAction implements Serializable {
 		}
 		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = null;
-		this.script = script;
+		this.script = facade.getScriptToEdition(script.getId());
 		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
@@ -94,12 +94,12 @@ public class ScriptAction implements Serializable {
 		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = null;
 		if (validator.getScript() != null) {
-			script = validator.getScript();
+			script = facade.getScriptToEdition(validator.getScript().getId());
 		} else {
 			script = new Script();
 			script.setGeneric(false);
+			script.setValidator(validator);
 		}
-		script.setValidator(validator);
 		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}

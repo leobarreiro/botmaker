@@ -98,7 +98,7 @@
 				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
 				<h:commandButton value="Back to Validator" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
 				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
-					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+					<a4j:ajax execute="frm:registryId frm:contextVarsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
 				</h:commandButton>
 				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
 					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />

@@ -57,10 +57,11 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 		try {
 			facade.saveValidator(validator);
 			msgAction.addMessage(MessageType.INFO, "Validator saved.");
+			return detail(validator);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
+			return "/pages/validators/validator.jsf?faces-redirect=true";
 		}
-		return list();
 	}
 
 	public String edit() {

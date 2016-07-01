@@ -3,6 +3,8 @@ package com.javaleo.systems.botmaker.ejb.business;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -130,15 +132,19 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Script getScriptToEdition(Long id) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Script> cq = cb.createQuery(Script.class);
 		Root<Script> from = cq.from(Script.class);
-		from.join("generic", JoinType.LEFT);
+		from.join("genericScript", JoinType.LEFT);
 		from.join("command", JoinType.LEFT);
 		from.join("question", JoinType.LEFT);
+		from.join("validator", JoinType.LEFT);
 		cq.where(cb.equal(from.get("id"), id));
-		return persistence.getSingleResult(cq);
+		Script script = persistence.getSingleResult(cq);
+		persistence.getEntityManager().contains(script);
+		return script;
 	}
 
 	@Override
@@ -197,7 +203,11 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveScript(Script script) throws BusinessException {
+		
+		persistence.getEntityManager().contains(script);
+		
 		if (script.getGeneric() != null && script.getGeneric()) {
 			if (StringUtils.isBlank(script.getName())) {
 				throw new BusinessException("For Generic Script is mandatory enter a Name.");

@@ -3,6 +3,8 @@ package com.javaleo.systems.botmaker.ejb.facades;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -273,6 +275,7 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveScript(Script script) throws BusinessException {
 		scriptBusiness.saveScript(script);
 	}
