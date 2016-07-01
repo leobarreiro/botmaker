@@ -30,7 +30,7 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 
 	@Inject
 	private UserPreferenceAction userPreferencesAction;
-	
+
 	@Inject
 	private MsgAction msgAction;
 
@@ -48,7 +48,7 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 		startNewConversation();
 		loadOptions();
 		validator = new Validator();
-		validator.setValidatorType(ValidatorType.REGEXP);
+		validator.setValidatorType(ValidatorType.BOOLEAN);
 		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator.jsf?faces-redirect=true";
 	}

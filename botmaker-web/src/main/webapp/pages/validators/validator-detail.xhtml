@@ -15,33 +15,20 @@
 				<h:outputText styleClass="txt" value="#{validatorAction.validator.description}" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Type" />
+				<h:outputLabel value="Type" />
 				<h:outputText styleClass="txt" value="#{validatorAction.validator.validatorType.descriptor}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:panelGroup layout="block" styleClass="scripting">
-					<h:inputTextarea id="scriptCode" value="#{validatorAction.validator.scriptCode}" rows="4" readonly="true" styleClass="script" rendered="#{validatorAction.validator.validatorType ne null}" />
-					<h:outputText value="--" styleClass="purple txt" rendered="#{validatorAction.validator.validatorType eq null}" />
-				</h:panelGroup>
+				<h:outputLabel value="Script" styleClass="txtop" />
+				<h:commandLink title="Edit Code" action="#{scriptAction.startEditScriptValidator(validatorAction.validator)}" styleClass="links-script-code">
+					<h:graphicImage value="/resources/img/icons/edit.png" />
+				</h:commandLink>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{validatorAction.cancel()}" value="Go Back" styleClass="secondary" />
 				<h:commandButton action="#{validatorAction.edit()}" value="Edit" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-
-		<script type="text/javascript">
-			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    indentWithTabs: true,
-			    lineNumbers: true, 
-			    lineWrapping: true, 
-			    readOnly: true   
-			});
-			scriptEditor.setSize('100%', 100);
-		</script>
 
 	</ui:define>
 </ui:composition>

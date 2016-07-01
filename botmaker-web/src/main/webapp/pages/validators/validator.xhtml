@@ -20,30 +20,11 @@
 					<f:selectItems value="#{validatorAction.filter.validatorTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				</h:selectOneMenu>
 			</h:panelGroup>
-			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Code" />
-				<h:panelGroup layout="block" styleClass="scripting">
-					<h:outputText styleClass="explain" value="Validator scripts must return a boolean value (true or false)" />
-					<ui:include src="/pages/utils/defaultvars.xhtml" />
-					<h:inputTextarea id="scriptCode" value="#{validatorAction.validator.scriptCode}" />
-				</h:panelGroup>
-			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-
-		<script type="text/javascript">
-			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    indentWithTabs: true,
-			    lineNumbers: true, 
-			    lineWrapping: true  
-			});
-			scriptEditor.setSize('100%', 100);
-		</script>
 
 	</ui:define>
 </ui:composition>

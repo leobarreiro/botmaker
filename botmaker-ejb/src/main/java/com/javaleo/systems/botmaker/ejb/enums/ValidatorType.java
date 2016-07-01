@@ -2,7 +2,7 @@ package com.javaleo.systems.botmaker.ejb.enums;
 
 public enum ValidatorType {
 
-	SET("Set of Options"), REGEXP("Simple Regexp"), GROOVY("Groovy");
+	SET("Set of Options"), BOOLEAN("Boolean");
 
 	private ValidatorType(String descriptor) {
 		this.descriptor = descriptor;
@@ -16,10 +16,6 @@ public enum ValidatorType {
 
 	public void setDescriptor(String descriptor) {
 		this.descriptor = descriptor;
-	}
-
-	public boolean isScript() {
-		return (!this.equals(ValidatorType.REGEXP) && !this.equals(ValidatorType.SET));
 	}
 
 	public boolean isSetOfOptions() {

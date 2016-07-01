@@ -28,7 +28,7 @@ public interface IQuestionBusiness extends Serializable {
 
 	boolean validateAnswer(Dialog dialog, Question question);
 
-	List<List<String>> convertOptions(Question question);
+	List<List<String>> convertOptions(Dialog dialog, Question question);
 
 	void postProcessAnswer(Dialog dialog, Question question, Answer answer) throws BusinessException;
 

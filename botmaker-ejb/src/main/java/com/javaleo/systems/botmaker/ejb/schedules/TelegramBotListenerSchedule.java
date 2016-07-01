@@ -58,7 +58,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Inject
 	private IQuestionBusiness questionBusiness;
-	
+
 	@Inject
 	private IScriptBusiness scriptBusiness;
 
@@ -263,7 +263,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		try {
 			if (dialog.getLastQuestion() != null) {
 				if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
-					List<List<String>> options = questionBusiness.convertOptions(dialog.getLastQuestion());
+					List<List<String>> options = questionBusiness.convertOptions(dialog, dialog.getLastQuestion());
 					sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN, options);
 				} else {
 					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN);

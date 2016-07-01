@@ -1,10 +1,9 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -166,21 +165,22 @@ public class QuestionBusiness implements IQuestionBusiness {
 			if (question.getValidator() == null || question.getValidator().getValidatorType() == null) {
 				return true;
 			} else {
-				if (question.getValidator().getValidatorType().equals(ValidatorType.REGEXP)) {
-					Pattern pattern = Pattern.compile(question.getValidator().getScriptCode());
-					Matcher m = pattern.matcher(StringUtils.lowerCase(dialog.getLastUpdate().getMessage().getText()));
-					return m.matches();
-				} else if (question.getValidator().getValidatorType().equals(ValidatorType.GROOVY)) {
-					dialog.addContextVar("userAnswer", dialog.getLastUpdate().getMessage().getText());
-					try {
-						Boolean valid = scriptBiz.evaluateBooleanScript(dialog, question.getPostScript());
-						return valid;
-					} catch (Exception e) {
-						LOG.error(e.getMessage());
+				try {
+					if (question.getValidator().getValidatorType().equals(ValidatorType.SET)) {
+						String validatorSource = scriptBiz.executeScript(dialog, question.getValidator().getScript());
+						List<String> optValidator = Arrays.asList(validatorSource.split(","));
+						for (String op : optValidator) {
+							if (StringUtils.equalsIgnoreCase(StringUtils.trim(op), dialog.getLastUpdate().getMessage().getText())) {
+								return true;
+							}
+						}
 						return false;
+					} else {
+						return scriptBiz.evaluateBooleanScript(dialog, question.getValidator().getScript());
 					}
-				} else {
-					return true;
+				} catch (Exception e) {
+					LOG.error(e.getMessage());
+					return false;
 				}
 			}
 		}
@@ -191,7 +191,8 @@ public class QuestionBusiness implements IQuestionBusiness {
 	public void postProcessAnswer(Dialog dialog, Question question, Answer answer) throws BusinessException {
 		if (!scriptBiz.isValidScript(question.getPostScript())) {
 			throw new BusinessException(
-					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", question.getCommand().getBot().getId().toString(), question.getCommand().getId().toString(), question.getId().toString()));
+					MessageFormat.format("Trying to execute a Post Script not valid [Bot:{0}|Command:{1}]", question.getCommand().getBot().getId().toString(),
+							question.getCommand().getId().toString(), question.getId().toString()));
 		}
 		String postProcessed = scriptBiz.executeScript(dialog, question.getPostScript());
 		dialog.setPostProcessedResult(postProcessed);
@@ -199,7 +200,14 @@ public class QuestionBusiness implements IQuestionBusiness {
 	}
 
 	@Override
-	public List<List<String>> convertOptions(Question question) {
-		return BotMakerUtils.convertStringToArrayOfArrays(question.getValidator().getScriptCode(), 2, ',');
+	public List<List<String>> convertOptions(Dialog dialog, Question question) {
+		String options;
+		try {
+			options = scriptBiz.executeScript(dialog, question.getValidator().getScript());
+		} catch (BusinessException e) {
+			options = "";
+			LOG.error(e.getMessage());
+		}
+		return BotMakerUtils.convertStringToArrayOfArrays(options, 2, ',');
 	}
 }

@@ -46,6 +46,7 @@ public class Script implements IEntityBasic {
 	private String code;
 	private Command command;
 	private Question question;
+	private Validator validator;
 	private Script genericScript;
 
 	@Id
@@ -184,7 +185,17 @@ public class Script implements IEntityBasic {
 		this.question = question;
 	}
 
-	@ManyToOne(fetch=FetchType.EAGER, optional = true, cascade={CascadeType.REFRESH})
+	@OneToOne(optional = true, mappedBy = "script")
+	@JoinColumn(name = "validator_id", referencedColumnName = "validator_id", nullable = true, foreignKey = @ForeignKey(name = "fk_script_validator"))
+	public Validator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = { CascadeType.REFRESH })
 	@JoinColumn(name = "generic_script", referencedColumnName = "script_id", foreignKey = @ForeignKey(name = "fk_generic_script"))
 	public Script getGenericScript() {
 		return genericScript;
@@ -205,6 +216,7 @@ public class Script implements IEntityBasic {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((generic == null) ? 0 : generic.hashCode());
+		result = prime * result + ((genericScript == null) ? 0 : genericScript.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -212,6 +224,7 @@ public class Script implements IEntityBasic {
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
 		result = prime * result + ((valid == null) ? 0 : valid.hashCode());
+		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		return result;
 	}
 
@@ -259,6 +272,11 @@ public class Script implements IEntityBasic {
 				return false;
 		} else if (!generic.equals(other.generic))
 			return false;
+		if (genericScript == null) {
+			if (other.genericScript != null)
+				return false;
+		} else if (!genericScript.equals(other.genericScript))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -287,6 +305,11 @@ public class Script implements IEntityBasic {
 			if (other.valid != null)
 				return false;
 		} else if (!valid.equals(other.valid))
+			return false;
+		if (validator == null) {
+			if (other.validator != null)
+				return false;
+		} else if (!validator.equals(other.validator))
 			return false;
 		return true;
 	}

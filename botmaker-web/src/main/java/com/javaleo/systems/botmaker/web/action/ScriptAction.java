@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -38,6 +39,9 @@ public class ScriptAction implements Serializable {
 	private CommandAction commandAction;
 
 	@Inject
+	private ValidatorAction validatorAction;
+
+	@Inject
 	private AuxAction auxAction;
 
 	@Inject
@@ -56,7 +60,7 @@ public class ScriptAction implements Serializable {
 		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = bot;
 		this.script = script;
-		loadQuestionsAndContextVars();
+		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
@@ -68,7 +72,7 @@ public class ScriptAction implements Serializable {
 		bot = null;
 		script = new Script();
 		script.setGeneric(true);
-		loadQuestionsAndContextVars();
+		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
@@ -79,11 +83,28 @@ public class ScriptAction implements Serializable {
 		conversation.setTimeout(CONVERSATION_EXPIRES);
 		this.bot = null;
 		this.script = script;
-		loadQuestionsAndContextVars();
+		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
-	private void loadQuestionsAndContextVars() {
+	public String startEditScriptValidator(Validator validator) {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+		conversation.setTimeout(CONVERSATION_EXPIRES);
+		this.bot = null;
+		if (validator.getScript() != null) {
+			script = validator.getScript();
+		} else {
+			script = new Script();
+			script.setGeneric(false);
+		}
+		script.setValidator(validator);
+		loadContextVars();
+		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	private void loadContextVars() {
 		this.contextVars = facade.getListDialogContextVars();
 		if (script.getCommand() != null && script.getCommand().getId() != null) {
 			List<Question> questions = facade.listQuestionsFromCommand(script.getCommand());
@@ -134,6 +155,10 @@ public class ScriptAction implements Serializable {
 
 	public String goBackCommand() {
 		return commandAction.detail(script.getCommand());
+	}
+
+	public String goBackValidator() {
+		return validatorAction.detail(script.getValidator());
 	}
 
 	public Bot getBot() {

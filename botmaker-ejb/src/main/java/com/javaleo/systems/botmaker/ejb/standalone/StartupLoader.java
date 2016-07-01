@@ -79,6 +79,9 @@ public class StartupLoader implements IStartupLoader {
 			// Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
 			// qrParseMode.executeUpdate();
 
+			String jpqlValidatorType = "UPDATE botmaker.validator SET validator_type = \'BOOLEAN\' WHERE (validator_type = \'GROOVY\' OR validator_type = \'REGEXP\')";
+			Query qrValidatorType = entityManager.createNativeQuery(jpqlValidatorType);
+			qrValidatorType.executeUpdate();
 		} catch (BusinessException e) {
 			LOG.warn(e.getMessage());
 		}

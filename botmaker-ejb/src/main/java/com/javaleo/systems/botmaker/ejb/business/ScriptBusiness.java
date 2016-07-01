@@ -22,6 +22,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.User;
+import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -49,6 +50,9 @@ public class ScriptBusiness implements IScriptBusiness {
 
 	@Inject
 	private IPersistenceBasic<Question> questionPersistence;
+
+	@Inject
+	private IPersistenceBasic<Validator> validatorPersistence;
 
 	@Inject
 	private GroovyScriptRunnerUtils groovyRunner;
@@ -199,11 +203,8 @@ public class ScriptBusiness implements IScriptBusiness {
 				throw new BusinessException("For Generic Script is mandatory enter a Name.");
 			}
 		} else {
-			if (script.getCommand() == null && script.getQuestion() == null) {
-				throw new BusinessException("The script must be owned by a command or a question to be saved.");
-			}
-			if (script.getCommand() != null && script.getQuestion() != null) {
-				throw new BusinessException("The script should be owned by a command or a question. Only one of the two options.");
+			if (script.getCommand() == null && script.getQuestion() == null && script.getValidator() == null) {
+				throw new BusinessException("The script must be owned by a command or a question or a validator to be saved.");
 			}
 		}
 
@@ -218,6 +219,13 @@ public class ScriptBusiness implements IScriptBusiness {
 			script.setQuestion(question);
 			question.setPostScript(script);
 		}
+
+		if (script.getValidator() != null && script.getValidator().getId() != null) {
+			Validator validator = validatorPersistence.find(Validator.class, script.getValidator().getId());
+			script.setValidator(validator);
+			validator.setScript(script);
+		}
+
 		if (script.getAuthor() == null) {
 			script.setAuthor(credentials.getUser());
 		}

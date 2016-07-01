@@ -1,15 +1,18 @@
 package com.javaleo.systems.botmaker.ejb.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -31,7 +34,7 @@ public class Validator implements IEntityBasic {
 	private String name;
 	private String description;
 	private ValidatorType validatorType;
-	private String scriptCode;
+	private Script script;
 
 	@Override
 	@Id
@@ -83,18 +86,14 @@ public class Validator implements IEntityBasic {
 		this.validatorType = validatorType;
 	}
 
-	@Column(name = "script_code", columnDefinition = "text")
-	public String getScriptCode() {
-		return scriptCode;
+	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })
+	@JoinColumn(name = "script_id", referencedColumnName = "script_id", nullable = true)
+	public Script getScript() {
+		return script;
 	}
 
-	public void setScriptCode(String scriptCode) {
-		this.scriptCode = scriptCode;
-	}
-
-	@Transient
-	public String codeResume() {
-		return StringUtils.abbreviate(scriptCode, 100);
+	public void setScript(Script script) {
+		this.script = script;
 	}
 
 	@Transient
@@ -110,7 +109,6 @@ public class Validator implements IEntityBasic {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((scriptCode == null) ? 0 : scriptCode.hashCode());
 		result = prime * result + ((validatorType == null) ? 0 : validatorType.hashCode());
 		return result;
 	}
@@ -143,11 +141,6 @@ public class Validator implements IEntityBasic {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (scriptCode == null) {
-			if (other.scriptCode != null)
-				return false;
-		} else if (!scriptCode.equals(other.scriptCode))
 			return false;
 		if (validatorType != other.validatorType)
 			return false;
