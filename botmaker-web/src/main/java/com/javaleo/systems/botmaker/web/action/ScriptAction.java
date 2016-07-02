@@ -53,14 +53,20 @@ public class ScriptAction implements Serializable {
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
 
-	public String startEditScript(Bot bot, Script script) {
+	public String startEditScript(Bot botEdition, Script scriptEdition) {
 		if (conversation.isTransient()) {
 			conversation.begin();
 		}
 		conversation.setTimeout(CONVERSATION_EXPIRES);
-		this.bot = bot;
-		this.script = facade.getScriptToEdition(script.getId());
+		bot = botEdition;
+		if (scriptEdition.getId() != null) {
+			script = facade.getScriptToEdition(scriptEdition.getId());
+		} else {
+			script = scriptEdition;
+		}
+		script.setGeneric(false);
 		loadContextVars();
+		listGenericScripts();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
@@ -101,6 +107,7 @@ public class ScriptAction implements Serializable {
 			script.setValidator(validator);
 		}
 		loadContextVars();
+		listGenericScripts();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 

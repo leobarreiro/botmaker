@@ -61,6 +61,13 @@
 					<f:ajax event="change" execute="@this" />
 				</h:selectOneMenu>
 			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line" rendered="#{not scriptAction.script.generic}">
+				<h:outputLabel value="Generic Script" />
+				<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
+					<f:selectItem itemLabel="None" itemValue="#{null}" />
+					<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
 		</rich:panel>
 
 		<rich:panel styleClass="frm-crud pc95">
