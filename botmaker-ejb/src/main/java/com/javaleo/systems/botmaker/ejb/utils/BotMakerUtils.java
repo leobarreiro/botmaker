@@ -21,7 +21,7 @@ public class BotMakerUtils {
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
 		List<String> subList = new ArrayList<String>();
 		for (int i = 0; i < originalOptions.size(); i++) {
-			byte[] textBytes = StringUtils.lowerCase(StringUtils.trim(originalOptions.get(i))).getBytes(StandardCharsets.ISO_8859_1);
+			byte[] textBytes = StringUtils.trim(originalOptions.get(i)).getBytes(StandardCharsets.ISO_8859_1);
 			subList.add(new String(textBytes, StandardCharsets.UTF_8));
 			if (i % maxSize == 0) {
 				listOfLists.add(subList);

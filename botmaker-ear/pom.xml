@@ -44,7 +44,7 @@
 						<webModule>
 							<groupId>com.javaleo.systems</groupId>
 							<artifactId>botmaker-web</artifactId>
-							<contextRoot>/botmaker</contextRoot>
+							<contextRoot>/</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>
