@@ -5,53 +5,41 @@
 
 		<h2>Bot</h2>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Bot Type" />
 				<h:outputText styleClass="txt #{botAction.bot.botType.name eq 'Telegram' ? 'blue' : 'green'}" value="#{botAction.bot.botType.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
 				<h:outputText id="nameBotId" styleClass="txt" value="#{botAction.bot.name}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Username" />
-				<h:outputText value="#{botAction.bot.username}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputText styleClass="txt" value="#{botAction.bot.username}" />
 				<h:outputLabel value="Token" />
-				<h:outputText value="#{botAction.bot.maskedToken}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.maskedToken}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Valid" />
 				<h:outputText value="#{botAction.bot.valid}" styleClass="#{(botAction.bot.valid) ? 'green': 'red'}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
-				<h:outputText value="#{botAction.bot.active}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.active}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:outputText value="#{botAction.bot.closedBotMessage}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputText styleClass="txt" value="#{botAction.bot.closedBotMessage}" />
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
-				<h:outputText value="#{botAction.bot.unknownCommadMessage}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.unknownCommadMessage}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="List commands when unknown command is received" />
-				<h:outputText value="#{botAction.bot.listCommands}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputText styleClass="txt" value="#{botAction.bot.listCommands}" />
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:outputText value="#{botAction.bot.endOfDialogMessage}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.endOfDialogMessage}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
-				<h:outputText value="#{botAction.bot.cancelKey}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputText styleClass="txt" value="#{botAction.bot.cancelKey}" />
 				<h:outputLabel value="Cancel Message" styleClass="txtop" />
-				<h:outputText value="#{botAction.bot.cancelMessage}" />
+				<h:outputText styleClass="txt" value="#{botAction.bot.cancelMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.list()}" value="List Bots" styleClass="secondary" />
@@ -85,15 +73,12 @@
 			</rich:dataTable>
 		</rich:panel>
 
-		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="280" width="360" maxHeight="280" maxWidth="360">
+		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="300" width="360" maxHeight="280" maxWidth="360">
 			<h:panelGroup layout="block" styleClass="pc100">
 				<h3 class="confirm-title">
 					<h:outputText value="#{botAction.bot.name}" />
 				</h3>
-				<h:panelGroup layout="block" styleClass="pc70 txctr mrauto">
-					<h:outputText value="Just click to copy" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="pc90 mrauto hg150 brd-green">
+				<h:panelGroup layout="block" styleClass="pc90 mrauto hg150">
 					<pre class="console" onclick="clickCopy(this)">#{botAction.rawCommands}</pre>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="frm-submit">

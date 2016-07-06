@@ -80,7 +80,7 @@ table tr td label {
 	margin: auto !important;
 }
 
-.frm-crud .frm-title, .frm-crud .frm-title-sec {
+.frm-title, .frm-title-sec {
 	text-align: left;
 	font-weight: bold;
 	color: #ffffff;
@@ -88,14 +88,13 @@ table tr td label {
 	background-color: #DFA5A5 !important;
 }
 
-.frm-crud .frm-line {
+.frm-line, .frm-line2 {
 	display: inline-block;
 	vertical-align: middle;
 }
 
-.frm-crud .frm-line label {
+.frm-line label, .frm-line2 label {
 	display: inline-block;
-	float: left;
 	text-align: right;
 	color: #440044;
 }
@@ -172,7 +171,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		font-size: 30pt;
 	}
 	.topmenu {
-		width: 50% !important;
+		width: 70% !important;
 		height: 30px;
 		padding-top: 20px;
 	}
@@ -183,7 +182,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		width: 25% !important;
 	}
 	h1, h2, h3, h4, h5, h6 {
-		width: 50%;
+		width: 70%;
 	}
 	h1 {
 		font-size: 28pt;
@@ -228,11 +227,11 @@ span.primary, a.primary, a.secondary, span.secondary {
 		padding: 12px 6px 12px 6px !important;
 	}
 	.frm-crud {
-		width: 50% !important;
+		width: 70% !important;
 		margin-top: 6px !important;
 		padding: 0px !important;
 		border: 1px solid #DFA5A5 !important;
-		border-radius: 8px !important;
+		/*border-radius: 8px !important;*/
 	}
 	.frm-crud table.rf-dt {
 		width: 100% !important;
@@ -240,28 +239,42 @@ span.primary, a.primary, a.secondary, span.secondary {
 	.frm-crud div.rf-p-b {
 		padding: 2px !important;
 	}
-	.frm-crud .frm-title {
+	.frm-title {
 		padding: 6px !important;
 		margin: 0px 0px 4px 0px;
 		font-size: 14pt;
-		border-radius: 8px 8px 0px 0px !important;
+		/*border-radius: 8px 8px 0px 0px !important;*/
 	}
-	.frm-crud .frm-title-sec {
+	.frm-title-sec {
 		padding: 6px !important;
 		margin: 0px 0px 4px 0px;
 		font-size: 14pt;
 		border-radius: 0px !important;
 	}
-	.frm-crud .frm-line {
+	.frm-line, .frm-line2 {
 		margin: 2px !important;
 		padding: 1px;
 		width: 100%;
 		font-size: 11pt !important;
 	}
-	.frm-crud .frm-line label {
+	.frm-line label {
 		padding: 2pt !important;
 		width: 25%;
 		margin-right: 8px;
+		vertical-align: top;
+	}
+	.frm-line2 label {
+		padding: 2pt !important;
+		width: 20%;
+		margin-right: 2px;
+		vertical-align: top;
+	}
+	.frm-line2 span {
+		display: inline-block;
+		padding: 2pt !important;
+		width: 28%;
+		vertical-align: top;
+		margin-right: 2px;
 	}
 	.frm-confirm {
 		padding: 4px !important;
@@ -326,7 +339,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		font-weight: normal !important;
 		border-radius: 4px !important;
 		text-shadow: none !important;
-		margin: 6px !important;
+		margin: 2px 6px 2px 6px !important;
 		cursor: default !important;
 	}
 	input.secondary, button.secondary {
@@ -614,7 +627,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 		color: #000000 !important;
 		font-size: 9pt !important;
 		overflow: auto;
-		min-height: 380px !important;
+		min-height: 100px !important;
 		padding: 6px !important;
 		margin: 4px !important;
 		white-space: pre-line !important;
@@ -628,7 +641,6 @@ span.primary, a.primary, a.secondary, span.secondary {
 		font-size: 14pt !important;
 		font-weight: normal !important;
 	}
-	
 }
 
 @media ( max-width : 480px) {

@@ -33,40 +33,48 @@
 				<h:outputLabel value="Validator Type" />
 				<h:outputText value="#{scriptAction.script.validator.validatorType.descriptor}" />
 			</h:panelGroup>
-			<h:panelGroup styleClass="frm-line" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
+			<h:panelGroup styleClass="frm-line2" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
 				<h:outputLabel value="Script Name" />
-				<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
+				<h:panelGroup styleClass="txt">
+					<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
+				</h:panelGroup>
 				<h:outputLabel value="Short description" styleClass="txtop" />
-				<h:inputTextarea value="#{scriptAction.script.description}" rows="2" styleClass="pc70" />
+				<h:panelGroup styleClass="txt">
+					<h:inputTextarea value="#{scriptAction.script.description}" rows="1" styleClass="pc70" />
+				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
-				<h:outputLabel value="Is Generic" />
-				<h:selectBooleanCheckbox value="#{scriptAction.script.generic}">
-					<f:ajax event="click" execute="@this" />
-				</h:selectBooleanCheckbox>
-			</h:panelGroup>
-			<h:panelGroup styleClass="frm-line">
+			<h:panelGroup styleClass="frm-line2">
 				<h:outputLabel value="Language" />
-				<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-					<f:ajax event="change" execute="@this" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup styleClass="frm-line">
+				<h:panelGroup styleClass="txt">
+					<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
+						<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+						<f:ajax event="change" execute="@this" />
+					</h:selectOneMenu>
+				</h:panelGroup>
 				<h:outputLabel value="Parse Mode" />
-				<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
-					<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
-					<f:ajax event="change" execute="@this" />
-				</h:selectOneMenu>
+				<h:panelGroup styleClass="txt">
+					<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
+						<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+						<f:ajax event="change" execute="@this" />
+					</h:selectOneMenu>
+				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup styleClass="frm-line" rendered="#{not scriptAction.script.generic}">
+			<h:panelGroup layout="block" styleClass="frm-line2" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
+				<h:outputLabel value="Is Generic" />
+				<h:panelGroup styleClass="txt">
+					<h:selectBooleanCheckbox value="#{scriptAction.script.generic}">
+						<f:ajax event="click" execute="@this" />
+					</h:selectBooleanCheckbox>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup styleClass="frm-line2" rendered="#{not scriptAction.script.generic}">
 				<h:outputLabel value="Generic Script" />
-				<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
-					<f:selectItem itemLabel="None" itemValue="#{null}" />
-					<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
-				</h:selectOneMenu>
+				<h:panelGroup styleClass="txt">
+					<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
+						<f:selectItem itemLabel="None" itemValue="#{null}" />
+						<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
+					</h:selectOneMenu>
+				</h:panelGroup>
 			</h:panelGroup>
 		</rich:panel>
 
@@ -90,7 +98,17 @@
 					</h:dataTable>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="hg100pc">
-					<h3 class="mrauto pc100">Script Editor</h3>
+					<h:panelGroup id="panelScriptControlsId" layout="block">
+						<h3 class="mrauto fleft pc50">Script Editor</h3>
+						<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
+						<h:commandButton value="Back to Validator" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
+						<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
+							<a4j:ajax execute="frm:registryId frm:contextVarsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+						</h:commandButton>
+						<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
+							<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+						</h:commandButton>
+					</h:panelGroup>
 					<h:panelGroup layout="block" styleClass="frm-line">
 						<h:inputTextarea id="scriptCode" value="#{scriptAction.script.code}" rows="16" />
 					</h:panelGroup>
@@ -101,16 +119,6 @@
 					<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
 				</h:panelGroup>
 			</h:panelGrid>
-			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="frm-submit">
-				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
-				<h:commandButton value="Back to Validator" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
-				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
-					<a4j:ajax execute="frm:registryId frm:contextVarsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
-				</h:commandButton>
-				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
-					<a4j:ajax execute="frm:registryId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
-				</h:commandButton>
-			</h:panelGroup>
 		</rich:panel>
 
 		<script type="text/javascript">
