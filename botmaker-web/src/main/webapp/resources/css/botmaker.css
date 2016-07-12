@@ -78,6 +78,7 @@ table tr td label {
 
 .frm-crud {
 	margin: auto !important;
+	display: block !important;
 }
 
 .frm-title, .frm-title-sec {
@@ -148,509 +149,648 @@ span.primary, a.primary, a.secondary, span.secondary {
 	display: inline-block;
 }
 
-@media ( min-width : 800px) {
-	body {
-		font-size: 10pt;
-	}
-	table tr td label {
-		margin-right: 12px !important;
-		padding: 2pt !important;
-		width: 100%;
-	}
-	div.head {
-		display: inline-block;
-		width: 100%;
-		height: 50px !important;
-		background-image: url("../img/botmaker-screen-white.png.jsf");
-		background-position: left 4px top 4px;
-		background-repeat: no-repeat;
-	}
-	div.head h1 {
-		width: 40% !important;
-		margin: 0px 0px 0px 220px !important;
-		font-size: 30pt;
-	}
-	.topmenu {
-		width: 70% !important;
-		height: 30px;
-		padding-top: 20px;
-	}
-	.menubar {
-		width: 70% !important;
-	}
-	.userbar {
-		width: 25% !important;
-	}
-	h1, h2, h3, h4, h5, h6 {
-		width: 70%;
-	}
-	h1 {
-		font-size: 28pt;
-	}
-	h2 {
-		font-size: 20pt;
-	}
-	h3 {
-		margin-top: 20px;
-		font-size: 16pt;
-	}
-	h4 {
-		margin-top: 14px;
-		font-size: 12pt;
-	}
-	h5 {
-		font-size: 10pt;
-	}
-	input, select, textarea {
-		padding: 4pt !important;
-		font-size: 11pt !important;
-	}
-	.frm-login {
-		padding: 8px;
-		width: 200px;
-		margin-top: 10px;
-		border-radius: 4pt !important;
-	}
-	.frm-login label {
-		margin-top: 4pt;
-		padding: 4pt !important;
-		font-size: 11pt !important;
-	}
-	.frm-login input {
-		width: 186px !important;
-		padding: 6px !important;
-		font-size: 12pt !important;
-		border-radius: 4pt !important;
-	}
-	.frm-login input[type="submit"] {
-		margin-top: 12pt !important;
-		padding: 12px 6px 12px 6px !important;
-	}
-	.frm-crud {
-		width: 70% !important;
-		margin-top: 6px !important;
-		padding: 0px !important;
-		border: 1px solid #DFA5A5 !important;
-		/*border-radius: 8px !important;*/
-	}
-	.frm-crud table.rf-dt {
-		width: 100% !important;
-	}
-	.frm-crud div.rf-p-b {
-		padding: 2px !important;
-	}
-	.frm-title {
-		padding: 6px !important;
-		margin: 0px 0px 4px 0px;
-		font-size: 14pt;
-		/*border-radius: 8px 8px 0px 0px !important;*/
-	}
-	.frm-title-sec {
-		padding: 6px !important;
-		margin: 0px 0px 4px 0px;
-		font-size: 14pt;
-		border-radius: 0px !important;
-	}
-	.frm-line, .frm-line2 {
-		margin: 2px !important;
-		padding: 1px;
-		width: 100%;
-		font-size: 11pt !important;
-	}
-	.frm-line label {
-		padding: 2pt !important;
-		width: 25%;
-		margin-right: 8px;
-		vertical-align: top;
-	}
-	.frm-line2 label {
-		padding: 2pt !important;
-		width: 20%;
-		margin-right: 2px;
-		vertical-align: top;
-	}
-	.frm-line2 span {
-		display: inline-block;
-		padding: 2pt !important;
-		width: 28%;
-		vertical-align: top;
-		margin-right: 2px;
-	}
-	.frm-confirm {
-		padding: 4px !important;
-		margin-top: 8px !important;
-		width: 90%;
-		border: 1 px solid magenta;
-	}
-	.confirm-title {
-		width: 100% !important;
-	}
-	.confirm-descr {
-		width: 100% !important;
-		font-size: 10pt !important;
-		padding: 8px 2px 0px 2px !important;
-	}
-	span.txt {
-		padding: 2pt !important;
-	}
-	.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
-		{
-		width: 70%;
-	}
-	.frm-line select {
-		
-	}
-	.frm-line input[type="checkbox"] {
-		margin-top: 6px !important;
-	}
-	.frm-line div.scripting {
-		width: 73%;
-		padding: 0px;
-		margin: 0px;
-	}
-	span.explain {
-		font-size: 11pt;
-		margin: 0px 0px 6px 0px;
-	}
-	.frm-line div div.themeBox {
-		width: 25%;
-	}
-	.frm-submit {
-		margin-top: 12px;
-		padding: 4px;
-	}
-	span.primary, a.primary, a.secondary, span.secondary {
-		margin: 6px;
-		padding: 4px 12px;
-		font-size: 11pt;
-	}
-	a.primary {
-		color: magenta !important;
-		font-size: 12pt !important;
-		font-weight: bold !important;
-	}
-	input.primary, button.primary {
-		background: #67ab49 !important;
-		border: 1px solid #67ab49 !important;
-		/*background: #440044 !important;*/
-		/*border: 1px solid #440044 !important;*/
-		color: #ffffff !important;
-		padding: 4px 6px 4px 6px !important;
-		font-weight: normal !important;
-		border-radius: 4px !important;
-		text-shadow: none !important;
-		margin: 2px 6px 2px 6px !important;
-		cursor: default !important;
-	}
-	input.secondary, button.secondary {
-		background: #666666 !important;
-		border: 1px solid #666666 !important;
-		border-radius: 4px !important;
-		color: #FFFFFF !important;
-		font-weight: normal !important;
-		margin: 4px;
-		padding: 2px 6px 2px 6px !important;
-	}
-	input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
-		{
-		color: yellow !important;
-	}
-	.popupExplain {
-		display: inline-block;
-		margin: auto;
-		padding: 20px 2px 20px 2px;
-		width: 100%;
-		height: 60px;
-		font-size: 12pt;
-	}
-	.required {
-		font-weight: bold;
-	}
-	.mrauto {
-		margin: auto !important;
-	}
-	.brd-green {
-		border: 1px solid green !important;
-	}
-	.brd-magenta {
-		border: 1px solid magenta !important;
-	}
-	.brd-blue {
-		border: 1px solid blue !important;
-	}
-	.hg100 {
-		height: 100px !important;
-		max-height: 100px !important;
-	}
-	.hg150 {
-		height: 150px !important;
-		max-height: 150px !important;
-	}
-	.hg200 {
-		height: 200px !important;
-		max-height: 200px !important;
-	}
-	.hg300 {
-		height: 300px !important;
-		max-height: 300px !important;
-	}
-	.hg500 {
-		height: 500px !important;
-		max-height: 500px !important;
-	}
-	.hg600 {
-		height: 600px !important;
-		max-height: 600px !important;
-	}
-	.hg100pc {
-		height: 100% !important;
-	}
-	.links-script-code {
-		margin: 1px 20px 1px 1px !important;
-	}
-	.wd100 {
-		width: 100px !important;
-	}
-	.wd200 {
-		width: 150px !important;
-	}
-	.wd200 {
-		width: 200px !important;
-	}
-	.wd250 {
-		width: 250px !important;
-	}
-	.pc5 {
-		width: 5% !important;
-	}
-	.pc10 {
-		width: 10% !important;
-	}
-	.pc15 {
-		width: 15% !important;
-	}
-	.pc20 {
-		width: 20% !important;
-	}
-	.pc25 {
-		width: 25% !important;
-	}
-	.pc28 {
-		width: 28% !important;
-	}
-	.pc30 {
-		width: 30% !important;
-	}
-	.pc40 {
-		width: 40% !important;
-	}
-	.pc50 {
-		width: 50% !important;
-	}
-	.pc55 {
-		width: 55% !important;
-	}
-	.pc60 {
-		width: 60% !important;
-	}
-	.pc70 {
-		width: 70% !important;
-	}
-	.pc80 {
-		width: 80% !important;
-	}
-	.pc90 {
-		width: 90% !important;
-	}
-	.pc95 {
-		width: 95% !important;
-	}
-	.pc100 {
-		width: 100% !important;
-	}
-	textarea.script {
-		color: green !important;
-		font-family: monospace !important;
-		background-image: none !important;
-		background-color: #333333 !important;
-	}
-	textarea[disabled].script {
-		color: #222222 !important;
-		background-color: #888888 !important;
-		border: 1px solid #440044 !important;
-	}
-	.green {
-		color: green !important;
-	}
-	.blue {
-		color: blue !important;
-	}
-	.purple {
-		color: #440044 !important;
-	}
-	.red {
-		color: red !important;
-	}
-	.gray {
-		color: gray !important;
-	}
-	.txctr {
-		text-align: center;
-	}
-	.txrgt {
-		text-align: right;
-	}
-	.txlft {
-		text-align: left;
-	}
-	.txtop {
-		vertical-align: top;
-	}
-	.txmiddle {
-		vertical-align: middle;
-	}
-	.tx9 {
-		font-size: 9pt !important;
-	}
-	.tx10 {
-		font-size: 10pt !important;
-	}
-	.tx11 {
-		font-size: 11pt !important;
-	}
-	.fltrgt, .fright {
-		float: right;
-	}
-	.fltlft, .fleft {
-		float: left;
-	}
-	.mgbot4 {
-		margin-bottom: 4px !important;
-	}
-	.rf-ddm-lbl-dec {
-		color: #FFFFFF !important;
-		font-weight: normal !important;
-		font-size: 11pt !important;
-	}
-	.rf-ddm-lbl-dec:hover {
-		color: yellow !important;
-	}
-	.rf-ddm-sel {
-		border: none !important;
-		background: transparent !important;
-	}
-	.rf-ddm-lbl-dec:hover {
-		background: transparent !important;
-	}
-	label, input, select, textarea, button, keygen, isindex, legend, a, span.txt,
-		.rf-p-b, .rf-dt-c {
-		font-size: 10pt !important;
-	}
-	.rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
-		background-color: #440044 !important;
-		border: 1px solid #FFFFFF !important;
-		font-size: 11pt !important;
-		color: #FFFFFF !important;
-		font-weight: normal !important;
-		padding: 4px !important;
-		background-image: none !important;
-	}
-	.rf-dt-c-srt {
-		cursor: pointer;
-		color: #FFFFFF !important;
-	}
-	.rf-dt-c-srt:hover {
-		color: #FFFFFF !important;
-	}
-	.rf-dt-shdr-c {
-		border: none !important;
-		background-color: #440044 !important;
-		background-image: none !important;
-		color: #FFFFFF;
-		padding: 4px;
-		text-align: center;
-	}
-	.statPane {
-		margin: auto;
-		width: 200px;
-		height: 100px;
-		display: block;
-		border: 1px solid green;
-	}
-	a.menuitem {
-		font-size: 12px !important;
-		text-decoration: none !important;
-	}
-	div.CodeMirror {
-		margin: auto !important;
-		font-size: 9pt !important;
-	}
-	.markdown {
-		color: green !important;
-	}
-	.html {
-		color: blue !important;
-	}
-	.groovy {
-		color: #440044 !important;
-	}
-	.javascript {
-		color: orange !important;
-	}
-	.tip-left {
-		margin-right: 4px !important;
-	}
-	.script-editor, .rf-pp-cnt {
-		padding: 0px !important;
-	}
-	.bck-script-editor {
-		background-color: #dfdfdf;
-	}
-	.console {
-		display: inline-block !important;
-		border: 1px solid gray !important;
-		background-color: #ffffff !important;
-		color: #000000 !important;
-		font-size: 9pt !important;
-		width: 96% !important;
-		max-width: 96% !important;
-		overflow: auto;
-		height: 90% !important;
-		max-height: 96% !important;
-		white-space: pre-line !important;
-		padding: 6px !important;
-		margin: auto !important;
-	}
-	.output-console {
-		border: 1px solid gray !important;
-		background-color: #ffffff !important;
-		color: #000000 !important;
-		font-size: 9pt !important;
-		overflow: auto;
-		min-height: 100px !important;
-		padding: 6px !important;
-		margin: 4px !important;
-		white-space: pre-line !important;
-	}
-	.rf-tb {
-		background-color: transparent !important;
-		background-image: none !important;
-	}
-	.link-destac {
-		margin: 16px 0px 16px 0px !important;
-		font-size: 14pt !important;
-		font-weight: normal !important;
-	}
+table tr td label {
+	margin-right: 12px !important;
+	padding: 2pt !important;
+	width: 100%;
 }
 
-@media ( max-width : 480px) {
-	body {
-		background-color: green !important;
-	}
-	.frm-crud {
-		width: 100% !important;
-		margin-top: 6px !important;
-		padding: 0px !important;
-		border: 1px solid #DFA5A5 !important;
-	}
+div.head {
+	display: inline-block;
+	width: 100%;
+	height: 50px !important;
+	background-image: url("../img/botmaker-screen-white.png.jsf");
+	background-position: left 4px top 4px;
+	background-repeat: no-repeat;
+}
+
+div.head h1 {
+	width: 40% !important;
+	margin: 0px 0px 0px 220px !important;
+	font-size: 30pt;
+}
+
+.topmenu {
+	width: 70% !important;
+	height: 30px;
+	padding-top: 20px;
+}
+
+.menubar {
+	width: 70% !important;
+}
+
+.userbar {
+	width: 25% !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	width: 70%;
+}
+
+h1 {
+	font-size: 28pt;
+}
+
+h2 {
+	font-size: 20pt;
+}
+
+h3 {
+	margin-top: 20px;
+	font-size: 16pt;
+}
+
+h4 {
+	margin-top: 14px;
+	font-size: 12pt;
+}
+
+h5 {
+	font-size: 10pt;
+}
+
+input, select, textarea {
+	padding: 4pt !important;
+	font-size: 11pt !important;
+}
+
+.frm-login {
+	padding: 8px;
+	width: 200px;
+	margin-top: 10px;
+	border-radius: 4pt !important;
+}
+
+.frm-login label {
+	margin-top: 4pt;
+	padding: 4pt !important;
+	font-size: 11pt !important;
+}
+
+.frm-login input {
+	width: 186px !important;
+	padding: 6px !important;
+	font-size: 12pt !important;
+	border-radius: 4pt !important;
+}
+
+.frm-login input[type="submit"] {
+	margin-top: 12pt !important;
+	padding: 12px 6px 12px 6px !important;
+}
+
+.frm-crud {
+	width: 70% !important;
+	margin-top: 6px !important;
+	padding: 0px !important;
+	border: 1px solid #DFA5A5 !important;
+	/*border-radius: 8px !important;*/
+}
+
+.frm-crud table.rf-dt {
+	width: 100% !important;
+}
+
+.frm-crud div.rf-p-b {
+	padding: 2px !important;
+}
+
+.frm-title {
+	padding: 6px !important;
+	margin: 0px 0px 4px 0px;
+	font-size: 14pt;
+	/*border-radius: 8px 8px 0px 0px !important;*/
+}
+
+.frm-title-sec {
+	padding: 6px !important;
+	margin: 0px 0px 4px 0px;
+	font-size: 14pt;
+	border-radius: 0px !important;
+}
+
+.frm-line, .frm-line2 {
+	margin: 2px !important;
+	padding: 1px;
+	width: 100%;
+	font-size: 11pt !important;
+}
+
+.frm-line label {
+	padding: 2pt !important;
+	width: 25%;
+	margin-right: 8px;
+	vertical-align: top;
+}
+
+.frm-line2 label {
+	padding: 2pt !important;
+	width: 20%;
+	margin-right: 2px;
+	vertical-align: top;
+}
+
+.frm-line2 span {
+	display: inline-block;
+	padding: 2pt !important;
+	width: 28%;
+	vertical-align: top;
+	margin-right: 2px;
+}
+
+.frm-confirm {
+	padding: 4px !important;
+	margin-top: 8px !important;
+	width: 90%;
+	border: 1 px solid magenta;
+}
+
+.confirm-title {
+	width: 100% !important;
+}
+
+.confirm-descr {
+	width: 100% !important;
+	font-size: 10pt !important;
+	padding: 8px 2px 0px 2px !important;
+}
+
+span.txt {
+	padding: 2pt !important;
+}
+
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
+	{
+	width: 70%;
+}
+
+.frm-line select {
+	
+}
+
+.frm-line input[type="checkbox"] {
+	margin-top: 6px !important;
+}
+
+.frm-line div.scripting {
+	width: 73%;
+	padding: 0px;
+	margin: 0px;
+}
+
+span.explain {
+	font-size: 11pt;
+	margin: 0px 0px 6px 0px;
+}
+
+.frm-line div div.themeBox {
+	width: 25%;
+}
+
+.frm-submit {
+	margin-top: 12px;
+	padding: 4px;
+}
+
+span.primary, a.primary, a.secondary, span.secondary {
+	margin: 6px;
+	padding: 4px 12px;
+	font-size: 11pt;
+}
+
+a.primary {
+	color: magenta !important;
+	font-size: 12pt !important;
+	font-weight: bold !important;
+}
+
+input.primary, button.primary {
+	background: #67ab49 !important;
+	border: 1px solid #67ab49 !important;
+	/*background: #440044 !important;*/
+	/*border: 1px solid #440044 !important;*/
+	color: #ffffff !important;
+	padding: 4px 6px 4px 6px !important;
+	font-weight: normal !important;
+	border-radius: 4px !important;
+	text-shadow: none !important;
+	margin: 2px 6px 2px 6px !important;
+	cursor: default !important;
+}
+
+input.secondary, button.secondary {
+	background: #666666 !important;
+	border: 1px solid #666666 !important;
+	border-radius: 4px !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	margin: 4px;
+	padding: 2px 6px 2px 6px !important;
+}
+
+input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
+	{
+	color: yellow !important;
+}
+
+.popupExplain {
+	display: inline-block;
+	margin: auto;
+	padding: 20px 2px 20px 2px;
+	width: 100%;
+	height: 60px;
+	font-size: 12pt;
+}
+
+.required {
+	font-weight: bold;
+}
+
+.mrauto {
+	margin: auto !important;
+}
+
+.brd-green {
+	border: 1px solid green !important;
+}
+
+.brd-magenta {
+	border: 1px solid magenta !important;
+}
+
+.brd-blue {
+	border: 1px solid blue !important;
+}
+
+.hg100 {
+	height: 100px !important;
+	max-height: 100px !important;
+}
+
+.hg150 {
+	height: 150px !important;
+	max-height: 150px !important;
+}
+
+.hg200 {
+	height: 200px !important;
+	max-height: 200px !important;
+}
+
+.hg300 {
+	height: 300px !important;
+	max-height: 300px !important;
+}
+
+.hg500 {
+	height: 500px !important;
+	max-height: 500px !important;
+}
+
+.hg600 {
+	height: 600px !important;
+	max-height: 600px !important;
+}
+
+.hg90pc {
+	height: 90% !important;
+}
+
+.hg100pc {
+	height: 100% !important;
+}
+
+.links-script-code {
+	margin: 1px 20px 1px 1px !important;
+}
+
+.wd100 {
+	width: 100px !important;
+}
+
+.wd200 {
+	width: 150px !important;
+}
+
+.wd200 {
+	width: 200px !important;
+}
+
+.wd250 {
+	width: 250px !important;
+}
+
+.pc5 {
+	width: 5% !important;
+}
+
+.pc10 {
+	width: 10% !important;
+}
+
+.pc15 {
+	width: 15% !important;
+}
+
+.pc20 {
+	width: 20% !important;
+}
+
+.pc25 {
+	width: 25% !important;
+}
+
+.pc28 {
+	width: 28% !important;
+}
+
+.pc30 {
+	width: 30% !important;
+}
+
+.pc40 {
+	width: 40% !important;
+}
+
+.pc50 {
+	width: 50% !important;
+}
+
+.pc55 {
+	width: 55% !important;
+}
+
+.pc60 {
+	width: 60% !important;
+}
+
+.pc70 {
+	width: 70% !important;
+}
+
+.pc80 {
+	width: 80% !important;
+}
+
+.pc90 {
+	width: 90% !important;
+}
+
+.pc95 {
+	width: 95% !important;
+}
+
+.pc100 {
+	width: 100% !important;
+}
+
+textarea.script {
+	color: green !important;
+	font-family: monospace !important;
+	background-image: none !important;
+	background-color: #333333 !important;
+}
+
+textarea[disabled].script {
+	color: #222222 !important;
+	background-color: #888888 !important;
+	border: 1px solid #440044 !important;
+}
+
+.green {
+	color: green !important;
+}
+
+.blue {
+	color: blue !important;
+}
+
+.purple {
+	color: #440044 !important;
+}
+
+.red {
+	color: red !important;
+}
+
+.gray {
+	color: gray !important;
+}
+
+.txctr {
+	text-align: center;
+}
+
+.txrgt {
+	text-align: right;
+}
+
+.txlft {
+	text-align: left;
+}
+
+.txtop {
+	vertical-align: top;
+}
+
+.txmiddle {
+	vertical-align: middle;
+}
+
+.tx9 {
+	font-size: 9pt !important;
+}
+
+.tx10 {
+	font-size: 10pt !important;
+}
+
+.tx11 {
+	font-size: 11pt !important;
+}
+
+.fltrgt, .fright {
+	float: right;
+}
+
+.fltlft, .fleft {
+	float: left;
+}
+
+.mgbot4 {
+	margin-bottom: 4px !important;
+}
+
+.rf-ddm-lbl-dec {
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	font-size: 11pt !important;
+}
+
+.rf-ddm-lbl-dec:hover {
+	color: yellow !important;
+}
+
+.rf-ddm-sel {
+	border: none !important;
+	background: transparent !important;
+}
+
+.rf-ddm-lbl-dec:hover {
+	background: transparent !important;
+}
+
+label, input, select, textarea, button, keygen, isindex, legend, a, span.txt,
+	.rf-p-b, .rf-dt-c {
+	font-size: 10pt !important;
+}
+
+.rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
+	background-color: #440044 !important;
+	border: 1px solid #FFFFFF !important;
+	font-size: 11pt !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	padding: 4px !important;
+	background-image: none !important;
+}
+
+.rf-dt-c-srt {
+	cursor: pointer;
+	color: #FFFFFF !important;
+}
+
+.rf-dt-c-srt:hover {
+	color: #FFFFFF !important;
+}
+
+.rf-dt-shdr-c {
+	border: none !important;
+	background-color: #440044 !important;
+	background-image: none !important;
+	color: #FFFFFF;
+	padding: 4px;
+	text-align: center;
+}
+
+.statPane {
+	margin: auto;
+	width: 200px;
+	height: 100px;
+	display: block;
+	border: 1px solid green;
+}
+
+a.menuitem {
+	font-size: 12px !important;
+	text-decoration: none !important;
+}
+
+div.CodeMirror {
+	margin: auto !important;
+	font-size: 9pt !important;
+}
+
+.markdown {
+	color: green !important;
+}
+
+.html {
+	color: blue !important;
+}
+
+.groovy {
+	color: #440044 !important;
+}
+
+.javascript {
+	color: orange !important;
+}
+
+.tip-left {
+	margin-right: 4px !important;
+}
+
+.script-editor, .rf-pp-cnt {
+	padding: 0px !important;
+}
+
+.editor-toolbar {
+	display: block;
+	height: 32px;
+	width: 95%;
+	margin: auto !important;
+}
+
+.editor-toolbar h2 {
+	width: auto !important;
+}
+
+.editor-buttons {
+	display: block;
+}
+
+.editor-buttons label {
+	margin: 0px 0px 0px 12px;
+}
+
+.editor-buttons input.secondary {
+	margin: 2px 2px 2px 12px;
+}
+
+.editor-screen {
+	width: 95% !important;
+}
+
+.editor-screen div h3 {
+	margin: auto !important;
+	display: block;
+	width: 96%;
+	padding: 2px;
+	text-align: center;
+	background-color: #FFFFFF;
+}
+
+.bck-script-editor {
+	background-color: #dfdfdf;
+}
+
+.console {
+	display: inline-block !important;
+	border: 1px solid gray !important;
+	background-color: #ffffff !important;
+	color: #000000 !important;
+	font-size: 9pt !important;
+	width: 96% !important;
+	max-width: 96% !important;
+	overflow: auto;
+	height: 90% !important;
+	max-height: 96% !important;
+	white-space: pre-line !important;
+	padding: 6px !important;
+	margin: auto !important;
+}
+
+.output-console {
+	border: 1px solid gray !important;
+	background-color: #ffffff !important;
+	color: #000000 !important;
+	font-size: 9pt !important;
+	overflow: auto;
+	min-height: 100px !important;
+	padding: 6px !important;
+	margin: 4px !important;
+	white-space: pre-line !important;
+}
+
+.rf-tb {
+	background-color: transparent !important;
+	background-image: none !important;
+}
+
+.link-destac {
+	margin: 16px 0px 16px 0px !important;
+	font-size: 14pt !important;
+	font-weight: normal !important;
 }
