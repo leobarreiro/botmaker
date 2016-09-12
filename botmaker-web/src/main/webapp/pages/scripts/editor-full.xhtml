@@ -24,14 +24,7 @@
 				<h:panelGroup layout="block" rendered="#{scriptAction.script.validator ne null}">
 					<h:outputLabel value="Validator" />
 					<h:outputText value="#{scriptAction.script.validator.name}" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{scriptAction.script.validator ne null}">
-					<h:outputLabel value="Short description" />
-					<h:outputText value="#{scriptAction.script.validator.shortDescription}" />
-				</h:panelGroup>
-				<h:panelGroup rendered="#{scriptAction.script.validator ne null}">
-					<h:outputLabel value="Validator Type" />
-					<h:outputText value="#{scriptAction.script.validator.validatorType.descriptor}" />
+					<h:outputText value=" (#{scriptAction.script.validator.validatorType.descriptor})" />
 				</h:panelGroup>
 				<h:panelGroup rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
 					<h:outputLabel value="Script Name" />
@@ -70,8 +63,8 @@
 						<f:ajax event="change" execute="@this" />
 					</h:selectOneMenu>
 				</h:panelGroup>
-				<h:commandButton value="Back to Command" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
-				<h:commandButton value="Back to Validator" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
+				<h:commandButton value="Go Back" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
+				<h:commandButton value="Go Back" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
 				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
 					<a4j:ajax execute="frm:panelScriptControlsId frm:contextVarsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
 				</h:commandButton>

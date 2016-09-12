@@ -52,31 +52,34 @@ public class StartupLoader implements IStartupLoader {
 				company.setWebsite("http://javaleo.org");
 				company.setActive(true);
 				companyBusiness.saveCompany(company);
-				List<User> users = userBusiness.listAllUsers();
-				if (users == null || users.isEmpty()) {
-					User user = new User();
-					user.setCompany(company);
-					user.setName("Admin User BotRise");
-					user.setEmail("javaleo@javaleo.org");
-					user.setUsername("admin");
-					user.setAdmin(true);
-					user.setActive(true);
-					String passwd = "admin@123";
-					userBusiness.saveUser(user, passwd, passwd);
-				}
 				mountCompanyRootDirectory(company.getId());
 			} else {
 				for (Company c : companies) {
 					mountCompanyRootDirectory(c.getId());
 				}
 			}
+			Company firstCompany = companyBusiness.getCompanyById(1L);
+			List<User> users = userBusiness.listAllUsers();
+			if (users == null || users.isEmpty()) {
+				User user = new User();
+				user.setCompany(firstCompany);
+				user.setName("Admin User BotRise");
+				user.setEmail("javaleo@javaleo.org");
+				user.setUsername("botmaster");
+				user.setAdmin(true);
+				user.setActive(true);
+				String passwd = "admin@123";
+				userBusiness.saveUser(user, passwd, passwd);
+			}
 
 			String jpqlAnswerType = "UPDATE botmaker.question SET answer_type = \'STRING\' WHERE answer_type IS NULL";
 			Query qrAnswerType = entityManager.createNativeQuery(jpqlAnswerType);
 			qrAnswerType.executeUpdate();
 
-			// String jpqlParseMode = "UPDATE botmaker.question SET parse_mode = \'HTML\' WHERE parse_mode IS NULL";
-			// Query qrParseMode = entityManager.createNativeQuery(jpqlParseMode);
+			// String jpqlParseMode = "UPDATE botmaker.question SET parse_mode =
+			// \'HTML\' WHERE parse_mode IS NULL";
+			// Query qrParseMode =
+			// entityManager.createNativeQuery(jpqlParseMode);
 			// qrParseMode.executeUpdate();
 
 			String jpqlValidatorType = "UPDATE botmaker.validator SET validator_type = \'BOOLEAN\' WHERE (validator_type = \'GROOVY\' OR validator_type = \'REGEXP\')";
