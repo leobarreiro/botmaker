@@ -60,8 +60,8 @@
 				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc70" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<a4j:commandButton value="Save Bot" action="#{botAction.save()}" styleClass="primary" render="notify" />
 				<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
+				<a4j:commandButton value="Save Bot" action="#{botAction.save()}" styleClass="primary" render="notify" />
 			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>

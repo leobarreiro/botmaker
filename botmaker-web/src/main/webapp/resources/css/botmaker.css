@@ -38,7 +38,7 @@ div.head h1 {
 table tr td label {
 	color: #440044;
 	display: inline-block;
-	float: left;
+	/*float: left;*/
 	text-align: right;
 }
 
@@ -97,7 +97,6 @@ table tr td label {
 .frm-line label, .frm-line2 label {
 	display: inline-block;
 	text-align: right;
-	color: #440044;
 }
 
 .frm-confirm {
@@ -152,7 +151,7 @@ span.primary, a.primary, a.secondary, span.secondary {
 table tr td label {
 	margin-right: 12px !important;
 	padding: 2pt !important;
-	width: 100%;
+	/*width: 100%;*/
 }
 
 div.head {
@@ -193,7 +192,7 @@ h1 {
 }
 
 h2 {
-	font-size: 20pt;
+	font-size: 24pt;
 }
 
 h3 {
@@ -641,9 +640,19 @@ textarea[disabled].script {
 	background: transparent !important;
 }
 
-label, input, select, textarea, button, keygen, isindex, legend, a, span.txt,
-	.rf-p-b, .rf-dt-c {
-	font-size: 10pt !important;
+label, keygen, isindex, legend, a, .rf-p-b, .rf-dt-c {
+	color: #666666 !important;
+	font-size: 11pt !important;
+}
+
+span.txt {
+	color: #000000 !important;
+	font-size: 11pt !important;
+}
+
+linput, select, textarea, button, keygen, isindex, legend, a {
+	color: #440044 !important;
+	font-size: 11pt !important;
 }
 
 .rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
@@ -718,21 +727,60 @@ div.CodeMirror {
 
 .editor-toolbar {
 	display: block;
-	height: 32px;
-	width: 95%;
+	height: 40px;
+	max-height: 40px;
+	width: 99%;
+	padding: 0px;
 	margin: auto !important;
+	background-color: #DEDEDE;
+	border-bottom: 2px solid #BDBDBD;
+	vertical-align: middle !important;
 }
 
 .editor-toolbar h2 {
-	width: auto !important;
+	width: 14% !important;
+	font-size: 36px;
+	display: inline-block;
+	padding: 0px;
+	margin: 0px;
+	float: left;
 }
 
-.editor-buttons {
+.editor-toolbar .editor-menu {
+	height: inherit;
+	max-height: inherit;
+	width: 85% !important;
+	display: inline-block;
+	padding: 0px;
+	margin: 2px;
+	float: right;
+}
+
+.editor-toolbar .editor-info {
 	display: block;
+	float: left;
+	width: 80% !important;
+	height: inherit;
+	max-height: inherit;
 }
 
-.editor-buttons label {
-	margin: 0px 0px 0px 12px;
+.editor-info label {
+	border-left: 2px solid #BDBDBD;
+	margin: 0px 6px 0px 18px !important;
+	padding-left: 2px;
+	display: inline-block;
+	height: 20px;
+	max-height: 20px;
+	vertical-align: middle;
+}
+
+.editor-toolbar .editor-buttons {
+	display: inline-block;
+	float: right;
+	text-align: right;
+	width: auto !important;
+	height: inherit;
+	max-height: inherit;
 }
 
 .editor-buttons input.secondary {
@@ -740,22 +788,30 @@ div.CodeMirror {
 }
 
 .editor-screen {
-	width: 95% !important;
+	width: 99% !important;
+	padding: 2px 0px 2px 0px !important;
+	margin: auto !important;
+	border: none !important;
+	background: transparent !important;
 }
 
 .editor-screen div h3 {
 	margin: auto !important;
 	display: block;
 	width: 96%;
-	padding: 2px;
-	text-align: center;
-	background-color: #FFFFFF;
+	padding: 1px 2px 2px 0px;
+	text-align: left;
+}
+
+.editor-screen div h3.v-space {
+	padding: 8px 2px 2px 0px !important;
 }
 
 .bck-script-editor {
 	background-color: #dfdfdf;
 }
 
+/*
 .console {
 	display: inline-block !important;
 	border: 1px solid gray !important;
@@ -770,18 +826,21 @@ div.CodeMirror {
 	white-space: pre-line !important;
 	padding: 6px !important;
 	margin: auto !important;
-}
-
+}*/
 .output-console {
-	border: 1px solid gray !important;
-	background-color: #ffffff !important;
-	color: #000000 !important;
+	border: 1px solid #BDBDBD !important;
+	background-color: #BDBDBD !important;
+	color: #222222 !important;
 	font-size: 9pt !important;
 	overflow: auto;
-	min-height: 100px !important;
+	min-height: 280px;
+	height: 280px;
+	max-height: 280px;
 	padding: 6px !important;
 	margin: 4px !important;
-	white-space: pre-line !important;
+	white-space: nowrap !important;
+	width: 290px !important;
+	max-width: 290px !important;
 }
 
 .rf-tb {
