@@ -114,9 +114,11 @@ public class ScriptAction implements Serializable {
 	private void loadContextVars() {
 		this.contextVars = facade.getListDialogContextVars();
 		if (script.getCommand() != null && script.getCommand().getId() != null) {
-			List<Question> questions = facade.listQuestionsFromCommand(script.getCommand());
+			List<Question> questions = facade.listQuestionsFromCommand(script
+					.getCommand());
 			for (Question q : questions) {
-				this.contextVars.add(new DialogContextVar(q.getVarName(), "", q.getInstruction()));
+				this.contextVars.add(new DialogContextVar(q.getVarName(), "", q
+						.getInstruction()));
 			}
 		}
 		// TODO fazer logica para script de uma question (sem command)
@@ -141,6 +143,10 @@ public class ScriptAction implements Serializable {
 			debugContent = e.getMessage();
 			script.setValid(false);
 		}
+	}
+
+	public void clearOutput() {
+		this.debugContent = "";
 	}
 
 	public String listGenericScripts() {

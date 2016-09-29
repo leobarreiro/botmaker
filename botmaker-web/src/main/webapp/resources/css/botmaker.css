@@ -45,6 +45,9 @@ table tr td label {
 .topmenu {
 	margin: auto !important;
 	border: none !important;
+	width: 70% !important;
+	height: 30px;
+	padding-top: 12px;
 }
 
 .menubar {
@@ -167,12 +170,6 @@ div.head h1 {
 	width: 40% !important;
 	margin: 0px 0px 0px 220px !important;
 	font-size: 30pt;
-}
-
-.topmenu {
-	width: 70% !important;
-	height: 30px;
-	padding-top: 20px;
 }
 
 .menubar {
@@ -408,6 +405,10 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .mrauto {
 	margin: auto !important;
+}
+
+.mrtop0 {
+	margin-top: 0px !important;
 }
 
 .brd-green {
@@ -697,7 +698,8 @@ a.menuitem {
 }
 
 div.CodeMirror {
-	margin: auto !important;
+	/*margin: auto !important;*/
+	border: 1px solid #888888;
 	font-size: 9pt !important;
 }
 
@@ -759,7 +761,7 @@ div.CodeMirror {
 .editor-toolbar .editor-info {
 	display: block;
 	float: left;
-	width: 80% !important;
+	width: 85% !important;
 	height: inherit;
 	max-height: inherit;
 }
@@ -828,8 +830,8 @@ div.CodeMirror {
 	margin: auto !important;
 }*/
 .output-console {
-	border: 1px solid #BDBDBD !important;
-	background-color: #BDBDBD !important;
+	border: 1px solid #888888;
+	background-color: #BDBDBD;
 	color: #222222 !important;
 	font-size: 9pt !important;
 	overflow: auto;
@@ -838,7 +840,7 @@ div.CodeMirror {
 	max-height: 280px;
 	padding: 6px !important;
 	margin: 4px !important;
-	white-space: nowrap !important;
+	white-space: pre-line !important;
 	width: 290px !important;
 	max-width: 290px !important;
 }

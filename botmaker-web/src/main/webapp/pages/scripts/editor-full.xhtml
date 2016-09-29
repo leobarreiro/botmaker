@@ -60,7 +60,7 @@
 					</h:panelGroup>
 					<h:panelGroup layout="block"
 						rendered="#{not scriptAction.script.generic}">
-						<h:outputLabel value="Generic Script" />
+						<h:outputLabel value="Generic" />
 						<h:panelGroup styleClass="txt">
 							<h:selectOneMenu id="includeGenericId"
 								value="#{scriptAction.script.genericScript}"
@@ -144,7 +144,7 @@
 					<h:panelGroup layout="block" styleClass="pc100 txrgt">
 						<h:commandButton id="btScriptTestId" value="Test"
 							actionListener="#{scriptAction.testScript()}"
-							styleClass="secondary">
+							styleClass="secondary" accesskey="e" >
 							<a4j:ajax
 								execute="frm:panelScriptControlsId frm:contextVarsId frm:scriptCode"
 								render="frm:outputHiddenId"
@@ -161,13 +161,10 @@
 
 					<h:panelGroup layout="block" styleClass="pc100 txrgt">
 						<h:commandButton id="btClearOutputId" value="Clear Output"
-							actionListener="#{scriptAction.testScript()}"
+							actionListener="#{scriptAction.clearOutput()}"
 							styleClass="secondary">
-							<a4j:ajax
-								execute="frm:panelScriptControlsId frm:contextVarsId frm:scriptCode"
-								render="frm:outputHiddenId"
-								onbeforesubmit="scriptCodeMirror.save()"
-								oncomplete="treatConsoleOutput()" />
+							<a4j:ajax execute="@this" render="frm:outputHiddenId"
+								oncomplete="clearConsoleOutput()" />
 						</h:commandButton>
 					</h:panelGroup>
 
@@ -199,6 +196,11 @@
 			}
 			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
 		}
+
+		function clearConsoleOutput() {
+			document.getElementById('frm:consoleOutputId').innerHTML = '';
+		}
+		
 		configureCodeMirror();
 	</script>
 
