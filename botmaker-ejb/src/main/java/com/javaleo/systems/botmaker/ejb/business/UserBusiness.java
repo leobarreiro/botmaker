@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -38,6 +40,7 @@ public class UserBusiness implements IUserBusiness {
 	private ITokenBusiness tokenBusiness;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
 		// name
 		Pattern namePattern = Pattern.compile("([A-Za-z]{3,}[\\W]+[A-Za-z]{2,})");
@@ -67,6 +70,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveUser(User user, String password, String passwordReview) throws BusinessException {
 		validateUser(user, password, passwordReview);
 		user.setPassword(DigestUtils.sha1Hex(password));
@@ -74,6 +78,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException {
 		if (!BotMakerUtils.validateEmail(email)) {
 			throw new BusinessException("The email can't be empty. You must enter a valid e-mail.");
@@ -86,8 +91,9 @@ public class UserBusiness implements IUserBusiness {
 			throw new BusinessException("The email entered don't belong to any user. Please review the information.");
 		}
 		Token token = tokenBusiness.generateTokenToUser(userOwnerEmail);
-		messageUtils.sendMailMessage("leopoldo.java@gmail.com", userOwnerEmail.getEmail(), "Bot49 - Reset your password",
-				"Reseting your password.\n\nPlease use the token bellow to reset your password.\n\n" + token.getUuid() + "\n\nThis token is valid per 2 hours.");
+		messageUtils.sendMailMessage("javaleo.org@gmail.com", userOwnerEmail.getEmail(), "Javaleo.org - Reset your password",
+				"Reseting your password.\n\nPlease use the token bellow to reset your password.\n\n<a href=\'nhttp://javaleo.org/reset-password.jsf?uuidToken=" + token.getUuid()
+						+ "\' target=\'_blank\'>" + token.getUuid() + "</a>\n\nThis token is valid per 2 hours.");
 	}
 
 	private User findUserByEmail(final String email) {
@@ -101,6 +107,7 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public User findUserByUsernameAndPassphrase(String username, String passphrase) {
 		CriteriaBuilder builder = persistence.getCriteriaBuilder();
 		CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -112,6 +119,19 @@ public class UserBusiness implements IUserBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public User findUserByUsername(String username) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		Root<User> from = cq.from(User.class);
+		from.join("company", JoinType.INNER);
+		cq.where(cb.equal(from.get("username"), username));
+		cq.select(from);
+		return persistence.getSingleResult(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<User> listAllUsers() {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<User> cq = cb.createQuery(User.class);

@@ -9,6 +9,7 @@ import com.javaleo.systems.botmaker.ejb.entities.BlackListExpression;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
+import com.javaleo.systems.botmaker.ejb.entities.Page;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.Token;
@@ -114,5 +115,11 @@ public interface IBotMakerFacade extends Serializable {
 	List<Script> listLastGenericScriptsFromUser();
 
 	List<Script> listAllGenericScriptsFromCompany();
+
+	void savePage(Page page) throws BusinessException;
+
+	List<Page> listPages();
+
+	void disablePage(Page page) throws BusinessException;
 
 }

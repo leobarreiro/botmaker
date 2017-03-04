@@ -68,6 +68,17 @@
 							<rich:menuItem label="List Generic Scripts" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" />
 							<rich:menuItem label="New Generic Script" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" />
 						</rich:dropDownMenu>
+						<rich:dropDownMenu mode="ajax">
+							<f:facet name="label">
+								<h:outputText value="Pages" />
+							</f:facet>
+							<c:forEach items="#{auxAction.lastGenericScripts}" var="sc">
+								<rich:menuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="#{(sc.valid) ? green : red}" />
+							</c:forEach>
+							<rich:menuSeparator />
+							<rich:menuItem label="List Pages" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" />
+							<rich:menuItem label="New Page" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" />
+						</rich:dropDownMenu>
 					</rich:toolbar>
 					<rich:toolbar styleClass="userbar">
 						<rich:dropDownMenu mode="ajax">

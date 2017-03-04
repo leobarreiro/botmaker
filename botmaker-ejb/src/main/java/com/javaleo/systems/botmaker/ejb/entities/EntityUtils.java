@@ -10,4 +10,5 @@ public class EntityUtils {
 
 	public static final String BOTRISE_USER = "botriseuser";
 	public static final String BOTCLIENT = "botclient";
+	public static final String PAGE = "page";
 }

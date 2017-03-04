@@ -13,6 +13,7 @@ import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICompanyBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IDialogContextVarBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IPageBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ITokenBusiness;
@@ -23,6 +24,7 @@ import com.javaleo.systems.botmaker.ejb.entities.BlackListExpression;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
+import com.javaleo.systems.botmaker.ejb.entities.Page;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.Token;
@@ -74,6 +76,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private ITokenBusiness tokenBusiness;
+
+	@Inject
+	private IPageBusiness pageBusiness;
 
 	@Override
 	public List<Company> listAllCompanies() {
@@ -303,6 +308,21 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public Token getTokenByUUID(String uuid) throws BusinessException {
 		return tokenBusiness.getTokenByUUID(uuid);
+	}
+
+	@Override
+	public void savePage(Page page) throws BusinessException {
+		pageBusiness.savePage(page);
+	}
+
+	@Override
+	public List<Page> listPages() {
+		return pageBusiness.listPages();
+	}
+
+	@Override
+	public void disablePage(Page page) throws BusinessException {
+		pageBusiness.disablePage(page);
 	}
 
 }
