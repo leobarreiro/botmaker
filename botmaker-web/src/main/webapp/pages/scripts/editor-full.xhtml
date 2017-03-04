@@ -1,104 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-
 		<h:panelGroup layout="block" styleClass="editor-toolbar">
+
 			<h2 class="fleft">Script Editor</h2>
-			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="fright editor-buttons">
-				<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}">
-					<h:outputLabel value="Bot" />
-					<h:outputText value="#{scriptAction.bot.name}" styleClass="txt" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{scriptAction.script.command ne null}">
-					<h:outputLabel value="Command" />
-					<h:outputText value="#{scriptAction.script.command.key}" styleClass="txt fixed" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{scriptAction.script.question ne null}">
-					<h:outputLabel value="Command" />
-					<h:outputText value="#{scriptAction.script.question.command.key}" styleClass="txt" />
-					<h:outputLabel value="Question" />
-					<h:outputText value="#{scriptAction.script.question.instruction}" styleClass="txt" />
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{scriptAction.script.validator ne null}">
-					<h:outputLabel value="Validator" />
-					<h:outputText value="#{scriptAction.script.validator.name}" />
-					<h:outputText value=" (#{scriptAction.script.validator.validatorType.descriptor})" />
-				</h:panelGroup>
-				<h:panelGroup rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
-					<h:outputLabel value="Script Name" />
-					<h:panelGroup styleClass="txt">
-						<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
+
+			<h:panelGroup id="panelScriptControlsId" layout="block"
+				styleClass="editor-menu">
+
+				<h:panelGroup layout="block" styleClass="editor-info">
+					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}">
+						<h:outputLabel value="Bot" />
+						<h:outputText value="#{scriptAction.bot.name}" styleClass="txt" />
 					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
-					<h:outputLabel value="Is Generic" />
-					<h:panelGroup styleClass="txt">
-						<h:selectBooleanCheckbox value="#{scriptAction.script.generic}">
-							<f:ajax event="click" execute="@this" />
-						</h:selectBooleanCheckbox>
+					<h:panelGroup layout="block"
+						rendered="#{scriptAction.script.command ne null}">
+						<h:outputLabel value="Command" />
+						<h:outputText value="#{scriptAction.script.command.key}"
+							styleClass="txt fixed" />
 					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" rendered="#{not scriptAction.script.generic}">
-					<h:outputLabel value="Generic Script" />
+					<h:panelGroup layout="block"
+						rendered="#{scriptAction.script.question ne null}">
+						<h:outputLabel value="Command" />
+						<h:outputText value="#{scriptAction.script.question.command.key}"
+							styleClass="txt" />
+						<h:outputLabel value="Question" />
+						<h:outputText value="#{scriptAction.script.question.instruction}"
+							styleClass="txt" />
+					</h:panelGroup>
+					<h:panelGroup layout="block"
+						rendered="#{scriptAction.script.validator ne null}">
+						<h:outputLabel value="Validator" />
+						<h:outputText value="#{scriptAction.script.validator.name}" />
+						<h:outputText
+							value=" (#{scriptAction.script.validator.validatorType.descriptor})" />
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
+						<h:panelGroup styleClass="txt">
+							<h:inputText value="#{scriptAction.script.name}" maxlength="40"
+								size="40" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block"
+						rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
+						<h:outputLabel value="Is Generic" />
+						<h:panelGroup styleClass="txt">
+							<h:selectBooleanCheckbox value="#{scriptAction.script.generic}">
+								<f:ajax event="click" execute="@this" />
+							</h:selectBooleanCheckbox>
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup layout="block"
+						rendered="#{not scriptAction.script.generic}">
+						<h:outputLabel value="Generic" />
+						<h:panelGroup styleClass="txt">
+							<h:selectOneMenu id="includeGenericId"
+								value="#{scriptAction.script.genericScript}"
+								converter="#{entityConverter}">
+								<f:selectItem itemLabel="None" itemValue="#{null}" />
+								<f:selectItems value="#{scriptAction.scripts}" var="incGen"
+									itemLabel="#{incGen.name}" itemValue="#{incGen}" />
+							</h:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGroup>
 					<h:panelGroup styleClass="txt">
-						<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
-							<f:selectItem itemLabel="None" itemValue="#{null}" />
-							<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
+						<h:outputLabel value="Lang" />
+						<h:selectOneMenu id="scriptTypeId"
+							value="#{scriptAction.script.scriptType}">
+							<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt"
+								itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+					<h:panelGroup styleClass="txt">
+						<h:outputLabel value="Parse" />
+						<h:selectOneMenu id="parseModeId"
+							value="#{scriptAction.script.parseMode}">
+							<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt"
+								itemValue="#{pmOpt}" />
+							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
 					</h:panelGroup>
 				</h:panelGroup>
-				<h:outputLabel value="Language" />
-				<h:panelGroup styleClass="txt">
-					<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
-						<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-						<f:ajax event="change" execute="@this" />
-					</h:selectOneMenu>
+
+				<h:panelGroup layout="block" styleClass="editor-buttons">
+
+					<h:commandButton value="Go Back"
+						action="#{scriptAction.goBackCommand()}"
+						rendered="#{scriptAction.script.command ne null}"
+						styleClass="secondary" />
+					<h:commandButton value="Go Back"
+						action="#{scriptAction.goBackValidator()}"
+						rendered="#{scriptAction.script.validator ne null}"
+						styleClass="secondary" />
+					<h:commandButton id="btScriptSaveId" value="Save"
+						action="#{scriptAction.saveScript()}" styleClass="primary">
+						<a4j:ajax execute="frm:panelScriptControlsId frm:scriptCode"
+							render="frm:outputHiddenId"
+							onbeforesubmit="scriptCodeMirror.save()"
+							oncomplete="treatConsoleOutput()" />
+					</h:commandButton>
+
 				</h:panelGroup>
-				<h:outputLabel value="Parse Mode" />
-				<h:panelGroup styleClass="txt">
-					<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
-						<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
-						<f:ajax event="change" execute="@this" />
-					</h:selectOneMenu>
-				</h:panelGroup>
-				<h:commandButton value="Go Back" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" />
-				<h:commandButton value="Go Back" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" />
-				<h:commandButton id="btScriptTestId" value="Test" actionListener="#{scriptAction.testScript()}" styleClass="secondary">
-					<a4j:ajax execute="frm:panelScriptControlsId frm:contextVarsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
-				</h:commandButton>
-				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
-					<a4j:ajax execute="frm:panelScriptControlsId frm:scriptCode" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
-				</h:commandButton>
 			</h:panelGroup>
 		</h:panelGroup>
 
 		<rich:panel styleClass="frm-crud editor-screen">
-			<h:panelGrid columns="3" columnClasses="pc20 txtop,pc60 txtop,pc20 txtop" styleClass="pc100">
+			<h:panelGrid columns="2" columnClasses="pc80 txtop,pc20 txtop"
+				styleClass="pc100">
+				<h:panelGroup layout="block" styleClass="hg100pc">
+					<h:panelGroup layout="block" styleClass="frm-line">
+						<h:inputTextarea id="scriptCode"
+							value="#{scriptAction.script.code}" rows="16" />
+					</h:panelGroup>
+				</h:panelGroup>
+
 				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
 					<h3>Context Vars</h3>
-					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{scriptAction.contextVars}" styleClass="pc100">
+					<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx"
+						value="#{scriptAction.contextVars}" styleClass="pc100"
+						columnClasses="pc10,pc40,pc50 txrgt">
 						<h:column headerClass="tx11 pc10">
-							<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
+							<h:graphicImage value="/resources/img/icons/info.png"
+								title="#{ctx.description}" styleClass="tip-left" />
 						</h:column>
 						<h:column headerClass="tx11 pc40">
 							<h:outputText value="#{ctx.name}" styleClass="tx9 green" />
 						</h:column>
 						<h:column headerClass="tx11 pc50">
-							<h:inputText value="#{ctx.value}" size="15" maxlength="120" />
+							<h:inputText value="#{ctx.value}" size="20" maxlength="120"
+								styleClass="tx9" />
 						</h:column>
 					</h:dataTable>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="hg100pc">
-					<h:panelGroup layout="block" styleClass="frm-line">
-						<h:inputTextarea id="scriptCode" value="#{scriptAction.script.code}" rows="16" />
+
+					<h:panelGroup layout="block" styleClass="pc100 txrgt">
+						<h:commandButton id="btScriptTestId" value="Test"
+							actionListener="#{scriptAction.testScript()}"
+							styleClass="secondary" accesskey="e" >
+							<a4j:ajax
+								execute="frm:panelScriptControlsId frm:contextVarsId frm:scriptCode"
+								render="frm:outputHiddenId"
+								onbeforesubmit="scriptCodeMirror.save()"
+								oncomplete="treatConsoleOutput()" />
+						</h:commandButton>
 					</h:panelGroup>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="pc100 hg100pc">
-					<h3>Output Console</h3>
-					<h:panelGroup layout="block" id="consoleOutputId" styleClass="output-console" />
-					<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
+
+					<h3 class="v-space">Output Console</h3>
+					<h:panelGroup layout="block" id="consoleOutputId"
+						styleClass="output-console" />
+					<h:inputHidden id="outputHiddenId"
+						value="#{scriptAction.debugContent}" />
+
+					<h:panelGroup layout="block" styleClass="pc100 txrgt">
+						<h:commandButton id="btClearOutputId" value="Clear Output"
+							actionListener="#{scriptAction.clearOutput()}"
+							styleClass="secondary">
+							<a4j:ajax execute="@this" render="frm:outputHiddenId"
+								oncomplete="clearConsoleOutput()" />
+						</h:commandButton>
+					</h:panelGroup>
+
 				</h:panelGroup>
 			</h:panelGrid>
 		</rich:panel>
@@ -127,6 +196,11 @@
 			}
 			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
 		}
+
+		function clearConsoleOutput() {
+			document.getElementById('frm:consoleOutputId').innerHTML = '';
+		}
+		
 		configureCodeMirror();
 	</script>
 
