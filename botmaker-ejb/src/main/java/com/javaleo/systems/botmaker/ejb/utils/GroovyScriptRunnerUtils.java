@@ -4,6 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +21,7 @@ import com.javaleo.systems.botmaker.ejb.business.IBlackListExpressionBusiness;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
+import com.javaleo.systems.botmaker.ejb.schedules.ManagerUtils;
 
 @Named
 @Stateless
@@ -34,10 +36,15 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	private DevUtils devUtils;
 
 	@Inject
+	private ManagerUtils managerUtils;
+
+	@Inject
 	private Logger LOG;
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
+	@AccessTimeout(
+			unit = TimeUnit.SECONDS,
+			value = 10)
 	public Object testScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
@@ -53,24 +60,32 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	}
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
+	@AccessTimeout(
+			unit = TimeUnit.SECONDS,
+			value = 10)
 	public Object evaluateScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
-			Map<String, String> contextVars = dialog.getContextVars();
-			Binding binding = mountBinding(contextVars);
+			Map<String, String> otherDialogsContextVars = managerUtils.getAllContextVarsFromUserId(dialog.getUserId());
+			Map<String, String> actualDialogContextVars = dialog.getContextVars();
+
+			Map<String, String> allContextVars = new HashMap<String, String>();
+			allContextVars.putAll(otherDialogsContextVars);
+			allContextVars.putAll(actualDialogContextVars);
+
+			Binding binding = mountBinding(allContextVars);
 			GroovyShell shell = new GroovyShell(binding);
 			Object result = shell.evaluate(script);
 			Binding postBinding = shell.getContext();
 			for (Object key : postBinding.getVariables().keySet()) {
 				String varName = (String) key;
 				if (postBinding.getVariable(varName) instanceof Integer) {
-					contextVars.put(varName, Integer.toString((Integer) postBinding.getVariable(varName)));
+					allContextVars.put(varName, Integer.toString((Integer) postBinding.getVariable(varName)));
 				} else if (postBinding.getVariable(varName) instanceof String) {
-					contextVars.put(varName, (String) postBinding.getVariable(varName));
+					allContextVars.put(varName, (String) postBinding.getVariable(varName));
 				}
 			}
-			dialog.setContextVars(contextVars);
+			dialog.setContextVars(allContextVars);
 			return result;
 		} catch (Exception e) {
 			LOG.error(e.getMessage());

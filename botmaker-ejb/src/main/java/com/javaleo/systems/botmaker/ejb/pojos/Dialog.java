@@ -17,6 +17,7 @@ public class Dialog implements Serializable {
 
 	private int id;
 	private Long botId;
+	private Integer userId;
 	private Update lastUpdate;
 	private Command lastCommand;
 	private String postProcessedResult;
@@ -48,6 +49,14 @@ public class Dialog implements Serializable {
 
 	public void setBotId(Long botId) {
 		this.botId = botId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Update getLastUpdate() {
@@ -135,24 +144,16 @@ public class Dialog implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
 		Dialog other = (Dialog) obj;
-		if (pendingCommand != other.isPendingServer())
-			return false;
-		if (id != other.id)
-			return false;
-		if (pendingServer != other.pendingServer)
-			return false;
+		if (pendingCommand != other.isPendingServer()) return false;
+		if (id != other.id) return false;
+		if (pendingServer != other.pendingServer) return false;
 		if (postProcessedResult == null) {
-			if (other.postProcessedResult != null)
-				return false;
-		} else if (!postProcessedResult.equals(other.postProcessedResult))
-			return false;
+			if (other.postProcessedResult != null) return false;
+		} else if (!postProcessedResult.equals(other.postProcessedResult)) return false;
 		return true;
 	}
 
