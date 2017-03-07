@@ -21,7 +21,7 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class ValidatorAction extends AbstractCrudAction<Validator> implements Serializable {
+public class ValidatorAction extends AbstractCrudAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,8 +33,6 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 
 	@Inject
 	private MsgAction msgAction;
-
-	private CRUD crudOp;
 
 	private ValidatorFilter filter;
 	private Validator validator;
@@ -98,15 +96,6 @@ public class ValidatorAction extends AbstractCrudAction<Validator> implements Se
 	@Override
 	public Conversation getConversation() {
 		return conversation;
-	}
-
-	@Override
-	public CRUD getCrudOp() {
-		return crudOp;
-	}
-
-	public void setCrudOp(CRUD crudOp) {
-		this.crudOp = crudOp;
 	}
 
 	public Validator getValidator() {

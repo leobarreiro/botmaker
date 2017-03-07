@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.javaleo.systems.botmaker.web.action.MsgAction;
-import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 public class BotMakerFilter implements Filter {
 
@@ -48,7 +47,7 @@ public class BotMakerFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		if (!authenticator.isAuthenticated()) {
+		if (!authenticator.isLoggedIn()) {
 			goToLoginPage(request, response);
 			return;
 		}
@@ -74,6 +73,7 @@ public class BotMakerFilter implements Filter {
 		httpResponse.sendRedirect(error500);
 	}
 
+	@SuppressWarnings("unused")
 	private void goToError404(HttpServletResponse httpResponse) throws IOException {
 		ServletContext servletContext = filterConfig.getServletContext();
 		String error404 = servletContext.getContextPath() + servletContext.getInitParameter("error.404");

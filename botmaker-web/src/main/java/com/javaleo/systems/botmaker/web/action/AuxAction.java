@@ -41,7 +41,7 @@ public class AuxAction implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		if (authenticator.isAuthenticated()) {
+		if (authenticator.isLoggedIn()) {
 			if (conversation.isTransient()) {
 				conversation.begin();
 			}

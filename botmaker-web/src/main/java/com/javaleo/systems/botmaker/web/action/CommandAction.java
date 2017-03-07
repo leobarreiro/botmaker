@@ -28,7 +28,7 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class CommandAction extends AbstractCrudAction<Command> implements Serializable {
+public class CommandAction extends AbstractCrudAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 	@Inject
 	private MsgAction msgAction;
 
-	private CRUD crudOp;
 	private Command command;
 	private List<Command> commands;
 	private List<Question> questions;
@@ -170,11 +169,6 @@ public class CommandAction extends AbstractCrudAction<Command> implements Serial
 
 	public void enablePostScript() {
 		fillPostScriptToCommand();
-	}
-
-	@Override
-	public CRUD getCrudOp() {
-		return crudOp;
 	}
 
 	public Command getCommand() {

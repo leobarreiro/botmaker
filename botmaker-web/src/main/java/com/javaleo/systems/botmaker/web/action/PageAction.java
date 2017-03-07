@@ -9,4 +9,6 @@ import javax.inject.Named;
 @ConversationScoped
 public class PageAction implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 }

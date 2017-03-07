@@ -37,28 +37,17 @@ public class BotMakerAuthenticator implements IJavaleoAuthenticator {
 		if (user.getCompany() != null) {
 			credentials.setCompany(user.getCompany());
 		}
-		credentials.setUsername(username);
+		credentials.setUuid(username);
 		credentials.setName(user.getName());
-		credentials.setEmail(user.getEmail());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.javaleo.libs.jee.core.security.IJavaleoAuthenticator#logoff()
-	 */
 	@Override
 	public void logoff() throws JavaleoException {
 		credentials.clear();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.javaleo.libs.jee.core.security.IJavaleoAuthenticator#isAuthenticated()
-	 */
 	@Override
-	public boolean isAuthenticated() {
+	public boolean isLoggedIn() {
 		return (credentials.getUser() != null);
 	}
 

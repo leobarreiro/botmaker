@@ -43,7 +43,7 @@ public class PageBusiness implements IPageBusiness {
 	public void savePage(Page page) throws BusinessException {
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		page.setCompany(company);
-		User user = userBusiness.findUserByUsername(credentials.getUsername());
+		User user = userBusiness.findUserByUsername(credentials.getUser().getUsername());
 		page.setUser(user);
 		if (page.getCreated() == null) {
 			page.setCreated(Calendar.getInstance().getTime());

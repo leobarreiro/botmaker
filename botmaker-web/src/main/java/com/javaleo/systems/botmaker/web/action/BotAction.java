@@ -21,7 +21,7 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
+public class BotAction extends AbstractCrudAction implements Serializable {
 
 	private static final String CANCEL_KEY = "/cancel";
 
@@ -45,7 +45,6 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 	private String token;
 	private BotType botType;
 	private BotFilter filter;
-	private CRUD crudOp;
 	private Bot bot;
 	private List<Bot> bots;
 	private String rawCommands;
@@ -135,11 +134,6 @@ public class BotAction extends AbstractCrudAction<Bot> implements Serializable {
 		}
 
 		this.rawCommands = str.toString();
-	}
-
-	@Override
-	public CRUD getCrudOp() {
-		return crudOp;
 	}
 
 	public String validateToken() {

@@ -3,14 +3,14 @@ package com.javaleo.systems.botmaker.ejb.security;
 import javax.ejb.Stateful;
 import javax.inject.Named;
 
-import org.javaleo.libs.jee.core.security.Credentials;
+import org.javaleo.libs.jee.core.security.JavaLeoCredentials;
 
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.User;
 
 @Named
 @Stateful
-public class BotMakerCredentials extends Credentials {
+public class BotMakerCredentials extends JavaLeoCredentials {
 
 	private static final long serialVersionUID = 1L;
 

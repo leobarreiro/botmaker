@@ -1,5 +1,6 @@
 package com.javaleo.systems.botmaker.web.action;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +28,12 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class QuestionAction extends AbstractCrudAction<Question> {
-
-	private static final String PAGE_QUESTION = "/pages/question/question.jsf?faces-redirect=true";
-	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.jsf?faces-redirect=true";
+public class QuestionAction extends AbstractCrudAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private CRUD crud;
+	private static final String PAGE_QUESTION = "/pages/question/question.jsf?faces-redirect=true";
+	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.jsf?faces-redirect=true";
 
 	@Inject
 	private Conversation conversation;
@@ -174,11 +173,6 @@ public class QuestionAction extends AbstractCrudAction<Question> {
 	@Override
 	public Conversation getConversation() {
 		return conversation;
-	}
-
-	@Override
-	public CRUD getCrudOp() {
-		return crud;
 	}
 
 	public Command getCommand() {

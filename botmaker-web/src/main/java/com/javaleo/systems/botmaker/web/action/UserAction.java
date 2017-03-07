@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
-import java.net.URL;
 import java.util.Map;
 
 import javax.enterprise.context.Conversation;
