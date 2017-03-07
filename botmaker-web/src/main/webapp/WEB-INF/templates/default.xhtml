@@ -31,7 +31,7 @@
 		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
 				<h:panelGroup layout="block" styleClass="topmenu">
-					<rich:toolbar rendered="#{botMakerAuthenticator.authenticated}" styleClass="menubar">
+					<rich:toolbar rendered="#{botMakerAuthenticator.loggedIn}" styleClass="menubar">
 						<rich:dropDownMenu mode="ajax" rendered="#{botMakerCredentials.user.admin}">
 							<f:facet name="label">
 								<h:outputText value="Expressions" />
