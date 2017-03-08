@@ -71,12 +71,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 	@Inject
 	private ManagerUtils managerUtils;
 
-	@Schedule(
-			dayOfWeek = "*",
-			hour = "*",
-			minute = "*",
-			second = "*/1",
-			persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/5", persistent = false)
 	public void listenBotUpdates() {
 		List<Bot> bots = botBusiness.listValidAndActiveBots();
 		for (Bot bot : bots) {
@@ -84,12 +79,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		}
 	}
 
-	@Schedule(
-			dayOfWeek = "*",
-			hour = "*/1",
-			minute = "00,30",
-			second = "00",
-			persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*/1", minute = "00,30", second = "00", persistent = false)
 	public void cleanDialogsWithoutInteraction() {
 		LOG.info("Removing old dialogs without interaction.");
 		managerUtils.removeOldDialogWithoutInteraction();

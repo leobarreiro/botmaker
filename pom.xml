@@ -77,6 +77,7 @@
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>botgram</artifactId>
 				<version>${version.botgram}</version>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax</groupId>
