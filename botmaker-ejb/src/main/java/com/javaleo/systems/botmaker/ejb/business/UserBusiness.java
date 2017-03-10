@@ -92,8 +92,8 @@ public class UserBusiness implements IUserBusiness {
 		}
 		Token token = tokenBusiness.generateTokenToUser(userOwnerEmail);
 		messageUtils.sendMailMessage("javaleo.org@gmail.com", userOwnerEmail.getEmail(), "Javaleo.org - Reset your password",
-				"Reseting your password.\n\nPlease use the token bellow to reset your password.\n\n<a href=\'nhttp://javaleo.org/reset-password.jsf?uuidToken=" + token.getUuid()
-						+ "\' target=\'_blank\'>" + token.getUuid() + "</a>\n\nThis token is valid per 2 hours.");
+				"Reseting your password.\n\nPlease use the token bellow to reset your password.\n\nhttp://javaleo.org/reset-password.jsf?uuidToken=" + token.getUuid()
+						+ "\n\nThis token is valid per 2 hours.");
 	}
 
 	private User findUserByEmail(final String email) {

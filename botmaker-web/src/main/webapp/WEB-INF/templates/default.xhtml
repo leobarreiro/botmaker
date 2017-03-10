@@ -26,8 +26,8 @@
 		<h:outputScript name="js/bot49.js" />
 	</h:head>
 	<h:body styleClass="page">
-		<a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-		<a4j:poll action="#{userAction.logoff()}" interval="720000" execute="@this" />
+		<a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" rendered="false" />
+		<a4j:poll action="#{userAction.logoff()}" interval="600000" execute="@this" enabled="#{not scriptAction.editing}" />
 		<h:form id="frm" acceptcharset="ISO-8859-1">
 			<h:panelGroup layout="block" styleClass="head">
 				<h:panelGroup layout="block" styleClass="topmenu">
@@ -43,8 +43,8 @@
 							<f:facet name="label">
 								<h:outputText value="Validators" />
 							</f:facet>
-							<rich:menuItem label="List Validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
-							<rich:menuItem label="New Validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
+							<rich:menuItem label="List Validators" action="#{validatorAction.list()}" immediate="true" execute="@this" actionListener="#{scriptAction.stopEdit()}" />
+							<rich:menuItem label="New Validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" actionListener="#{scriptAction.stopEdit()}" />
 						</rich:dropDownMenu>
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
@@ -97,7 +97,6 @@
 				[Template content will be inserted here]
 			</ui:insert>
 			</h:panelGroup>
-
 			<rich:popupPanel id="statPane" autosized="true" styleClass="statPane" modal="true">
     	        Please wait...
 	        </rich:popupPanel>

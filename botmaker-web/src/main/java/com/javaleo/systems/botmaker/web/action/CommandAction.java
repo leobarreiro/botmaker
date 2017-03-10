@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 import org.python.icu.util.Calendar;
 
@@ -19,6 +20,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -97,6 +99,8 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 			script.setCreated(Calendar.getInstance().getTime());
 			script.setEnabled(true);
 			script.setCommand(command);
+			script.setScriptType(ScriptType.GROOVY);
+			script.setParseMode(ParseMode.MARKDOWN);
 			command.setPostScript(script);
 		}
 	}
