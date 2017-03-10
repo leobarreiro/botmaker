@@ -205,9 +205,9 @@ public class ScriptBusiness implements IScriptBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveScript(Script script) throws BusinessException {
-		
+
 		persistence.getEntityManager().contains(script);
-		
+
 		if (script.getGeneric() != null && script.getGeneric()) {
 			if (StringUtils.isBlank(script.getName())) {
 				throw new BusinessException("For Generic Script is mandatory enter a Name.");

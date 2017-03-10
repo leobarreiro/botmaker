@@ -19,6 +19,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
+import com.javaleo.systems.botmaker.ejb.filters.PageFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
@@ -118,8 +119,10 @@ public interface IBotMakerFacade extends Serializable {
 
 	void savePage(Page page) throws BusinessException;
 
-	List<Page> listPages();
+	List<Page> listPages(PageFilter pageFilter);
 
 	void disablePage(Page page) throws BusinessException;
+
+	List<Page> listLastPagesEdited();
 
 }

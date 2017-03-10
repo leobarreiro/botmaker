@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+
+		<h2>Content Pages</h2>
+
+		<rich:panel legend="Filter" styleClass="frm-crud">
+			<h:panelGrid columns="6" styleClass="pc100">
+				<h:outputText styleClass="txt" value="Title" />
+				<h:inputText value="#{pageAction.filter.title}" />
+				<h:outputText styleClass="txt" value="Content" />
+				<h:inputText value="#{pageAction.filter.content}" />
+				<h:commandButton action="#{pageAction.list()}" value="List" update="pageListId" styleClass="primary" />
+				<h:commandButton action="#{pageAction.startNew()}" value="New Content Page" styleClass="secondary" immediate="true" />
+			</h:panelGrid>
+		</rich:panel>
+		<h:panelGroup layout="block" styleClass="frm-crud">
+			<rich:dataTable id="pageListId" value="#{pageAction.pageList}" var="pg" rows="20" styleClass="pc100">
+				<rich:column sortBy="#{pg.title}" styleClass="txlft pc20">
+					<f:facet name="header">Title</f:facet>
+					<h:commandLink action="#{pageAction.detail(pg)}" value="#{pg.shortContent}" styleClass="tx10" />
+				</rich:column>
+				<rich:column sortBy="#{pg.active}" styleClass="txlft pc15">
+					<f:facet name="header">Active</f:facet>
+					<h:outputText value="#{(pg.active) ? 'Yes' : 'No'}" styleClass="#{(pg.active) ? 'green' : 'gray'}" />
+				</rich:column>
+				<f:facet name="footer">
+					<rich:dataScroller fastStep="3" />
+				</f:facet>
+			</rich:dataTable>
+		</h:panelGroup>
+
+	</ui:define>
+</ui:composition>

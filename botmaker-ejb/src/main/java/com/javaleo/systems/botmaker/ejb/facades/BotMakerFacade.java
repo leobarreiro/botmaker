@@ -34,6 +34,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.BotFilter;
+import com.javaleo.systems.botmaker.ejb.filters.PageFilter;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
@@ -316,8 +317,13 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
-	public List<Page> listPages() {
-		return pageBusiness.listPages();
+	public List<Page> listPages(PageFilter pageFilter) {
+		return pageBusiness.listPages(pageFilter);
+	}
+
+	@Override
+	public List<Page> listLastPagesEdited() {
+		return pageBusiness.listLastPagesEdited();
 	}
 
 	@Override

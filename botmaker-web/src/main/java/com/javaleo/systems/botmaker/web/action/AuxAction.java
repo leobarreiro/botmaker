@@ -15,6 +15,7 @@ import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Page;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
@@ -38,6 +39,7 @@ public class AuxAction implements Serializable {
 	private List<Bot> bots;
 	private List<Script> lastGenericScripts;
 	private List<Script> companyGenericScripts;
+	private List<Page> lastPagesEdited;
 
 	@PostConstruct
 	public void init() {
@@ -48,6 +50,7 @@ public class AuxAction implements Serializable {
 			updateLastBotsFromCompanyUser();
 			updateLastGenericScripts();
 			updateCompanyGenericScripts();
+			updateLastContentPages();
 		}
 	}
 
@@ -61,6 +64,10 @@ public class AuxAction implements Serializable {
 
 	public void updateCompanyGenericScripts() {
 		companyGenericScripts = facade.listAllGenericScriptsFromCompany();
+	}
+
+	public void updateLastContentPages() {
+		lastPagesEdited = facade.listLastPagesEdited();
 	}
 
 	public List<ScriptType> getScriptTypeOpt() {
@@ -97,6 +104,14 @@ public class AuxAction implements Serializable {
 
 	public void setCompanyGenericScripts(List<Script> companyGenericScripts) {
 		this.companyGenericScripts = companyGenericScripts;
+	}
+
+	public List<Page> getLastPagesEdited() {
+		return lastPagesEdited;
+	}
+
+	public void setLastPagesEdited(List<Page> lastPagesEdited) {
+		this.lastPagesEdited = lastPagesEdited;
 	}
 
 }

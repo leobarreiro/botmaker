@@ -29,6 +29,7 @@ public class Page implements IEntityBasic {
 	private String uid;
 	private String content;
 	private Date created;
+	private Date edited;
 	private User user;
 	private Company company;
 	private Boolean active;
@@ -81,6 +82,16 @@ public class Page implements IEntityBasic {
 		this.created = created;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "edited")
+	public Date getEdited() {
+		return edited;
+	}
+
+	public void setEdited(Date edited) {
+		this.edited = edited;
+	}
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "fk_page_user"))
 	public User getUser() {
@@ -118,6 +129,7 @@ public class Page implements IEntityBasic {
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
+		result = prime * result + ((edited == null) ? 0 : edited.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
@@ -143,6 +155,9 @@ public class Page implements IEntityBasic {
 		if (created == null) {
 			if (other.created != null) return false;
 		} else if (!created.equals(other.created)) return false;
+		if (edited == null) {
+			if (other.edited != null) return false;
+		} else if (!edited.equals(other.edited)) return false;
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;

@@ -21,15 +21,8 @@ import javax.persistence.Table;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity
-@Table(
-		schema = EntityUtils.SCHEMA,
-		name = "user")
-@SequenceGenerator(
-		schema = EntityUtils.SCHEMA,
-		name = "sq_user",
-		sequenceName = "user_seq",
-		allocationSize = 1,
-		initialValue = 1)
+@Table(schema = EntityUtils.SCHEMA, name = "user")
+@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "sq_user", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)
 public class User implements IEntityBasic {
 
 	private static final long serialVersionUID = 1L;
