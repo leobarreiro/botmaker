@@ -23,7 +23,7 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class UserAction implements Serializable {
+public class UserAction extends AbstractConversationAction implements Serializable {
 
 	private static final long serialVersionUID = 8467442454444489390L;
 
@@ -63,6 +63,7 @@ public class UserAction implements Serializable {
 	private User user;
 
 	public String login() {
+		startNewConversation();
 		try {
 			authenticator.authenticate(username, plainPassword);
 			auxAction.init();
@@ -84,15 +85,14 @@ public class UserAction implements Serializable {
 	}
 
 	public String createAccount() {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
+		startNewConversation();
 		company = new Company();
 		user = new User();
 		return "/new-account.jsf?faces-redirect=true";
 	}
 
 	public String saveNewUser() {
+		startOrResumeConversation();
 		try {
 			facade.validateUser(user, plainPassword, passwordReview);
 			if (StringUtils.isBlank(company.getName())) {
@@ -112,21 +112,17 @@ public class UserAction implements Serializable {
 	}
 
 	public String forgotMyPassword() {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
+		startNewConversation();
 		emailRecovery = null;
 		emailRecoveryReview = null;
 		return "/password-recovery.jsf?faces-redirect=true";
 	}
 
 	public String recoverPasswordFromUser() {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
+		startOrResumeConversation();
 		try {
 			facade.sendMessageRecoveryLoginToUser(emailRecovery, emailRecoveryReview);
-			msgAction.addInfoMessage("A message will be sent to your e-mail. Please read it and follow the instructions.");
+			msgAction.addInfoMessage("A message was sent to your e-mail. Please read it and follow the instructions.");
 			return "/index.jsf?faces-redirect=true";
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
@@ -135,11 +131,7 @@ public class UserAction implements Serializable {
 	}
 
 	public void startResetPassword() {
-		if (!conversation.isTransient()) {
-			conversation.end();
-		}
-		conversation.begin();
-
+		startNewConversation();
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String uniqueToken = params.get("uuidToken");
 
@@ -155,6 +147,7 @@ public class UserAction implements Serializable {
 	}
 
 	public String confirmResetPassword() {
+		startOrResumeConversation();
 		try {
 			facade.saveUser(token.getUser(), plainPassword, passwordReview);
 			msgAction.addInfoMessage("Your new password was been saved!");
@@ -166,10 +159,13 @@ public class UserAction implements Serializable {
 	}
 
 	public String goToLogin() {
-		if (!conversation.isTransient()) {
-			conversation.end();
-		}
+		startOrResumeConversation();
 		return "/index.jsf?faces-redirect=true";
+	}
+
+	@Override
+	public Conversation getConversation() {
+		return conversation;
 	}
 
 	public String getUsername() {

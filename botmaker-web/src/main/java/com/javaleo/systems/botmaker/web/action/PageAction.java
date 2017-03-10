@@ -53,6 +53,11 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		return PAGE_DETAIL;
 	}
 
+	@Override
+	public Conversation getConversation() {
+		return conversation;
+	}
+
 	public PageFilter getFilter() {
 		return filter;
 	}

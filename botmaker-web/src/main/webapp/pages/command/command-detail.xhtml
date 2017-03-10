@@ -46,6 +46,7 @@
 				</h:commandLink>
 				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command.postScript)}"
 					styleClass="links-script-code">
+					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />

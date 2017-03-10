@@ -4,19 +4,29 @@ import javax.enterprise.context.Conversation;
 
 public abstract class AbstractConversationAction {
 
-	private Conversation conversation;
+	public static long CONVERSATION_EXPIRES = 760000l;
 
 	public void startNewConversation() {
-		if (!conversation.isTransient()) {
-			conversation.begin();
+		if (!getConversation().isTransient()) {
+			getConversation().end();
 		}
-		conversation.begin();
+		getConversation().begin();
+		getConversation().setTimeout(CONVERSATION_EXPIRES);
 	}
 
 	public void startOrResumeConversation() {
-		if (conversation.isTransient()) {
-			conversation.begin();
+		if (getConversation().isTransient()) {
+			getConversation().begin();
+			getConversation().setTimeout(CONVERSATION_EXPIRES);
 		}
 	}
+
+	public void endConversation() {
+		if (!getConversation().isTransient()) {
+			getConversation().end();
+		}
+	}
+
+	public abstract Conversation getConversation();
 
 }

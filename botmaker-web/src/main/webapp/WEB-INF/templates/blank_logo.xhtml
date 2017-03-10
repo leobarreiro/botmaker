@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" >
 <f:view contentType="text/html; charset=ISO-8859-1" encoding="ISO-8859-1">
 	<h:head>
 		<title><h:outputText value="BotMaker" /></title>
@@ -9,17 +11,17 @@
 	</h:head>
 	<h:body>
 		<h:form id="frm" acceptcharset="ISO-8859-1">
-
 			<h:panelGroup layout="block" styleClass="mrauto wd200 txctr">
 				<h:graphicImage value="/resources/img/botmaker-logo-black.png" width="140" height="140" />
 			</h:panelGroup>
-
 			<h:panelGroup layout="block">
 				<ui:insert name="content">
 				[Template content will be inserted here]
 			</ui:insert>
 			</h:panelGroup>
 		</h:form>
+		<rich:notifyStack id="mainStack" position="topRight" direction="vertical" method="first" />
+		<rich:notify id="notify" stack="mainStack" summary="#{msgAction.showMsg()}" escape="false" rendered="#{msgAction.mustShow}" />
 	</h:body>
 </f:view>
 </html>

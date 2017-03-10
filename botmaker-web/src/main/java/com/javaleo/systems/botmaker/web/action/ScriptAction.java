@@ -23,9 +23,7 @@ import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 
 @Named
 @ConversationScoped
-public class ScriptAction implements Serializable {
-
-	private static final long CONVERSATION_EXPIRES = 760000l;
+public class ScriptAction extends AbstractConversationAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,18 +50,18 @@ public class ScriptAction implements Serializable {
 	private List<Script> scripts;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
+	private Boolean editing = Boolean.FALSE;
 
 	public String startEditScript(Bot botEdition, Script scriptEdition) {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
-		conversation.setTimeout(CONVERSATION_EXPIRES);
+		startOrResumeConversation();
+		editing = Boolean.TRUE;
 		bot = botEdition;
 		if (scriptEdition.getId() != null) {
 			script = facade.getScriptToEdition(scriptEdition.getId());
 		} else {
 			script = scriptEdition;
 		}
+
 		script.setGeneric(false);
 		loadContextVars();
 		listGenericScripts();
@@ -71,10 +69,8 @@ public class ScriptAction implements Serializable {
 	}
 
 	public String startNewGeneric() {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
-		conversation.setTimeout(CONVERSATION_EXPIRES);
+		startNewConversation();
+		editing = Boolean.TRUE;
 		bot = null;
 		script = new Script();
 		script.setGeneric(true);
@@ -83,10 +79,8 @@ public class ScriptAction implements Serializable {
 	}
 
 	public String startEditGeneric(Script script) {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
-		conversation.setTimeout(CONVERSATION_EXPIRES);
+		startOrResumeConversation();
+		editing = Boolean.TRUE;
 		this.bot = null;
 		this.script = facade.getScriptToEdition(script.getId());
 		loadContextVars();
@@ -94,10 +88,8 @@ public class ScriptAction implements Serializable {
 	}
 
 	public String startEditScriptValidator(Validator validator) {
-		if (conversation.isTransient()) {
-			conversation.begin();
-		}
-		conversation.setTimeout(CONVERSATION_EXPIRES);
+		startOrResumeConversation();
+		editing = Boolean.TRUE;
 		this.bot = null;
 		if (validator.getScript() != null) {
 			script = facade.getScriptToEdition(validator.getScript().getId());
@@ -109,6 +101,10 @@ public class ScriptAction implements Serializable {
 		loadContextVars();
 		listGenericScripts();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	public void stopEdit() {
+		this.editing = Boolean.FALSE;
 	}
 
 	private void loadContextVars() {
@@ -166,12 +162,21 @@ public class ScriptAction implements Serializable {
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
+	public void handleRefreshConversation() {
+		startOrResumeConversation();
+	}
+
 	public String goBackCommand() {
 		return commandAction.detail(script.getCommand());
 	}
 
 	public String goBackValidator() {
 		return validatorAction.detail(script.getValidator());
+	}
+
+	@Override
+	public Conversation getConversation() {
+		return conversation;
 	}
 
 	public Bot getBot() {
@@ -212,6 +217,14 @@ public class ScriptAction implements Serializable {
 
 	public void setDebugContent(String debugContent) {
 		this.debugContent = debugContent;
+	}
+
+	public Boolean getEditing() {
+		return editing;
+	}
+
+	public void setEditing(Boolean editing) {
+		this.editing = editing;
 	}
 
 }
