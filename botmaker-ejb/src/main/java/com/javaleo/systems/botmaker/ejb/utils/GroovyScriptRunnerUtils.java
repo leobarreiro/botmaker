@@ -83,6 +83,8 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 					allContextVars.put(varName, Integer.toString((Integer) postBinding.getVariable(varName)));
 				} else if (postBinding.getVariable(varName) instanceof String) {
 					allContextVars.put(varName, (String) postBinding.getVariable(varName));
+				} else if (postBinding.getVariable(varName) instanceof Long) {
+					allContextVars.put(varName, Long.toString((Long) postBinding.getVariable(varName)));
 				}
 			}
 			dialog.setContextVars(allContextVars);

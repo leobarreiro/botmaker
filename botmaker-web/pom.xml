@@ -33,6 +33,11 @@
 			<groupId>org.richfaces</groupId>
 			<artifactId>richfaces</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.javaleo.libs</groupId>
+			<artifactId>botgram</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

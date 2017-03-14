@@ -45,6 +45,7 @@
 							<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
 								<f:selectItem itemLabel="None" itemValue="#{null}" />
 								<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
+								<f:ajax event="change" execute="@this" />
 							</h:selectOneMenu>
 						</h:panelGroup>
 					</h:panelGroup>
