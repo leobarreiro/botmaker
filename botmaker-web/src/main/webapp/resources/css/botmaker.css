@@ -119,8 +119,7 @@ span.txt {
 	display: inline-block;
 }
 
-.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
-	{
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
 	
 }
 
@@ -316,8 +315,7 @@ span.txt {
 	padding: 2pt !important;
 }
 
-.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"]
-	{
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
 	width: 70%;
 }
 
@@ -385,8 +383,7 @@ input.secondary, button.secondary {
 	padding: 2px 6px 2px 6px !important;
 }
 
-input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover
-	{
+input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
 	color: yellow !important;
 }
 
@@ -748,17 +745,23 @@ div.CodeMirror {
 	float: left;
 }
 
-.editor-toolbar .editor-menu {
+div.editor-toolbar div.editor-menu {
+	border: 0 !important;
+	background-color: transparent !important;
 	height: inherit;
 	max-height: inherit;
 	width: 85% !important;
 	display: inline-block;
-	padding: 0px;
-	margin: 2px;
+	padding: 0px !important;
+	margin: 2px !important;
 	float: right;
 }
 
-.editor-toolbar .editor-info {
+div.editor-menu div.rf-p-b {
+	padding: 0 !important;
+}
+
+div.editor-toolbar div.editor-info {
 	display: block;
 	float: left;
 	width: 85% !important;
@@ -766,7 +769,7 @@ div.CodeMirror {
 	max-height: inherit;
 }
 
-.editor-info label {
+div.editor-info label {
 	border-left: 2px solid #BDBDBD;
 	margin: 0px 6px 0px 18px !important;
 	padding-left: 2px;
@@ -855,3 +858,4 @@ div.CodeMirror {
 	font-size: 14pt !important;
 	font-weight: normal !important;
 }
+

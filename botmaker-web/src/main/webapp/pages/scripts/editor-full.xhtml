@@ -5,7 +5,7 @@
 		<a4j:poll actionListener="#{scriptAction.handleRefreshConversation()}" interval="30000" execute="frm:scriptCode" ontimer="scriptCodeMirror.save()" />
 		<h:panelGroup layout="block" styleClass="editor-toolbar">
 			<h2 class="fleft">Script Editor</h2>
-			<h:panelGroup id="panelScriptControlsId" layout="block" styleClass="editor-menu">
+			<rich:panel id="panelScriptConstrolsId" styleClass="editor-menu">
 				<h:panelGroup layout="block" styleClass="editor-info">
 					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}">
 						<h:outputLabel value="Bot" />
@@ -58,7 +58,8 @@
 					<h:panelGroup styleClass="txt">
 						<h:outputLabel value="Parse" />
 						<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
-							<f:selectItems value="#{auxAction.parseModeOpt}" var="pmOpt" itemValue="#{pmOpt}" />
+							<f:selectItem itemValue="MARKDOWN" itemLabel="MarkDown"/>
+							<f:selectItem itemValue="HTML" itemLabel="Html"/>
 							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
 					</h:panelGroup>
@@ -66,11 +67,11 @@
 				<h:panelGroup layout="block" styleClass="editor-buttons">
 					<h:commandButton value="Go Back" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" immediate="true" />
 					<h:commandButton value="Go Back" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" immediate="true" />
-					<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary">
-						<a4j:ajax execute="frm:scriptCode @this" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save()" oncomplete="treatConsoleOutput()" />
+					<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary" onclick="scriptCodeMirror.save()">
+						
 					</h:commandButton>
 				</h:panelGroup>
-			</h:panelGroup>
+			</rich:panel>
 		</h:panelGroup>
 		<rich:panel styleClass="frm-crud editor-screen">
 			<h:panelGrid columns="2" columnClasses="pc80 txtop,pc20 txtop" styleClass="pc100">
