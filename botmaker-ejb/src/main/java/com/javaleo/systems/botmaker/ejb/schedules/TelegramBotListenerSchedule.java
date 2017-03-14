@@ -71,7 +71,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 	@Inject
 	private ManagerUtils managerUtils;
 
-	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/5", persistent = false)
+	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/2", persistent = false)
 	public void listenBotUpdates() {
 		List<Bot> bots = botBusiness.listValidAndActiveBots();
 		for (Bot bot : bots) {
