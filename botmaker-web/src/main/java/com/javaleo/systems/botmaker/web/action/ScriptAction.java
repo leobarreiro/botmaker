@@ -103,6 +103,20 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
+	public void startViewScript(Script scriptView) {
+		startOrResumeConversation();
+		editing = Boolean.FALSE;
+		if (scriptView.getId() != null) {
+			script = facade.getScriptToEdition(scriptView.getId());
+		} else {
+			script = scriptView;
+		}
+
+		if (script.getCommand() != null && script.getCommand().getBot() != null) {
+			bot = script.getCommand().getBot();
+		}
+	}
+
 	public void stopEdit() {
 		this.editing = Boolean.FALSE;
 	}

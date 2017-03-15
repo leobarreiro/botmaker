@@ -9,11 +9,15 @@
 				<h:panelGroup layout="block" styleClass="editor-info">
 					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}">
 						<h:outputLabel value="Bot" />
-						<h:outputText value="#{scriptAction.bot.name}" styleClass="txt" />
+						<h:commandLink value="#{scriptAction.bot.name}" action="#{botAction.detail(scriptAction.bot)}">
+							<f:ajax execute="@this" immediate="true" />
+						</h:commandLink>
 					</h:panelGroup>
 					<h:panelGroup layout="block" rendered="#{scriptAction.script.command ne null}">
 						<h:outputLabel value="Command" />
-						<h:outputText value="#{scriptAction.script.command.key}" styleClass="txt fixed" />
+						<h:commandLink value="#{scriptAction.script.command.key}" action="#{scriptAction.goBackCommand()}">
+							<f:ajax execute="@this" immediate="true" />
+						</h:commandLink>
 					</h:panelGroup>
 					<h:panelGroup layout="block" rendered="#{scriptAction.script.question ne null}">
 						<h:outputLabel value="Command" />
@@ -28,6 +32,7 @@
 					</h:panelGroup>
 					<h:panelGroup rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
 						<h:panelGroup styleClass="txt">
+							<h:outputLabel value="Script Name" />
 							<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
 						</h:panelGroup>
 					</h:panelGroup>
@@ -66,10 +71,8 @@
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="editor-buttons">
-					<h:commandButton value="Go Back" action="#{scriptAction.goBackCommand()}" rendered="#{scriptAction.script.command ne null}" styleClass="secondary" immediate="true" />
 					<h:commandButton value="Go Back" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" immediate="true" />
 					<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary" onclick="scriptCodeMirror.save()">
-						
 					</h:commandButton>
 				</h:panelGroup>
 			</rich:panel>
@@ -116,7 +119,8 @@
 		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 		    lineNumbers: true, 
 		    lineWrapping: true, 
-		    indentWithTabs: true
+		    indentWithTabs: true, 
+		    indentUnit: 4
 		});
 
 		function configureCodeMirror() {

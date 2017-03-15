@@ -15,7 +15,8 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
 	color: blue !important;
-	text-decoration: none !important;
+	text-decoration: underline !important;
+	font-size: 11pt !important;
 }
 
 body.page {
@@ -383,6 +384,17 @@ input.secondary, button.secondary {
 	padding: 2px 6px 2px 6px !important;
 }
 
+input.attention, button.attention {
+	background: #aa0000!important;
+	border: 1px solid #666666 !important;
+	border-radius: 4px !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	margin: 4px;
+	padding: 2px 6px 2px 6px !important;
+}
+
+
 input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
 	color: yellow !important;
 }
@@ -459,7 +471,7 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 }
 
 .links-script-code {
-	margin: 1px 20px 1px 1px !important;
+	margin: 3px !important;
 }
 
 .wd100 {
@@ -480,6 +492,10 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 
 .pc5 {
 	width: 5% !important;
+}
+
+.pc7 {
+	width: 7% !important;
 }
 
 .pc10 {
@@ -638,17 +654,17 @@ textarea[disabled].script {
 	background: transparent !important;
 }
 
-label, keygen, isindex, legend, a, .rf-p-b, .rf-dt-c {
+label, keygen, isindex, legend, .rf-p-b, .rf-dt-c {
 	color: #666666 !important;
 	font-size: 11pt !important;
 }
 
 span.txt {
-	color: #000000 !important;
+	color: #000000;
 	font-size: 11pt !important;
 }
 
-linput, select, textarea, button, keygen, isindex, legend, a {
+linput, select, textarea, button, keygen, isindex, legend {
 	color: #440044 !important;
 	font-size: 11pt !important;
 }
@@ -673,8 +689,8 @@ linput, select, textarea, button, keygen, isindex, legend, a {
 }
 
 .rf-dt-shdr-c {
-	border: none !important;
-	background-color: #440044 !important;
+	border: 1px solid #dfa5a5 !important;
+	/*background-color: #440044 !important;*/
 	background-image: none !important;
 	color: #FFFFFF;
 	padding: 4px;
@@ -740,6 +756,7 @@ div.CodeMirror {
 	width: 14% !important;
 	font-size: 36px;
 	display: inline-block;
+	font-weight: bold;
 	padding: 0px;
 	margin: 0px;
 	float: left;

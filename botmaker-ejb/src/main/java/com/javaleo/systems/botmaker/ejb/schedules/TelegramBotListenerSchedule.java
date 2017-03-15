@@ -32,7 +32,6 @@ import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
-import com.javaleo.systems.botmaker.ejb.business.IScriptBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -58,9 +57,6 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Inject
 	private IQuestionBusiness questionBusiness;
-
-	@Inject
-	private IScriptBusiness scriptBusiness;
 
 	@Inject
 	private TelegramSendMessageUtils sendMessageUtils;

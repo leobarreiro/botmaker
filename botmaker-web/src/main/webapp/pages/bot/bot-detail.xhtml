@@ -2,7 +2,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-
 		<h2>Bot</h2>
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line2">
@@ -19,21 +18,21 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Valid" />
-				<h:outputText value="#{botAction.bot.valid}" styleClass="#{(botAction.bot.valid) ? 'green': 'red'}" />
+				<h:outputText value="#{(botAction.bot.valid) ? 'Yes' : 'No'}" styleClass="#{(botAction.bot.valid) ? 'green': 'red'}" />
 				<h:outputLabel value="Active" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.active}" />
+				<h:outputText styleClass="#{(botAction.bot.active) ? 'green': 'red'}" value="#{(botAction.bot.active) ? 'Yes' : 'No'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.closedBotMessage}" />
+				<h:outputText styleClass="txt" value="#{(not empty botAction.bot.closedBotMessage) ? botAction.bot.closedBotMessage : '--'}" />
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
 				<h:outputText styleClass="txt" value="#{botAction.bot.unknownCommadMessage}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="List commands when unknown command is received" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.listCommands}" />
+				<h:outputText value="#{(botAction.bot.listCommands) ? 'Yes' : 'No'}" styleClass="txt #{(botAction.bot.listCommands) ? 'green' : 'red'}" />
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.endOfDialogMessage}" />
+				<h:outputText styleClass="txt" value="#{(not empty botAction.bot.endOfDialogMessage) ? botAction.bot.endOfDialogMessage : '--'}" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
@@ -44,7 +43,7 @@
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.list()}" value="List Bots" styleClass="secondary" />
 				<h:commandButton action="#{botAction.edit()}" value="Edit Bot" styleClass="secondary" />
-				<h:commandButton value="Deactivate Bot" styleClass="secondary" rendered="#{botAction.bot.active}">
+				<h:commandButton value="Deactivate Bot" styleClass="attention" rendered="#{botAction.bot.active}">
 					<rich:componentControl target="popupConfirmId" operation="show" />
 				</h:commandButton>
 				<h:commandButton value="Activate Bot" styleClass="secondary" rendered="#{not botAction.bot.active}" action="#{botAction.reactivateBot()}" />
@@ -54,11 +53,10 @@
 				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
-
 		<h3>Commands for this Bot</h3>
-		<rich:panel styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud" rendered="#{not empty commandAction.commands}">
 			<rich:dataTable value="#{commandAction.commands}" var="cmd" styleClass="pc100">
-				<rich:column styleClass="pc30">
+				<rich:column styleClass="pc20">
 					<f:facet name="header">Command</f:facet>
 					<h:commandLink action="#{commandAction.detail(cmd)}" value="#{(not empty cmd.key) ? cmd.key : cmd.id}" />
 				</rich:column>
@@ -66,13 +64,24 @@
 					<f:facet name="header">Post Process</f:facet>
 					<h:outputText value="#{(cmd.postProcess eq true) ? 'Yes' : 'No'}" styleClass="#{(cmd.postProcess eq true) ? 'green' : 'red'}" />
 				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Script</f:facet>
+					<h:commandLink title="View Code" rendered="#{cmd.postProcess}" actionListener="#{scriptAction.startViewScript(cmd.postScript)}" styleClass="links-script-code">
+						<h:graphicImage value="/resources/img/icons/view.png" />
+						<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
+					</h:commandLink>
+					<h:commandLink action="#{scriptAction.startEditScript(cmd.bot, cmd.postScript)}" rendered="#{cmd.postProcess eq true}" styleClass="links-script-code">
+						<f:ajax execute="@this" />
+						<h:graphicImage value="/resources/img/icons/edit.png" />
+					</h:commandLink>
+					<h:outputText value="--" rendered="#{cmd.postProcess eq false}" />
+				</rich:column>
 				<rich:column>
 					<f:facet name="header">Description</f:facet>
 					<h:outputText value="#{cmd.shortDescription}" />
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>
-
 		<rich:popupPanel id="popupRawCommandsId" modal="true" moveable="true" header="RAW Commands" height="300" width="360" maxHeight="280" maxWidth="360">
 			<h:panelGroup layout="block" styleClass="pc100">
 				<h3 class="confirm-title">
@@ -88,12 +97,11 @@
 				</h:panelGroup>
 			</h:panelGroup>
 		</rich:popupPanel>
-
 		<ui:param name="confirmTitle" value="Deactivate this Bot" />
 		<ui:param name="confirmDescription" value="Are you sure to deactivate this bot? You can reactivate it later." />
 		<ui:param name="confirmBean" value="#{botAction}" />
 		<ui:param name="confirmMethod" value="deactivateBot" />
 		<ui:include src="/pages/utils/confirm-action.xhtml" />
-
+		<ui:include src="/pages/utils/script-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

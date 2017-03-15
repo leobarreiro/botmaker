@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-
 		<h2>Question detail</h2>
-
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot / Command" />
@@ -18,7 +16,6 @@
 				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
 			</h:panelGroup>
 		</rich:panel>
-
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" />
@@ -58,42 +55,30 @@
 			</h:panelGroup>
 			<h:panelGroup id="blockScriptCodeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink title="View Code" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
+				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(questionAction.question.postScript)}">
 					<h:graphicImage value="/resources/img/icons/view.png" />
-					<f:ajax event="click" listener="#{questionAction.debugMode(false)}" execute="@this" render="frm:panelScriptControlsId" />
+					<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" styleClass="links-script-code" onclick="#{rich:component('scriptEditor')}.show();">
+				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" action="#{scriptAction.startEditScript(questionAction.question.command.bot, questionAction.question.postScript)}"
+					styleClass="links-script-code">
+					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />
-					<f:ajax event="click" listener="#{questionAction.debugMode(true)}" execute="@this" render="frm:panelScriptControlsId" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not questionAction.question.processAnswer}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
-				<h:commandButton value="Drop Question" styleClass="secondary">
+				<h:commandButton value="Drop Question" styleClass="attention">
 					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
 				</h:commandButton>
 				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-
 		<ui:param name="confirmTitle" value="Drop Question" />
 		<ui:param name="confirmDescription" value="Are you sure to delete this question? You can't undo this action." />
 		<ui:param name="confirmBean" value="#{questionAction}" />
 		<ui:param name="confirmMethod" value="dropQuestion" />
 		<ui:include src="/pages/utils/confirm-action.xhtml" />
-
-		<ui:param name="debugging" value="#{questionAction.debugging}" />
-		<ui:param name="saveCodeBean" value="#{questionAction}" />
-		<ui:param name="saveCodeMethod" value="save" />
-		<ui:param name="testCodeBean" value="#{questionAction}" />
-		<ui:param name="testCodeMethod" value="testScript" />
-		<ui:param name="debugContent" value="#{questionAction.debugContent}" />
-		<ui:param name="scriptCode" value="#{questionAction.question.postScript.code}" />
-		<ui:param name="scriptType" value="#{questionAction.question.postScript.scriptType}" />
-		<ui:param name="parseMode" value="#{questionAction.question.postScript.parseMode}" />
-		<ui:param name="contextVars" value="#{questionAction.contextVars}" />
-		<ui:include src="/pages/utils/script-editor.xhtml" />
-
+		<ui:include src="/pages/utils/script-viewer.xhtml" />
 	</ui:define>
 </ui:composition>
