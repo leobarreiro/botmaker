@@ -2,7 +2,7 @@ package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -134,7 +134,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 
 	public void testScript() {
 		try {
-			Map<String, String> mapVars = new HashMap<String, String>();
+			Map<String, Object> mapVars = new LinkedHashMap<String, Object>();
 			for (DialogContextVar ctx : contextVars) {
 				if (StringUtils.isNotEmpty(ctx.getValue())) {
 					mapVars.put(ctx.getName(), ctx.getValue());

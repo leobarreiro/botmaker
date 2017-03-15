@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.pojos;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +25,11 @@ public class Dialog implements Serializable {
 	private boolean pendingServer;
 	private boolean pendingCommand;
 	private List<Answer> answers;
-	private Map<String, String> contextVars;
+	private Map<String, Object> contextVars;
 
 	public void addContextVar(String name, String value) {
 		if (contextVars == null) {
-			contextVars = new LinkedHashMap<String, String>();
+			contextVars = new LinkedHashMap<String, Object>();
 		}
 		contextVars.put(name, value);
 	}
@@ -123,11 +122,11 @@ public class Dialog implements Serializable {
 		this.answers = answers;
 	}
 
-	public Map<String, String> getContextVars() {
-		return (contextVars != null) ? contextVars : new HashMap<String, String>();
+	public Map<String, Object> getContextVars() {
+		return (contextVars != null) ? contextVars : new LinkedHashMap<String, Object>();
 	}
 
-	public void setContextVars(Map<String, String> contextVars) {
+	public void setContextVars(Map<String, Object> contextVars) {
 		this.contextVars = contextVars;
 	}
 

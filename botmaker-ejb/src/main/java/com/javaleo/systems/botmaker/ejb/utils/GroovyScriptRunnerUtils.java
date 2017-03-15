@@ -4,7 +4,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -42,9 +42,7 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	private Logger LOG;
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	@AccessTimeout(
-			unit = TimeUnit.SECONDS,
-			value = 10)
+	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
 	public Object testScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
@@ -66,10 +64,10 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	public Object evaluateScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
-			Map<String, String> otherDialogsContextVars = managerUtils.getAllContextVarsFromUserId(dialog.getUserId());
-			Map<String, String> actualDialogContextVars = dialog.getContextVars();
+			Map<String, Object> otherDialogsContextVars = managerUtils.getAllContextVarsFromUserId(dialog.getUserId());
+			Map<String, Object> actualDialogContextVars = dialog.getContextVars();
 
-			Map<String, String> allContextVars = new HashMap<String, String>();
+			Map<String, Object> allContextVars = new LinkedHashMap<String, Object>();
 			allContextVars.putAll(otherDialogsContextVars);
 			allContextVars.putAll(actualDialogContextVars);
 
@@ -95,7 +93,7 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 		}
 	}
 
-	private Binding mountBinding(Map<String, String> contextVars) {
+	private Binding mountBinding(Map<String, Object> contextVars) {
 		Binding binding = new Binding();
 		for (String name : contextVars.keySet()) {
 			binding.setVariable(name, contextVars.get(name));

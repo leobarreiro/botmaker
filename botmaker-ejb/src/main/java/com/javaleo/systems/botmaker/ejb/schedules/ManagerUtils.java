@@ -2,8 +2,8 @@ package com.javaleo.systems.botmaker.ejb.schedules;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -137,8 +137,8 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public Map<String, String> getAllContextVarsFromUserId(Integer userId) {
-		Map<String, String> mapContextVars = new HashMap<String, String>();
+	public Map<String, Object> getAllContextVarsFromUserId(Integer userId) {
+		Map<String, Object> mapContextVars = new LinkedHashMap<String, Object>();
 		for (Long idBot : dialogsPerBotMap.keySet()) {
 			Set<Dialog> dialogs = dialogsPerBotMap.get(idBot);
 			for (Dialog d : dialogs) {

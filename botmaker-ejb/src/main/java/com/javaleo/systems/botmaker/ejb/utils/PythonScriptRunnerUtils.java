@@ -27,13 +27,12 @@ public class PythonScriptRunnerUtils implements Serializable {
 	// implements IScriptRunnerUtils
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private IBlackListExpressionBusiness blackListBusiness;
 
 	@Inject
 	private Logger LOG;
-
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
@@ -57,7 +56,7 @@ public class PythonScriptRunnerUtils implements Serializable {
 		try {
 			// PyObject dict = new PyObject(PyDictionary.TYPE);
 			PythonInterpreter py = new PythonInterpreter();
-			Map<String, String> contextVars = dialog.getContextVars();
+			Map<String, Object> contextVars = dialog.getContextVars();
 			mountBinding(py, contextVars);
 			py.exec(script);
 			PyObject result = py.get("response");
@@ -70,7 +69,7 @@ public class PythonScriptRunnerUtils implements Serializable {
 		}
 	}
 
-	private void mountBinding(PythonInterpreter py, Map<String, String> contextVars) {
+	private void mountBinding(PythonInterpreter py, Map<String, Object> contextVars) {
 		for (String name : contextVars.keySet()) {
 			py.set(name, contextVars.get(name));
 		}
