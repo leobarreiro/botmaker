@@ -30,6 +30,7 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
+import com.javaleo.systems.botmaker.ejb.utils.JavaScriptRunnerUtils;
 import com.javaleo.systems.botmaker.ejb.utils.PythonScriptRunnerUtils;
 
 @Named
@@ -63,6 +64,9 @@ public class ScriptBusiness implements IScriptBusiness {
 	private PythonScriptRunnerUtils pythonRunner;
 
 	@Inject
+	private JavaScriptRunnerUtils javascriptRunner;
+
+	@Inject
 	private BotMakerCredentials credentials;
 
 	@Override
@@ -82,10 +86,17 @@ public class ScriptBusiness implements IScriptBusiness {
 		isValidScript(script);
 		String result = "";
 		String code = getCodeFromScript(script);
-		if (script.getScriptType().equals(ScriptType.GROOVY)) {
+		// ScriptType.GROOVY
+		if (ScriptType.GROOVY.equals(script.getScriptType())) {
 			result = (String) groovyRunner.evaluateScript(dialog, code);
-		} else { // ScriptType.PYTHON
+		}
+		// ScriptType.PYTHON
+		else if (ScriptType.PYTHON.equals(script.getScriptType())) {
 			result = (String) pythonRunner.evaluateScript(dialog, code);
+		}
+		// ScriptType.JAVASCRIPT
+		else {
+			result = (String) javascriptRunner.evaluateScript(dialog, code);
 		}
 		return result;
 	}
@@ -96,10 +107,17 @@ public class ScriptBusiness implements IScriptBusiness {
 			isValidScript(script);
 			String result = "";
 			String code = getCodeFromScript(script);
-			if (script.getScriptType().equals(ScriptType.GROOVY)) {
+			// ScriptType.GROOVY
+			if (ScriptType.GROOVY.equals(script.getScriptType())) {
 				result = (String) groovyRunner.testScript(dialog, code);
-			} else { // ScriptType.PYTHON
+			}
+			// ScriptType.PYTHON
+			else if (ScriptType.PYTHON.equals(script.getScriptType())) {
 				result = (String) pythonRunner.testScript(dialog, code);
+			}
+			// ScriptType.JAVASCRIPT
+			else {
+				result = (String) javascriptRunner.testScript(dialog, code);
 			}
 			return result;
 		} catch (Throwable e) {
@@ -112,10 +130,16 @@ public class ScriptBusiness implements IScriptBusiness {
 		isValidScript(script);
 		Boolean result = false;
 		String code = getCodeFromScript(script);
-		if (script.getScriptType().equals(ScriptType.GROOVY)) {
+		if (ScriptType.GROOVY.equals(script.getScriptType())) {
 			result = (Boolean) groovyRunner.evaluateScript(dialog, code);
-		} else { // ScriptType.PYTHON
+		}
+		// ScriptType.PYTHON
+		else if (ScriptType.PYTHON.equals(script.getScriptType())) {
 			result = (Boolean) pythonRunner.evaluateScript(dialog, code);
+		}
+		// ScriptType.JAVASCRIPT
+		else {
+			result = (Boolean) javascriptRunner.evaluateScript(dialog, code);
 		}
 		return result;
 	}

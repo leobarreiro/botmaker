@@ -31,6 +31,7 @@ public class Validator implements IEntityBasic {
 
 	private Long id;
 	private Company company;
+	private Boolean publicValidator;
 	private String name;
 	private String description;
 	private ValidatorType validatorType;
@@ -61,6 +62,15 @@ public class Validator implements IEntityBasic {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	@Column(name = "public_validator", nullable = true)
+	public Boolean getPublicValidator() {
+		return publicValidator;
+	}
+
+	public void setPublicValidator(Boolean publicValidator) {
+		this.publicValidator = publicValidator;
 	}
 
 	public void setName(String name) {
@@ -109,41 +119,33 @@ public class Validator implements IEntityBasic {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((publicValidator == null) ? 0 : publicValidator.hashCode());
 		result = prime * result + ((validatorType == null) ? 0 : validatorType.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
 		Validator other = (Validator) obj;
 		if (company == null) {
-			if (other.company != null)
-				return false;
-		} else if (!company.equals(other.company))
-			return false;
+			if (other.company != null) return false;
+		} else if (!company.equals(other.company)) return false;
 		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (validatorType != other.validatorType)
-			return false;
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		if (publicValidator == null) {
+			if (other.publicValidator != null) return false;
+		} else if (!publicValidator.equals(other.publicValidator)) return false;
+		if (validatorType != other.validatorType) return false;
 		return true;
 	}
 

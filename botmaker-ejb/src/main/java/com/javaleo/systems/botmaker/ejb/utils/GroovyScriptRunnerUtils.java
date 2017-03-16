@@ -58,9 +58,7 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	}
 
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
-	@AccessTimeout(
-			unit = TimeUnit.SECONDS,
-			value = 10)
+	@AccessTimeout(unit = TimeUnit.SECONDS, value = 10)
 	public Object evaluateScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
