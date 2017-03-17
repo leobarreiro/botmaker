@@ -35,6 +35,8 @@ public class Validator implements IEntityBasic {
 	private String name;
 	private String description;
 	private ValidatorType validatorType;
+	private Boolean simpleValidator;
+	private String code;
 	private Script script;
 
 	@Override
@@ -94,6 +96,24 @@ public class Validator implements IEntityBasic {
 
 	public void setValidatorType(ValidatorType validatorType) {
 		this.validatorType = validatorType;
+	}
+
+	@Column(name = "simple_validator", nullable = true)
+	public Boolean getSimpleValidator() {
+		return simpleValidator;
+	}
+
+	public void setSimpleValidator(Boolean simpleValidator) {
+		this.simpleValidator = simpleValidator;
+	}
+
+	@Column(name = "script_code", columnDefinition = "text", nullable = true)
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH })

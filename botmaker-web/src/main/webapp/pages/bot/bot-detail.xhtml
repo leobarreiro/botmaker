@@ -62,23 +62,32 @@
 				</rich:column>
 				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Post Process</f:facet>
-					<h:outputText value="#{(cmd.postProcess eq true) ? 'Yes' : 'No'}" styleClass="#{(cmd.postProcess eq true) ? 'green' : 'red'}" />
-				</rich:column>
-				<rich:column styleClass="pc10 txctr">
-					<f:facet name="header">Script</f:facet>
-					<h:commandLink title="View Code" rendered="#{cmd.postProcess}" actionListener="#{scriptAction.startViewScript(cmd.postScript)}" styleClass="links-script-code">
-						<h:graphicImage value="/resources/img/icons/view.png" />
-						<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
-					</h:commandLink>
-					<h:commandLink action="#{scriptAction.startEditScript(cmd.bot, cmd.postScript)}" rendered="#{cmd.postProcess eq true}" styleClass="links-script-code">
-						<f:ajax execute="@this" />
-						<h:graphicImage value="/resources/img/icons/edit.png" />
-					</h:commandLink>
-					<h:outputText value="--" rendered="#{cmd.postProcess eq false}" />
+					<h:outputText value="No" styleClass="red" rendered="#{not cmd.postProcess}" />
+					<h:panelGroup rendered="#{cmd.postProcess and (cmd.postScript ne null)}">
+						<h:outputText value="#{cmd.postScript.scriptType.descriptor}"
+							styleClass="mr2 #{(cmd.postScript.scriptType eq 'GROOVY') ? 'groovy' : (cmd.postScript.scriptType eq 'JAVASCRIPT') ? 'javascript' : (cmd.postScript.scriptType eq 'PYTHON') ? 'python' : 'none'}"
+							rendered="#{cmd.postScript ne null}" />
+						<h:outputText value="/" styleClass="mr2" rendered="#{cmd.postScript ne null}" />
+						<h:outputText value="#{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'MarkDown' : 'Html'}" styleClass="mr2 #{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" rendered="#{cmd.postScript ne null}" />
+					</h:panelGroup>
 				</rich:column>
 				<rich:column>
 					<f:facet name="header">Description</f:facet>
 					<h:outputText value="#{cmd.shortDescription}" />
+				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Script</f:facet>
+					<h:commandLink title="View Code (#{cmd.postScript.scriptType.descriptor} / #{cmd.postScript.parseMode})" rendered="#{cmd.postProcess}"
+						actionListener="#{scriptAction.startViewScript(cmd.postScript)}" styleClass="links-script-code">
+						<h:graphicImage value="/resources/img/icons/view.png" />
+						<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
+					</h:commandLink>
+					<h:commandLink title="Edit Script (#{cmd.postScript.scriptType.descriptor} / #{cmd.postScript.parseMode})" action="#{scriptAction.startEditScript(cmd.bot, cmd.postScript)}"
+						rendered="#{cmd.postProcess eq true}" styleClass="links-script-code">
+						<f:ajax execute="@this" />
+						<h:graphicImage value="/resources/img/icons/edit.png" />
+					</h:commandLink>
+					<h:outputText value="--" rendered="#{cmd.postProcess eq false}" />
 				</rich:column>
 			</rich:dataTable>
 		</rich:panel>

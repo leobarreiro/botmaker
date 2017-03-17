@@ -416,6 +416,10 @@ input.primary:hover, button.primary:hover, input.secondary:hover, button.seconda
 	margin: auto !important;
 }
 
+.mr2 {
+	margin: 2px !important;
+}
+
 .mrtop0 {
 	margin-top: 0px !important;
 }

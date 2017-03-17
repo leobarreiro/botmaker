@@ -1,7 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,12 +24,10 @@ import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
-import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.pojos.Answer;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
-import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 
 @Stateless
 public class QuestionBusiness implements IQuestionBusiness {
@@ -51,6 +48,9 @@ public class QuestionBusiness implements IQuestionBusiness {
 
 	@Inject
 	private IScriptBusiness scriptBiz;
+
+	@Inject
+	private IValidatorBusiness validatorBusiness;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -155,35 +155,25 @@ public class QuestionBusiness implements IQuestionBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public boolean validateAnswer(Dialog dialog, Question question) {
-		if (question.getAnswerType().equals(AnswerType.PHOTO)) {
+		if (AnswerType.PHOTO.equals(question.getAnswerType())) {
 			List<PhotoSize> photoSizes = dialog.getLastUpdate().getMessage().getPhotosizes();
 			return (photoSizes != null && !photoSizes.isEmpty());
-		} else if (question.getAnswerType().equals(AnswerType.DOCUMENT)) {
+		} else if (AnswerType.DOCUMENT.equals(question.getAnswerType())) {
 			Document document = dialog.getLastUpdate().getMessage().getDocument();
 			return (document != null && document.getSize() > 0);
-		} else {
+		} else if (AnswerType.STRING.equals(question.getAnswerType()) || AnswerType.NUMERIC.equals(question.getAnswerType())) {
 			if (question.getValidator() == null || question.getValidator().getValidatorType() == null) {
 				return true;
 			} else {
 				try {
-					if (question.getValidator().getValidatorType().equals(ValidatorType.SET)) {
-						String validatorSource = scriptBiz.executeScript(dialog, question.getValidator().getScript());
-						List<String> optValidator = Arrays.asList(validatorSource.split(","));
-						for (String op : optValidator) {
-							if (StringUtils.equalsIgnoreCase(StringUtils.trim(op), dialog.getLastUpdate().getMessage().getText())) {
-								return true;
-							}
-						}
-						return false;
-					} else {
-						return scriptBiz.evaluateBooleanScript(dialog, question.getValidator().getScript());
-					}
-				} catch (Exception e) {
-					LOG.error(e.getMessage());
+					return validatorBusiness.validateContent(question.getValidator(), dialog.getLastUpdate().getMessage().getText());
+				} catch (BusinessException e) {
+					LOG.warn(MessageFormat.format("Error when trying to validate an answer. Msg: {0}", e.getMessage()));
 					return false;
 				}
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -199,15 +189,4 @@ public class QuestionBusiness implements IQuestionBusiness {
 		answer.setPostProcessedAnswer(postProcessed);
 	}
 
-	@Override
-	public List<List<String>> convertOptions(Dialog dialog, Question question) {
-		String options;
-		try {
-			options = scriptBiz.executeScript(dialog, question.getValidator().getScript());
-		} catch (BusinessException e) {
-			options = "";
-			LOG.error(e.getMessage());
-		}
-		return BotMakerUtils.convertStringToArrayOfArrays(options, 2, ',');
-	}
 }

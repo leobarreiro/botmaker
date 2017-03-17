@@ -16,4 +16,8 @@ public interface IValidatorBusiness extends Serializable {
 
 	List<Validator> searchValidatorByFilter(ValidatorFilter filter);
 
+	public List<List<String>> getOptionsByValidator(Validator validator);
+
+	boolean validateContent(Validator validator, String content) throws BusinessException;
+
 }

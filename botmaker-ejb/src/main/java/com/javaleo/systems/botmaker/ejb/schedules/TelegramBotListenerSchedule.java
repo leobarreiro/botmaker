@@ -32,6 +32,7 @@ import com.google.gson.GsonBuilder;
 import com.javaleo.systems.botmaker.ejb.business.IBotBusiness;
 import com.javaleo.systems.botmaker.ejb.business.ICommandBusiness;
 import com.javaleo.systems.botmaker.ejb.business.IQuestionBusiness;
+import com.javaleo.systems.botmaker.ejb.business.IValidatorBusiness;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -57,6 +58,9 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Inject
 	private IQuestionBusiness questionBusiness;
+
+	@Inject
+	private IValidatorBusiness validatorBusiness;
 
 	@Inject
 	private TelegramSendMessageUtils sendMessageUtils;
@@ -261,7 +265,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 		try {
 			if (dialog.getLastQuestion() != null) {
 				if (dialog.getLastQuestion().getValidator() != null && dialog.getLastQuestion().getValidator().getValidatorType().isSetOfOptions()) {
-					List<List<String>> options = questionBusiness.convertOptions(dialog, dialog.getLastQuestion());
+					List<List<String>> options = validatorBusiness.getOptionsByValidator(dialog.getLastQuestion().getValidator());
 					sendMessageUtils.sendMessageWithOptions(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN, options);
 				} else {
 					sendMessageUtils.sendSimpleMessage(bot, dialog, dialog.getLastQuestion().getInstruction(), ParseMode.MARKDOWN);

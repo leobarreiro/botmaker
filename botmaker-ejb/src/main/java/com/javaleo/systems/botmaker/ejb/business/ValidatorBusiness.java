@@ -1,7 +1,10 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -14,13 +17,16 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
+import com.javaleo.systems.botmaker.ejb.utils.BotMakerUtils;
 
 @Stateless
 public class ValidatorBusiness implements IValidatorBusiness {
@@ -61,6 +67,32 @@ public class ValidatorBusiness implements IValidatorBusiness {
 		cq.where(predicateArray);
 		cq.orderBy(cb.asc(fromSnippet.get("name")));
 		return persistence.getResultList(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public boolean validateContent(Validator validator, String content) throws BusinessException {
+		if (ValidatorType.SET.equals(validator.getValidatorType())) {
+			String validatorSource = validator.getCode();
+			List<String> optValidator = new ArrayList<String>(Arrays.asList(validatorSource.split(",")));
+			for (String op : optValidator) {
+				if (StringUtils.equalsIgnoreCase(StringUtils.trim(op), content)) {
+					return true;
+				}
+			}
+			return false;
+		} else if (ValidatorType.BOOLEAN.equals(validator.getValidatorType())) {
+			Pattern pattern = Pattern.compile(validator.getCode());
+			Matcher m = pattern.matcher(StringUtils.lowerCase(content));
+			return m.matches();
+		}
+		return false;
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public List<List<String>> getOptionsByValidator(Validator validator) {
+		return BotMakerUtils.convertStringToArrayOfArrays(validator.getCode(), 2, ',');
 	}
 
 }
