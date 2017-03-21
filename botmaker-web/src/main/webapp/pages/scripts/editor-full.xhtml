@@ -44,6 +44,21 @@
 							</h:selectBooleanCheckbox>
 						</h:panelGroup>
 					</h:panelGroup>
+					<h:panelGroup styleClass="txt">
+						<h:outputLabel value="Lang" />
+						<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
+							<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
+							<f:ajax event="change" execute="@this" listener="#{scriptAction.handleGenericScripts()}" render="frm:includeGenericId" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+					<h:panelGroup styleClass="txt">
+						<h:outputLabel value="Parse" />
+						<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
+							<f:selectItem itemValue="MARKDOWN" itemLabel="MarkDown" />
+							<f:selectItem itemValue="HTML" itemLabel="Html" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</h:panelGroup>
 					<h:panelGroup layout="block" rendered="#{not scriptAction.script.generic}">
 						<h:outputLabel value="Generic" />
 						<h:panelGroup styleClass="txt">
@@ -53,21 +68,9 @@
 								<f:ajax event="change" execute="@this" />
 							</h:selectOneMenu>
 						</h:panelGroup>
-					</h:panelGroup>
-					<h:panelGroup styleClass="txt">
-						<h:outputLabel value="Lang" />
-						<h:selectOneMenu id="scriptTypeId" value="#{scriptAction.script.scriptType}">
-							<f:selectItems value="#{auxAction.scriptTypeOpt}" var="stOpt" itemLabel="#{stOpt.descriptor}" itemValue="#{stOpt}" />
-							<f:ajax event="change" execute="@this" />
-						</h:selectOneMenu>
-					</h:panelGroup>
-					<h:panelGroup styleClass="txt">
-						<h:outputLabel value="Parse" />
-						<h:selectOneMenu id="parseModeId" value="#{scriptAction.script.parseMode}">
-							<f:selectItem itemValue="MARKDOWN" itemLabel="MarkDown"/>
-							<f:selectItem itemValue="HTML" itemLabel="Html"/>
-							<f:ajax event="change" execute="@this" />
-						</h:selectOneMenu>
+						<h:commandLink title="View Generic" styleClass="links-script-code" value="view">
+							<a4j:ajax oncomplete="#{rich:component('popupViewGenericScriptId')}.show();" render="frm:popupViewGenericScriptId" />
+						</h:commandLink>
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup layout="block" styleClass="editor-buttons">
@@ -113,6 +116,42 @@
 				</h:panelGroup>
 			</h:panelGrid>
 		</rich:panel>
+		<rich:popupPanel id="popupViewGenericScriptId" show="false" modal="false" moveable="true" header="Generic Script Viewer" height="460" width="600" maxHeight="460" maxWidth="600" onshow="configureViewer()">
+			<f:facet name="controls">
+				<h:outputLink value="#" onclick="#{rich:component('popupViewGenericScriptId')}.hide(); return false;">x</h:outputLink>
+			</f:facet>
+			<rich:panel id="viewGenericPanelId" styleClass="mrauto">
+				<h:panelGrid styleClass="pc95" columns="4" columnClasses="pc20 txrgt tx10,pc30 tx10,pc20 txrgt tx10,pc30 tx10">
+					<h:outputLabel value="Name" styleClass="tx10" />
+					<h:outputLabel value="#{scriptAction.script.genericScript.name}" styleClass="tx10" />
+					<h:outputLabel value="Author" styleClass="tx10" />
+					<h:outputLabel value="#{scriptAction.script.genericScript.author.name}" styleClass="tx10" />
+					<h:outputLabel value="Created" styleClass="tx10" />
+					<h:outputLabel value="#{scriptAction.script.genericScript.created}" styleClass="tx10">
+						<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					</h:outputLabel>
+					<h:outputLabel value="Updated" styleClass="tx10" />
+					<h:outputLabel value="#{scriptAction.script.genericScript.modified}" styleClass="tx10">
+						<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					</h:outputLabel>
+					<h:outputLabel value="Lang" styleClass="tx10" />
+					<h:outputText value="#{scriptAction.script.genericScript.scriptType}"
+						styleClass="tx10 #{(scriptAction.script.genericScript.scriptType eq 'GROOVY') ? 'groovy' : (scriptAction.script.genericScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
+					<h:outputLabel value="Parse" styleClass="tx10" />
+					<h:outputText value="#{(scriptAction.script.genericScript.parseMode eq 'MARKDOWN') ? 'MarkDown' : 'Html'}"
+						styleClass="tx10 #{(scriptAction.script.genericScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
+				</h:panelGrid>
+				<h:panelGroup layout="block">
+					<h:inputTextarea id="genericCodeId" value="#{scriptAction.script.genericScript.code}" cols="16"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="frm-submit">
+					<h:commandButton value="Close" styleClass="primary">
+						<rich:componentControl event="click" target="popupViewGenericScriptId" operation="hide" />
+						<f:ajax execute="@this" immediate="true" />
+					</h:commandButton>
+				</h:panelGroup>
+			</rich:panel>
+		</rich:popupPanel>
 		<script type="text/javascript">
 		var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
 			mode: "groovy",
@@ -144,6 +183,19 @@
 		}
 		
 		configureCodeMirror();
+
+		function configureViewer() {
+			scriptGenericMirror = CodeMirror.fromTextArea(document.getElementById('frm:genericCodeId'), {
+				mode: "groovy",
+			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+			    lineNumbers: true, 
+			    lineWrapping: true, 
+			    indentWithTabs: true, 
+			    indentUnit: 4, 
+			    readOnly: true
+			});
+			scriptGenericMirror.setSize('98%', 270);
+		}
 	
 	</script>
 	</ui:define>

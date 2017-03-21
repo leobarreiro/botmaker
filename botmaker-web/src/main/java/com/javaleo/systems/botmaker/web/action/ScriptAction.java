@@ -16,6 +16,7 @@ import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
+import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
@@ -160,7 +161,10 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	}
 
 	public String listGenericScripts() {
-		scripts = facade.listAllGenericScriptsFromCompany();
+		if (this.script.getScriptType() == null) {
+			this.script.setScriptType(ScriptType.GROOVY);
+		}
+		handleGenericScripts();
 		return "/pages/scripts/list-generic.jsf?faces-redirect=true";
 	}
 
@@ -174,6 +178,10 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 			msgAction.addErrorMessage(e.getMessage());
 		}
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+	}
+
+	public void handleGenericScripts() {
+		scripts = facade.listGenericScriptsFromScriptType(this.script.getScriptType());
 	}
 
 	public void handleRefreshConversation() {

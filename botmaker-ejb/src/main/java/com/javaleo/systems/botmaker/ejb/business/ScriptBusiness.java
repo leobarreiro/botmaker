@@ -172,6 +172,7 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Script> listLastGenericScriptsFromUser() {
 		if (credentials.getCompany() == null) {
 			return null;
@@ -190,6 +191,7 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Script> listGenericScriptsFromScriptType(ScriptType scriptType) {
 		if (credentials.getCompany() == null) {
 			return null;
@@ -209,6 +211,7 @@ public class ScriptBusiness implements IScriptBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Script> listAllGenericScriptsFromCompany() {
 		if (credentials.getCompany() == null) {
 			return null;

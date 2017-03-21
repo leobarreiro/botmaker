@@ -95,16 +95,12 @@
 							render="frm:outputValidationId" />
 					</h:commandButton>
 
-					<h:commandButton id="btScriptTestId" value="Test"
-						actionListener="#{blackListExpressionAction.testExpression()}"
-						styleClass="primary">
-						<a4j:ajax execute="frm:testExpressionId" render="frm:testExpressionId"
-							onbeforesubmit="scriptEditor.save();" />
+					<h:commandButton id="btScriptTestId" value="Test" actionListener="#{blackListExpressionAction.testExpression()}" styleClass="primary">
+						<a4j:ajax execute="frm:testExpressionId" render="frm:testExpressionId" onbeforesubmit="scriptEditor.save();" />
 					</h:commandButton>
 
 					<h:commandButton value="Close" styleClass="secondary">
-						<rich:componentControl event="click"
-							target="popupTestExpressionId" operation="hide" />
+						<rich:componentControl event="click" target="popupTestExpressionId" operation="hide" />
 					</h:commandButton>
 				</h:panelGroup>
 			</rich:panel>
