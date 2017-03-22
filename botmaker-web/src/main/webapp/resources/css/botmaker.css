@@ -733,11 +733,15 @@ div.CodeMirror {
 }
 
 .groovy {
-	color: #440044 !important;
+	color: #a953ff!important;
 }
 
 .javascript {
-	color: orange !important;
+	color: #ff8000 !important;
+}
+
+.python {
+	color: #5967ff !important;
 }
 
 .tip-left {

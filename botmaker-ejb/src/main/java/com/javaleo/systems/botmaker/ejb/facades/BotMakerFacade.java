@@ -271,6 +271,11 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
+	public List<Script> listLastCommandScriptsEditedByUser() {
+		return scriptBusiness.listLastCommandScriptsEditedByUser();
+	}
+
+	@Override
 	public List<Script> listAllGenericScriptsFromCompany() {
 		return scriptBusiness.listAllGenericScriptsFromCompany();
 	}

@@ -92,7 +92,7 @@ public class PageBusiness implements IPageBusiness {
 		Join<Page, Company> joinCompany = fromPage.join("company", JoinType.INNER);
 		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
 		cq.orderBy(cb.desc(fromPage.get("edited")));
-		return persistence.getResultList(cq);
+		return persistence.getResultList(cq, 5);
 	}
 
 	@Override

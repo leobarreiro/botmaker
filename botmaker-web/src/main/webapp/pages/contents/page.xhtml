@@ -1,39 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-
-		<h2>BlackList Expression</h2>
-
+		<h2>Content Page</h2>
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true">
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Regexp" styleClass="txtop" />
-				<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}">
-					<f:selectItem itemValue="#{false}" itemLabel="No" />
-					<f:selectItem itemValue="#{true}" itemLabel="Yes" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Content" />
-				<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" immediate="true" value="Cancel" styleClass="secondary"
-					rendered="#{blackListExpressionAction.expression.id ne null}">
-					<f:ajax execute="@this" immediate="true" />
-				</h:commandButton>
-				<h:commandButton action="#{blackListExpressionAction.list()}" value="Cancel" styleClass="secondary" rendered="#{blackListExpressionAction.expression.id eq null}">
-					<f:ajax execute="@this" immediate="true" />
-				</h:commandButton>
-				<h:commandButton action="#{blackListExpressionAction.save()}" value="Save" styleClass="primary" />
+				<h:outputLabel value="Title" />
+				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
 			</h:panelGroup>
 		</rich:panel>
-
+		<rich:panel styleClass="frm-crud">
+			<rich:editor toolbar="full" id="editor" value="#{pageAction.page.content}" styleClass="pc100 mrauto" />
+		</rich:panel>
+		<rich:panel styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{pageAction.list()}" immediate="true" value="Cancel" styleClass="secondary">
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandButton>
+				<h:commandButton action="#{pageAction.save()}" value="Save" styleClass="primary" />
+			</h:panelGroup>
+		</rich:panel>
 	</ui:define>
 </ui:composition>

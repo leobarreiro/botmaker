@@ -115,6 +115,8 @@ public interface IBotMakerFacade extends Serializable {
 
 	List<Script> listLastGenericScriptsFromUser();
 
+	List<Script> listLastCommandScriptsEditedByUser();
+
 	List<Script> listAllGenericScriptsFromCompany();
 
 	void savePage(Page page) throws BusinessException;

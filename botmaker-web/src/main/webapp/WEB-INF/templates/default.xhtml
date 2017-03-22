@@ -51,7 +51,7 @@
 								<h:outputText value="Bots" />
 							</f:facet>
 							<c:forEach items="#{auxAction.bots}" var="bt">
-								<rich:menuItem label="#{bt.name}" action="#{botAction.detail(bt)}" immediate="true" execute="@this" styleClass="#{(bt.valid) ? green : red}" />
+								<rich:menuItem label="#{bt.name}" action="#{botAction.detail(bt)}" immediate="true" execute="@this" styleClass="#{(bt.valid) ? 'green' : 'red'}" />
 							</c:forEach>
 							<rich:menuSeparator />
 							<rich:menuItem label="List Bots" action="#{botAction.list()}" immediate="true" execute="@this" />
@@ -59,25 +59,36 @@
 						</rich:dropDownMenu>
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
-								<h:outputText value="Generic Scripts" />
+								<h:outputText value="Scripts" />
 							</f:facet>
+							<rich:menuItem label="Generic Scripts" disabled="true" />
 							<c:forEach items="#{auxAction.lastGenericScripts}" var="sc">
-								<rich:menuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="#{(sc.valid) ? green : red}" />
+								<rich:menuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="green" />
 							</c:forEach>
 							<rich:menuSeparator />
 							<rich:menuItem label="List Generic Scripts" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" />
 							<rich:menuItem label="New Generic Script" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" />
+							<rich:menuSeparator />
+							<rich:menuSeparator />
+							<rich:menuItem label="Command Scripts" disabled="true" />
+							<c:forEach items="#{auxAction.lastCommandScriptsEdited}" var="cse">
+								<rich:menuItem action="#{scriptAction.startEditScript(cse.command.bot, cse.command, cse)}" immediate="true" execute="@this">
+									<h:outputLabel value="#{cse.command.key}"
+										styleClass="tx9 #{(cse.scriptType eq 'GROOVY') ? 'groovy' : (cse.scriptType eq 'PYTHON') ? 'python' : (cse.scriptType eq 'JAVASCRIPT') ? 'javascript' : 'none'}" />
+									<h:outputLabel value="(#{cse.command.bot.name})" styleClass="tx9" />
+								</rich:menuItem>
+							</c:forEach>
 						</rich:dropDownMenu>
 						<rich:dropDownMenu mode="ajax">
 							<f:facet name="label">
 								<h:outputText value="Pages" />
 							</f:facet>
-							<c:forEach items="#{auxAction.lastGenericScripts}" var="sc">
-								<rich:menuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="#{(sc.valid) ? green : red}" />
+							<c:forEach items="#{auxAction.lastPagesEdited}" var="pg">
+								<rich:menuItem label="#{pg.title}" action="#{pageAction.detail(pg)}" immediate="true" execute="@this" />
 							</c:forEach>
 							<rich:menuSeparator />
-							<rich:menuItem label="List Pages" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" />
-							<rich:menuItem label="New Page" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" />
+							<rich:menuItem label="List Pages" action="#{pageAction.list()}" immediate="true" execute="@this" />
+							<rich:menuItem label="New Page" action="#{pageAction.startNew()}" immediate="true" execute="@this" />
 						</rich:dropDownMenu>
 					</rich:toolbar>
 					<rich:toolbar styleClass="userbar">

@@ -19,6 +19,7 @@ import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.python.icu.util.Calendar;
 import org.slf4j.Logger;
 
+import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Company;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -185,9 +186,30 @@ public class ScriptBusiness implements IScriptBusiness {
 		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
 		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), true);
 		cq.where(cb.and(whereCompany, whereGeneric));
-		cq.orderBy(cb.desc(from.get("id")), cb.asc(from.get("name")));
+		cq.orderBy(cb.desc(from.get("modified")), cb.asc(from.get("name")));
 		cq.select(from);
-		return persistence.getResultList(cq);
+		return persistence.getResultList(cq, 5);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Script> listLastCommandScriptsEditedByUser() {
+		if (credentials.getCompany() == null) {
+			return null;
+		}
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Script> cq = cb.createQuery(Script.class);
+		Root<Script> from = cq.from(Script.class);
+		Join<Script, User> joinAuthor = from.join("author", JoinType.INNER);
+		Join<User, Company> joinCompany = joinAuthor.join("company", JoinType.INNER);
+		Join<Script, Command> joinCommand = from.join("command", JoinType.INNER);
+		Join<Command, Bot> joinBot = joinCommand.join("bot", JoinType.INNER);
+		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
+		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), false);
+		cq.where(cb.and(whereCompany, whereGeneric));
+		cq.orderBy(cb.desc(from.get("modified")), cb.asc(from.get("name")));
+		cq.select(from);
+		return persistence.getResultList(cq, 5);
 	}
 
 	@Override

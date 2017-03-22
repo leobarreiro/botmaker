@@ -39,6 +39,7 @@ public class AuxAction implements Serializable {
 	private List<Bot> bots;
 	private List<Script> lastGenericScripts;
 	private List<Script> companyGenericScripts;
+	private List<Script> lastCommandScriptsEdited;
 	private List<Page> lastPagesEdited;
 
 	@PostConstruct
@@ -51,6 +52,7 @@ public class AuxAction implements Serializable {
 			updateLastGenericScripts();
 			updateCompanyGenericScripts();
 			updateLastContentPages();
+			updateLastCommandScriptEditedByUser();
 		}
 	}
 
@@ -64,6 +66,10 @@ public class AuxAction implements Serializable {
 
 	public void updateCompanyGenericScripts() {
 		companyGenericScripts = facade.listAllGenericScriptsFromCompany();
+	}
+
+	public void updateLastCommandScriptEditedByUser() {
+		lastCommandScriptsEdited = facade.listLastCommandScriptsEditedByUser();
 	}
 
 	public void updateLastContentPages() {
@@ -104,6 +110,14 @@ public class AuxAction implements Serializable {
 
 	public void setCompanyGenericScripts(List<Script> companyGenericScripts) {
 		this.companyGenericScripts = companyGenericScripts;
+	}
+
+	public List<Script> getLastCommandScriptsEdited() {
+		return lastCommandScriptsEdited;
+	}
+
+	public void setLastCommandScriptsEdited(List<Script> lastCommandScriptsEdited) {
+		this.lastCommandScriptsEdited = lastCommandScriptsEdited;
 	}
 
 	public List<Page> getLastPagesEdited() {

@@ -59,7 +59,7 @@
 					<h:graphicImage value="/resources/img/icons/view.png" />
 					<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" action="#{scriptAction.startEditScript(questionAction.question.command.bot, questionAction.question.postScript)}"
+				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" action="#{scriptAction.startEditScript(questionAction.question.command.bot, questionAction.question.command, questionAction.question.postScript)}"
 					styleClass="links-script-code">
 					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />

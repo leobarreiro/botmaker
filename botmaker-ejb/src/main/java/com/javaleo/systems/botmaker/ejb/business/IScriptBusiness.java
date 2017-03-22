@@ -25,6 +25,8 @@ public interface IScriptBusiness extends Serializable {
 
 	List<Script> listLastGenericScriptsFromUser();
 
+	List<Script> listLastCommandScriptsEditedByUser();
+
 	List<Script> listGenericScriptsFromScriptType(ScriptType scriptType);
 
 	List<Script> listAllGenericScriptsFromCompany();

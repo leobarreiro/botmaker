@@ -65,11 +65,11 @@
 							<h:selectOneMenu id="includeGenericId" value="#{scriptAction.script.genericScript}" converter="#{entityConverter}">
 								<f:selectItem itemLabel="None" itemValue="#{null}" />
 								<f:selectItems value="#{scriptAction.scripts}" var="incGen" itemLabel="#{incGen.name}" itemValue="#{incGen}" />
-								<f:ajax event="change" execute="@this" />
+								<f:ajax event="change" execute="@this" render="frm:viewLinkGenericId" listener="#{scriptAction.startViewScript(scriptAction.script.genericScript)}" />
 							</h:selectOneMenu>
 						</h:panelGroup>
-						<h:commandLink title="View Generic" styleClass="links-script-code" value="view">
-							<a4j:ajax oncomplete="#{rich:component('popupViewGenericScriptId')}.show();" render="frm:popupViewGenericScriptId" />
+						<h:commandLink id="viewLinkGenericId" title="View Generic" styleClass="links-script-code" value="view" disabled="#{scriptAction.script.genericScript eq null}">
+							<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />
 						</h:commandLink>
 					</h:panelGroup>
 				</h:panelGroup>
@@ -116,87 +116,38 @@
 				</h:panelGroup>
 			</h:panelGrid>
 		</rich:panel>
-		<rich:popupPanel id="popupViewGenericScriptId" show="false" modal="false" moveable="true" header="Generic Script Viewer" height="460" width="600" maxHeight="460" maxWidth="600" onshow="configureViewer()">
-			<f:facet name="controls">
-				<h:outputLink value="#" onclick="#{rich:component('popupViewGenericScriptId')}.hide(); return false;">x</h:outputLink>
-			</f:facet>
-			<rich:panel id="viewGenericPanelId" styleClass="mrauto">
-				<h:panelGrid styleClass="pc95" columns="4" columnClasses="pc20 txrgt tx10,pc30 tx10,pc20 txrgt tx10,pc30 tx10">
-					<h:outputLabel value="Name" styleClass="tx10" />
-					<h:outputLabel value="#{scriptAction.script.genericScript.name}" styleClass="tx10" />
-					<h:outputLabel value="Author" styleClass="tx10" />
-					<h:outputLabel value="#{scriptAction.script.genericScript.author.name}" styleClass="tx10" />
-					<h:outputLabel value="Created" styleClass="tx10" />
-					<h:outputLabel value="#{scriptAction.script.genericScript.created}" styleClass="tx10">
-						<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
-					</h:outputLabel>
-					<h:outputLabel value="Updated" styleClass="tx10" />
-					<h:outputLabel value="#{scriptAction.script.genericScript.modified}" styleClass="tx10">
-						<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
-					</h:outputLabel>
-					<h:outputLabel value="Lang" styleClass="tx10" />
-					<h:outputText value="#{scriptAction.script.genericScript.scriptType}"
-						styleClass="tx10 #{(scriptAction.script.genericScript.scriptType eq 'GROOVY') ? 'groovy' : (scriptAction.script.genericScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
-					<h:outputLabel value="Parse" styleClass="tx10" />
-					<h:outputText value="#{(scriptAction.script.genericScript.parseMode eq 'MARKDOWN') ? 'MarkDown' : 'Html'}"
-						styleClass="tx10 #{(scriptAction.script.genericScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
-				</h:panelGrid>
-				<h:panelGroup layout="block">
-					<h:inputTextarea id="genericCodeId" value="#{scriptAction.script.genericScript.code}" cols="16"/>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="frm-submit">
-					<h:commandButton value="Close" styleClass="primary">
-						<rich:componentControl event="click" target="popupViewGenericScriptId" operation="hide" />
-						<f:ajax execute="@this" immediate="true" />
-					</h:commandButton>
-				</h:panelGroup>
-			</rich:panel>
-		</rich:popupPanel>
+		<ui:include src="/pages/utils/script-viewer.xhtml" />
 		<script type="text/javascript">
-		var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
-			mode: "groovy",
-		    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-		    lineNumbers: true, 
-		    lineWrapping: true, 
-		    indentWithTabs: true, 
-		    indentUnit: 4
-		});
-
-		function configureCodeMirror() {
-			scriptCodeMirror.setSize('98%', 600);
-			scriptCodeMirror.setOption('theme', '#{userPreferenceAction.scriptingTheme.value}');
-			scriptCodeMirror.setOption('readOnly', false);
-		}
-		
-		function treatConsoleOutput() {
-			var treatedContent = '';
- 			if (document.getElementById("frm:parseModeId").value == 'MARKDOWN') {
- 				treatedContent = markdown.toHTML(document.getElementById('frm:outputHiddenId').value);
- 			} else {
- 				treatedContent = document.getElementById('frm:outputHiddenId').value;
- 			}
- 			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
-		}
-
-		function clearConsoleOutput() {
-			document.getElementById('frm:consoleOutputId').innerHTML = '';
-		}
-		
-		configureCodeMirror();
-
-		function configureViewer() {
-			scriptGenericMirror = CodeMirror.fromTextArea(document.getElementById('frm:genericCodeId'), {
+			var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
 				mode: "groovy",
 			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
 			    lineNumbers: true, 
 			    lineWrapping: true, 
 			    indentWithTabs: true, 
-			    indentUnit: 4, 
-			    readOnly: true
+			    indentUnit: 4
 			});
-			scriptGenericMirror.setSize('98%', 270);
-		}
 	
-	</script>
+			function configureCodeMirror() {
+				scriptCodeMirror.setSize('98%', 600);
+				scriptCodeMirror.setOption('theme', '#{userPreferenceAction.scriptingTheme.value}');
+				scriptCodeMirror.setOption('readOnly', false);
+			}
+			
+			function treatConsoleOutput() {
+				var treatedContent = '';
+	 			if (document.getElementById("frm:parseModeId").value == 'MARKDOWN') {
+	 				treatedContent = markdown.toHTML(document.getElementById('frm:outputHiddenId').value);
+	 			} else {
+	 				treatedContent = document.getElementById('frm:outputHiddenId').value;
+	 			}
+	 			document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
+			}
+	
+			function clearConsoleOutput() {
+				document.getElementById('frm:consoleOutputId').innerHTML = '';
+			}
+			
+			configureCodeMirror();
+		</script>
 	</ui:define>
 </ui:composition>

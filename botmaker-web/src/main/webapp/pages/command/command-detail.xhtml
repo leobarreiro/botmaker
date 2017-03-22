@@ -39,9 +39,9 @@
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(commandAction.command.postScript)}">
 					<h:graphicImage value="/resources/img/icons/view.png" />
-					<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />					
+					<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />					
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command.postScript)}"
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command, commandAction.command.postScript)}"
 					styleClass="links-script-code">
 					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />

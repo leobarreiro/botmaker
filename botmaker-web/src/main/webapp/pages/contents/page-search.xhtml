@@ -19,7 +19,7 @@
 			<rich:dataTable id="pageListId" value="#{pageAction.pageList}" var="pg" rows="20" styleClass="pc100">
 				<rich:column sortBy="#{pg.title}" styleClass="txlft pc20">
 					<f:facet name="header">Title</f:facet>
-					<h:commandLink action="#{pageAction.detail(pg)}" value="#{pg.shortContent}" styleClass="tx10" />
+					<h:commandLink action="#{pageAction.detail(pg)}" value="#{pg.title}" styleClass="tx10" />
 				</rich:column>
 				<rich:column sortBy="#{pg.active}" styleClass="txlft pc15">
 					<f:facet name="header">Active</f:facet>

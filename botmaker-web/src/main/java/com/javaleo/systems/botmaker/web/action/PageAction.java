@@ -8,7 +8,10 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+
 import com.javaleo.systems.botmaker.ejb.entities.Page;
+import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.PageFilter;
 
@@ -30,6 +33,12 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	private Conversation conversation;
 
 	@Inject
+	private Logger LOG;
+
+	@Inject
+	private MsgAction msgAction;
+
+	@Inject
 	private IBotMakerFacade facade;
 
 	public String list() {
@@ -47,10 +56,34 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		return PAGE_EDIT;
 	}
 
+	public String save() {
+		startOrResumeConversation();
+		try {
+			facade.savePage(page);
+			return list();
+		} catch (BusinessException e) {
+			LOG.warn(e.getMessage());
+			msgAction.addErrorMessage(e.getMessage());
+			return PAGE_EDIT;
+		}
+	}
+
 	public String detail(Page page) {
 		startOrResumeConversation();
 		this.page = page;
 		return PAGE_DETAIL;
+	}
+
+	public String edit(Page page) {
+		startOrResumeConversation();
+		this.page = page;
+		return PAGE_EDIT;
+	}
+
+	public String dropPage() {
+		startOrResumeConversation();
+		// TODO realizar drop da pagina
+		return list();
 	}
 
 	@Override

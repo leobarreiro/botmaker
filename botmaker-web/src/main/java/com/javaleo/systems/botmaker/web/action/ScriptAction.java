@@ -11,8 +11,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.libs.botgram.enums.ParseMode;
+import org.python.icu.util.Calendar;
 
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
+import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
 import com.javaleo.systems.botmaker.ejb.entities.Script;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
@@ -21,6 +24,7 @@ import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
+import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Named
 @ConversationScoped
@@ -33,6 +37,9 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	@Inject
 	private Conversation conversation;
+
+	@Inject
+	private BotMakerCredentials credentials;
 
 	@Inject
 	private CommandAction commandAction;
@@ -48,21 +55,28 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	private Bot bot;
 	private Script script;
+	private Script viewScript;
 	private List<Script> scripts;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
 	private Boolean editing = Boolean.FALSE;
 
-	public String startEditScript(Bot botEdition, Script scriptEdition) {
+	public String startEditScript(Bot botEdition, Command command, Script scriptEdition) {
 		startOrResumeConversation();
 		editing = Boolean.TRUE;
 		bot = botEdition;
-		if (scriptEdition.getId() != null) {
+		if (scriptEdition != null && scriptEdition.getId() != null) {
 			script = facade.getScriptToEdition(scriptEdition.getId());
 		} else {
-			script = scriptEdition;
+			script = new Script();
+			script.setAuthor(credentials.getUser());
+			script.setCreated(Calendar.getInstance().getTime());
+			script.setEnabled(true);
+			script.setCommand(command);
+			script.setScriptType(ScriptType.GROOVY);
+			script.setParseMode(ParseMode.MARKDOWN);
+			command.setPostScript(script);
 		}
-
 		script.setGeneric(false);
 		loadContextVars();
 		listGenericScripts();
@@ -106,16 +120,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	public void startViewScript(Script scriptView) {
 		startOrResumeConversation();
-		editing = Boolean.FALSE;
-		if (scriptView.getId() != null) {
-			script = facade.getScriptToEdition(scriptView.getId());
-		} else {
-			script = scriptView;
-		}
-
-		if (script.getCommand() != null && script.getCommand().getBot() != null) {
-			bot = script.getCommand().getBot();
-		}
+		viewScript = (scriptView != null && scriptView.getId() != null) ? facade.getScriptToEdition(scriptView.getId()) : scriptView;
 	}
 
 	public void stopEdit() {
@@ -215,6 +220,14 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	public void setScript(Script script) {
 		this.script = script;
+	}
+
+	public Script getViewScript() {
+		return viewScript;
+	}
+
+	public void setViewScript(Script script) {
+		this.viewScript = script;
 	}
 
 	public List<Script> getScripts() {
