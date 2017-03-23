@@ -9,9 +9,9 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -21,6 +21,7 @@ import com.javaleo.systems.botmaker.ejb.enums.AnswerType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.ValidatorFilter;
+import com.javaleo.systems.botmaker.ejb.interceptors.EditingInterceptor;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 import com.javaleo.systems.botmaker.ejb.utils.GroovyScriptRunnerUtils;
@@ -28,7 +29,8 @@ import com.javaleo.systems.botmaker.web.action.MsgAction.MessageType;
 
 @Named
 @ConversationScoped
-public class QuestionAction extends AbstractCrudAction implements Serializable {
+@Interceptors(EditingInterceptor.class)
+public class QuestionAction extends AbstractConversationAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

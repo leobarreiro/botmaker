@@ -7,16 +7,20 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import org.slf4j.Logger;
 
+import com.javaleo.systems.botmaker.ejb.annotations.EditingNow;
 import com.javaleo.systems.botmaker.ejb.entities.Page;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 import com.javaleo.systems.botmaker.ejb.filters.PageFilter;
+import com.javaleo.systems.botmaker.ejb.interceptors.EditingInterceptor;
 
 @Named
 @ConversationScoped
+@Interceptors(EditingInterceptor.class)
 public class PageAction extends AbstractConversationAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +54,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		return PAGE_LIST;
 	}
 
+	@EditingNow(edit = true)
 	public String startNew() {
 		startOrResumeConversation();
 		this.page = new Page();
@@ -60,7 +65,8 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		startOrResumeConversation();
 		try {
 			facade.savePage(page);
-			return list();
+			msgAction.addInfoMessage("Page saved!");
+			return detail(page);
 		} catch (BusinessException e) {
 			LOG.warn(e.getMessage());
 			msgAction.addErrorMessage(e.getMessage());
@@ -84,6 +90,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		return PAGE_DETAIL;
 	}
 
+	@EditingNow(edit = true)
 	public String edit(Page page) {
 		startOrResumeConversation();
 		this.page = page;

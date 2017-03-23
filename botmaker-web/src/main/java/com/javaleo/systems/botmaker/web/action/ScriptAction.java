@@ -9,11 +9,13 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.python.icu.util.Calendar;
 
+import com.javaleo.systems.botmaker.ejb.annotations.EditingNow;
 import com.javaleo.systems.botmaker.ejb.entities.Bot;
 import com.javaleo.systems.botmaker.ejb.entities.Command;
 import com.javaleo.systems.botmaker.ejb.entities.Question;
@@ -22,12 +24,14 @@ import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ScriptType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
 import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
+import com.javaleo.systems.botmaker.ejb.interceptors.EditingInterceptor;
 import com.javaleo.systems.botmaker.ejb.pojos.Dialog;
 import com.javaleo.systems.botmaker.ejb.pojos.DialogContextVar;
 import com.javaleo.systems.botmaker.ejb.security.BotMakerCredentials;
 
 @Named
 @ConversationScoped
+@Interceptors(EditingInterceptor.class)
 public class ScriptAction extends AbstractConversationAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -59,11 +63,10 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	private List<Script> scripts;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
-	private Boolean editing = Boolean.FALSE;
 
+	@EditingNow(edit = true)
 	public String startEditScript(Bot botEdition, Command command, Script scriptEdition) {
 		startOrResumeConversation();
-		editing = Boolean.TRUE;
 		bot = botEdition;
 		if (scriptEdition != null && scriptEdition.getId() != null) {
 			script = facade.getScriptToEdition(scriptEdition.getId());
@@ -87,9 +90,9 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
+	@EditingNow(edit = true)
 	public String startNewGeneric() {
 		startNewConversation();
-		editing = Boolean.TRUE;
 		bot = null;
 		script = new Script();
 		script.setGeneric(true);
@@ -97,18 +100,18 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
+	@EditingNow(edit = true)
 	public String startEditGeneric(Script script) {
 		startOrResumeConversation();
-		editing = Boolean.TRUE;
 		this.bot = null;
 		this.script = facade.getScriptToEdition(script.getId());
 		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
+	@EditingNow(edit = true)
 	public String startEditScriptValidator(Validator validator) {
 		startOrResumeConversation();
-		editing = Boolean.TRUE;
 		this.bot = null;
 		if (validator.getScript() != null) {
 			script = facade.getScriptToEdition(validator.getScript().getId());
@@ -125,10 +128,6 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	public void startViewScript(Script scriptView) {
 		startOrResumeConversation();
 		viewScript = (scriptView != null && scriptView.getId() != null) ? facade.getScriptToEdition(scriptView.getId()) : scriptView;
-	}
-
-	public void stopEdit() {
-		this.editing = Boolean.FALSE;
 	}
 
 	private void loadContextVars() {
@@ -256,14 +255,6 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	public void setDebugContent(String debugContent) {
 		this.debugContent = debugContent;
-	}
-
-	public Boolean getEditing() {
-		return editing;
-	}
-
-	public void setEditing(Boolean editing) {
-		this.editing = editing;
 	}
 
 }

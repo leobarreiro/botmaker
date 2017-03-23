@@ -2,10 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-
-		<h2>Content Pages</h2>
-
-		<rich:panel legend="Filter" styleClass="frm-crud">
+		<h2 class="pc95">Content Pages</h2>
+		<rich:panel legend="Filter" styleClass="frm-crud pc95">
 			<h:panelGrid columns="6" styleClass="pc100">
 				<h:outputText styleClass="txt" value="Title" />
 				<h:inputText value="#{pageAction.filter.title}" />
@@ -15,21 +13,52 @@
 				<h:commandButton action="#{pageAction.startNew()}" value="New Content Page" styleClass="secondary" immediate="true" />
 			</h:panelGrid>
 		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud">
+		<h:panelGroup layout="block" styleClass="frm-crud pc95">
 			<rich:dataTable id="pageListId" value="#{pageAction.pageList}" var="pg" rows="20" styleClass="pc100">
 				<rich:column sortBy="#{pg.title}" styleClass="txlft pc20">
 					<f:facet name="header">Title</f:facet>
-					<h:commandLink action="#{pageAction.detail(pg)}" value="#{pg.title}" styleClass="tx10" />
+					<h:commandLink action="#{pageAction.detail(pg)}" value="#{pg.title}" styleClass="tx11" />
 				</rich:column>
-				<rich:column sortBy="#{pg.active}" styleClass="txlft pc15">
-					<f:facet name="header">Active</f:facet>
-					<h:outputText value="#{(pg.active) ? 'Yes' : 'No'}" styleClass="#{(pg.active) ? 'green' : 'gray'}" />
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Operations</f:facet>
+					<h:commandLink title="View Page" action="#{pageAction.detail(pg)}" styleClass="links-script-code">
+						<h:graphicImage value="/resources/img/icons/view.png" />
+						<f:ajax execute="@this" />
+					</h:commandLink>
+					<h:commandLink title="Edit Page" action="#{pageAction.edit(pg)}" styleClass="links-script-code">
+						<h:graphicImage value="/resources/img/icons/edit.png" />
+						<f:ajax execute="@this" />
+					</h:commandLink>
+					<h:outputText value="--" rendered="#{cmd.postProcess eq false}" />
+				</rich:column>
+				<rich:column sortBy="#{pg.resume}" styleClass="txlft">
+					<f:facet name="header">Resume</f:facet>
+					<h:outputText value="#{pg.resume}" styleClass="tx9" />
+				</rich:column>
+				<rich:column sortBy="#{pg.user.name}" styleClass="txctr pc15">
+					<f:facet name="header">Author</f:facet>
+					<h:outputText value="#{pg.user.name}" styleClass="tx9" />
+				</rich:column>
+				<rich:column sortBy="#{pg.created}" styleClass="txctr">
+					<f:facet name="header">Created</f:facet>
+					<h:outputText value="#{pg.created}" styleClass="tx9">
+						<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</rich:column>
+				<rich:column sortBy="#{pg.edited}" styleClass="txctr">
+					<f:facet name="header">Modified</f:facet>
+					<h:outputText value="#{pg.edited}" styleClass="tx9">
+						<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</rich:column>
+				<rich:column sortBy="#{pg.published}" styleClass="txctr">
+					<f:facet name="header">Published</f:facet>
+					<h:outputText value="#{(pg.published) ? 'Yes' : 'No'}" styleClass="tx9 #{(pg.published) ? 'green' : 'red'}" />
 				</rich:column>
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
 			</rich:dataTable>
 		</h:panelGroup>
-
 	</ui:define>
 </ui:composition>

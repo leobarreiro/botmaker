@@ -8,15 +8,31 @@
 				<h:outputLabel value="Title" />
 				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
 			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Published" />
+				<h:selectBooleanCheckbox value="#{pageAction.page.published}">
+					<f:selectItem itemLabel="Yes" itemValue="true" />
+					<f:selectItem itemLabel="No" itemValue="false" />
+				</h:selectBooleanCheckbox>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line2">
+				<h:outputLabel value="Author" styleClass="pc25" />
+				<h:outputText value="#{pageAction.page.user.name}" styleClass="txt pc20" />
+				<h:outputLabel value="Created" styleClass="pc25" />
+				<h:outputText value="#{pageAction.page.created}" styleClass="txt pc20">
+					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+				</h:outputText>
+			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
-			<rich:editor toolbar="full" id="editor" valueChangeListener="#{pageAction.saveQuiet()}"  plugins="save" value="#{pageAction.page.content}" styleClass="pc100 mrauto">
-			</rich:editor>
-  
+			<rich:editor toolbar="full" id="editor" onchange="#{pageAction.saveQuiet()}" plugins="save" value="#{pageAction.page.content}" styleClass="pc100 mrauto" />
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{pageAction.list()}" immediate="true" value="Cancel" styleClass="secondary">
+				<h:commandButton action="#{pageAction.list()}" immediate="true" value="Go to List" styleClass="secondary">
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandButton>
+				<h:commandButton action="#{pageAction.detail(pageAction.page)}" immediate="true" value="View Details" styleClass="secondary">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
 				<h:commandButton action="#{pageAction.save()}" value="Save" styleClass="primary" />

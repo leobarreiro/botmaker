@@ -620,6 +620,14 @@ textarea[disabled].script {
 	vertical-align: middle;
 }
 
+.tx7 {
+	font-size: 7pt !important;
+}
+
+.tx8 {
+	font-size: 8pt !important;
+}
+
 .tx9 {
 	font-size: 9pt !important;
 }
@@ -779,7 +787,7 @@ div.CodeMirror {
 	display: inline-block;
 	background-color: #FFFFFF;
 	width: 100% !important;
-	padding : 0;
+	padding: 0;
 	margin: 0;
 	padding: 0;
 }
@@ -900,4 +908,8 @@ div.editor-info label {
 	margin: 16px 0px 16px 0px !important;
 	font-size: 14pt !important;
 	font-weight: normal !important;
+}
+
+.rf-ddm-emptyIcon {
+	display: none !important;
 }

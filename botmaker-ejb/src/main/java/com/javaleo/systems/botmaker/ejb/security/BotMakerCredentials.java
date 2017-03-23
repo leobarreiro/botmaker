@@ -17,6 +17,15 @@ public class BotMakerCredentials extends JavaLeoCredentials implements IJavaLeoC
 
 	private User user;
 	private Company company;
+	private Boolean editing;
+
+	public void startEditing() {
+		this.editing = Boolean.TRUE;
+	}
+
+	public void stopEditing() {
+		this.editing = Boolean.FALSE;
+	}
 
 	public User getUser() {
 		return user;
@@ -34,11 +43,20 @@ public class BotMakerCredentials extends JavaLeoCredentials implements IJavaLeoC
 		this.company = company;
 	}
 
+	public Boolean getEditing() {
+		return editing;
+	}
+
+	public void setEditing(Boolean editing) {
+		this.editing = editing;
+	}
+
 	@Override
 	public void clear() {
 		super.clear();
 		this.company = null;
 		this.user = null;
+		this.editing = null;
 	}
 
 }

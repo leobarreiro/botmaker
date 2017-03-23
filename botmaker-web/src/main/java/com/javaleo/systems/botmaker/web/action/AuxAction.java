@@ -23,7 +23,7 @@ import com.javaleo.systems.botmaker.ejb.facades.IBotMakerFacade;
 
 @Named
 @ConversationScoped
-public class AuxAction implements Serializable {
+public class AuxAction extends AbstractConversationAction implements Serializable {
 
 	@Inject
 	private Conversation conversation;
@@ -54,6 +54,11 @@ public class AuxAction implements Serializable {
 			updateLastContentPages();
 			updateLastCommandScriptEditedByUser();
 		}
+	}
+
+	@Override
+	public Conversation getConversation() {
+		return conversation;
 	}
 
 	public void updateLastBotsFromCompanyUser() {

@@ -14,7 +14,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity
@@ -32,6 +34,7 @@ public class Page implements IEntityBasic {
 	private Date edited;
 	private User user;
 	private Company company;
+	private Boolean published;
 	private Boolean active;
 
 	@Id
@@ -112,6 +115,15 @@ public class Page implements IEntityBasic {
 		this.company = company;
 	}
 
+	@Column(name = "published", nullable = true)
+	public Boolean getPublished() {
+		return published;
+	}
+
+	public void setPublished(Boolean published) {
+		this.published = published;
+	}
+
 	@Column(name = "active")
 	public Boolean getActive() {
 		return active;
@@ -119,6 +131,11 @@ public class Page implements IEntityBasic {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@Transient
+	public String getResume() {
+		return StringUtils.abbreviate(StringUtils.strip(this.content), 90);
 	}
 
 	@Override
