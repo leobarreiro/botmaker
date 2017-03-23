@@ -67,6 +67,9 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		bot = botEdition;
 		if (scriptEdition != null && scriptEdition.getId() != null) {
 			script = facade.getScriptToEdition(scriptEdition.getId());
+			if (script.getGenericScript() != null) {
+				viewScript = script.getGenericScript();
+			}
 		} else {
 			script = new Script();
 			script.setAuthor(credentials.getUser());
@@ -76,6 +79,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 			script.setScriptType(ScriptType.GROOVY);
 			script.setParseMode(ParseMode.MARKDOWN);
 			command.setPostScript(script);
+			viewScript = null;
 		}
 		script.setGeneric(false);
 		loadContextVars();

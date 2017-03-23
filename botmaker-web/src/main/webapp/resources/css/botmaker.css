@@ -360,7 +360,7 @@ a.primary {
 	font-weight: bold !important;
 }
 
-input.primary, button.primary {
+input.primary, button.primary, a.cke_dialog_ui_button_ok {
 	background: #67ab49 !important;
 	border: 1px solid #67ab49 !important;
 	/*background: #440044 !important;*/
@@ -374,7 +374,7 @@ input.primary, button.primary {
 	cursor: default !important;
 }
 
-input.secondary, button.secondary {
+input.secondary, button.secondary, a.cke_dialog_ui_button_cancel {
 	background: #666666 !important;
 	border: 1px solid #666666 !important;
 	border-radius: 4px !important;
@@ -382,10 +382,12 @@ input.secondary, button.secondary {
 	font-weight: normal !important;
 	margin: 4px;
 	padding: 2px 6px 2px 6px !important;
+	text-decoration: none !important;
+	font-weight: normal !important;
 }
 
 input.attention, button.attention {
-	background: #aa0000!important;
+	background: #aa0000 !important;
 	border: 1px solid #666666 !important;
 	border-radius: 4px !important;
 	color: #FFFFFF !important;
@@ -393,7 +395,6 @@ input.attention, button.attention {
 	margin: 4px;
 	padding: 2px 6px 2px 6px !important;
 }
-
 
 input.primary:hover, button.primary:hover, input.secondary:hover, button.secondary:hover {
 	color: yellow !important;
@@ -733,7 +734,7 @@ div.CodeMirror {
 }
 
 .groovy {
-	color: #a953ff!important;
+	color: #a953ff !important;
 }
 
 .javascript {
@@ -772,6 +773,19 @@ div.CodeMirror {
 	padding: 0px;
 	margin: 0px;
 	float: left;
+}
+
+.page-content {
+	display: inline-block;
+	background-color: #FFFFFF;
+	width: 100% !important;
+	padding : 0;
+	margin: 0;
+	padding: 0;
+}
+
+.page-content * {
+	margin: 0 !important;
 }
 
 div.editor-toolbar div.editor-menu {
@@ -887,4 +901,3 @@ div.editor-info label {
 	font-size: 14pt !important;
 	font-weight: normal !important;
 }
-

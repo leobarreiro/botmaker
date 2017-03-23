@@ -10,7 +10,9 @@
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
-			<rich:editor toolbar="full" id="editor" value="#{pageAction.page.content}" styleClass="pc100 mrauto" />
+			<rich:editor toolbar="full" id="editor" valueChangeListener="#{pageAction.saveQuiet()}"  plugins="save" value="#{pageAction.page.content}" styleClass="pc100 mrauto">
+			</rich:editor>
+  
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-submit">

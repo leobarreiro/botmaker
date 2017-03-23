@@ -74,8 +74,8 @@
 							<c:forEach items="#{auxAction.lastCommandScriptsEdited}" var="cse">
 								<rich:menuItem action="#{scriptAction.startEditScript(cse.command.bot, cse.command, cse)}" immediate="true" execute="@this">
 									<h:outputLabel value="#{cse.command.key}"
-										styleClass="tx9 #{(cse.scriptType eq 'GROOVY') ? 'groovy' : (cse.scriptType eq 'PYTHON') ? 'python' : (cse.scriptType eq 'JAVASCRIPT') ? 'javascript' : 'none'}" />
-									<h:outputLabel value="(#{cse.command.bot.name})" styleClass="tx9" />
+										styleClass="tx9 personal-item #{(cse.scriptType eq 'GROOVY') ? 'groovy' : (cse.scriptType eq 'PYTHON') ? 'python' : (cse.scriptType eq 'JAVASCRIPT') ? 'javascript' : 'none'}" />
+									<h:outputLabel value="(#{cse.command.bot.name})" styleClass="tx9 personal-item" />
 								</rich:menuItem>
 							</c:forEach>
 						</rich:dropDownMenu>

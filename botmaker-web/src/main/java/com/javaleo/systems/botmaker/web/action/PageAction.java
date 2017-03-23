@@ -68,6 +68,16 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		}
 	}
 
+	public void saveQuiet() {
+		startOrResumeConversation();
+		try {
+			facade.savePage(page);
+		} catch (BusinessException e) {
+			LOG.warn(e.getMessage());
+			msgAction.addErrorMessage(e.getMessage());
+		}
+	}
+
 	public String detail(Page page) {
 		startOrResumeConversation();
 		this.page = page;
