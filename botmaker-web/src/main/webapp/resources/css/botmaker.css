@@ -11,6 +11,29 @@ h1, h2, h3, h4, h5, h6 {
 	color: #440044;
 	display: block;
 	margin: auto;
+	width: 98%;
+}
+
+h1 {
+	font-size: 28pt;
+}
+
+h2 {
+	font-size: 24pt;
+}
+
+h3 {
+	margin-top: 20px;
+	font-size: 16pt;
+}
+
+h4 {
+	margin-top: 14px;
+	font-size: 12pt;
+}
+
+h5 {
+	font-size: 10pt;
 }
 
 a {
@@ -37,30 +60,30 @@ div.head h1 {
 }
 
 table tr td label {
-	color: #440044;
+	color: #950095 !important;
 	display: inline-block;
-	/*float: left;*/
 	text-align: right;
 }
 
 .topmenu {
-	margin: auto !important;
+	margin: 12px 1px 1px 90px !important;
 	border: none !important;
-	width: 70% !important;
-	height: 30px;
-	padding-top: 12px;
+	width: 92% !important;
+	border: none !important;
+	height: 22px;
 }
 
 .menubar {
+	display: inline-block !important;
+	width: 80% !important;
 	float: left;
 	box-shadow: none !important;
-	border: 1px solid orange !important;
-	display: inline-block !important;
 	border: none !important;
 }
 
 .userbar {
 	display: inline-block;
+	width: 18% !important;
 	float: right;
 	display: inline-block !important;
 	border: none !important;
@@ -83,7 +106,23 @@ table tr td label {
 .frm-crud {
 	margin: auto !important;
 	display: block !important;
+	width: 98% !important;
+	margin-top: 6px !important;
+	padding: 4px !important;
+	border: 1px solid #DFA5A5 !important;
+	border-radius: 4px !important;
 }
+
+.frm-crud table {
+	border: 1px solid transparent !important;
+	margin: auto !important;
+	display: table !important;
+}
+
+.frm-crud div.rf-p-b {
+	padding: 2px !important;
+}
+
 
 .frm-title, .frm-title-sec {
 	text-align: left;
@@ -93,14 +132,46 @@ table tr td label {
 	background-color: #DFA5A5 !important;
 }
 
-.frm-line, .frm-line2 {
-	display: inline-block;
+.frm-line, .frm-line2, .frm-line3 {
+	display: inline-block !important;
 	vertical-align: middle;
+	margin: 1px !important;
+	padding: 1px;
+	font-size: 10pt !important;
 }
 
-.frm-line label, .frm-line2 label {
+.frm-line {
+	width: 100%;
+	clear: both !important;
+	
+}
+
+.frm-line2 {
+	width: 50% !important;
+	clear: both !important;
+}
+
+.frm-line3 {
+	width: 33% !important;
+	clear: both !important;
+}
+
+.frm-line label, .frm-line2 label, .frm-line3 label {
 	display: inline-block;
 	text-align: right;
+	padding: 2pt !important;
+	width: 30%;
+	margin-right: 2px;
+	vertical-align: top;
+	color: #950095 !important;
+}
+
+.frm-line1 span, .frm-line2 span, .frm-line3 span {
+	display: inline-block;
+	padding: 2pt !important;
+	width: 65%;
+	vertical-align: top;
+	margin-right: 2px;
 }
 
 .frm-confirm {
@@ -118,6 +189,9 @@ table tr td label {
 
 span.txt {
 	display: inline-block;
+	color: #000000;
+	padding: 2pt !important;
+	font-size: 10pt !important;
 }
 
 .frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
@@ -154,7 +228,6 @@ span.primary, a.primary, a.secondary, span.secondary {
 table tr td label {
 	margin-right: 12px !important;
 	padding: 2pt !important;
-	/*width: 100%;*/
 }
 
 div.head {
@@ -170,40 +243,6 @@ div.head h1 {
 	width: 40% !important;
 	margin: 0px 0px 0px 220px !important;
 	font-size: 30pt;
-}
-
-.menubar {
-	width: 70% !important;
-}
-
-.userbar {
-	width: 25% !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	width: 70%;
-}
-
-h1 {
-	font-size: 28pt;
-}
-
-h2 {
-	font-size: 24pt;
-}
-
-h3 {
-	margin-top: 20px;
-	font-size: 16pt;
-}
-
-h4 {
-	margin-top: 14px;
-	font-size: 12pt;
-}
-
-h5 {
-	font-size: 10pt;
 }
 
 input, select, textarea {
@@ -236,22 +275,6 @@ input, select, textarea {
 	padding: 12px 6px 12px 6px !important;
 }
 
-.frm-crud {
-	width: 70% !important;
-	margin-top: 6px !important;
-	padding: 0px !important;
-	border: 1px solid #DFA5A5 !important;
-	/*border-radius: 8px !important;*/
-}
-
-.frm-crud table.rf-dt {
-	width: 100% !important;
-}
-
-.frm-crud div.rf-p-b {
-	padding: 2px !important;
-}
-
 .frm-title {
 	padding: 6px !important;
 	margin: 0px 0px 4px 0px;
@@ -264,35 +287,6 @@ input, select, textarea {
 	margin: 0px 0px 4px 0px;
 	font-size: 14pt;
 	border-radius: 0px !important;
-}
-
-.frm-line, .frm-line2 {
-	margin: 2px !important;
-	padding: 1px;
-	width: 100%;
-	font-size: 11pt !important;
-}
-
-.frm-line label {
-	padding: 2pt !important;
-	width: 25%;
-	margin-right: 8px;
-	vertical-align: top;
-}
-
-.frm-line2 label {
-	padding: 2pt !important;
-	width: 20%;
-	margin-right: 2px;
-	vertical-align: top;
-}
-
-.frm-line2 span {
-	display: inline-block;
-	padding: 2pt !important;
-	width: 28%;
-	vertical-align: top;
-	margin-right: 2px;
 }
 
 .frm-confirm {
@@ -310,10 +304,6 @@ input, select, textarea {
 	width: 100% !important;
 	font-size: 10pt !important;
 	padding: 8px 2px 0px 2px !important;
-}
-
-span.txt {
-	padding: 2pt !important;
 }
 
 .frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
@@ -652,10 +642,20 @@ textarea[disabled].script {
 	margin-bottom: 4px !important;
 }
 
+/* Richfaces components customization */
+.rf-ddm-lst-bg {
+	background-image: none !important;
+}
+
+.rf-ddm-sep {
+	border-top: 1px dotted #dfa5a5 !important;
+	margin: 4px !important;
+}
+
 .rf-ddm-lbl-dec {
 	color: #FFFFFF !important;
-	font-weight: normal !important;
-	font-size: 11pt !important;
+	font-weight: bold !important;
+	font-size: 10pt !important;
 }
 
 .rf-ddm-lbl-dec:hover {
@@ -672,12 +672,7 @@ textarea[disabled].script {
 }
 
 label, keygen, isindex, legend, .rf-p-b, .rf-dt-c {
-	color: #666666 !important;
-	font-size: 11pt !important;
-}
-
-span.txt {
-	color: #000000;
+	color: #950095 !important;
 	font-size: 11pt !important;
 }
 

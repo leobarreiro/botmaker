@@ -19,8 +19,10 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.python.icu.util.Calendar;
 
 import com.javaleo.systems.botmaker.ejb.entities.Company;
+import com.javaleo.systems.botmaker.ejb.entities.User;
 import com.javaleo.systems.botmaker.ejb.entities.Validator;
 import com.javaleo.systems.botmaker.ejb.enums.ValidatorType;
 import com.javaleo.systems.botmaker.ejb.exceptions.BusinessException;
@@ -37,13 +39,30 @@ public class ValidatorBusiness implements IValidatorBusiness {
 	private IPersistenceBasic<Validator> persistence;
 
 	@Inject
+	private ICompanyBusiness companyBusiness;
+
+	@Inject
+	private IUserBusiness userBusiness;
+
+	@Inject
 	private BotMakerCredentials credentials;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveValidator(Validator snippet) throws BusinessException {
-		// TODO Validar o snippet aqui antes de salvar
-		persistence.saveOrUpdate(snippet);
+	public void saveValidator(Validator validator) throws BusinessException {
+		if (validator.getCompany() == null) {
+			Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
+			validator.setCompany(company);
+		}
+		if (validator.getAuthor() == null) {
+			User user = userBusiness.findUserByUsername(credentials.getUser().getUsername());
+			validator.setAuthor(user);
+		}
+		if (validator.getCreated() == null) {
+			validator.setCreated(Calendar.getInstance().getTime());
+		}
+		validator.setModified(Calendar.getInstance().getTime());
+		persistence.saveOrUpdate(validator);
 	}
 
 	@Override

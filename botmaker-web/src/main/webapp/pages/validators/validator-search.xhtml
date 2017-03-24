@@ -19,18 +19,26 @@
 			</h:panelGrid>
 		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
-			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="10" styleClass="pc100">
-				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc30">
+			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="20" styleClass="pc100">
+				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc20">
 					<f:facet name="header">Name</f:facet>
 					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" styleClass="tx10" />
 				</rich:column>
-				<rich:column sortBy="#{vdt.validatorType}" styleClass="pc15">
+				<rich:column sortBy="#{vdt.validatorType}" styleClass="pc10 txctr">
 					<f:facet name="header">Type</f:facet>
 					<h:outputText value="#{vdt.validatorType.descriptor}" />
+				</rich:column>
+				<rich:column sortBy="#{vdt.publicUse}" styleClass="txctr pc10">
+					<f:facet name="header">Public Use</f:facet>
+					<h:outputText value="#{(vdt.publicUse) ? 'Yes' : 'No'}" styleClass="#{(vdt.publicUse) ? 'green' : 'red'}" />
 				</rich:column>
 				<rich:column sortBy="#{vdt.description}" styleClass="txlft">
 					<f:facet name="header">Description</f:facet>
 					<h:outputText value="#{vdt.shortDescription}" />
+				</rich:column>
+				<rich:column sortBy="#{vdt.author.name}" styleClass="txctr pc20">
+					<f:facet name="header">Author</f:facet>
+					<h:outputText value="#{vdt.author.name}" />
 				</rich:column>
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />

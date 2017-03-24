@@ -13,29 +13,23 @@
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
 				<h:outputLabel value="Key" />
 				<h:outputText styleClass="txt" value="#{commandAction.command.key}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Short Description" />
-				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Process Answers" />
-				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
 				<h:outputText value="#{(commandAction.command.postScript.scriptType ne null) ? commandAction.command.postScript.scriptType : 'None'}"
 					styleClass="txt #{(commandAction.command.postScript.scriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
+				<h:outputLabel value="Short Description" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.postScript.parseMode ne null) ? commandAction.command.postScript.parseMode : 'None'}"
 					styleClass="txt #{(commandAction.command.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="frm-line2">
+				<h:outputLabel value="Process Answers" />
+				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(commandAction.command.postScript)}">
 					<h:graphicImage value="/resources/img/icons/view.png" />

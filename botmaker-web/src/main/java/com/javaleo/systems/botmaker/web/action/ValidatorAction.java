@@ -1,6 +1,7 @@
 package com.javaleo.systems.botmaker.web.action;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 	private Validator validator;
 	private List<Validator> validators;
 	private List<ScriptType> scriptTypeOptions;
+	private List<ValidatorType> validatorTypeOptions;
 
 	@Inject
 	private IBotMakerFacade facade;
@@ -91,6 +93,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		userPreferencesAction.loadPreferences();
 		filter = new ValidatorFilter();
 		this.scriptTypeOptions = Arrays.asList(ScriptType.values());
+		this.validatorTypeOptions = new ArrayList<ValidatorType>(Arrays.asList(ValidatorType.values()));
 	}
 
 	@Override
@@ -120,6 +123,14 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 
 	public void setScriptTypeOptions(List<ScriptType> scriptTypeOptions) {
 		this.scriptTypeOptions = scriptTypeOptions;
+	}
+
+	public List<ValidatorType> getValidatorTypeOptions() {
+		return validatorTypeOptions;
+	}
+
+	public void setValidatorTypeOptions(List<ValidatorType> validatorTypeOptions) {
+		this.validatorTypeOptions = validatorTypeOptions;
 	}
 
 	public ValidatorFilter getFilter() {
