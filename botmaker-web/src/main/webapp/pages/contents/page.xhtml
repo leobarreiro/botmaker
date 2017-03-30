@@ -6,7 +6,7 @@
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Title" />
-				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
+				<h:inputText value="#{pageAction.page.title}" maxlength="50" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Published" />
@@ -15,11 +15,13 @@
 					<f:selectItem itemLabel="No" itemValue="false" />
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line2">
-				<h:outputLabel value="Author" styleClass="pc25" />
-				<h:outputText value="#{pageAction.page.user.name}" styleClass="txt pc20" />
-				<h:outputLabel value="Created" styleClass="pc25" />
-				<h:outputText value="#{pageAction.page.created}" styleClass="txt pc20">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Author" />
+				<h:outputText value="#{pageAction.page.user.name}" styleClass="txt" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Created" />
+				<h:outputText value="#{pageAction.page.created}" styleClass="txt">
 					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
 				</h:outputText>
 			</h:panelGroup>

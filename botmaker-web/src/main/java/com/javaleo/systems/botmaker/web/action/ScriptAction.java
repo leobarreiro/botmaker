@@ -59,6 +59,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	private Bot bot;
 	private Script script;
+	private ScriptType scriptType;
 	private Script viewScript;
 	private List<Script> scripts;
 	private List<DialogContextVar> contextVars;
@@ -85,8 +86,9 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 			viewScript = null;
 		}
 		script.setGeneric(false);
+		scriptType = script.getScriptType();
 		loadContextVars();
-		listGenericScripts();
+		handleGenericScripts();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
 
@@ -96,6 +98,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		bot = null;
 		script = new Script();
 		script.setGeneric(true);
+		scriptType = null;
 		loadContextVars();
 		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
 	}
@@ -169,9 +172,9 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	}
 
 	public String listGenericScripts() {
-		if (this.script.getScriptType() == null) {
-			this.script.setScriptType(ScriptType.GROOVY);
-		}
+		this.scriptType = null;
+		this.script = null;
+		this.viewScript = null;
 		handleGenericScripts();
 		return "/pages/scripts/list-generic.jsf?faces-redirect=true";
 	}
@@ -189,7 +192,10 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	}
 
 	public void handleGenericScripts() {
-		scripts = facade.listGenericScriptsFromScriptType(this.script.getScriptType());
+		if (this.script != null) {
+			this.scriptType = this.script.getScriptType();
+		}
+		scripts = facade.listGenericScriptsFromScriptType(this.scriptType);
 	}
 
 	public void handleRefreshConversation() {
@@ -223,6 +229,14 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 
 	public void setScript(Script script) {
 		this.script = script;
+	}
+
+	public ScriptType getScriptType() {
+		return scriptType;
+	}
+
+	public void setScriptType(ScriptType scriptType) {
+		this.scriptType = scriptType;
 	}
 
 	public Script getViewScript() {

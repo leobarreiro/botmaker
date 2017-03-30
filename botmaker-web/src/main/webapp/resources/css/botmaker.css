@@ -306,8 +306,8 @@ input, select, textarea {
 	padding: 8px 2px 0px 2px !important;
 }
 
-.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"] {
-	width: 70%;
+.frm-line table, .frm-line input[type="text"], .frm-line input[type="password"], .frm-line textarea {
+	width: 65%;
 }
 
 .frm-line select {
@@ -319,7 +319,7 @@ input, select, textarea {
 }
 
 .frm-line div.scripting {
-	width: 73%;
+	width: 60%;
 	padding: 0px;
 	margin: 0px;
 }

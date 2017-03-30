@@ -1,5 +1,6 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -223,10 +224,16 @@ public class ScriptBusiness implements IScriptBusiness {
 		Root<Script> from = cq.from(Script.class);
 		Join<Script, User> joinAuthor = from.join("author", JoinType.INNER);
 		Join<User, Company> joinCompany = joinAuthor.join("company", JoinType.INNER);
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
+		predicates.add(whereCompany);
 		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), true);
-		Predicate whereScriptType = cb.equal(from.get("scriptType"), scriptType);
-		cq.where(cb.and(whereCompany, whereGeneric, whereScriptType));
+		predicates.add(whereGeneric);
+		if (scriptType != null) {
+			Predicate whereScriptType = cb.equal(from.get("scriptType"), scriptType);
+			predicates.add(whereScriptType);
+		}
+		cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
 		cq.orderBy(cb.asc(from.get("name")));
 		cq.select(from);
 		return persistence.getResultList(cq);

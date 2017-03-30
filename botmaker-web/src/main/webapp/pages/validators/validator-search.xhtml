@@ -40,6 +40,12 @@
 					<f:facet name="header">Author</f:facet>
 					<h:outputText value="#{vdt.author.name}" />
 				</rich:column>
+				<rich:column sortBy="#{vdt.modified}" styleClass="txctr pc10">
+					<f:facet name="header">Updated</f:facet>
+					<h:outputText value="#{vdt.modified}">
+						<f:convertDateTime pattern="dd/MM/yy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+					</h:outputText>
+				</rich:column>
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
