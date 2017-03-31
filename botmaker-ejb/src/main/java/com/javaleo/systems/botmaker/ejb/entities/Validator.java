@@ -175,11 +175,12 @@ public class Validator implements IEntityBasic {
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((publicUse == null) ? 0 : publicUse.hashCode());
-		result = prime * result + ((script == null) ? 0 : script.hashCode());
 		result = prime * result + ((simpleValidator == null) ? 0 : simpleValidator.hashCode());
 		result = prime * result + ((validatorType == null) ? 0 : validatorType.hashCode());
 		return result;
@@ -200,21 +201,24 @@ public class Validator implements IEntityBasic {
 		if (company == null) {
 			if (other.company != null) return false;
 		} else if (!company.equals(other.company)) return false;
+		if (created == null) {
+			if (other.created != null) return false;
+		} else if (!created.equals(other.created)) return false;
 		if (description == null) {
 			if (other.description != null) return false;
 		} else if (!description.equals(other.description)) return false;
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;
+		if (modified == null) {
+			if (other.modified != null) return false;
+		} else if (!modified.equals(other.modified)) return false;
 		if (name == null) {
 			if (other.name != null) return false;
 		} else if (!name.equals(other.name)) return false;
 		if (publicUse == null) {
 			if (other.publicUse != null) return false;
 		} else if (!publicUse.equals(other.publicUse)) return false;
-		if (script == null) {
-			if (other.script != null) return false;
-		} else if (!script.equals(other.script)) return false;
 		if (simpleValidator == null) {
 			if (other.simpleValidator != null) return false;
 		} else if (!simpleValidator.equals(other.simpleValidator)) return false;

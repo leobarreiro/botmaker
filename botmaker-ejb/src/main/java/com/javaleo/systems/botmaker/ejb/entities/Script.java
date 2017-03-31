@@ -48,6 +48,7 @@ public class Script implements IEntityBasic {
 	private Question question;
 	private Validator validator;
 	private Script genericScript;
+	private Boolean publicUse;
 
 	@Id
 	@Override
@@ -205,6 +206,15 @@ public class Script implements IEntityBasic {
 		this.genericScript = genericScript;
 	}
 
+	@Column(name = "public_use", nullable = true)
+	public Boolean getPublicUse() {
+		return publicUse;
+	}
+
+	public void setPublicUse(Boolean publicUse) {
+		this.publicUse = publicUse;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -221,6 +231,7 @@ public class Script implements IEntityBasic {
 		result = prime * result + ((modified == null) ? 0 : modified.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((parseMode == null) ? 0 : parseMode.hashCode());
+		result = prime * result + ((publicUse == null) ? 0 : publicUse.hashCode());
 		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((scriptType == null) ? 0 : scriptType.hashCode());
 		result = prime * result + ((valid == null) ? 0 : valid.hashCode());
@@ -230,87 +241,57 @@ public class Script implements IEntityBasic {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
 		Script other = (Script) obj;
 		if (author == null) {
-			if (other.author != null)
-				return false;
-		} else if (!author.equals(other.author))
-			return false;
+			if (other.author != null) return false;
+		} else if (!author.equals(other.author)) return false;
 		if (code == null) {
-			if (other.code != null)
-				return false;
-		} else if (!code.equals(other.code))
-			return false;
+			if (other.code != null) return false;
+		} else if (!code.equals(other.code)) return false;
 		if (command == null) {
-			if (other.command != null)
-				return false;
-		} else if (!command.equals(other.command))
-			return false;
+			if (other.command != null) return false;
+		} else if (!command.equals(other.command)) return false;
 		if (created == null) {
-			if (other.created != null)
-				return false;
-		} else if (!created.equals(other.created))
-			return false;
+			if (other.created != null) return false;
+		} else if (!created.equals(other.created)) return false;
 		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
+			if (other.description != null) return false;
+		} else if (!description.equals(other.description)) return false;
 		if (enabled == null) {
-			if (other.enabled != null)
-				return false;
-		} else if (!enabled.equals(other.enabled))
-			return false;
+			if (other.enabled != null) return false;
+		} else if (!enabled.equals(other.enabled)) return false;
 		if (generic == null) {
-			if (other.generic != null)
-				return false;
-		} else if (!generic.equals(other.generic))
-			return false;
+			if (other.generic != null) return false;
+		} else if (!generic.equals(other.generic)) return false;
 		if (genericScript == null) {
-			if (other.genericScript != null)
-				return false;
-		} else if (!genericScript.equals(other.genericScript))
-			return false;
+			if (other.genericScript != null) return false;
+		} else if (!genericScript.equals(other.genericScript)) return false;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
 		if (modified == null) {
-			if (other.modified != null)
-				return false;
-		} else if (!modified.equals(other.modified))
-			return false;
+			if (other.modified != null) return false;
+		} else if (!modified.equals(other.modified)) return false;
 		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (parseMode != other.parseMode)
-			return false;
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		if (parseMode != other.parseMode) return false;
+		if (publicUse == null) {
+			if (other.publicUse != null) return false;
+		} else if (!publicUse.equals(other.publicUse)) return false;
 		if (question == null) {
-			if (other.question != null)
-				return false;
-		} else if (!question.equals(other.question))
-			return false;
-		if (scriptType != other.scriptType)
-			return false;
+			if (other.question != null) return false;
+		} else if (!question.equals(other.question)) return false;
+		if (scriptType != other.scriptType) return false;
 		if (valid == null) {
-			if (other.valid != null)
-				return false;
-		} else if (!valid.equals(other.valid))
-			return false;
+			if (other.valid != null) return false;
+		} else if (!valid.equals(other.valid)) return false;
 		if (validator == null) {
-			if (other.validator != null)
-				return false;
-		} else if (!validator.equals(other.validator))
-			return false;
+			if (other.validator != null) return false;
+		} else if (!validator.equals(other.validator)) return false;
 		return true;
 	}
 

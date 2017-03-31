@@ -165,9 +165,13 @@ public class Question implements IEntityBasic, Comparable<Question> {
 		int result = 1;
 		result = prime * result + ((answerType == null) ? 0 : answerType.hashCode());
 		result = prime * result + ((command == null) ? 0 : command.hashCode());
+		result = prime * result + ((errorFormatMessage == null) ? 0 : errorFormatMessage.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((instruction == null) ? 0 : instruction.hashCode());
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((postScript == null) ? 0 : postScript.hashCode());
+		result = prime * result + ((processAnswer == null) ? 0 : processAnswer.hashCode());
+		result = prime * result + ((successMessage == null) ? 0 : successMessage.hashCode());
 		result = prime * result + ((validator == null) ? 0 : validator.hashCode());
 		result = prime * result + ((varName == null) ? 0 : varName.hashCode());
 		return result;
@@ -175,45 +179,41 @@ public class Question implements IEntityBasic, Comparable<Question> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
 		Question other = (Question) obj;
-		if (answerType != other.answerType)
-			return false;
+		if (answerType != other.answerType) return false;
 		if (command == null) {
-			if (other.command != null)
-				return false;
-		} else if (!command.equals(other.command))
-			return false;
+			if (other.command != null) return false;
+		} else if (!command.equals(other.command)) return false;
+		if (errorFormatMessage == null) {
+			if (other.errorFormatMessage != null) return false;
+		} else if (!errorFormatMessage.equals(other.errorFormatMessage)) return false;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
 		if (instruction == null) {
-			if (other.instruction != null)
-				return false;
-		} else if (!instruction.equals(other.instruction))
-			return false;
+			if (other.instruction != null) return false;
+		} else if (!instruction.equals(other.instruction)) return false;
 		if (order == null) {
-			if (other.order != null)
-				return false;
-		} else if (!order.equals(other.order))
-			return false;
+			if (other.order != null) return false;
+		} else if (!order.equals(other.order)) return false;
+		if (postScript == null) {
+			if (other.postScript != null) return false;
+		} else if (!postScript.equals(other.postScript)) return false;
+		if (processAnswer == null) {
+			if (other.processAnswer != null) return false;
+		} else if (!processAnswer.equals(other.processAnswer)) return false;
+		if (successMessage == null) {
+			if (other.successMessage != null) return false;
+		} else if (!successMessage.equals(other.successMessage)) return false;
 		if (validator == null) {
-			if (other.validator != null)
-				return false;
-		} else if (!validator.equals(other.validator))
-			return false;
+			if (other.validator != null) return false;
+		} else if (!validator.equals(other.validator)) return false;
 		if (varName == null) {
-			if (other.varName != null)
-				return false;
-		} else if (!varName.equals(other.varName))
-			return false;
+			if (other.varName != null) return false;
+		} else if (!varName.equals(other.varName)) return false;
 		return true;
 	}
 

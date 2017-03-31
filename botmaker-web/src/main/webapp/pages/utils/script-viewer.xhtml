@@ -16,11 +16,11 @@
 				<h:outputLabel value="#{scriptAction.viewScript.author.name}" styleClass="tx10" />
 				<h:outputLabel value="Created" styleClass="tx10" />
 				<h:outputLabel value="#{scriptAction.viewScript.created}" styleClass="tx10">
-					<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
 				</h:outputLabel>
 				<h:outputLabel value="Updated" styleClass="tx10" />
 				<h:outputLabel value="#{scriptAction.viewScript.modified}" styleClass="tx10">
-					<f:convertDateTime pattern="dd/MM/yyyy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
+					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
 				</h:outputLabel>
 				<h:outputLabel value="Language" styleClass="tx10" />
 				<h:outputText value="#{scriptAction.viewScript.scriptType}"

@@ -153,9 +153,19 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 		}
 	}
 
-	private void loadOptions() {
-		this.contextVars = facade.getListDialogContextVars();
+	public void handleListValidators() {
 		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
+	}
+
+	public void selectValidator(Validator validator) {
+		if (this.question != null) {
+			this.question.setValidator(validator);
+		}
+	}
+
+	public void loadOptions() {
+		this.contextVars = facade.getListDialogContextVars();
+		handleListValidators();
 	}
 
 	public void enablePostScript() {

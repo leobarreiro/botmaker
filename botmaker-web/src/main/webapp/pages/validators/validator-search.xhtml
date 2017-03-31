@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>Search Validators</h2>
@@ -24,6 +24,18 @@
 					<f:facet name="header">Name</f:facet>
 					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" styleClass="tx10" />
 				</rich:column>
+				<rich:column styleClass="pc10 txctr">
+					<f:facet name="header">Operations</f:facet>
+					<h:commandLink title="View Details" actionListener="#{validatorAction.startViewValidator(vdt)}" styleClass="links-script-code">
+						<h:graphicImage value="/resources/img/icons/view.png" />
+						<a4j:ajax oncomplete="#{rich:component('popupViewValidatorId')}.show();" render="frm:popupViewValidatorId" />
+					</h:commandLink>
+					<h:commandLink title="Edit Validator" action="#{validatorAction.startEditValidator(vdt)}" styleClass="links-script-code">
+						<f:ajax execute="@this" />
+						<h:graphicImage value="/resources/img/icons/edit.png" />
+					</h:commandLink>
+					<h:outputText value="--" rendered="#{cmd.postProcess eq false}" />
+				</rich:column>
 				<rich:column sortBy="#{vdt.validatorType}" styleClass="pc10 txctr">
 					<f:facet name="header">Type</f:facet>
 					<h:outputText value="#{vdt.validatorType.descriptor}" />
@@ -42,14 +54,13 @@
 				</rich:column>
 				<rich:column sortBy="#{vdt.modified}" styleClass="txctr pc10">
 					<f:facet name="header">Updated</f:facet>
-					<h:outputText value="#{vdt.modified}">
-						<f:convertDateTime pattern="dd/MM/yy HH:mm:ss" timeZone="America/Sao_Paulo"/>
-					</h:outputText>
+					<h:outputText value="#{vdt.modified}" />
 				</rich:column>
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
 			</rich:dataTable>
 		</h:panelGroup>
+		<ui:include src="/pages/utils/validator-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

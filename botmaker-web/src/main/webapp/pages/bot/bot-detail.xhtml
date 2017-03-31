@@ -82,8 +82,8 @@
 							styleClass="mr2 #{(cmd.postScript.scriptType eq 'GROOVY') ? 'groovy' : (cmd.postScript.scriptType eq 'JAVASCRIPT') ? 'javascript' : (cmd.postScript.scriptType eq 'PYTHON') ? 'python' : 'none'}"
 							rendered="#{cmd.postScript ne null}" />
 						<h:outputText value="/" styleClass="mr2" rendered="#{cmd.postScript ne null}" />
-						<h:outputText value="#{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'MarkDown' : (cmd.postScript.parseMode eq 'HTML') ? 'Html' : '?'}" styleClass="mr2 #{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}"
-							rendered="#{cmd.postScript ne null}" />
+						<h:outputText value="#{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'MarkDown' : (cmd.postScript.parseMode eq 'HTML') ? 'Html' : '?'}"
+							styleClass="mr2 #{(cmd.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" rendered="#{cmd.postScript ne null}" />
 					</h:panelGroup>
 				</rich:column>
 				<rich:column styleClass="pc10 txctr">

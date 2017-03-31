@@ -225,7 +225,8 @@ public class ScriptBusiness implements IScriptBusiness {
 		Join<Script, User> joinAuthor = from.join("author", JoinType.INNER);
 		Join<User, Company> joinCompany = joinAuthor.join("company", JoinType.INNER);
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
+		// From same Company or under "public use"
+		Predicate whereCompany = cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.equal(from.get("publicUse"), Boolean.TRUE));
 		predicates.add(whereCompany);
 		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), true);
 		predicates.add(whereGeneric);
@@ -251,7 +252,7 @@ public class ScriptBusiness implements IScriptBusiness {
 		Join<Script, User> joinAuthor = from.join("author", JoinType.INNER);
 		Join<User, Company> joinCompany = joinAuthor.join("company", JoinType.INNER);
 		Predicate whereCompany = cb.equal(joinCompany.get("id"), credentials.getCompany().getId());
-		Predicate whereGeneric = cb.equal(from.<Boolean> get("generic"), true);
+		Predicate whereGeneric = cb.equal(from.get("generic"), Boolean.TRUE);
 		cq.where(cb.and(whereCompany, whereGeneric));
 		cq.orderBy(cb.asc(from.get("name")));
 		cq.select(from);

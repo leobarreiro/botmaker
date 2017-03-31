@@ -73,11 +73,7 @@ public class ValidatorBusiness implements IValidatorBusiness {
 		Root<Validator> fromSnippet = cq.from(Validator.class);
 		Join<Validator, Company> joinCompany = fromSnippet.join("company", JoinType.LEFT);
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		if (credentials.getCompany() != null) {
-			predicates.add(cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.isNull(joinCompany.get("id"))));
-		} else {
-			predicates.add(cb.isNull(joinCompany.get("id")));
-		}
+		predicates.add(cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.equal(fromSnippet.get("publicUse"), Boolean.TRUE)));
 		if (filter.getValidatorType() != null) {
 			predicates.add(cb.equal(fromSnippet.get("scriptType"), filter.getValidatorType()));
 		}

@@ -71,7 +71,7 @@
 				<h:commandButton value="Drop Question" styleClass="attention">
 					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
 				</h:commandButton>
-				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" />
+				<h:commandButton action="#{questionAction.edit(questionAction.question)}" value="Edit Question" styleClass="primary" immediate="true" />
 			</h:panelGroup>
 		</rich:panel>
 		<ui:param name="confirmTitle" value="Drop Question" />

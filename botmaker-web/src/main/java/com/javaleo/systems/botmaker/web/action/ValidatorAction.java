@@ -37,6 +37,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 
 	private ValidatorFilter filter;
 	private Validator validator;
+	private Validator viewValidator;
 	private List<Validator> validators;
 	private List<ScriptType> scriptTypeOptions;
 	private List<ValidatorType> validatorTypeOptions;
@@ -64,11 +65,17 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		}
 	}
 
-	public String edit() {
+	public String startEditValidator(Validator validator) {
 		startOrResumeConversation();
+		this.validator = validator;
 		loadOptions();
-		userPreferencesAction.loadPreferences();
 		return "/pages/validators/validator.jsf?faces-redirect=true";
+	}
+
+	public void startViewValidator(Validator viewValidator) {
+		startOrResumeConversation();
+		this.viewValidator = viewValidator;
+		loadOptions();
 	}
 
 	public String detail(Validator validator) {
@@ -107,6 +114,14 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	public Validator getViewValidator() {
+		return viewValidator;
+	}
+
+	public void setViewValidator(Validator viewValidator) {
+		this.viewValidator = viewValidator;
 	}
 
 	public List<Validator> getValidators() {

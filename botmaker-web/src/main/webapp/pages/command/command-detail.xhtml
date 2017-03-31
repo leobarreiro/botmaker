@@ -33,10 +33,10 @@
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(commandAction.command.postScript)}">
 					<h:graphicImage value="/resources/img/icons/view.png" />
-					<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />					
+					<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}" action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command, commandAction.command.postScript)}"
-					styleClass="links-script-code">
+				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}"
+					action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command, commandAction.command.postScript)}" styleClass="links-script-code">
 					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />
 				</h:commandLink>
@@ -52,11 +52,11 @@
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud" rendered="#{not empty commandAction.questions}">
-			<rich:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions">
+			<rich:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions" styleClass="pc100">
 				<rich:column styleClass="pc5">
 					<f:facet name="header">#</f:facet>
 					<h:commandLink action="#{questionAction.upQuestion(qst)}" value="up">
-						<a4j:ajax render="dataTableQuestions" />
+						<a4j:ajax execute="@this" render="dataTableQuestions" />
 					</h:commandLink>
 				</rich:column>
 				<rich:column styleClass="pc5">
@@ -65,7 +65,9 @@
 				</rich:column>
 				<rich:column>
 					<f:facet name="header">Question</f:facet>
-					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}" />
+					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.instruction}">
+						<a4j:ajax execute="@this" immediate="true" />
+					</h:commandLink>
 				</rich:column>
 				<rich:column styleClass="pc15 txctr">
 					<f:facet name="header">Answer Type</f:facet>

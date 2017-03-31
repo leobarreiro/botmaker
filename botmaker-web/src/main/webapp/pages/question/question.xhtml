@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
+	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 	<ui:define name="content">
-
 		<h2>Question</h2>
-
 		<rich:panel styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-title">
 				<h:outputLabel value="Bot / Command" />
@@ -18,11 +16,10 @@
 				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
 			</h:panelGroup>
 		</rich:panel>
-
 		<rich:panel id="questionCrudId" styleClass="frm-crud">
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Type" />
@@ -34,18 +31,19 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
-				<h:selectOneMenu id="validatorId" value="#{questionAction.question.validator}" converter="#{entityConverter}" disabled="#{not questionAction.enableValidator}">
-					<f:selectItem itemValue="#{null}" itemLabel="None" />
-					<f:selectItems value="#{questionAction.validators}" var="snp" itemLabel="#{snp.name}" itemValue="#{snp}" />
-				</h:selectOneMenu>
+				<h:outputText id="answerValidatorId" value="#{questionAction.question.validator.name}" rendered="#{questionAction.question.validator ne null}" styleClass="txt" />
+				<h:commandLink title="Select a Validator" actionListener="#{questionAction.handleListValidators()}" styleClass="link-right">
+					<h:outputText value="pick a validator" />	
+					<a4j:ajax oncomplete="#{rich:component('popupPickValidatorId')}.show();" render="frm:popupViewScriptId" />
+				</h:commandLink>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{questionAction.question.errorFormatMessage}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Success Message" styleClass="txtop" />
-				<h:inputTextarea value="#{questionAction.question.successMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{questionAction.question.successMessage}" rows="2" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
@@ -63,5 +61,6 @@
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
+		<ui:include src="/pages/utils/validator-pick.xhtml" />
 	</ui:define>
 </ui:composition>
