@@ -70,17 +70,20 @@ public class ValidatorBusiness implements IValidatorBusiness {
 	public List<Validator> searchValidatorByFilter(ValidatorFilter filter) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Validator> cq = cb.createQuery(Validator.class);
-		Root<Validator> fromSnippet = cq.from(Validator.class);
-		Join<Validator, Company> joinCompany = fromSnippet.join("company", JoinType.LEFT);
+		Root<Validator> from = cq.from(Validator.class);
+		Join<Validator, Company> joinCompany = from.join("company", JoinType.LEFT);
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		predicates.add(cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.equal(fromSnippet.get("publicUse"), Boolean.TRUE)));
+		predicates.add(cb.or(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()), cb.equal(from.get("publicUse"), Boolean.TRUE)));
 		if (filter.getValidatorType() != null) {
-			predicates.add(cb.equal(fromSnippet.get("scriptType"), filter.getValidatorType()));
+			predicates.add(cb.equal(from.get("validatorType"), filter.getValidatorType()));
+		}
+		if (StringUtils.isNotBlank(filter.getName())) {
+			predicates.add(cb.like(cb.lower(from.<String> get("name")), "%" + filter.getName().toLowerCase() + "%"));
 		}
 		Predicate[] predicateArray = new Predicate[predicates.size()];
 		predicates.toArray(predicateArray);
 		cq.where(predicateArray);
-		cq.orderBy(cb.asc(fromSnippet.get("name")));
+		cq.orderBy(cb.asc(from.get("name")));
 		return persistence.getResultList(cq);
 	}
 

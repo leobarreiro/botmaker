@@ -123,19 +123,9 @@ table tr td label {
 	padding: 2px !important;
 }
 
-
-.frm-title, .frm-title-sec {
-	text-align: left;
-	font-weight: bold;
-	color: #ffffff;
-	/*background-color: #440044 !important;*/
-	background-color: #DFA5A5 !important;
-}
-
 .frm-line, .frm-line2, .frm-line3 {
 	display: inline-block !important;
 	vertical-align: middle;
-	margin: 1px !important;
 	padding: 1px;
 	font-size: 10pt !important;
 }
@@ -143,20 +133,19 @@ table tr td label {
 .frm-line {
 	width: 100%;
 	clear: both !important;
-	
 }
 
 .frm-line2 {
-	width: 50% !important;
+	width: 48% !important;
 	clear: both !important;
 }
 
 .frm-line3 {
-	width: 33% !important;
+	width: 32% !important;
 	clear: both !important;
 }
 
-.frm-line label, .frm-line2 label, .frm-line3 label {
+.frm-line label {
 	display: inline-block;
 	text-align: right;
 	padding: 2pt !important;
@@ -166,12 +155,99 @@ table tr td label {
 	color: #950095 !important;
 }
 
-.frm-line1 span, .frm-line2 span, .frm-line3 span {
+.frm-line2 label, .frm-line3 label {
 	display: inline-block;
+	text-align: right;
 	padding: 2pt !important;
-	width: 65%;
+	width: 25%;
+	margin-right: 2px;
+	vertical-align: top;
+	color: #950095 !important;
+}
+
+.frm-line span, .frm-line2 span, .frm-line3 span {
+	display: inline-block !important;
+	padding: 2pt !important;
 	vertical-align: top;
 	margin-right: 2px;
+}
+
+.frm-line div.mixed {
+	display: inline-block !important;
+	padding: 1pt 1pt 1pt 2pt !important;
+	vertical-align: top;
+	margin-right: 2px;
+	width: auto !important;
+}
+
+.blc1, .blc2, .blc3 {
+	display: inline-block;
+	width: 100%;
+	padding: 2px;
+}
+
+.blc1 label, .blc2 label, .blc3 label {
+	display: inline-table;
+	color: #950095 !important;
+	text-align: right;
+	vertical-align: top;
+	padding: 2pt 4pt 2pt 2pt;
+}
+
+.blc1 span, .blc2 span, .blc3 span {
+	display: inline-block;
+	height: auto !important;
+	vertical-align: top;
+	border: 1px dotted #dedede;
+	padding: 2pt;
+}
+
+.blc1 a, .blc2 a, .blc3 a {
+	display: inline-table;
+	vertical-align: top;
+}
+
+.blc1 label {
+	width: 40% !important;
+}
+
+.blc1 span {
+	width: 58% !important;
+}
+
+.blc2 label {
+	width: 18% !important;
+}
+
+.blc2 span {
+	width: 30% !important;
+}
+
+.blc3 label {
+	width: 10% !important;
+}
+
+.blc3 span {
+	width: 22% !important;
+}
+
+.tit1, .tit2 {
+	text-align: left;
+	font-weight: bold;
+	color: #ffffff;
+	background-color: #DFA5A5 !important;
+}
+
+.tit1, .frm-title {
+	padding: 6px !important;
+	margin: 0px 0px 4px 0px;
+	font-size: 14pt;
+}
+
+.tit2, .frm-title-sec {
+	padding: 4px !important;
+	margin: 0px 0px 2px 0px;
+	font-size: 10pt;	
 }
 
 .frm-confirm {
@@ -190,7 +266,6 @@ table tr td label {
 span.txt {
 	display: inline-block;
 	color: #000000;
-	padding: 2pt !important;
 	font-size: 10pt !important;
 }
 
@@ -273,20 +348,6 @@ input, select, textarea {
 .frm-login input[type="submit"] {
 	margin-top: 12pt !important;
 	padding: 12px 6px 12px 6px !important;
-}
-
-.frm-title {
-	padding: 6px !important;
-	margin: 0px 0px 4px 0px;
-	font-size: 14pt;
-	/*border-radius: 8px 8px 0px 0px !important;*/
-}
-
-.frm-title-sec {
-	padding: 6px !important;
-	margin: 0px 0px 4px 0px;
-	font-size: 14pt;
-	border-radius: 0px !important;
 }
 
 .frm-confirm {
@@ -672,7 +733,8 @@ textarea[disabled].script {
 }
 
 label, keygen, isindex, legend, .rf-p-b, .rf-dt-c {
-	color: #950095 !important;
+	/*color: #950095 !important;*/
+	color: #666666 !important;
 	font-size: 11pt !important;
 }
 

@@ -10,18 +10,14 @@
 		<rich:panel id="viewScriptPanelId" styleClass="mrauto">
 			<h:panelGrid styleClass="pc95" columns="4" columnClasses="pc20 txrgt tx10,pc30 tx10,pc20 txrgt tx10,pc30 tx10">
 				<h:outputLabel value="Name" styleClass="tx10" />
-				<h:outputLabel value="#{scriptAction.viewScript.name}" styleClass="tx10" rendered="#{scriptAction.viewScript.generic}" />
-				<h:outputLabel value="#{scriptAction.viewScript.command.key} (command)" styleClass="tx10" rendered="#{not scriptAction.viewScript.generic}" />
+				<h:outputText value="#{scriptAction.viewScript.name}" styleClass="tx10" rendered="#{scriptAction.viewScript.generic}" />
+				<h:outputText value="#{scriptAction.viewScript.command.key} (command)" styleClass="tx10" rendered="#{not scriptAction.viewScript.generic}" />
 				<h:outputLabel value="Author" styleClass="tx10" />
-				<h:outputLabel value="#{scriptAction.viewScript.author.name}" styleClass="tx10" />
+				<h:outputText value="#{scriptAction.viewScript.author.name}" styleClass="tx10" />
 				<h:outputLabel value="Created" styleClass="tx10" />
-				<h:outputLabel value="#{scriptAction.viewScript.created}" styleClass="tx10">
-					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
-				</h:outputLabel>
+				<h:outputText value="#{scriptAction.viewScript.created}" styleClass="tx10" />
 				<h:outputLabel value="Updated" styleClass="tx10" />
-				<h:outputLabel value="#{scriptAction.viewScript.modified}" styleClass="tx10">
-					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
-				</h:outputLabel>
+				<h:outputText value="#{scriptAction.viewScript.modified}" styleClass="tx10" />
 				<h:outputLabel value="Language" styleClass="tx10" />
 				<h:outputText value="#{scriptAction.viewScript.scriptType}"
 					styleClass="tx10 #{(scriptAction.viewScript.scriptType eq 'GROOVY') ? 'groovy' : (scriptAction.viewScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />

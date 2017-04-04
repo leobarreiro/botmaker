@@ -14,7 +14,10 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Public Use" />
+				<h:panelGroup>
 				<h:selectBooleanCheckbox value="#{validatorAction.validator.publicUse}" />
+				<h:outputText value=" If checked, this validator can be used by other people, but not edited by them." />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />

@@ -15,6 +15,14 @@
 				<h:outputText styleClass="txt" value="#{validatorAction.validator.description}" rows="3" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Author" />
+				<h:outputText styleClass="txt" value="#{validatorAction.validator.author.name}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Public Use" />
+				<h:outputText styleClass="txt #{validatorAction.validator.publicUse ? 'green' : 'red'}" value="#{validatorAction.validator.publicUse ? 'Yes' : 'No'}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Type" />
 				<h:outputText styleClass="txt" value="#{validatorAction.validator.validatorType.descriptor}" />
 			</h:panelGroup>
@@ -35,7 +43,7 @@
 
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{validatorAction.cancel()}" value="Go Back" styleClass="secondary" />
-				<h:commandButton action="#{validatorAction.edit()}" value="Edit" styleClass="primary" />
+				<h:commandButton action="#{validatorAction.startEditValidator(validatorAction.validator)}" rendered="#{validatorAction.validator.company.id eq botMakerCredentials.company.id}" value="Edit" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
 

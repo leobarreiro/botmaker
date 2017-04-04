@@ -4,70 +4,73 @@
 	<ui:define name="content">
 		<h2>Question detail</h2>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Bot / Command" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Bot" />
-				<h:outputText styleClass="txt" value="#{questionAction.command.bot.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{botAction.detail(questionAction.command.bot)}" value="#{questionAction.command.bot.name}" />
+				</h:panelGroup>
 				<h:outputLabel value="Command" />
-				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{commandAction.detail(questionAction.command)}" value="#{questionAction.command.key}" />
+				</h:panelGroup>
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="tit2">
+				<h:outputLabel value="Question" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Instruction" />
 				<h:outputText styleClass="txt" value="#{questionAction.question.instruction}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Type" />
 				<h:outputText styleClass="txt" value="#{questionAction.question.answerType}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Answer Validator" />
-				<h:outputText styleClass="txt" value="#{questionAction.question.validator.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:panelGroup styleClass="txt">
+					<h:commandLink value="#{questionAction.question.validator.name}" rendered="#{questionAction.question.validator ne null}"
+						actionListener="#{validatorAction.startViewValidator(questionAction.question.validator)}">
+						<a4j:ajax oncomplete="#{rich:component('popupViewValidatorId')}.show();" render="frm:popupViewValidatorId" />
+					</h:commandLink>
+				</h:panelGroup>
 				<h:outputLabel value="Error Format Message" />
 				<h:outputText styleClass="txt" value="#{questionAction.question.errorFormatMessage}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Success Message" />
 				<h:outputText styleClass="txt" value="#{questionAction.question.successMessage}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Variable Name" />
 				<h:outputText styleClass="txt" value="#{questionAction.question.varName}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Process Answer" />
 				<h:outputText value="#{questionAction.question.processAnswer ? 'Yes' : 'No'}" styleClass="txt #{questionAction.question.processAnswer ? 'green' : 'red'}" />
 			</h:panelGroup>
-			<h:panelGroup id="blockScriptTypeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
+			<h:panelGroup id="blockScriptTypeId" layout="block" styleClass="blc1" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Script Type" />
 				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.scriptType.descriptor : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
-			<h:panelGroup id="blockParseModeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
+			<h:panelGroup id="blockParseModeId" layout="block" styleClass="blc1" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(questionAction.question.postScript ne null) ? questionAction.question.postScript.parseMode : 'None'}" styleClass="purple txt" />
 			</h:panelGroup>
-			<h:panelGroup id="blockScriptCodeId" layout="block" styleClass="frm-line" rendered="#{questionAction.question.processAnswer}">
+			<h:panelGroup id="blockScriptCodeId" layout="block" styleClass="blc1" rendered="#{questionAction.question.processAnswer}">
 				<h:outputLabel value="Script Code" styleClass="txtop" />
 				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(questionAction.question.postScript)}">
 					<h:graphicImage value="/resources/img/icons/view.png" />
 					<a4j:ajax oncomplete="#{rich:component('scriptViewer')}.show();" render="frm:scriptViewer" />
 				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}" action="#{scriptAction.startEditScript(questionAction.question.command.bot, questionAction.question.command, questionAction.question.postScript)}"
-					styleClass="links-script-code">
+				<h:commandLink title="Edit Code" rendered="#{questionAction.question.processAnswer}"
+					action="#{scriptAction.startEditScript(questionAction.question.command.bot, questionAction.question.command, questionAction.question.postScript)}" styleClass="links-script-code">
 					<f:ajax execute="@this" />
 					<h:graphicImage value="/resources/img/icons/edit.png" />
 				</h:commandLink>
 				<h:outputText value="None" rendered="#{not questionAction.question.processAnswer}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary" />
+				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Go Back" styleClass="secondary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
 				<h:commandButton value="Drop Question" styleClass="attention">
 					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
 				</h:commandButton>
@@ -80,5 +83,6 @@
 		<ui:param name="confirmMethod" value="dropQuestion" />
 		<ui:include src="/pages/utils/confirm-action.xhtml" />
 		<ui:include src="/pages/utils/script-viewer.xhtml" />
+		<ui:include src="/pages/utils/validator-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

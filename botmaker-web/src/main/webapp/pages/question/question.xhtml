@@ -4,19 +4,21 @@
 	<ui:define name="content">
 		<h2>Question</h2>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Bot / Command" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Bot" />
-				<h:outputText styleClass="txt" value="#{questionAction.command.bot.name}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{botAction.detail(questionAction.command.bot)}" value="#{questionAction.command.bot.name}" />
+				</h:panelGroup>
 				<h:outputLabel value="Command" />
-				<h:outputText styleClass="txt" value="#{questionAction.command.key}" />
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{commandAction.detail(questionAction.command)}" value="#{questionAction.command.key}" />
+				</h:panelGroup>
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel id="questionCrudId" styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="tit2">
+				<h:outputLabel value="Question" />
+			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Instruction" styleClass="txtop" />
 				<h:inputTextarea value="#{questionAction.question.instruction}" rows="2" />
@@ -31,11 +33,17 @@
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Answer Validator" />
-				<h:outputText id="answerValidatorId" value="#{questionAction.question.validator.name}" rendered="#{questionAction.question.validator ne null}" styleClass="txt" />
-				<h:commandLink title="Select a Validator" actionListener="#{questionAction.handleListValidators()}" styleClass="link-right">
-					<h:outputText value="pick a validator" />	
-					<a4j:ajax oncomplete="#{rich:component('popupPickValidatorId')}.show();" render="frm:popupViewScriptId" />
-				</h:commandLink>
+				<rich:panel id="answerValidatorId" styleClass="mixed">
+					<h:outputText value="-- none selected --" rendered="#{questionAction.question.validator eq null}" styleClass="txt" />
+					<h:commandLink value="#{questionAction.question.validator.name}" rendered="#{questionAction.question.validator ne null}" actionListener="#{validatorAction.startViewValidator(questionAction.question.validator)}">
+						<a4j:ajax oncomplete="#{rich:component('popupViewValidatorId')}.show();" render="frm:popupViewValidatorId" />
+					</h:commandLink>
+					<h:outputText value=" - " />
+					<h:commandLink title="Select a Validator" actionListener="#{questionAction.handleListValidators()}" styleClass="link-right">
+						<h:outputText value="pick" />
+						<a4j:ajax oncomplete="#{rich:component('popupPickValidatorId')}.show();" render="frm:popupViewScriptId" />
+					</h:commandLink>
+				</rich:panel>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Error Format Message" styleClass="txtop" />
@@ -56,11 +64,12 @@
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{questionAction.detail(questionAction.question)}" value="Cancel" styleClass="secondary" rendered="#{not empty questionAction.question.id}" />
-				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" rendered="#{empty questionAction.question.id}" />
+				<h:commandButton action="#{questionAction.detail(questionAction.question)}" value="Cancel" styleClass="secondary" rendered="#{not empty questionAction.question.id}" immediate="true" />
+				<h:commandButton action="#{commandAction.detail(questionAction.command)}" value="Cancel" styleClass="secondary" rendered="#{empty questionAction.question.id}" immediate="true" />
 				<h:commandButton action="#{questionAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
 		<ui:include src="/pages/utils/validator-pick.xhtml" />
+		<ui:include src="/pages/utils/validator-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

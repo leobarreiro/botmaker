@@ -4,62 +4,65 @@
 	<ui:define name="content">
 		<h2>Command detail</h2>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
+			<h:panelGroup layout="block" styleClass="blc1">
 				<h:outputLabel value="Bot" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Name" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{botAction.detail(botAction.bot)}" value="#{botAction.bot.name}" />
+				</h:panelGroup>
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line2">
-				<h:outputLabel value="Key" />
+			<h:panelGroup layout="block" styleClass="blc3">
+				<h:outputLabel value="Command Key" />
 				<h:outputText styleClass="txt" value="#{commandAction.command.key}" />
 				<h:outputLabel value="Script Type" />
 				<h:outputText value="#{(commandAction.command.postScript.scriptType ne null) ? commandAction.command.postScript.scriptType : 'None'}"
 					styleClass="txt #{(commandAction.command.postScript.scriptType eq 'GROOVY') ? 'groovy' : (commandAction.command.postScript.scriptType eq 'JAVASCRIPT' ? 'javascript' : 'python')}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line2">
-				<h:outputLabel value="Short Description" />
-				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
 				<h:outputLabel value="Parse Mode" />
 				<h:outputText value="#{(commandAction.command.postScript.parseMode ne null) ? commandAction.command.postScript.parseMode : 'None'}"
 					styleClass="txt #{(commandAction.command.postScript.parseMode eq 'MARKDOWN') ? 'markdown' : 'html'}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line2">
+			<h:panelGroup layout="block" styleClass="blc3">
+				<h:outputLabel value="Short Description" />
+				<h:outputText styleClass="txt" value="#{commandAction.command.shortDescription}" />
 				<h:outputLabel value="Process Answers" />
 				<h:outputText value="#{commandAction.command.postProcess ? 'Yes' : 'No'}" styleClass="txt #{commandAction.command.postProcess ? 'green' : 'red'}" />
-				<h:outputLabel value="Script Code" styleClass="txtop" />
-				<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(commandAction.command.postScript)}">
-					<h:graphicImage value="/resources/img/icons/view.png" />
-					<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />
-				</h:commandLink>
-				<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}"
-					action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command, commandAction.command.postScript)}" styleClass="links-script-code">
-					<f:ajax execute="@this" />
-					<h:graphicImage value="/resources/img/icons/edit.png" />
-				</h:commandLink>
-				<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" styleClass="txt" />
+				<h:outputLabel value="Script Code" />
+				<h:panelGroup styleClass="none">
+					<h:commandLink title="View Code" rendered="#{commandAction.command.postProcess}" styleClass="links-script-code" actionListener="#{scriptAction.startViewScript(commandAction.command.postScript)}">
+						<h:graphicImage value="/resources/img/icons/view.png" />
+						<a4j:ajax oncomplete="#{rich:component('popupViewScriptId')}.show();" render="frm:popupViewScriptId" />
+					</h:commandLink>
+					<h:commandLink title="Edit Code" rendered="#{commandAction.command.postProcess}"
+						action="#{scriptAction.startEditScript(commandAction.command.bot, commandAction.command, commandAction.command.postScript)}" styleClass="links-script-code">
+						<f:ajax execute="@this" />
+						<h:graphicImage value="/resources/img/icons/edit.png" />
+					</h:commandLink>
+					<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" />
+				</h:panelGroup>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" immediate="true" />
 				<h:commandButton value="Drop Command" styleClass="attention">
 					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
 				</h:commandButton>
-				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary" />
-				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="primary" />
+				<h:commandButton action="#{commandAction.edit(commandAction.command)}" value="Edit" styleClass="secondary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+				<h:commandButton action="#{questionAction.startNew(commandAction.command)}" value="Add a Question" styleClass="primary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud" rendered="#{not empty commandAction.questions}">
 			<rich:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions" styleClass="pc100">
-				<rich:column styleClass="pc5">
+				<rich:column styleClass="pc5 txctr">
 					<f:facet name="header">#</f:facet>
 					<h:commandLink action="#{questionAction.upQuestion(qst)}" value="up">
 						<a4j:ajax execute="@this" render="dataTableQuestions" />
 					</h:commandLink>
 				</rich:column>
-				<rich:column styleClass="pc5">
+				<rich:column styleClass="pc5 txrgt">
 					<f:facet name="header">Order</f:facet>
 					<h:commandLink action="#{questionAction.detail(qst)}" value="#{qst.order}" />
 				</rich:column>

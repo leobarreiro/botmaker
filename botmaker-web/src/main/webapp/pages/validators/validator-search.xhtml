@@ -30,7 +30,7 @@
 						<h:graphicImage value="/resources/img/icons/view.png" />
 						<a4j:ajax oncomplete="#{rich:component('popupViewValidatorId')}.show();" render="frm:popupViewValidatorId" />
 					</h:commandLink>
-					<h:commandLink title="Edit Validator" action="#{validatorAction.startEditValidator(vdt)}" styleClass="links-script-code">
+					<h:commandLink title="Edit Validator" action="#{validatorAction.startEditValidator(vdt)}" rendered="#{vdt.company.id eq botMakerCredentials.company.id}" styleClass="links-script-code">
 						<f:ajax execute="@this" />
 						<h:graphicImage value="/resources/img/icons/edit.png" />
 					</h:commandLink>

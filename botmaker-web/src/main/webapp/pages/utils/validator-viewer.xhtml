@@ -10,21 +10,21 @@
 		<rich:panel id="viewValidatorPanelId" styleClass="mrauto">
 			<h:panelGrid styleClass="pc95" columns="4" columnClasses="pc20 txrgt tx10,pc30 txlft tx10,pc20 txrgt tx10,pc30 txlft tx10">
 				<h:outputLabel value="Name" styleClass="tx10" />
-				<h:outputLabel value="#{validatorAction.viewValidator.name}" styleClass="txlft tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.name}" styleClass="txlft tx10" />
 				<h:outputLabel value="Author" styleClass="tx10" />
-				<h:outputLabel value="#{validatorAction.viewValidator.author.name}" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.author.name}" styleClass="tx10" />
 				<h:outputLabel value="Type" styleClass="tx10" />
 				<h:outputText value="#{validatorAction.viewValidator.validatorType.descriptor}" styleClass="tx10" />
 				<h:outputLabel value="Public Use" styleClass="tx10" />
 				<h:outputText value="#{(validatorAction.viewValidator.publicUse) ? 'Yes' : 'No'}" styleClass="tx10 #{(validatorAction.viewValidator.publicUse) ? 'green' : 'red'}" />
 				<h:outputLabel value="Created" styleClass="tx10" />
-				<h:outputLabel value="#{validatorAction.viewValidator.created}" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.created}" styleClass="tx10" />
 				<h:outputLabel value="Updated" styleClass="tx10" />
-				<h:outputLabel value="#{validatorAction.viewValidator.modified}" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.modified}" styleClass="tx10" />
 			</h:panelGrid>
 			<h:panelGrid styleClass="pc95" columns="2" columnClasses="pc20 txrgt,pc80 txlft">
 				<h:outputLabel value="Description" styleClass="tx10" />
-				<h:outputLabel value="#{validatorAction.viewValidator.description}" styleClass="txlft tx9" />
+				<h:outputText value="#{validatorAction.viewValidator.description}" styleClass="txlft tx9" />
 			</h:panelGrid>
 			<h:panelGroup layout="block">
 				<h:inputTextarea id="validatorViewerTextAreaId" value="#{validatorAction.viewValidator.code}" cols="16" />

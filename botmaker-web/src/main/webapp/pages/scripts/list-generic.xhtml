@@ -6,14 +6,14 @@
 		<h2>Generic Scripts</h2>
 		<rich:panel header="Filtro" styleClass="frm-crud">
 			<h:panelGrid columns="6" styleClass="pc100">
-				<h:commandButton action="#{scriptAction.startNewGeneric()}" value="New Generic Script" immediate="true" styleClass="secondary" />
+				<h:commandButton action="#{scriptAction.startNewGeneric()}" value="New Generic Script" immediate="true" styleClass="primary" />
 			</h:panelGrid>
 		</rich:panel>
 		<h:panelGroup layout="block" styleClass="frm-crud">
 			<rich:dataTable id="scriptsId" value="#{scriptAction.scripts}" var="sc" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{sc.name}" styleClass="txlft">
 					<f:facet name="header">Name</f:facet>
-					<h:commandLink action="#{scriptAction.startEditGeneric(sc)}" value="#{sc.name}" />
+					<h:commandLink action="#{scriptAction.startEditGeneric(sc)}" value="#{sc.name}" immediate="true" />
 				</rich:column>
 				<rich:column sortBy="#{sc.description}">
 					<f:facet name="header">Short Description</f:facet>
@@ -41,9 +41,7 @@
 				</rich:column>
 				<rich:column sortBy="#{sc.modified}" styleClass="txctr pc10">
 					<f:facet name="header">Updated</f:facet>
-					<h:outputText value="#{sc.modified}">
-						<f:convertDateTime pattern="dd/MM/yy HH:mm:ss" timeZone="America/Sao_Paulo"/>
-					</h:outputText>
+					<h:outputText value="#{sc.modified}" />
 				</rich:column>
 			</rich:dataTable>
 		</h:panelGroup>

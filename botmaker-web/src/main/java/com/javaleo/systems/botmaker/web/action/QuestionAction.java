@@ -58,6 +58,7 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 	private Command command;
 	private Question question;
 	private List<Validator> validators;
+	private ValidatorFilter validatorFilter;
 	private List<DialogContextVar> contextVars;
 	private String debugContent;
 	private boolean debugging;
@@ -154,7 +155,7 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 	}
 
 	public void handleListValidators() {
-		this.validators = facade.searchValidatorByFilter(new ValidatorFilter());
+		this.validators = facade.searchValidatorByFilter(validatorFilter);
 	}
 
 	public void selectValidator(Validator validator) {
@@ -165,7 +166,8 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 
 	public void loadOptions() {
 		this.contextVars = facade.getListDialogContextVars();
-		handleListValidators();
+		this.validatorFilter = new ValidatorFilter();
+		// handleListValidators();
 	}
 
 	public void enablePostScript() {
@@ -209,6 +211,14 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 
 	public void setValidators(List<Validator> validators) {
 		this.validators = validators;
+	}
+
+	public ValidatorFilter getValidatorFilter() {
+		return validatorFilter;
+	}
+
+	public void setValidatorFilter(ValidatorFilter validatorFilter) {
+		this.validatorFilter = validatorFilter;
 	}
 
 	public List<DialogContextVar> getContextVars() {
