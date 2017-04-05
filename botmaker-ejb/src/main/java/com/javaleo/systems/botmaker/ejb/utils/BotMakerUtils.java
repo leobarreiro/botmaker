@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BotMakerUtils {
 
+	public static final String DOMAIN_NAME = "javaleo.org";
+
 	public static List<List<String>> convertStringToArrayOfArrays(String source, int maxSize, char separator) {
 		String[] optArray = StringUtils.split(source, separator);
 		List<String> options = Arrays.asList(optArray);

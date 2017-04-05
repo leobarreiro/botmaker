@@ -1,6 +1,9 @@
 package com.javaleo.systems.botmaker.ejb.business;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,8 +18,10 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.slf4j.Logger;
 
 import com.javaleo.systems.botmaker.ejb.entities.Token;
 import com.javaleo.systems.botmaker.ejb.entities.User;
@@ -39,6 +44,9 @@ public class UserBusiness implements IUserBusiness {
 	@Inject
 	private ITokenBusiness tokenBusiness;
 
+	@Inject
+	private Logger LOG;
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void validateUser(User user, String password, String passwordReview) throws BusinessException {
@@ -49,10 +57,10 @@ public class UserBusiness implements IUserBusiness {
 			throw new BusinessException("Your name not contains first and last name. Please review and try again.");
 		}
 		// username
-		Pattern usernamePattern = Pattern.compile("^[A-Za-z0-9]{6,12}$");
+		Pattern usernamePattern = Pattern.compile("^[A-Za-z0-9]{4,12}$");
 		Matcher usernameMatcher = usernamePattern.matcher(user.getUsername());
 		if (!usernameMatcher.find()) {
-			throw new BusinessException("The username must be between 6 and 12 digits long. He should contains letters and numbers only.");
+			throw new BusinessException("The username must be between 4 and 12 digits long. He should contains letters and numbers only.");
 		}
 		// email
 		if (!BotMakerUtils.validateEmail(user.getEmail())) {
@@ -90,10 +98,36 @@ public class UserBusiness implements IUserBusiness {
 		if (userOwnerEmail == null) {
 			throw new BusinessException("The email entered don't belong to any user. Please review the information.");
 		}
+
+		String conteudo = "";
+		Map<String, String> keyValues = new HashMap<>();
+
+		try {
+			conteudo = IOUtils.toString(getClass().getResourceAsStream("/templates/mail-recover-password.html"));
+		} catch (IOException e) {
+			LOG.warn(e.getMessage());
+			throw new BusinessException(e.getMessage());
+		}
+
+		String domainName = null;
+		try {
+			domainName = System.getProperty("botmaker.domain");
+		} catch (Exception e) {
+			LOG.warn(e.getMessage());
+		}
+
+		if (StringUtils.isBlank(domainName)) {
+			LOG.warn("Property botmaker.domain is not defined in System properties. Please revise this configuration.");
+			domainName = BotMakerUtils.DOMAIN_NAME;
+		}
+
 		Token token = tokenBusiness.generateTokenToUser(userOwnerEmail);
-		messageUtils.sendMailMessage("javaleo.org@gmail.com", userOwnerEmail.getEmail(), "Javaleo.org - Reset your password",
-				"Reseting your password.\n\nPlease use the token bellow to reset your password.\n\nhttp://javaleo.org/reset-password.jsf?uuidToken=" + token.getUuid()
-						+ "\n\nThis token is valid per 2 hours.");
+		keyValues.put("{domain-name}", domainName);
+		keyValues.put("{token-uuid}", token.getUuid());
+
+		String conteudoHtml = messageUtils.assemblyBodyMail(keyValues, conteudo);
+
+		messageUtils.sendMailMessage("javaleo.org@gmail.com", userOwnerEmail.getEmail(), "Javaleo.org - Reset your password", conteudoHtml);
 	}
 
 	private User findUserByEmail(final String email) {
