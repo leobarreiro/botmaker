@@ -3,7 +3,7 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
-	<display-name>botmaker</display-name>
+	<display-name>blog</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
@@ -43,14 +43,6 @@
 		<param-name>error.500</param-name>
 		<param-value>/errors/500.jsf</param-value>
 	</context-param>
-	<context-param>
-		<param-name>failure.login.page</param-name>
-		<param-value>/index.jsf</param-value>
-	</context-param>
-	<context-param>
-		<param-name>logout.page</param-name>
-		<param-value>/index.jsf</param-value>
-	</context-param>
 	<session-config>
 		<session-timeout>40</session-timeout>
 	</session-config>
@@ -64,11 +56,11 @@
 		<url-pattern>*.bot</url-pattern>
 	</servlet-mapping>
 	<filter>
-		<filter-name>BotMakerWebFilter</filter-name>
-		<filter-class>com.javaleo.systems.botmaker.web.filter.BotMakerFilter</filter-class>
+		<filter-name>BlogWebFilter</filter-name>
+		<filter-class>com.javaleo.systems.botmaker.blog.filter.BlogFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>BotMakerWebFilter</filter-name>
-		<url-pattern>/pages/*</url-pattern>
+		<filter-name>BlogWebFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 </web-app>

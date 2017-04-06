@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: Consolas, Lucida Console, Inconsolata;
+	font-size: 10pt;
+}
+
+h1.blog-title {
+	width: 60%;
+	margin: auto;
+	padding: 4pt 0pt 4pt 0pt;
+}
+
+h3.blog-slogan {
+	width: 60%;
+	margin: auto;
+	padding: 2pt 0pt 12pt 0pt;
+}
+
+div.pg-item-list {
+	width: 60%;
+	margin: auto;
+	background-color: #e1e1e1;
+	padding: 4px;
+}
+
+div.pg-content {
+	font-size: 12pt;
+}
+
+table.pg-foot {
+	width: 100%;
+	display: inline-table;
+}
+
+table.pg-foot td {
+	text-align: right;
+}

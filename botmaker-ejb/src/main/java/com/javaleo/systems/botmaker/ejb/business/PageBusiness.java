@@ -103,4 +103,15 @@ public class PageBusiness implements IPageBusiness {
 		persistence.saveOrUpdate(managedPage);
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Page> listPagesFromBlog() {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
+		Root<Page> fromPage = cq.from(Page.class);
+		cq.where(cb.equal(fromPage.get("published"), Boolean.TRUE));
+		cq.orderBy(cb.desc(fromPage.get("created")));
+		return persistence.getResultList(cq, 10);
+	}
+
 }

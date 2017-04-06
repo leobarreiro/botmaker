@@ -18,6 +18,7 @@
 	<modules>
 		<module>botmaker-ejb</module>
 		<module>botmaker-web</module>
+		<module>blog-web</module>
 		<module>botmaker-ear</module>
 	</modules>
 	<properties>
@@ -64,6 +65,13 @@
 			<dependency>
 				<groupId>com.javaleo.systems</groupId>
 				<artifactId>botmaker-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.javaleo.systems</groupId>
+				<artifactId>blog-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 				<scope>compile</scope>

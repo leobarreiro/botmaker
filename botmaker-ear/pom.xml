@@ -26,6 +26,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.javaleo.systems</groupId>
+			<artifactId>blog-web</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.javaleo.systems</groupId>
 			<artifactId>botmaker-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
@@ -44,6 +49,11 @@
 						<webModule>
 							<groupId>com.javaleo.systems</groupId>
 							<artifactId>botmaker-web</artifactId>
+							<contextRoot>grandpa/</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>com.javaleo.systems</groupId>
+							<artifactId>blog-web</artifactId>
 							<contextRoot>/</contextRoot>
 						</webModule>
 					</modules>

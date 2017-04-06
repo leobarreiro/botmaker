@@ -22,7 +22,9 @@
 			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="20" styleClass="pc100">
 				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc20">
 					<f:facet name="header">Name</f:facet>
-					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" styleClass="tx10" />
+					<h:commandLink action="#{validatorAction.detail(vdt)}" value="#{vdt.name}" styleClass="tx10">
+						<f:ajax execute="@this" immediate="true" />
+					</h:commandLink>
 				</rich:column>
 				<rich:column styleClass="pc10 txctr">
 					<f:facet name="header">Operations</f:facet>

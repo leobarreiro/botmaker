@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+	<rich:popupPanel id="popupPickValidatorId" modal="true" moveable="true" header="Validator Picker" domElementAttachment="form" height="300" width="520" maxHeight="300" maxWidth="520">
+		<f:facet name="controls">
+			<h:outputLink value="#" onclick="#{rich:component('popupPickValidatorId')}.hide(); return false;">
+				<h:graphicImage value="/resources/img/close-popup.png" />
+			</h:outputLink>
+		</f:facet>
+		<h:panelGrid columns="5" styleClass="pc100" columnClasses="pc20 txlft,pc20,pc20 txlft,pc20,pc20">
+			<h:outputLabel value="Name" />
+			<h:inputText id="nameValidatorId" value="#{questionAction.validatorFilter.name}" styleClass="tx9" />
+			<h:outputLabel value="Type" />
+			<h:selectOneMenu id="typeValidatorId" value="#{questionAction.validatorFilter.validatorType}" styleClass="tx9">
+				<f:selectItem itemLabel="Any" itemValue="#{null}" />
+				<f:selectItems value="#{questionAction.validatorFilter.validatorTypeOptions}" var="vld" itemValue="#{vld}" itemLabel="#{vld.descriptor}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Search" action="#{questionAction.handleListValidators()}" styleClass="primary">
+				<a4j:ajax execute="frm:nameValidatorId frm:typeValidatorId" render="frm:validatorsDataTableId" />
+			</h:commandButton>
+		</h:panelGrid>
+		<rich:dataTable id="validatorsDataTableId" styleClass="pc100" value="#{questionAction.validators}" var="val">
+			<rich:column sortBy="#{val.name}" styleClass="tx10 pc30">
+				<f:facet name="header">Name</f:facet>
+				<h:commandLink actionListener="#{questionAction.selectValidator(val)}" value="#{val.name}" styleClass="txlft tx9 blue">
+					<a4j:ajax execute="@this" render="answerValidatorId" oncomplete="#{rich:component('popupPickValidatorId')}.hide(); return false;" />
+				</h:commandLink>
+			</rich:column>
+			<rich:column sortBy="#{val.publicUse}" styleClass="tx10 pc20 txctr">
+				<f:facet name="header">Public</f:facet>
+				<h:outputLabel value="#{(val.publicUse) ? 'Yes' : 'No'}" styleClass="txlft tx9 #{val.publicUse ? 'green' : 'red'}" />
+			</rich:column>
+			<rich:column  styleClass="tx10 pc50">
+				<f:facet name="header">Description</f:facet>
+				<h:outputLabel value="#{val.description}" styleClass="txlft tx8" />
+			</rich:column>
+		</rich:dataTable>
+	</rich:popupPanel>
+</ui:composition>

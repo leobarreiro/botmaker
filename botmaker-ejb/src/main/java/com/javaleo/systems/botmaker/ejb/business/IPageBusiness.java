@@ -20,4 +20,6 @@ public interface IPageBusiness extends Serializable {
 
 	void disablePage(Page page) throws BusinessException;
 
+	List<Page> listPagesFromBlog();
+
 }
