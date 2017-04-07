@@ -1,8 +1,8 @@
 @CHARSET "UTF-8";
 
-body {
+body, a {
 	font-family: Consolas, Lucida Console, Inconsolata;
-	font-size: 10pt;
+	font-size: 11pt;
 }
 
 h1.blog-title {
