@@ -39,6 +39,9 @@ public class Validator implements IEntityBasic {
 	private String name;
 	private String description;
 	private ValidatorType validatorType;
+	private String validExample;
+	private String successMessage;
+	private String invalidMessage;
 	private Boolean simpleValidator;
 	private Boolean publicUse;
 	private Date created;
@@ -63,6 +66,10 @@ public class Validator implements IEntityBasic {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_validator_company"), nullable = true)
 	public Company getCompany() {
@@ -83,10 +90,6 @@ public class Validator implements IEntityBasic {
 		this.author = author;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	@Column(name = "description", length = 120)
 	public String getDescription() {
 		return description;
@@ -104,6 +107,33 @@ public class Validator implements IEntityBasic {
 
 	public void setValidatorType(ValidatorType validatorType) {
 		this.validatorType = validatorType;
+	}
+
+	@Column(name = "valid_example", length = 60, nullable = true)
+	public String getValidExample() {
+		return validExample;
+	}
+
+	public void setValidExample(String validExample) {
+		this.validExample = validExample;
+	}
+
+	@Column(name = "success_message", length = 120, nullable = true)
+	public String getSuccessMessage() {
+		return successMessage;
+	}
+
+	public void setSuccessMessage(String successMessage) {
+		this.successMessage = successMessage;
+	}
+
+	@Column(name = "invalid_message", length = 120, nullable = true)
+	public String getInvalidMessage() {
+		return invalidMessage;
+	}
+
+	public void setInvalidMessage(String invalidMessage) {
+		this.invalidMessage = invalidMessage;
 	}
 
 	@Column(name = "simple_validator", nullable = true)

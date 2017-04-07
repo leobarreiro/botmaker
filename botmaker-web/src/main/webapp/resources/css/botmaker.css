@@ -380,9 +380,13 @@ input, select, textarea {
 }
 
 .frm-line div.scripting {
-	width: 60%;
+	width: 65%;
 	padding: 0px;
 	margin: 0px;
+}
+
+.frm-line div.scripting div.rf-p {
+	border: none !important;
 }
 
 span.explain {
