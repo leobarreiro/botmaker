@@ -21,10 +21,6 @@ div.pg-item-list {
 	padding: 4px;
 }
 
-div.pg-content {
-	font-size: 12pt;
-}
-
 table.pg-foot {
 	width: 100%;
 	display: inline-table;
@@ -34,7 +30,7 @@ table.pg-foot td {
 	text-align: right;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 660px) {
 	body, a {
 		font-size: 20pt;
 	}
@@ -43,7 +39,7 @@ table.pg-foot td {
 	}
 }
 
-@media only screen and (min-device-width: 481px) {
+@media only screen and (min-device-width: 661px) {
 	body, a {
 		font-size: 12pt;
 	}

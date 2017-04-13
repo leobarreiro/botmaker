@@ -34,6 +34,7 @@ public class Page implements IEntityBasic {
 	private Date edited;
 	private User user;
 	private Company company;
+	private Category category;
 	private Boolean published;
 	private Boolean active;
 
@@ -115,6 +116,16 @@ public class Page implements IEntityBasic {
 		this.company = company;
 	}
 
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id")
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Column(name = "published", nullable = true)
 	public Boolean getPublished() {
 		return published;
@@ -143,11 +154,13 @@ public class Page implements IEntityBasic {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((edited == null) ? 0 : edited.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((published == null) ? 0 : published.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
@@ -163,6 +176,9 @@ public class Page implements IEntityBasic {
 		if (active == null) {
 			if (other.active != null) return false;
 		} else if (!active.equals(other.active)) return false;
+		if (category == null) {
+			if (other.category != null) return false;
+		} else if (!category.equals(other.category)) return false;
 		if (company == null) {
 			if (other.company != null) return false;
 		} else if (!company.equals(other.company)) return false;
@@ -178,6 +194,9 @@ public class Page implements IEntityBasic {
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;
+		if (published == null) {
+			if (other.published != null) return false;
+		} else if (!published.equals(other.published)) return false;
 		if (title == null) {
 			if (other.title != null) return false;
 		} else if (!title.equals(other.title)) return false;
