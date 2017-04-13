@@ -6,21 +6,18 @@ body, a {
 }
 
 h1.blog-title {
-	width: 60%;
 	margin: auto;
 	padding: 4pt 0pt 4pt 0pt;
 }
 
 h3.blog-slogan {
-	width: 60%;
 	margin: auto;
 	padding: 2pt 0pt 12pt 0pt;
 }
 
 div.pg-item-list {
-	width: 60%;
 	margin: auto;
-	background-color: #e1e1e1;
+	/*background-color: #e1e1e1;*/
 	padding: 4px;
 }
 
@@ -35,4 +32,22 @@ table.pg-foot {
 
 table.pg-foot td {
 	text-align: right;
+}
+
+@media only screen and (max-device-width: 480px) {
+	body, a {
+		font-size: 20pt;
+	}
+	h1.blog-title, h3.blog-slogan, div.pg-item-list {
+		width: 98% !important;
+	}
+}
+
+@media only screen and (min-device-width: 481px) {
+	body, a {
+		font-size: 12pt;
+	}
+	h1.blog-title, h3.blog-slogan, div.pg-item-list {
+		width: 80% !important;
+	}
 }
