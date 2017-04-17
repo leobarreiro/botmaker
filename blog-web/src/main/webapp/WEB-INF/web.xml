@@ -57,7 +57,7 @@
 	</servlet-mapping>
 	<filter>
 		<filter-name>BlogWebFilter</filter-name>
-		<filter-class>com.javaleo.systems.botmaker.blog.filter.BlogFilter</filter-class>
+		<filter-class>org.javaleo.grandpa.blog.filter.BlogFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>BlogWebFilter</filter-name>

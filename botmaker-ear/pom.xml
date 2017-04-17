@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>botmaker</artifactId>
-		<groupId>com.javaleo.systems</groupId>
+		<artifactId>grandpa</artifactId>
+		<groupId>org.javaleo</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>botmaker-ear</artifactId>
+	<artifactId>grandpa-ear</artifactId>
 	<packaging>ear</packaging>
-	<name>botmaker: EAR Module</name>
+	<name>GrandPa: EAR Module</name>
 	<url>http://wildfly.org</url>
 	<licenses>
 		<license>
@@ -20,18 +20,18 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>com.javaleo.systems</groupId>
-			<artifactId>botmaker-web</artifactId>
+			<groupId>org.javaleo</groupId>
+			<artifactId>grandpa-web</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>com.javaleo.systems</groupId>
+			<groupId>org.javaleo</groupId>
 			<artifactId>blog-web</artifactId>
 			<type>war</type>
 		</dependency>
 		<dependency>
-			<groupId>com.javaleo.systems</groupId>
-			<artifactId>botmaker-ejb</artifactId>
+			<groupId>org.javaleo</groupId>
+			<artifactId>grandpa-ejb</artifactId>
 			<type>ejb</type>
 		</dependency>
 	</dependencies>
@@ -47,12 +47,12 @@
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<modules>
 						<webModule>
-							<groupId>com.javaleo.systems</groupId>
-							<artifactId>botmaker-web</artifactId>
+							<groupId>org.javaleo</groupId>
+							<artifactId>grandpa-web</artifactId>
 							<contextRoot>grandpa/</contextRoot>
 						</webModule>
 						<webModule>
-							<groupId>com.javaleo.systems</groupId>
+							<groupId>org.javaleo</groupId>
 							<artifactId>blog-web</artifactId>
 							<contextRoot>/</contextRoot>
 						</webModule>

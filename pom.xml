@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<name>botmaker</name>
+	<name>GrandPa</name>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.javaleo.systems</groupId>
-	<artifactId>botmaker</artifactId>
+	<groupId>org.javaleo</groupId>
+	<artifactId>grandpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<url>http://botmaker.javaleo.com</url>
+	<url>http://javaleo.org</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -16,10 +16,10 @@
 		</license>
 	</licenses>
 	<modules>
-		<module>botmaker-ejb</module>
-		<module>botmaker-web</module>
+		<module>grandpa-ejb</module>
+		<module>grandpa-web</module>
 		<module>blog-web</module>
-		<module>botmaker-ear</module>
+		<module>grandpa-ear</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,20 +57,20 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.javaleo.systems</groupId>
-				<artifactId>botmaker-ejb</artifactId>
+				<groupId>org.javaleo</groupId>
+				<artifactId>grandpa-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
 			</dependency>
 			<dependency>
-				<groupId>com.javaleo.systems</groupId>
-				<artifactId>botmaker-web</artifactId>
+				<groupId>org.javaleo</groupId>
+				<artifactId>grandpa-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
-				<groupId>com.javaleo.systems</groupId>
+				<groupId>org.javaleo</groupId>
 				<artifactId>blog-web</artifactId>
 				<version>${project.version}</version>
 				<type>war</type>

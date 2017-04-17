@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>botmaker</artifactId>
-		<groupId>com.javaleo.systems</groupId>
+		<artifactId>grandpa</artifactId>
+		<groupId>org.javaleo</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>botmaker-ejb</artifactId>
+	<artifactId>grandpa-ejb</artifactId>
 	<packaging>ejb</packaging>
-	<name>botmaker: EJB Module</name>
-	<url>http://wildfly.org</url>
+	<name>GrandPa: EJB Module</name>
+	<url>http://javaleo.org</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>

@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>botmaker</artifactId>
-		<groupId>com.javaleo.systems</groupId>
+		<artifactId>grandpa</artifactId>
+		<groupId>org.javaleo</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>botmaker-web</artifactId>
+	<artifactId>grandpa-web</artifactId>
 	<packaging>war</packaging>
-	<name>botmaker: WAR Module</name>
-	<url>http://wildfly.org</url>
+	<name>GrandPa: WAR Module</name>
+	<url>http://javaleo.org</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -20,8 +20,8 @@
 	</licenses>
 	<dependencies>
 		<dependency>
-			<groupId>com.javaleo.systems</groupId>
-			<artifactId>botmaker-ejb</artifactId>
+			<groupId>org.javaleo</groupId>
+			<artifactId>grandpa-ejb</artifactId>
 			<type>ejb</type>
 			<scope>provided</scope>
 		</dependency>
