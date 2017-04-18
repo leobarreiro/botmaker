@@ -19,9 +19,9 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String CATEG_EDIT = "/pages/contents/category.jsf?faces-redirect=true";
-	public static final String CATEG_DETAIL = "/pages/contents/category-detail.jsf?faces-redirect=true";
-	public static final String CATEG_LIST = "/pages/contents/category-search.jsf?faces-redirect=true";
+	public static final String CATEG_EDIT = "/pages/category/category.jsf?faces-redirect=true";
+	public static final String CATEG_DETAIL = "/pages/category/category-detail.jsf?faces-redirect=true";
+	public static final String CATEG_LIST = "/pages/category/category-search.jsf?faces-redirect=true";
 
 	private List<Category> categoryList;
 	private Category category;
