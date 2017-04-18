@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h2>Category detail</h2>
+		<rich:panel styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="blc1">
+				<h:outputLabel value="Category" />
+				<h:panelGroup styleClass="txt">
+					<h:commandLink action="#{botAction.detail(botAction.bot)}" value="#{botAction.bot.name}" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</rich:panel>
+		<rich:panel styleClass="frm-crud">
+			<h:panelGroup layout="block" styleClass="blc1">
+				<h:outputLabel value="Name" />
+				<h:outputText styleClass="txt" value="#{categoryAction.category.name}" />
+				<h:outputLabel value="Active" />
+				<h:outputText value="#{(categoryAction.category.active) ? 'Yes' : 'No'}" styleClass="txt #{(categoryAction.category.active) ? 'green' : 'red'}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{categoryAction.listCategories()}" value="List Categories" styleClass="secondary" immediate="true" />
+				<h:commandButton action="#{categoryAction.startEditCategory(categoryAction.category)}" value="Edit" styleClass="secondary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+				<h:commandButton value="Deactivate Category" styleClass="attention" rendered="#{categoryAction.category.active}">
+					<rich:componentControl target="popupConfirmId" operation="show" />
+				</h:commandButton>
+				<h:commandButton value="Activate Category" styleClass="secondary" rendered="#{not categoryAction.category.active}" action="#{categoryAction.enableCategory()}">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+			</h:panelGroup>
+		</rich:panel>
+		
+		<ui:param name="confirmTitle" value="Disable Category: [#{categoryAction.category.name}]" />
+		<ui:param name="confirmDescription" value="Are you sure to disable this category? You can undo this action later." />
+		<ui:param name="confirmBean" value="#{categoryAction}" />
+		<ui:param name="confirmMethod" value="disableCategory" />
+		<ui:include src="/pages/utils/confirm-action.xhtml" />
+		
+	</ui:define>
+</ui:composition>

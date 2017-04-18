@@ -7,6 +7,7 @@ import javax.ejb.Local;
 
 import org.javaleo.grandpa.ejb.entities.BlackListExpression;
 import org.javaleo.grandpa.ejb.entities.Bot;
+import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Page;
@@ -126,5 +127,11 @@ public interface IBotMakerFacade extends Serializable {
 	void disablePage(Page page) throws BusinessException;
 
 	List<Page> listLastPagesEdited();
+
+	List<Category> listCategories();
+
+	void saveCategory(Category category) throws BusinessException;
+
+	void disableCategory(Category category);
 
 }

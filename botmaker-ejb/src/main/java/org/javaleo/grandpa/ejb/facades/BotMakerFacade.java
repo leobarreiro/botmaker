@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.business.IBlackListExpressionBusiness;
 import org.javaleo.grandpa.ejb.business.IBotBusiness;
+import org.javaleo.grandpa.ejb.business.ICategoryBusiness;
 import org.javaleo.grandpa.ejb.business.ICommandBusiness;
 import org.javaleo.grandpa.ejb.business.ICompanyBusiness;
 import org.javaleo.grandpa.ejb.business.IDialogContextVarBusiness;
@@ -22,6 +23,7 @@ import org.javaleo.grandpa.ejb.business.IUserPreferenceBusiness;
 import org.javaleo.grandpa.ejb.business.IValidatorBusiness;
 import org.javaleo.grandpa.ejb.entities.BlackListExpression;
 import org.javaleo.grandpa.ejb.entities.Bot;
+import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Page;
@@ -80,6 +82,9 @@ public class BotMakerFacade implements IBotMakerFacade {
 
 	@Inject
 	private IPageBusiness pageBusiness;
+
+	@Inject
+	private ICategoryBusiness categoryBusiness;
 
 	@Override
 	public List<Company> listAllCompanies() {
@@ -334,6 +339,21 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void disablePage(Page page) throws BusinessException {
 		pageBusiness.disablePage(page);
+	}
+
+	@Override
+	public List<Category> listCategories() {
+		return categoryBusiness.listCategories();
+	}
+
+	@Override
+	public void saveCategory(Category category) throws BusinessException {
+		categoryBusiness.saveCategory(category);
+	}
+
+	@Override
+	public void disableCategory(Category category) {
+		categoryBusiness.disableCategory(category);
 	}
 
 }
