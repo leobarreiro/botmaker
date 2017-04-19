@@ -25,9 +25,9 @@ public class PageAction extends AbstractConversationAction implements Serializab
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String PAGE_EDIT = "/pages/contents/page.jsf?faces-redirect=true";
-	public static final String PAGE_DETAIL = "/pages/contents/page-detail.jsf?faces-redirect=true";
-	public static final String PAGE_LIST = "/pages/contents/page-search.jsf?faces-redirect=true";
+	public static final String PAGE_EDIT = "/pages/contents/page.bot?faces-redirect=true";
+	public static final String PAGE_DETAIL = "/pages/contents/page-detail.bot?faces-redirect=true";
+	public static final String PAGE_LIST = "/pages/contents/page-search.bot?faces-redirect=true";
 
 	private PageFilter filter;
 	private List<Page> pageList;

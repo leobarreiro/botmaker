@@ -22,6 +22,12 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 @ConversationScoped
 public class BotAction extends AbstractCrudAction implements Serializable {
 
+	private static final String PAGE_BOT_1 = "/pages/bot/bot1.bot?faces-redirect=true";
+
+	private static final String PAGE_BOT_2 = "/pages/bot/bot2.bot?faces-redirect=true";
+
+	private static final String PAGE_DETAIL = "/pages/bot/bot-detail.bot?faces-redirect=true";
+
 	private static final String CANCEL_KEY = "/cancel";
 
 	private static final long serialVersionUID = 1L;
@@ -54,14 +60,14 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		bot = new Bot();
 		bot.setCancelKey(CANCEL_KEY);
 		filter = new BotFilter();
-		return "/pages/bot/bot1.jsf?faces-redirect=true";
+		return PAGE_BOT_1;
 	}
 
 	public String list() {
 		startNewConversation();
 		filter = new BotFilter();
 		search();
-		return "/pages/bot/bot-search.jsf?faces-redirect=true";
+		return "/pages/bot/bot-search.bot?faces-redirect=true";
 	}
 
 	public void search() {
@@ -78,12 +84,12 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	public String edit() {
 		this.filter = new BotFilter();
-		return "/pages/bot/bot2.jsf?faces-redirect=true";
+		return PAGE_BOT_2;
 	}
 
 	public String deactivateBot() {
@@ -93,7 +99,7 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	public String reactivateBot() {
@@ -103,7 +109,7 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	public String detail(Bot bot) {
@@ -111,7 +117,7 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		commandAction.setBot(bot);
 		commandAction.search();
 		mountRawCommandsFromBot();
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	private void mountRawCommandsFromBot() {
@@ -138,12 +144,12 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 	public String validateToken() {
 		try {
 			bot = facade.validateBotTelegram(token);
-			return "/pages/bot/bot2.jsf?faces-redirect=true";
+			return PAGE_BOT_2;
 		} catch (BusinessException e) {
 			bot.setName("Bot token is not valid");
 			bot.setValid(false);
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			return "/pages/bot/bot1.jsf?faces-redirect=true";
+			return PAGE_BOT_1;
 		}
 	}
 

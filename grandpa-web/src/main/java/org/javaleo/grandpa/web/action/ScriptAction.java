@@ -33,6 +33,10 @@ import org.python.icu.util.Calendar;
 @Interceptors(EditingInterceptor.class)
 public class ScriptAction extends AbstractConversationAction implements Serializable {
 
+	private static final String PAGE_LIST_GENERIC = "/pages/scripts/list-generic.bot?faces-redirect=true";
+
+	private static final String PAGE_EDIT_FULL = "/pages/scripts/editor-full.bot?faces-redirect=true";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -88,7 +92,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		scriptType = script.getScriptType();
 		loadContextVars();
 		handleGenericScripts();
-		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+		return PAGE_EDIT_FULL;
 	}
 
 	@EditingNow(edit = true)
@@ -99,7 +103,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		script.setGeneric(true);
 		scriptType = null;
 		loadContextVars();
-		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+		return PAGE_EDIT_FULL;
 	}
 
 	@EditingNow(edit = true)
@@ -108,7 +112,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		this.bot = null;
 		this.script = facade.getScriptToEdition(script.getId());
 		loadContextVars();
-		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+		return PAGE_EDIT_FULL;
 	}
 
 	@EditingNow(edit = true)
@@ -124,7 +128,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		}
 		loadContextVars();
 		listGenericScripts();
-		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+		return PAGE_EDIT_FULL;
 	}
 
 	public void startViewScript(Script scriptView) {
@@ -175,7 +179,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		this.script = null;
 		this.viewScript = null;
 		handleGenericScripts();
-		return "/pages/scripts/list-generic.jsf?faces-redirect=true";
+		return PAGE_LIST_GENERIC;
 	}
 
 	public String saveScript() {
@@ -187,7 +191,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
 		}
-		return "/pages/scripts/editor-full.jsf?faces-redirect=true";
+		return PAGE_EDIT_FULL;
 	}
 
 	public void handleGenericScripts() {

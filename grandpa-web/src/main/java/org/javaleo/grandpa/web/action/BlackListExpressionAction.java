@@ -19,9 +19,9 @@ public class BlackListExpressionAction implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String PAGE_EDIT = "/pages/expressions/expression.jsf?faces-redirect=true";
-	public static final String PAGE_DETAIL = "/pages/expressions/expression-detail.jsf?faces-redirect=true";
-	public static final String PAGE_LIST = "/pages/expressions/expression-search.jsf?faces-redirect=true";
+	public static final String PAGE_EDIT = "/pages/expressions/expression.bot?faces-redirect=true";
+	public static final String PAGE_DETAIL = "/pages/expressions/expression-detail.bot?faces-redirect=true";
+	public static final String PAGE_LIST = "/pages/expressions/expression-search.bot?faces-redirect=true";
 
 	@Inject
 	private Conversation conversation;

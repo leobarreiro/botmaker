@@ -119,6 +119,10 @@ table tr td label {
 	display: table !important;
 }
 
+.rf-p {
+	border: none !important;
+}
+
 .frm-crud div.rf-p-b {
 	padding: 2px !important;
 }

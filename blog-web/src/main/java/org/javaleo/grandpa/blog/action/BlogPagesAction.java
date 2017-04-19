@@ -18,8 +18,8 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String PAGE_DETAIL = "/page-detail.jsf?faces-redirect=true";
-	public static final String PAGE_LIST = "/pages/contents/page-search.jsf?faces-redirect=true";
+	public static final String PAGE_DETAIL = "/page-detail.botf?faces-redirect=true";
+	public static final String PAGE_LIST = "/pages/contents/page-search.bot?faces-redirect=true";
 
 	private PageFilter filter;
 	private List<Page> pageList;

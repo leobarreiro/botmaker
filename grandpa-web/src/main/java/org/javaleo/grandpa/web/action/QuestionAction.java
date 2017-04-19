@@ -33,8 +33,8 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String PAGE_QUESTION = "/pages/question/question.jsf?faces-redirect=true";
-	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.jsf?faces-redirect=true";
+	private static final String PAGE_QUESTION = "/pages/question/question.bot?faces-redirect=true";
+	private static final String PAGE_QUESTION_DETAIL = "/pages/question/question-detail.bot?faces-redirect=true";
 
 	@Inject
 	private Conversation conversation;

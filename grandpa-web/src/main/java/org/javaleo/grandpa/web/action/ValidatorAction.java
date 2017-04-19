@@ -23,6 +23,12 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 @ConversationScoped
 public class ValidatorAction extends AbstractCrudAction implements Serializable {
 
+	private static final String PAGE_LIST = "/pages/validators/validator-search.bot?faces-redirect=true";
+
+	private static final String PAGE_DETAIL = "/pages/validators/validator-detail.bot?faces-redirect=true";
+
+	private static final String PAGE_EDIT = "/pages/validators/validator.bot?faces-redirect=true";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -50,7 +56,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		validator = new Validator();
 		validator.setValidatorType(ValidatorType.BOOLEAN);
 		userPreferencesAction.loadPreferences();
-		return "/pages/validators/validator.jsf?faces-redirect=true";
+		return PAGE_EDIT;
 	}
 
 	public String save() {
@@ -60,7 +66,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 			return detail(validator);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			return "/pages/validators/validator.jsf?faces-redirect=true";
+			return PAGE_EDIT;
 		}
 	}
 
@@ -68,7 +74,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		startOrResumeConversation();
 		this.validator = validator;
 		loadOptions();
-		return "/pages/validators/validator.jsf?faces-redirect=true";
+		return PAGE_EDIT;
 	}
 
 	public void startViewValidator(Validator viewValidator) {
@@ -81,7 +87,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		startOrResumeConversation();
 		this.validator = validator;
 		userPreferencesAction.loadPreferences();
-		return "/pages/validators/validator-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	public String cancel() {
@@ -92,7 +98,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 		startOrResumeConversation();
 		loadOptions();
 		validators = facade.searchValidatorByFilter(filter);
-		return "/pages/validators/validator-search.jsf?faces-redirect=true";
+		return PAGE_LIST;
 	}
 
 	private void loadOptions() {

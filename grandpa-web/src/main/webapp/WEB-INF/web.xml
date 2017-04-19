@@ -22,31 +22,31 @@
   </context-param>
   <context-param>
     <param-name>login.page</param-name>
-    <param-value>/index.jsf</param-value>
+    <param-value>index.bot</param-value>
   </context-param>
   <context-param>
     <param-name>welcome.page</param-name>
-    <param-value>/welcome.jsf</param-value>
+    <param-value>welcome.bot</param-value>
   </context-param>
   <context-param>
     <param-name>error.404</param-name>
-    <param-value>/errors/404.jsf</param-value>
+    <param-value>errors/404.bot</param-value>
   </context-param>
   <context-param>
     <param-name>session.timeout</param-name>
-    <param-value>/errors/no-session.jsf</param-value>
+    <param-value>errors/no-session.bot</param-value>
   </context-param>
   <context-param>
     <param-name>error.500</param-name>
-    <param-value>/errors/500.jsf</param-value>
+    <param-value>errors/500.bot</param-value>
   </context-param>
   <context-param>
     <param-name>failure.login.page</param-name>
-    <param-value>/index.jsf</param-value>
+    <param-value>index.bot</param-value>
   </context-param>
   <context-param>
     <param-name>logout.page</param-name>
-    <param-value>/index.jsf</param-value>
+    <param-value>index.bot</param-value>
   </context-param>
   <session-config>
     <session-timeout>40</session-timeout>

@@ -31,6 +31,12 @@ import org.python.icu.util.Calendar;
 @ConversationScoped
 public class CommandAction extends AbstractCrudAction implements Serializable {
 
+	private static final String PAGE_DETAIL = "/pages/command/command-detail.bot?faces-redirect=true";
+
+	private static final String PAGE_EDIT = "/pages/command/command.bot?faces-redirect=true";
+
+	private static final String PAGE_BOT_DETAIL = "/pages/bot/bot-detail.bot?faces-redirect=true";
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -69,13 +75,13 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 		questions = new ArrayList<Question>();
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
-		return "/pages/command/command.jsf?faces-redirect=true";
+		return PAGE_EDIT;
 	}
 
 	public String list() {
 		startOrResumeConversation();
 		search();
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_BOT_DETAIL;
 	}
 
 	public void search() {
@@ -88,7 +94,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		debugMode(false);
-		return "/pages/command/command.jsf?faces-redirect=true";
+		return PAGE_EDIT;
 	}
 
 	private void fillPostScriptToCommand() {
@@ -112,7 +118,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 		loadQuestionsAndContextVars();
 		userPreferenceAction.loadPreferences();
 		debugMode(false);
-		return "/pages/command/command-detail.jsf?faces-redirect=true";
+		return PAGE_DETAIL;
 	}
 
 	public String save() {
@@ -123,7 +129,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 			return detail(command);
 		} catch (BusinessException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			return "/pages/command/command.jsf";
+			return PAGE_EDIT;
 		}
 	}
 
@@ -157,7 +163,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 		facade.dropCommand(command);
 		search();
 		msgAction.addInfoMessage("Command droped.");
-		return "/pages/bot/bot-detail.jsf?faces-redirect=true";
+		return PAGE_BOT_DETAIL;
 	}
 
 	public void loadQuestionsAndContextVars() {

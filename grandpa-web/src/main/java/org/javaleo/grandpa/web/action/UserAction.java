@@ -24,6 +24,14 @@ import org.slf4j.Logger;
 @ConversationScoped
 public class UserAction extends AbstractConversationAction implements Serializable {
 
+	private static final String PAGE_RESET_PASSWD = "/reset-password.bot?faces-redirect=true";
+
+	private static final String PAGE_PASSWD_RECOVERY = "/password-recovery.bot?faces-redirect=true";
+
+	private static final String PAGE_NEW_ACCOUNT = "/new-account.bot?faces-redirect=true";
+
+	private static final String PAGE_INIT = "/index.bot?faces-redirect=true";
+
 	private static final long serialVersionUID = 8467442454444489390L;
 
 	@Inject
@@ -69,7 +77,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 			return botAction.list();
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
-			return "/index.jsf?faces-redirect=true";
+			return PAGE_INIT;
 		}
 	}
 
@@ -80,14 +88,14 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		} catch (JavaleoException e) {
 			msgAction.addMessage(MessageType.ERROR, e.getMessage());
 		}
-		return "/index.jsf?faces-redirect=true";
+		return PAGE_INIT;
 	}
 
 	public String createAccount() {
 		startNewConversation();
 		company = new Company();
 		user = new User();
-		return "/new-account.jsf?faces-redirect=true";
+		return PAGE_NEW_ACCOUNT;
 	}
 
 	public String saveNewUser() {
@@ -106,7 +114,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 			return goToLogin();
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
-			return "/new-account.jsf?faces-redirect=true";
+			return PAGE_NEW_ACCOUNT;
 		}
 	}
 
@@ -114,7 +122,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		startNewConversation();
 		emailRecovery = null;
 		emailRecoveryReview = null;
-		return "/password-recovery.jsf?faces-redirect=true";
+		return PAGE_PASSWD_RECOVERY;
 	}
 
 	public String recoverPasswordFromUser() {
@@ -122,10 +130,10 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		try {
 			facade.sendMessageRecoveryLoginToUser(emailRecovery, emailRecoveryReview);
 			msgAction.addInfoMessage("A message was sent to your e-mail. Please read it and follow the instructions.");
-			return "/index.jsf?faces-redirect=true";
+			return PAGE_INIT;
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
-			return "/password-recovery.jsf?faces-redirect=true";
+			return PAGE_PASSWD_RECOVERY;
 		}
 	}
 
@@ -150,16 +158,16 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		try {
 			facade.saveUser(token.getUser(), plainPassword, passwordReview);
 			msgAction.addInfoMessage("Your new password was been saved!");
-			return "/index.jsf?faces-redirect=true";
+			return PAGE_INIT;
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());
-			return "/reset-password.jsf?faces-redirect=true";
+			return PAGE_RESET_PASSWD;
 		}
 	}
 
 	public String goToLogin() {
 		startOrResumeConversation();
-		return "/index.jsf?faces-redirect=true";
+		return PAGE_INIT;
 	}
 
 	@Override

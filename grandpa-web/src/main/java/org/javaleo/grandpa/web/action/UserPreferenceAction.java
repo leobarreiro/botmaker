@@ -19,7 +19,7 @@ import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 @SessionScoped
 public class UserPreferenceAction implements Serializable {
 
-	private static final String PAGE_PREFS = "/pages/preferences/user-preferences.jsf?faces-redirect=true";
+	private static final String PAGE_PREFS = "/pages/preferences/user-preferences.bot?faces-redirect=true";
 	private static final String SCRIPTING_THEME = "SCRIPTING_THEME";
 	private static final String SCRIPTING_MAX_HEIGHT = "SCRIPTING_MAX_HEIGHT";
 	private static final String SCRIPTING_MAX_WIDTH = "SCRIPTING_MAX_WIDTH";
