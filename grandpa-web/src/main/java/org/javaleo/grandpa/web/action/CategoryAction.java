@@ -37,7 +37,7 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 
 	public String listCategories() {
 		startOrResumeConversation();
-		categoryList = facade.listCategories();
+		categoryList = facade.listAllCategories();
 		return CATEG_LIST;
 	}
 

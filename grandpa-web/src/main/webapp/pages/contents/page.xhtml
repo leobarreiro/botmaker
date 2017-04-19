@@ -3,10 +3,17 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<h2>Content Page</h2>
-		<rich:panel styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud" id="infoPanelId">
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Title" />
-				<h:inputText value="#{pageAction.page.title}" maxlength="50" />
+				<h:outputLabel value="Title" styleClass="required" />
+				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Category" styleClass="required" />
+				<h:selectOneMenu id="categoryId" value="#{pageAction.page.category}" converter="#{entityConverter}">
+					<f:selectItems value="#{pageAction.categories}" var="ct" itemLabel="#{ct.name}" itemValue="#{ct}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Published" />
@@ -26,7 +33,7 @@
 				</h:outputText>
 			</h:panelGroup>
 		</rich:panel>
-		<rich:panel styleClass="frm-crud">
+		<rich:panel styleClass="frm-crud" id="editorPanelId">
 			<rich:editor toolbar="full" id="editor" onchange="#{pageAction.saveQuiet()}" plugins="save" value="#{pageAction.page.content}" styleClass="pc100 mrauto" />
 		</rich:panel>
 		<rich:panel styleClass="frm-crud">
@@ -37,7 +44,9 @@
 				<h:commandButton action="#{pageAction.detail(pageAction.page)}" immediate="true" value="View Details" styleClass="secondary">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
-				<h:commandButton action="#{pageAction.save()}" value="Save" styleClass="primary" />
+				<h:commandButton action="#{pageAction.save()}" value="Save" styleClass="primary">
+					<a4j:ajax execute="infoPanelId editorPanelId" />
+				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
 	</ui:define>

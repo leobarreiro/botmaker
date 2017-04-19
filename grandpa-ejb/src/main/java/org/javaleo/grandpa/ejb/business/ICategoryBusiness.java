@@ -11,7 +11,9 @@ import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 @Local
 public interface ICategoryBusiness extends Serializable {
 
-	List<Category> listCategories();
+	List<Category> listAllCategories();
+
+	List<Category> listActiveCategories();
 
 	void saveCategory(Category category) throws BusinessException;
 

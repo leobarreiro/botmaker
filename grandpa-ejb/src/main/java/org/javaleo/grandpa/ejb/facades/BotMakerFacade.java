@@ -342,8 +342,13 @@ public class BotMakerFacade implements IBotMakerFacade {
 	}
 
 	@Override
-	public List<Category> listCategories() {
-		return categoryBusiness.listCategories();
+	public List<Category> listAllCategories() {
+		return categoryBusiness.listAllCategories();
+	}
+
+	@Override
+	public List<Category> listActiveCategories() {
+		return categoryBusiness.listActiveCategories();
 	}
 
 	@Override

@@ -46,6 +46,18 @@ public class PageBusiness implements IPageBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void savePage(Page page) throws BusinessException {
+		if (StringUtils.isBlank(page.getTitle())) {
+			throw new BusinessException("Page Title can´t be empty.");
+		}
+
+		if (page.getCategory() == null) {
+			throw new BusinessException("Page Category can´t be null.");
+		}
+
+		if (StringUtils.isBlank(page.getContent())) {
+			throw new BusinessException("Page Content can´t be empty.");
+		}
+
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		page.setCompany(company);
 		User user = userBusiness.findUserByUsername(credentials.getUser().getUsername());

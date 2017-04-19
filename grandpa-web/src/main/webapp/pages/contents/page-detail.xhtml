@@ -5,18 +5,26 @@
 		<h:panelGrid columns="2" styleClass="mrauto pc70" columnClasses="pc60 txleft, pc40">
 			<h2 class="fleft">Content Page Detail</h2>
 			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{pageAction.edit(pageAction.page)}" immediate="true" value="Edit" styleClass="primary">
+				<h:commandButton action="#{pageAction.edit(pageAction.page)}" value="Edit" styleClass="primary">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
-				<h:commandButton action="#{pageAction.list()}" immediate="true" value="Go to List" styleClass="secondary">
+				<h:commandButton action="#{pageAction.list()}" value="Go to List" styleClass="secondary">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandButton>
 			</h:panelGroup>
 		</h:panelGrid>
 		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
+			<h:panelGroup layout="block" styleClass="blc1">
 				<h:outputLabel value="Title" />
 				<h:outputText value="#{pageAction.page.title}" styleClass="txt" />
+				<h:outputLabel value="Category" />
+				<h:outputText value="#{pageAction.page.category.name}" styleClass="txt" />
+				<h:outputLabel value="Published" />
+				<h:outputText value="#{(pageAction.page.published) ? 'Yes' : 'No'}" styleClass="txt #{(pageAction.page.published) ? 'green' : 'red'}" />
+				<h:outputLabel value="Author" />
+				<h:outputText value="#{pageAction.page.user.name}" styleClass="txt" />
+				<h:outputLabel value="Created" />
+				<h:outputText value="#{pageAction.page.created}" styleClass="txt" />
 			</h:panelGroup>
 		</rich:panel>
 		<rich:panel styleClass="frm-crud page-container">

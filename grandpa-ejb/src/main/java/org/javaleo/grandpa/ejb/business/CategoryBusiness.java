@@ -41,13 +41,26 @@ public class CategoryBusiness implements ICategoryBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Category> listCategories() {
+	public List<Category> listAllCategories() {
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		Root<Category> fromCat = cq.from(Category.class);
 		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
 		cq.where(cb.equal(joinComp.get("id"), company.getId()));
+		cq.orderBy(cb.asc(fromCat.get("name")));
+		return persistence.getResultList(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Category> listActiveCategories() {
+		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Root<Category> fromCat = cq.from(Category.class);
+		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
+		cq.where(cb.equal(joinComp.get("id"), company.getId()), cb.equal(fromCat.get("active"), Boolean.TRUE));
 		cq.orderBy(cb.asc(fromCat.get("name")));
 		return persistence.getResultList(cq);
 	}

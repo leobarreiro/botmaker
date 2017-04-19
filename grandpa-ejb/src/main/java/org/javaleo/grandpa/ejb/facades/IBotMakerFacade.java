@@ -128,7 +128,9 @@ public interface IBotMakerFacade extends Serializable {
 
 	List<Page> listLastPagesEdited();
 
-	List<Category> listCategories();
+	List<Category> listAllCategories();
+
+	List<Category> listActiveCategories();
 
 	void saveCategory(Category category) throws BusinessException;
 

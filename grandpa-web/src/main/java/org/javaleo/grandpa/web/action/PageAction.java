@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 
 import org.javaleo.grandpa.ejb.annotations.EditingNow;
+import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
@@ -31,6 +32,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	private PageFilter filter;
 	private List<Page> pageList;
 	private Page page;
+	private List<Category> categories;
 
 	@Inject
 	private Conversation conversation;
@@ -50,12 +52,14 @@ public class PageAction extends AbstractConversationAction implements Serializab
 			filter = new PageFilter();
 		}
 		pageList = facade.listPages(filter);
+		initLoad();
 		return PAGE_LIST;
 	}
 
 	@EditingNow(edit = true)
 	public String startNew() {
 		startOrResumeConversation();
+		initLoad();
 		this.page = new Page();
 		return PAGE_EDIT;
 	}
@@ -93,6 +97,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	public String edit(Page page) {
 		startOrResumeConversation();
 		this.page = page;
+		initLoad();
 		return PAGE_EDIT;
 	}
 
@@ -100,6 +105,10 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		startOrResumeConversation();
 		// TODO realizar drop da pagina
 		return list();
+	}
+
+	private void initLoad() {
+		categories = facade.listActiveCategories();
 	}
 
 	@Override
@@ -129,6 +138,14 @@ public class PageAction extends AbstractConversationAction implements Serializab
 
 	public void setPage(Page page) {
 		this.page = page;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 }
