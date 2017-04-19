@@ -136,9 +136,9 @@ public class ManagerUtils implements Serializable {
 		dialogsPerBotMap.put(bot.getId(), dialogs);
 	}
 
-	public Map<String, Object> getAllContextVarsFromUserId(Integer userId) {
+	public Map<String, Object> getAllContextVarsFromUserIdAndBot(Long idBot, Integer userId) {
 		Map<String, Object> mapContextVars = new LinkedHashMap<String, Object>();
-		for (Long idBot : dialogsPerBotMap.keySet()) {
+		if (dialogsPerBotMap.containsKey(idBot)) {
 			Set<Dialog> dialogs = dialogsPerBotMap.get(idBot);
 			for (Dialog d : dialogs) {
 				if (d.getUserId().equals(userId)) {

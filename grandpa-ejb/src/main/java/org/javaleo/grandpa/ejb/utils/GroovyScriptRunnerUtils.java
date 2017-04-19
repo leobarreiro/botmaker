@@ -61,7 +61,7 @@ public class GroovyScriptRunnerUtils implements Serializable { // IScriptRunnerU
 	public Object evaluateScript(Dialog dialog, String script) throws BusinessException {
 		try {
 			blackListBusiness.testScriptAgainstBlackListExpression(script, ScriptType.GROOVY);
-			Map<String, Object> otherDialogsContextVars = managerUtils.getAllContextVarsFromUserId(dialog.getUserId());
+			Map<String, Object> otherDialogsContextVars = managerUtils.getAllContextVarsFromUserIdAndBot(dialog.getBotId(), dialog.getUserId());
 			Map<String, Object> actualDialogContextVars = dialog.getContextVars();
 
 			Map<String, Object> allContextVars = new LinkedHashMap<String, Object>();
