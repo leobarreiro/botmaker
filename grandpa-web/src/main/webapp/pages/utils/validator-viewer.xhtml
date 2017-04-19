@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-	<rich:popupPanel id="popupViewValidatorId" onshow="configureViewerMirror()" modal="false" moveable="true" header="Validator Viewer" height="300" width="600" maxHeight="300" maxWidth="600">
+	<rich:popupPanel id="popupViewValidatorId" onshow="configureViewerMirror()" modal="false" moveable="true" header="Validator Viewer" height="420" width="600" maxHeight="420" maxWidth="600">
 		<f:facet name="controls">
 			<h:outputLink value="#" onclick="#{rich:component('popupViewValidatorId')}.hide(); return false;">
 				<h:graphicImage value="/resources/img/close-popup.png" />
@@ -25,6 +25,12 @@
 			<h:panelGrid styleClass="pc95" columns="2" columnClasses="pc20 txrgt,pc80 txlft">
 				<h:outputLabel value="Description" styleClass="tx10" />
 				<h:outputText value="#{validatorAction.viewValidator.description}" styleClass="txlft tx9" />
+				<h:outputLabel value="Valid Example" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.validExample}" styleClass="txlft tx9" />
+				<h:outputLabel value="Succesful Message" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.successMessage}" styleClass="txlft tx9" />
+				<h:outputLabel value="Invalid Message" styleClass="tx10" />
+				<h:outputText value="#{validatorAction.viewValidator.invalidMessage}" styleClass="txlft tx9" />
 			</h:panelGrid>
 			<h:panelGroup layout="block">
 				<h:inputTextarea id="validatorViewerTextAreaId" value="#{validatorAction.viewValidator.code}" cols="16" />
