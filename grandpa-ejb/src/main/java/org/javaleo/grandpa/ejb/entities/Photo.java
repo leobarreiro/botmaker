@@ -21,15 +21,8 @@ import javax.persistence.Transient;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity
-@Table(
-		schema = EntityUtils.SCHEMA,
-		name = "photo")
-@SequenceGenerator(
-		schema = EntityUtils.SCHEMA,
-		name = "photo_sq",
-		sequenceName = "photo_seq",
-		initialValue = 1,
-		allocationSize = 1)
+@Table(schema = EntityUtils.SCHEMA, name = "photo")
+@SequenceGenerator(schema = EntityUtils.SCHEMA, name = "photo_sq", sequenceName = "photo_seq", initialValue = 1, allocationSize = 1)
 public class Photo implements IEntityBasic {
 
 	private static final long serialVersionUID = 5679551260780321462L;
@@ -47,11 +40,8 @@ public class Photo implements IEntityBasic {
 	private byte[] content;
 
 	@Id
-	@Column(
-			name = "photo_id")
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "photo_sq")
+	@Column(name = "photo_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_sq")
 	public Long getId() {
 		return id;
 	}
@@ -60,9 +50,7 @@ public class Photo implements IEntityBasic {
 		this.id = id;
 	}
 
-	@Column(
-			name = "uuid",
-			length = 32)
+	@Column(name = "uuid", length = 32)
 	public String getUuid() {
 		return uuid;
 	}
@@ -71,9 +59,7 @@ public class Photo implements IEntityBasic {
 		this.uuid = uuid;
 	}
 
-	@Column(
-			name = "mime_type",
-			length = 30)
+	@Column(name = "mime_type", length = 30)
 	public String getMimeType() {
 		return mimeType;
 	}
@@ -82,9 +68,7 @@ public class Photo implements IEntityBasic {
 		this.mimeType = mimeType;
 	}
 
-	@Column(
-			name = "name",
-			length = 60)
+	@Column(name = "name", length = 60)
 	public String getName() {
 		return name;
 	}
@@ -93,10 +77,7 @@ public class Photo implements IEntityBasic {
 		this.name = name;
 	}
 
-	@Column(
-			name = "description",
-			columnDefinition = "text",
-			nullable = true)
+	@Column(name = "description", columnDefinition = "text", nullable = true)
 	public String getDescription() {
 		return description;
 	}
@@ -105,9 +86,7 @@ public class Photo implements IEntityBasic {
 		this.description = description;
 	}
 
-	@Column(
-			name = "hash",
-			length = 32)
+	@Column(name = "hash", length = 32)
 	public String getHash() {
 		return hash;
 	}
@@ -117,8 +96,7 @@ public class Photo implements IEntityBasic {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(
-			name = "created")
+	@Column(name = "created")
 	public Date getCreated() {
 		return created;
 	}
@@ -128,8 +106,7 @@ public class Photo implements IEntityBasic {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(
-			name = "last_uploaded")
+	@Column(name = "last_uploaded")
 	public Date getLastUploaded() {
 		return lastUploaded;
 	}
@@ -138,13 +115,8 @@ public class Photo implements IEntityBasic {
 		this.lastUploaded = lastUploaded;
 	}
 
-	@ManyToOne(
-			fetch = FetchType.EAGER)
-	@JoinColumn(
-			name = "uploader_id",
-			referencedColumnName = "user_id",
-			foreignKey = @ForeignKey(
-					name = "photo_fk_user"))
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "uploader_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "photo_fk_user"))
 	public User getUploader() {
 		return uploader;
 	}
@@ -153,15 +125,8 @@ public class Photo implements IEntityBasic {
 		this.uploader = uploader;
 	}
 
-	@ManyToOne(
-			optional = false,
-			cascade = { CascadeType.PERSIST,
-					CascadeType.REFRESH, CascadeType.MERGE })
-	@JoinColumn(
-			name = "gallery_id",
-			referencedColumnName = "gallery_id",
-			foreignKey = @ForeignKey(
-					name = "photo_fk_gallery"))
+	@ManyToOne(optional = false, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
+	@JoinColumn(name = "gallery_id", referencedColumnName = "gallery_id", foreignKey = @ForeignKey(name = "photo_fk_gallery"))
 	public Gallery getGallery() {
 		return gallery;
 	}

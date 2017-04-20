@@ -49,6 +49,8 @@
 		<version.jython>2.7.0</version.jython>
 		<version.jboss.ext.ejb>2.2.0.Final</version.jboss.ext.ejb>
 		<version.richfaces>4.5.15.Final</version.richfaces>
+		<version.resteasy>3.1.2.Final</version.resteasy>
+		<version.gson>2.8.0</version.gson>
 	</properties>
 	<scm>
 		<connection>scm:git:https://bitbucket.org/javaleo/botmaker.git</connection>
@@ -139,6 +141,21 @@
 				<groupId>org.jboss.ejb3</groupId>
 				<artifactId>jboss-ejb3-ext-api</artifactId>
 				<version>${version.jboss.ext.ejb}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxrs</artifactId>
+				<version>${version.resteasy}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-jaxb-provider</artifactId>
+				<version>${version.resteasy}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.google.code.gson</groupId>
+			    <artifactId>gson</artifactId>
+			    <version>${version.gson}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

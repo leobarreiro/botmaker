@@ -25,6 +25,7 @@ import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
+import org.javaleo.grandpa.ejb.enums.BotType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.pojos.Answer;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
@@ -73,7 +74,7 @@ public class TelegramBotListenerSchedule implements Serializable {
 
 	@Schedule(dayOfWeek = "*", hour = "*", minute = "*", second = "*/2", persistent = false)
 	public void listenBotUpdates() {
-		List<Bot> bots = botBusiness.listValidAndActiveBots();
+		List<Bot> bots = botBusiness.listValidAndActiveBots(BotType.TELEGRAM);
 		for (Bot bot : bots) {
 			processDialogsToBot(bot);
 		}

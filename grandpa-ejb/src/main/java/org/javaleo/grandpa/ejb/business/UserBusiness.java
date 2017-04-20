@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.javaleo.grandpa.ejb.entities.Token;
 import org.javaleo.grandpa.ejb.entities.User;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.utils.BotMakerUtils;
+import org.javaleo.grandpa.ejb.utils.GrandPaUtils;
 import org.javaleo.grandpa.ejb.utils.IMessageUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class UserBusiness implements IUserBusiness {
 			throw new BusinessException("The username must be between 4 and 12 digits long. He should contains letters and numbers only.");
 		}
 		// email
-		if (!BotMakerUtils.validateEmail(user.getEmail())) {
+		if (!GrandPaUtils.validateEmail(user.getEmail())) {
 			throw new BusinessException("The email entered is not valid. Please review your email.");
 		}
 		// password
@@ -87,7 +87,7 @@ public class UserBusiness implements IUserBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException {
-		if (!BotMakerUtils.validateEmail(email)) {
+		if (!GrandPaUtils.validateEmail(email)) {
 			throw new BusinessException("The email can't be empty. You must enter a valid e-mail.");
 		}
 		if (!StringUtils.equals(email, emailReview)) {
@@ -117,7 +117,7 @@ public class UserBusiness implements IUserBusiness {
 
 		if (StringUtils.isBlank(domainName)) {
 			LOG.warn("Property botmaker.domain is not defined in System properties. Please revise this configuration.");
-			domainName = BotMakerUtils.DOMAIN_NAME;
+			domainName = GrandPaUtils.DOMAIN_NAME;
 		}
 
 		Token token = tokenBusiness.generateTokenToUser(userOwnerEmail);

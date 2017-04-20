@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import org.javaleo.grandpa.ejb.entities.Bot;
+import org.javaleo.grandpa.ejb.enums.BotType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
 
@@ -17,13 +18,13 @@ public interface IBotBusiness extends Serializable {
 	void saveBot(Bot bot) throws BusinessException;
 
 	void deactivateBot(Bot bot) throws BusinessException;
-	
+
 	void reactivateBot(Bot bot) throws BusinessException;
 
 	List<Bot> searchBot(BotFilter filter);
 
 	List<Bot> listLastBotsFromCompanyUser();
 
-	List<Bot> listValidAndActiveBots();
+	List<Bot> listValidAndActiveBots(BotType botType);
 
 }

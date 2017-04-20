@@ -8,6 +8,8 @@ public class EntityUtils {
 	public static final String SCRIPT = "script";
 	public static final String BLACKLIST_EXPRESSION = "blacklist_expression";
 
+	public static final String BLOG = "blog";
+
 	public static final String PAGE = "page";
 	public static final String CATEGORY = "category";
 	public static final String CONFIGURATION = "configuration";

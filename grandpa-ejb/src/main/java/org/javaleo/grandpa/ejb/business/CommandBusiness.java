@@ -22,7 +22,7 @@ import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.security.BotMakerCredentials;
-import org.javaleo.grandpa.ejb.utils.BotMakerUtils;
+import org.javaleo.grandpa.ejb.utils.GrandPaUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.slf4j.Logger;
 
@@ -133,7 +133,7 @@ public class CommandBusiness implements ICommandBusiness {
 		for (Command c : commands) {
 			keyCommands.add("/".concat(c.getKey()));
 		}
-		return BotMakerUtils.convertArrayOfArrays(keyCommands, 3);
+		return GrandPaUtils.convertArrayOfArrays(keyCommands, 3);
 	}
 
 	@Override

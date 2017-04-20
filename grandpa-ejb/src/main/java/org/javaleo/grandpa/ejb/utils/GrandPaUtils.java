@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class BotMakerUtils {
+public class GrandPaUtils {
 
 	public static final String DOMAIN_NAME = "javaleo.org";
 

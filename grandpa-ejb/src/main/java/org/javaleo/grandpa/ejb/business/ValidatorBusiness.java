@@ -25,7 +25,7 @@ import org.javaleo.grandpa.ejb.enums.ValidatorType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.security.BotMakerCredentials;
-import org.javaleo.grandpa.ejb.utils.BotMakerUtils;
+import org.javaleo.grandpa.ejb.utils.GrandPaUtils;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 import org.python.icu.util.Calendar;
 
@@ -109,7 +109,7 @@ public class ValidatorBusiness implements IValidatorBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public List<List<String>> getOptionsByValidator(Validator validator) {
-		return BotMakerUtils.convertStringToArrayOfArrays(validator.getCode(), 2, ',');
+		return GrandPaUtils.convertStringToArrayOfArrays(validator.getCode(), 2, ',');
 	}
 
 }
