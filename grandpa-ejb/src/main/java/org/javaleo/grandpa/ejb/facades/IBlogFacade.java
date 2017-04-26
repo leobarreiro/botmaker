@@ -17,10 +17,20 @@ public interface IBlogFacade extends Serializable {
 
 	Blog getBlogFromKey(String key);
 
+	Blog getBlogFromId(Long id);
+
+	List<Category> listAllCategoriesFromBlog(Blog blog);
+
+	Category getCategoryFromKey(String key);
+
 	Category getFirstCategoryOptionFromBlog(Blog blog);
 
 	List<Page> listPagesFromBlogIdAndCategoryId(Long idBlog, Long idCategory) throws BusinessException;
 
 	List<Page> listPagesFromBlogKeyAndCategoryKey(String blogKey, String categoryKey) throws BusinessException;
+
+	List<Category> listActiveCategoriesFromBlog(Blog blog);
+
+	Category getFirstCategoryOptionfromBlog(Blog blog);
 
 }

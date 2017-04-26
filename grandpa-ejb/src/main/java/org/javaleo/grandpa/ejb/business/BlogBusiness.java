@@ -3,6 +3,8 @@ package org.javaleo.grandpa.ejb.business;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -37,6 +39,7 @@ public class BlogBusiness implements IBlogBusiness {
 	private Logger LOG;
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Blog> listBlogs() {
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
@@ -49,6 +52,7 @@ public class BlogBusiness implements IBlogBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveBlog(Blog blog) throws BusinessException {
 		if (StringUtils.isBlank(blog.getName())) {
 			throw new BusinessException("Blog name cant´t be empty.");
@@ -67,6 +71,7 @@ public class BlogBusiness implements IBlogBusiness {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Blog getBlogFromKey(String key) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Blog> cq = cb.createQuery(Blog.class);
@@ -74,5 +79,11 @@ public class BlogBusiness implements IBlogBusiness {
 		cq.where(cb.equal(from.get("key"), key));
 		cq.select(from);
 		return persistence.getSingleResult(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Blog getBlogFromId(Long id) {
+		return persistence.find(Blog.class, id);
 	}
 }

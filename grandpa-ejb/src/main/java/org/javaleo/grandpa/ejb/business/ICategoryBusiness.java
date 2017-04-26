@@ -14,9 +14,13 @@ public interface ICategoryBusiness extends Serializable {
 
 	List<Category> listAllCategories();
 
-	List<Category> listActiveCategories();
+	List<Category> listAllCategoriesFromBlog(Blog blog);
 
-	Category getFirstCategoryOptionfromBlog(Blog blog);
+	List<Category> listActiveCategoriesFromBlog(Blog blog);
+
+	Category getCategoryFromKey(final String key);
+
+	Category getFirstCategoryOptionFromBlog(Blog blog);
 
 	void saveCategory(Category category) throws BusinessException;
 

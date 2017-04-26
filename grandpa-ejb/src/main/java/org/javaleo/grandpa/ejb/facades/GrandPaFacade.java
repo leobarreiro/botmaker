@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.business.IBlackListExpressionBusiness;
+import org.javaleo.grandpa.ejb.business.IBlogBusiness;
 import org.javaleo.grandpa.ejb.business.IBotBusiness;
 import org.javaleo.grandpa.ejb.business.ICategoryBusiness;
 import org.javaleo.grandpa.ejb.business.ICommandBusiness;
@@ -80,6 +81,9 @@ public class GrandPaFacade implements IGrandPaFacade {
 
 	@Inject
 	private ITokenBusiness tokenBusiness;
+
+	@Inject
+	private IBlogBusiness blogBusiness;
 
 	@Inject
 	private IPageBusiness pageBusiness;
@@ -343,13 +347,38 @@ public class GrandPaFacade implements IGrandPaFacade {
 	}
 
 	@Override
+	public List<Blog> listBlogs() {
+		return blogBusiness.listBlogs();
+	}
+
+	@Override
+	public void saveBlog(Blog blog) throws BusinessException {
+		blogBusiness.saveBlog(blog);
+	}
+
+	@Override
+	public Blog getBlogFromKey(String key) {
+		return blogBusiness.getBlogFromKey(key);
+	}
+
+	@Override
+	public Blog getBlogFromId(Long id) {
+		return blogBusiness.getBlogFromId(id);
+	}
+
+	@Override
 	public List<Category> listAllCategories() {
 		return categoryBusiness.listAllCategories();
 	}
 
 	@Override
-	public List<Category> listActiveCategories() {
-		return categoryBusiness.listActiveCategories();
+	public List<Category> listAllCategoriesFromBlog(Blog blog) {
+		return categoryBusiness.listAllCategoriesFromBlog(blog);
+	}
+
+	@Override
+	public List<Category> listActiveCategoriesFromBlog(Blog blog) {
+		return categoryBusiness.listActiveCategoriesFromBlog(blog);
 	}
 
 	@Override
@@ -364,7 +393,7 @@ public class GrandPaFacade implements IGrandPaFacade {
 
 	@Override
 	public Category getFirstCategoryOptionfromBlog(Blog blog) {
-		return categoryBusiness.getFirstCategoryOptionfromBlog(blog);
+		return categoryBusiness.getFirstCategoryOptionFromBlog(blog);
 	}
 
 }

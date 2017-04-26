@@ -8,6 +8,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
@@ -23,6 +24,7 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 	public static final String CATEG_DETAIL = "/pages/category/category-detail.bot?faces-redirect=true";
 	public static final String CATEG_LIST = "/pages/category/category-search.bot?faces-redirect=true";
 
+	private List<Blog> blogs;
 	private List<Category> categoryList;
 	private Category category;
 
@@ -38,6 +40,7 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 	public String listCategories() {
 		startOrResumeConversation();
 		categoryList = facade.listAllCategories();
+		blogs = facade.listBlogs();
 		return CATEG_LIST;
 	}
 
@@ -50,12 +53,14 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 	public String startNewCategory() {
 		startOrResumeConversation();
 		this.category = new Category();
+		this.blogs = facade.listBlogs();
 		return CATEG_EDIT;
 	}
 
 	public String startEditCategory(Category cat) {
 		startOrResumeConversation();
 		this.category = cat;
+		this.blogs = facade.listBlogs();
 		return CATEG_EDIT;
 	}
 
@@ -93,6 +98,14 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 	@Override
 	public Conversation getConversation() {
 		return conversation;
+	}
+
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
 	}
 
 	public List<Category> getCategoryList() {

@@ -16,4 +16,6 @@ public interface IBlogBusiness {
 
 	Blog getBlogFromKey(String key);
 
+	Blog getBlogFromId(Long id);
+
 }

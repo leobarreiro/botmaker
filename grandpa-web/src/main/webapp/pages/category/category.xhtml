@@ -5,6 +5,13 @@
 		<h2 class="pc50">Category</h2>
 		<rich:panel id="commandCrudId" styleClass="frm-crud pc50">
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Blog" styleClass="required" />
+				<h:selectOneMenu id="blogId" value="#{categoryAction.category.blog}" converter="#{entityConverter}">
+					<f:selectItems value="#{categoryAction.blogs}" var="bg" itemLabel="#{bg.name}" itemValue="#{bg}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Name" />
 				<h:inputText value="#{categoryAction.category.name}" maxlength="30" />
 			</h:panelGroup>

@@ -16,13 +16,17 @@
 					<f:facet name="header">Name</f:facet>
 					<h:commandLink action="#{categoryAction.detailCategory(ct)}" value="#{ct.name}" />
 				</rich:column>
-				<rich:column headerText="Active" sortBy="#{ct.active}" styleClass="pc20 txctr">
+				<rich:column sortBy="#{ct.active}" styleClass="pc20 txctr">
 					<f:facet name="header">First Option</f:facet>
 					<h:outputText value="#{(ct.firstOption) ? 'Yes' : 'No'}" styleClass="#{(ct.firstOption) ? 'green' : 'red'}" />
 				</rich:column>
-				<rich:column headerText="Active" sortBy="#{ct.active}" styleClass="pc20 txctr">
+				<rich:column sortBy="#{ct.active}" styleClass="pc20 txctr">
 					<f:facet name="header">Active</f:facet>
 					<h:outputText value="#{(ct.active) ? 'Yes' : 'No'}" styleClass="#{(ct.active) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column sortBy="#{ct.blog.name}" styleClass="txlft">
+					<f:facet name="header">Blog</f:facet>
+					<h:outputText value="#{ct.blog.name}" />
 				</rich:column>
 			</rich:dataTable>
 		</h:panelGroup>

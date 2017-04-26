@@ -52,30 +52,61 @@ public class CategoryBusiness implements ICategoryBusiness {
 		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
 		cq.where(cb.equal(joinComp.get("id"), company.getId()));
 		cq.orderBy(cb.asc(fromCat.get("name")));
+		cq.select(fromCat);
 		return persistence.getResultList(cq);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Category> listActiveCategories() {
+	public List<Category> listAllCategoriesFromBlog(Blog blog) {
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		Root<Category> fromCat = cq.from(Category.class);
 		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
-		cq.where(cb.equal(joinComp.get("id"), company.getId()), cb.equal(fromCat.get("active"), Boolean.TRUE));
-		cq.orderBy(cb.asc(fromCat.get("firstOption")), cb.asc(fromCat.get("name")));
+		Join<Category, Blog> joinBlog = fromCat.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinComp.get("id"), company.getId()), cb.equal(joinBlog.get("id"), blog.getId()));
+		cq.orderBy(cb.asc(fromCat.get("name")));
+		cq.select(fromCat);
 		return persistence.getResultList(cq);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public Category getFirstCategoryOptionfromBlog(Blog blog) {
+	public List<Category> listActiveCategoriesFromBlog(Blog blog) {
+		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Root<Category> fromCat = cq.from(Category.class);
+		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
+		Join<Category, Blog> joinBlog = fromCat.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinComp.get("id"), company.getId()), cb.equal(joinBlog.get("id"), blog.getId()), cb.equal(fromCat.get("active"), Boolean.TRUE));
+		cq.orderBy(cb.asc(fromCat.get("firstOption")), cb.asc(fromCat.get("name")));
+		cq.select(fromCat);
+		return persistence.getResultList(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Category getCategoryFromKey(String key) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Root<Category> fromCat = cq.from(Category.class);
+		Join<Category, Blog> joinBlog = fromCat.join("blog", JoinType.INNER);
+		cq.where(cb.equal(fromCat.get("key"), key));
+		cq.select(fromCat);
+		return persistence.getSingleResult(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Category getFirstCategoryOptionFromBlog(Blog blog) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		Root<Category> fromCat = cq.from(Category.class);
 		Join<Category, Blog> joinBlog = fromCat.join("blog", JoinType.INNER);
 		cq.where(cb.equal(joinBlog.get("id"), blog.getId()), cb.equal(fromCat.get("firstOption"), Boolean.TRUE));
+		cq.select(fromCat);
 		return persistence.getSingleResult(cq);
 	}
 

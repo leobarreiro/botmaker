@@ -131,12 +131,22 @@ public interface IGrandPaFacade extends Serializable {
 
 	List<Category> listAllCategories();
 
-	List<Category> listActiveCategories();
+	List<Category> listAllCategoriesFromBlog(Blog blog);
+
+	List<Category> listActiveCategoriesFromBlog(Blog blog);
 
 	void saveCategory(Category category) throws BusinessException;
 
 	void disableCategory(Category category);
 
 	Category getFirstCategoryOptionfromBlog(Blog blog);
+
+	List<Blog> listBlogs();
+
+	void saveBlog(Blog blog) throws BusinessException;
+
+	Blog getBlogFromKey(String key);
+
+	Blog getBlogFromId(Long id);
 
 }

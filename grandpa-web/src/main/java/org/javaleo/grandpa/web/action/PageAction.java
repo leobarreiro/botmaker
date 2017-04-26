@@ -108,7 +108,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	}
 
 	private void initLoad() {
-		categories = facade.listActiveCategories();
+		categories = facade.listAllCategories();
 	}
 
 	@Override
