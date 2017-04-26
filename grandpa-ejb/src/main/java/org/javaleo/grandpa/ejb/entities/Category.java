@@ -21,7 +21,10 @@ public class Category implements IEntityBasic {
 
 	private Long id;
 	private String name;
+	private String key;
 	private Boolean active;
+	private Boolean firstOption;
+	private Blog blog;
 	private Company company;
 
 	@Id
@@ -44,6 +47,15 @@ public class Category implements IEntityBasic {
 		this.name = name;
 	}
 
+	@Column(name = "category_key", length = 32, nullable = true)
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	@Column(name = "active")
 	public Boolean getActive() {
 		return active;
@@ -51,6 +63,25 @@ public class Category implements IEntityBasic {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@Column(name = "first_option")
+	public Boolean getFirstOption() {
+		return firstOption;
+	}
+
+	public void setFirstOption(Boolean firstOption) {
+		this.firstOption = firstOption;
+	}
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "blog_id", referencedColumnName = "blog_id")
+	public Blog getBlog() {
+		return blog;
+	}
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
 	}
 
 	@ManyToOne(optional = false)
@@ -68,8 +99,11 @@ public class Category implements IEntityBasic {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((blog == null) ? 0 : blog.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result + ((firstOption == null) ? 0 : firstOption.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -83,12 +117,21 @@ public class Category implements IEntityBasic {
 		if (active == null) {
 			if (other.active != null) return false;
 		} else if (!active.equals(other.active)) return false;
+		if (blog == null) {
+			if (other.blog != null) return false;
+		} else if (!blog.equals(other.blog)) return false;
 		if (company == null) {
 			if (other.company != null) return false;
 		} else if (!company.equals(other.company)) return false;
+		if (firstOption == null) {
+			if (other.firstOption != null) return false;
+		} else if (!firstOption.equals(other.firstOption)) return false;
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;
+		if (key == null) {
+			if (other.key != null) return false;
+		} else if (!key.equals(other.key)) return false;
 		if (name == null) {
 			if (other.name != null) return false;
 		} else if (!name.equals(other.name)) return false;

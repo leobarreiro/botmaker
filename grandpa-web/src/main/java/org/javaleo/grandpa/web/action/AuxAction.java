@@ -16,7 +16,7 @@ import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.libs.botgram.enums.ParseMode;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 
@@ -31,7 +31,7 @@ public class AuxAction extends AbstractConversationAction implements Serializabl
 	private IJavaleoAuthenticator authenticator;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	private static final long serialVersionUID = 1L;
 

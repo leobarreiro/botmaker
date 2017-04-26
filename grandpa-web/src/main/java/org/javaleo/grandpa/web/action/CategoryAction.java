@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 
 @Named
@@ -33,7 +33,7 @@ public class CategoryAction extends AbstractCrudAction implements Serializable {
 	private MsgAction msgAction;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	public String listCategories() {
 		startOrResumeConversation();

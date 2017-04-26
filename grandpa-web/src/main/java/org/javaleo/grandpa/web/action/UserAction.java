@@ -14,7 +14,7 @@ import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Token;
 import org.javaleo.grandpa.ejb.entities.User;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 import org.javaleo.libs.jee.core.exceptions.JavaleoException;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
@@ -38,7 +38,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 	private IJavaleoAuthenticator authenticator;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private Conversation conversation;

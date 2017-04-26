@@ -18,7 +18,7 @@ import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.entities.Validator;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.interceptors.EditingInterceptor;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
@@ -40,7 +40,7 @@ public class QuestionAction extends AbstractConversationAction implements Serial
 	private Conversation conversation;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private GroovyScriptRunnerUtils groovyScriptRunner;

@@ -9,6 +9,10 @@
 				<h:inputText value="#{categoryAction.category.name}" maxlength="30" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="First Category Option" />
+				<h:selectBooleanCheckbox value="#{categoryAction.category.firstOption}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Active" />
 				<h:selectBooleanCheckbox value="#{categoryAction.category.active}" />
 			</h:panelGroup>
@@ -19,6 +23,5 @@
 				<h:commandButton action="#{categoryAction.saveCategory()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
 		</rich:panel>
-
 	</ui:define>
 </ui:composition>

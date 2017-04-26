@@ -11,7 +11,7 @@ import javax.inject.Named;
 import org.javaleo.grandpa.ejb.entities.BlackListExpression;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 
 @Named
 @ConversationScoped
@@ -27,7 +27,7 @@ public class BlackListExpressionAction implements Serializable {
 	private Conversation conversation;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private UserPreferenceAction preferenceAction;

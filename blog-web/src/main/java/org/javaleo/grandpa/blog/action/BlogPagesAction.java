@@ -1,6 +1,7 @@
 package org.javaleo.grandpa.blog.action;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IBlogFacade;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
 
@@ -39,7 +41,11 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 
 	public void listPages() {
 		startOrResumeConversation();
-		pageList = blogFacade.listPagesFromBlog();
+		try {
+			pageList = blogFacade.listPagesFromBlogIdAndCategoryId(1L, 1L);
+		} catch (BusinessException e) {
+			pageList = new ArrayList<Page>();
+		}
 	}
 
 	@Override

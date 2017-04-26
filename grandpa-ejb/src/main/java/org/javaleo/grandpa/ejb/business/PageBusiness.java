@@ -17,6 +17,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Page;
@@ -91,6 +92,7 @@ public class PageBusiness implements IPageBusiness {
 		}
 		cq.where(cb.and(predicates.toArray(new Predicate[predicates.size()])));
 		cq.orderBy(cb.desc(fromPage.get("edited")));
+		cq.select(fromPage);
 		return persistence.getResultList(cq);
 	}
 
@@ -103,6 +105,7 @@ public class PageBusiness implements IPageBusiness {
 		Join<Page, Company> joinCompany = fromPage.join("company", JoinType.INNER);
 		cq.where(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
 		cq.orderBy(cb.desc(fromPage.get("edited")));
+		cq.select(fromPage);
 		return persistence.getResultList(cq, 5);
 	}
 
@@ -116,12 +119,42 @@ public class PageBusiness implements IPageBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Page> listPagesFromBlog() {
+	public List<Page> listPagesFromBlog(Blog blog) {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
 		Root<Page> fromPage = cq.from(Page.class);
-		cq.where(cb.equal(fromPage.get("published"), Boolean.TRUE));
+		Join<Page, Blog> joinBlog = fromPage.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinBlog.get("id"), blog.getId()), cb.equal(fromPage.get("published"), Boolean.TRUE));
 		cq.orderBy(cb.desc(fromPage.get("created")));
+		cq.select(fromPage);
+		return persistence.getResultList(cq, 10);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Page> listPagesFromBlogIdAndCategoryId(Long idBlog, Long idCategory) throws BusinessException {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
+		Root<Page> fromPage = cq.from(Page.class);
+		Join<Page, Category> joinCat = fromPage.join("category", JoinType.INNER);
+		Join<Page, Blog> joinBlog = fromPage.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinBlog.get("id"), idBlog), cb.equal(joinCat.get("id"), idCategory), cb.equal(fromPage.get("published"), Boolean.TRUE));
+		cq.orderBy(cb.desc(fromPage.get("created")));
+		cq.select(fromPage);
+		return persistence.getResultList(cq, 10);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Page> listPagesFromBlogKeyAndCategoryKey(String blogKey, String categoryKey) throws BusinessException {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
+		Root<Page> fromPage = cq.from(Page.class);
+		Join<Page, Category> joinCat = fromPage.join("category", JoinType.INNER);
+		Join<Page, Blog> joinBlog = fromPage.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinBlog.get("key"), blogKey), cb.equal(joinCat.get("key"), categoryKey), cb.equal(fromPage.get("published"), Boolean.TRUE));
+		cq.orderBy(cb.desc(fromPage.get("created")));
+		cq.select(fromPage);
 		return persistence.getResultList(cq, 10);
 	}
 
@@ -138,6 +171,7 @@ public class PageBusiness implements IPageBusiness {
 		Predicate whereCategory = cb.equal(joinCategory.get("id"), category.getId());
 		cq.where(whereCompany, whereCategory);
 		cq.orderBy(cb.desc(fromPage.get("created")));
+		cq.select(fromPage);
 		return persistence.getResultList(cq);
 	}
 

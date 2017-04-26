@@ -17,6 +17,10 @@
 					<h:commandLink action="#{categoryAction.detailCategory(ct)}" value="#{ct.name}" />
 				</rich:column>
 				<rich:column headerText="Active" sortBy="#{ct.active}" styleClass="pc20 txctr">
+					<f:facet name="header">First Option</f:facet>
+					<h:outputText value="#{(ct.firstOption) ? 'Yes' : 'No'}" styleClass="#{(ct.firstOption) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column headerText="Active" sortBy="#{ct.active}" styleClass="pc20 txctr">
 					<f:facet name="header">Active</f:facet>
 					<h:outputText value="#{(ct.active) ? 'Yes' : 'No'}" styleClass="#{(ct.active) ? 'green' : 'red'}" />
 				</rich:column>

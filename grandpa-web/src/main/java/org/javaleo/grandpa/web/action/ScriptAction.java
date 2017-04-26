@@ -20,7 +20,7 @@ import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.entities.Validator;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.interceptors.EditingInterceptor;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
@@ -40,7 +40,7 @@ public class ScriptAction extends AbstractConversationAction implements Serializ
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private Conversation conversation;

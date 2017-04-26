@@ -13,12 +13,15 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.security.BotMakerCredentials;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
+import org.python.icu.util.Calendar;
 import org.slf4j.Logger;
 
 @Named
@@ -61,8 +64,19 @@ public class CategoryBusiness implements ICategoryBusiness {
 		Root<Category> fromCat = cq.from(Category.class);
 		Join<Category, Company> joinComp = fromCat.join("company", JoinType.INNER);
 		cq.where(cb.equal(joinComp.get("id"), company.getId()), cb.equal(fromCat.get("active"), Boolean.TRUE));
-		cq.orderBy(cb.asc(fromCat.get("name")));
+		cq.orderBy(cb.asc(fromCat.get("firstOption")), cb.asc(fromCat.get("name")));
 		return persistence.getResultList(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Category getFirstCategoryOptionfromBlog(Blog blog) {
+		CriteriaBuilder cb = persistence.getCriteriaBuilder();
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		Root<Category> fromCat = cq.from(Category.class);
+		Join<Category, Blog> joinBlog = fromCat.join("blog", JoinType.INNER);
+		cq.where(cb.equal(joinBlog.get("id"), blog.getId()), cb.equal(fromCat.get("firstOption"), Boolean.TRUE));
+		return persistence.getSingleResult(cq);
 	}
 
 	@Override
@@ -72,6 +86,15 @@ public class CategoryBusiness implements ICategoryBusiness {
 		}
 		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
 		category.setCompany(company);
+		if (StringUtils.isBlank(category.getKey())) {
+			Calendar cal = Calendar.getInstance();
+			StringBuilder sb = new StringBuilder();
+			sb.append(category.getCompany().getId());
+			sb.append(category.getBlog().getId());
+			sb.append(category.getName());
+			sb.append(cal.getTime());
+			category.setKey(DigestUtils.md5Hex(sb.toString().getBytes()));
+		}
 		persistence.saveOrUpdate(category);
 	}
 

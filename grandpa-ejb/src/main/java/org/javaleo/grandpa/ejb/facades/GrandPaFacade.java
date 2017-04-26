@@ -22,6 +22,7 @@ import org.javaleo.grandpa.ejb.business.IUserBusiness;
 import org.javaleo.grandpa.ejb.business.IUserPreferenceBusiness;
 import org.javaleo.grandpa.ejb.business.IValidatorBusiness;
 import org.javaleo.grandpa.ejb.entities.BlackListExpression;
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
@@ -43,7 +44,7 @@ import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
 
 @Named
 @Stateless
-public class BotMakerFacade implements IBotMakerFacade {
+public class GrandPaFacade implements IGrandPaFacade {
 
 	private static final long serialVersionUID = 1L;
 
@@ -359,6 +360,11 @@ public class BotMakerFacade implements IBotMakerFacade {
 	@Override
 	public void disableCategory(Category category) {
 		categoryBusiness.disableCategory(category);
+	}
+
+	@Override
+	public Category getFirstCategoryOptionfromBlog(Blog blog) {
+		return categoryBusiness.getFirstCategoryOptionfromBlog(blog);
 	}
 
 }

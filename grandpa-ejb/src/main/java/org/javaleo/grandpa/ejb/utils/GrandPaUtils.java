@@ -34,13 +34,17 @@ public class GrandPaUtils {
 		return listOfLists;
 	}
 
-	public static boolean validateEmail(final String email) {
-		if (StringUtils.isBlank(email)) {
+	public static boolean validateContentAgainstPattern(final String pattern, final String content) {
+		if (StringUtils.isBlank(content)) {
 			return false;
 		}
-		Pattern mailPattern = Pattern.compile("^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$");
-		Matcher mailMatcher = mailPattern.matcher(email);
-		return mailMatcher.matches();
+		Pattern compiledPattern = Pattern.compile(pattern);
+		Matcher matcher = compiledPattern.matcher(content);
+		return matcher.matches();
+	}
+
+	public static boolean validateEmail(final String email) {
+		return validateContentAgainstPattern("^[a-zA-Z0-9][a-zA-Z0-9_\\-.]*[a-zA-Z0-9]@[a-zA-Z0-9][a-zA-Z0-9.]*\\.[a-zA-Z0-9.]+$", email);
 	}
 
 }

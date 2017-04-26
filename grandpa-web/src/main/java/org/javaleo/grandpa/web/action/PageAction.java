@@ -13,7 +13,7 @@ import org.javaleo.grandpa.ejb.annotations.EditingNow;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
 import org.javaleo.grandpa.ejb.interceptors.EditingInterceptor;
 import org.slf4j.Logger;
@@ -44,7 +44,7 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	private MsgAction msgAction;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	public String list() {
 		startOrResumeConversation();

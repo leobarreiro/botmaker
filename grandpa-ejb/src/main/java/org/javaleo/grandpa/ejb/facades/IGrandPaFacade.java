@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import org.javaleo.grandpa.ejb.entities.BlackListExpression;
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
@@ -26,7 +27,7 @@ import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
 
 @Local
-public interface IBotMakerFacade extends Serializable {
+public interface IGrandPaFacade extends Serializable {
 
 	Bot validateBotTelegram(String token) throws BusinessException;
 
@@ -135,5 +136,7 @@ public interface IBotMakerFacade extends Serializable {
 	void saveCategory(Category category) throws BusinessException;
 
 	void disableCategory(Category category);
+
+	Category getFirstCategoryOptionfromBlog(Blog blog);
 
 }

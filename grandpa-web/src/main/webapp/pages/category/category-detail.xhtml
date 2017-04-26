@@ -7,6 +7,8 @@
 			<h:panelGroup layout="block" styleClass="blc1">
 				<h:outputLabel value="Name" />
 				<h:outputText styleClass="txt" value="#{categoryAction.category.name}" />
+				<h:outputLabel value="First Category Option" />
+				<h:outputText value="#{(categoryAction.category.firstOption) ? 'Yes' : 'No'}" styleClass="txt #{(categoryAction.category.firstOption) ? 'green' : 'red'}" />
 				<h:outputLabel value="Active" />
 				<h:outputText value="#{(categoryAction.category.active) ? 'Yes' : 'No'}" styleClass="txt #{(categoryAction.category.active) ? 'green' : 'red'}" />
 			</h:panelGroup>

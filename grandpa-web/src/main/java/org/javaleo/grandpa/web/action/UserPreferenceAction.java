@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.entities.UserPreference;
 import org.javaleo.grandpa.ejb.entities.UserPreference.PrefsType;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.security.BotMakerCredentials;
 import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 
@@ -28,7 +28,7 @@ public class UserPreferenceAction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private BotMakerCredentials credentials;

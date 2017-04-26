@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
@@ -21,7 +22,11 @@ public interface IPageBusiness extends Serializable {
 
 	void disablePage(Page page) throws BusinessException;
 
-	List<Page> listPagesFromBlog();
+	List<Page> listPagesFromBlog(Blog blog);
+
+	List<Page> listPagesFromBlogIdAndCategoryId(Long idBlog, Long idCategory) throws BusinessException;
+
+	List<Page> listPagesFromBlogKeyAndCategoryKey(String blogKey, String categoryKey) throws BusinessException;
 
 	List<Page> listPagesFromCategory(Category category);
 

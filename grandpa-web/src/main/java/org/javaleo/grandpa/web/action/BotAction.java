@@ -13,7 +13,7 @@ import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.enums.BotType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
 import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
@@ -33,7 +33,7 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private AuxAction auxAction;

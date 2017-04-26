@@ -14,7 +14,7 @@ import org.javaleo.grandpa.ejb.entities.Validator;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.enums.ValidatorType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
@@ -48,7 +48,7 @@ public class ValidatorAction extends AbstractCrudAction implements Serializable 
 	private List<ValidatorType> validatorTypeOptions;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	public String startNew() {
 		startNewConversation();

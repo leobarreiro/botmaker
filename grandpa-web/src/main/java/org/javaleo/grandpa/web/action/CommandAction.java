@@ -18,7 +18,7 @@ import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
-import org.javaleo.grandpa.ejb.facades.IBotMakerFacade;
+import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
 import org.javaleo.grandpa.ejb.security.BotMakerCredentials;
@@ -43,7 +43,7 @@ public class CommandAction extends AbstractCrudAction implements Serializable {
 	private Conversation conversation;
 
 	@Inject
-	private IBotMakerFacade facade;
+	private IGrandPaFacade facade;
 
 	@Inject
 	private UserPreferenceAction userPreferenceAction;

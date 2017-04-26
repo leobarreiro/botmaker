@@ -25,6 +25,7 @@ public class Blog implements IEntityBasic {
 
 	private Long id;
 	private String name;
+	private String key;
 	private String description;
 	private Company company;
 	private Date created;
@@ -48,6 +49,15 @@ public class Blog implements IEntityBasic {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "blog_key", length = 32, nullable = true)
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	@Column(name = "description", length = 255)
@@ -97,6 +107,7 @@ public class Blog implements IEntityBasic {
 		result = prime * result + ((created == null) ? 0 : created.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -122,6 +133,9 @@ public class Blog implements IEntityBasic {
 		if (id == null) {
 			if (other.id != null) return false;
 		} else if (!id.equals(other.id)) return false;
+		if (key == null) {
+			if (other.key != null) return false;
+		} else if (!key.equals(other.key)) return false;
 		if (name == null) {
 			if (other.name != null) return false;
 		} else if (!name.equals(other.name)) return false;
