@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" 
-	xmlns:c="http://java.sun.com/jsp/jstl/core" template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<f:metadata>
 			<f:event type="preRenderView" listener="#{blogPagesAction.listPages()}" />
 		</f:metadata>
-		<h1 class="blog-title">GrandPa Blog</h1>
-		<h3 class="blog-slogan">A Blog to celebrate Telegram, Java and other crazy stuff</h3>
-		<a4j:repeat value="#{blogPagesAction.pageList}" var="pgs">
-			<h:panelGroup layout="block" styleClass="pg-item-list">
-				<h2 class="pg-title">#{pgs.title}</h2>
-				<h:panelGroup layout="block" styleClass="pg-content">
-					<h:outputText value="#{pgs.content}" escape="false" />
-				</h:panelGroup>
-				<h:panelGrid columns="2" styleClass="pg-foot">
-					<h:outputText value="#{pgs.user.name}" />
-					<h:outputText value="#{pgs.created}" />
-				</h:panelGrid>
-				
+		<h1 class="blog-title">
+			<h:outputText value="#{blogPagesAction.blog.name}" />
+		</h1>
+		<h:panelGrid columns="2" styleClass="blog-subheader">
+			<h:panelGroup layout="block">
+				<h3 class="blog-slogan">
+					<h:outputText value="#{blogPagesAction.blog.description}" />
+				</h3>
 			</h:panelGroup>
-		</a4j:repeat>
+			<h:panelGroup layout="block">
+				Category Selector
+				<h:selectOneMenu value="#{blogPagesAction.category}" converter="#{entityBlogConverter}">
+					<f:selectItems value="#{blogPagesAction.categories}" var="ct" itemLabel="#{ct.name}" itemValue="#{ct}" />
+					<f:ajax event="change" execute="@this" listener="#{blogPagesAction.handleListPagesFromCategory()}" render="frm:contentPanelId" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+		</h:panelGrid>
+		<h:panelGroup id="contentPanelId">
+			<a4j:repeat value="#{blogPagesAction.pageList}" var="pgs">
+				<h:panelGroup layout="block" styleClass="pg-item-list">
+					<h2 class="pg-title">#{pgs.title}</h2>
+					<h:panelGroup layout="block" styleClass="pg-content">
+						<h:outputText value="#{pgs.content}" escape="false" />
+					</h:panelGroup>
+					<h:panelGrid columns="3" styleClass="pg-foot">
+						<h:panelGroup>
+							<h:outputLabel value="Category: " />
+							<h:outputText value="#{pgs.category.name}" />
+						</h:panelGroup>
+						<h:outputText value="#{pgs.user.name}" />
+						<h:outputText value="#{pgs.created}" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</a4j:repeat>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

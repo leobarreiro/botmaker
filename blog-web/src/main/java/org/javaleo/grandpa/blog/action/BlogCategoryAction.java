@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
-import org.javaleo.grandpa.ejb.facades.BlogFacade;
+import org.javaleo.grandpa.ejb.facades.IBlogFacade;
 
 @Named
 @ConversationScoped
@@ -24,7 +24,7 @@ public class BlogCategoryAction extends AbstractBlogAction implements Serializab
 	private Conversation conversation;
 
 	@Inject
-	private BlogFacade facade;
+	private IBlogFacade facade;
 
 	private Category firstCategory;
 	private List<Category> categories;

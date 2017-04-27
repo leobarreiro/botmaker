@@ -5,12 +5,16 @@
 		<h2 class="pc50">Category detail</h2>
 		<rich:panel styleClass="frm-crud pc50">
 			<h:panelGroup layout="block" styleClass="blc1">
+				<h:outputLabel value="Blog" />
+				<h:outputText styleClass="txt" value="#{categoryAction.category.blog.name}" />
 				<h:outputLabel value="Name" />
 				<h:outputText styleClass="txt" value="#{categoryAction.category.name}" />
 				<h:outputLabel value="First Category Option" />
 				<h:outputText value="#{(categoryAction.category.firstOption) ? 'Yes' : 'No'}" styleClass="txt #{(categoryAction.category.firstOption) ? 'green' : 'red'}" />
 				<h:outputLabel value="Active" />
 				<h:outputText value="#{(categoryAction.category.active) ? 'Yes' : 'No'}" styleClass="txt #{(categoryAction.category.active) ? 'green' : 'red'}" />
+				<h:outputLabel value="Key" />
+				<h:outputText value="#{categoryAction.category.key}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{categoryAction.listCategories()}" value="List Categories" styleClass="secondary" immediate="true" />
@@ -25,12 +29,10 @@
 				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
-		
 		<ui:param name="confirmTitle" value="Disable Category: [#{categoryAction.category.name}]" />
 		<ui:param name="confirmDescription" value="Are you sure to disable this category? You can undo this action later." />
 		<ui:param name="confirmBean" value="#{categoryAction}" />
 		<ui:param name="confirmMethod" value="disableCategory" />
 		<ui:include src="/pages/utils/confirm-action.xhtml" />
-		
 	</ui:define>
 </ui:composition>

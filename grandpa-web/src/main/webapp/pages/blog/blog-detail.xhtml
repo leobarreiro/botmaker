@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h2 class="pc50">Blog detail</h2>
+		<rich:panel styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="blc1">
+				<h:outputLabel value="Name" />
+				<h:outputText styleClass="txt" value="#{blogAction.blog.name}" />
+				<h:outputLabel value="Description" />
+				<h:outputText styleClass="txt" value="#{blogAction.blog.description}" />
+				<h:outputLabel value="Active" />
+				<h:outputText value="#{(blogAction.blog.active) ? 'Yes' : 'No'}" styleClass="txt #{(blogAction.blog.active) ? 'green' : 'red'}" />
+				<h:outputLabel value="Key" />
+				<h:outputText styleClass="txt" value="#{blogAction.blog.key}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{blogAction.listBlogs()}" value="List Blogs" styleClass="secondary" immediate="true" />
+				<h:commandButton action="#{blogAction.startEditBlog(blogAction.blog)}" value="Edit" styleClass="secondary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+			</h:panelGroup>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

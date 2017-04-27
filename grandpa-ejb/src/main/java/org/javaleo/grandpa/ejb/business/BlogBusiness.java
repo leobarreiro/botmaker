@@ -54,6 +54,8 @@ public class BlogBusiness implements IBlogBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveBlog(Blog blog) throws BusinessException {
+		Company company = companyBusiness.getCompanyById(credentials.getCompany().getId());
+		blog.setCompany(company);
 		if (StringUtils.isBlank(blog.getName())) {
 			throw new BusinessException("Blog name cant´t be empty.");
 		}

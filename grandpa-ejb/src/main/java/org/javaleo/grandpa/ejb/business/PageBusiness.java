@@ -76,9 +76,17 @@ public class PageBusiness implements IPageBusiness {
 		CriteriaBuilder cb = persistence.getCriteriaBuilder();
 		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
 		Root<Page> fromPage = cq.from(Page.class);
+		Join<Page, Category> joinCategory = fromPage.join("category", JoinType.INNER);
+		Join<Category, Blog> joinBlog = joinCategory.join("blog", JoinType.INNER);
 		Join<Page, Company> joinCompany = fromPage.join("company", JoinType.INNER);
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		predicates.add(cb.equal(joinCompany.get("id"), credentials.getCompany().getId()));
+		if (pageFilter.getBlog() != null) {
+			predicates.add(cb.equal(joinBlog.get("id"), pageFilter.getBlog().getId()));
+		}
+		if (pageFilter.getCategory() != null) {
+			predicates.add(cb.equal(joinCategory.get("id"), pageFilter.getCategory().getId()));
+		}
 		if (StringUtils.isNotBlank(pageFilter.getTitle())) {
 			Expression<String> path = fromPage.get("title");
 			predicates.add(cb.like(path, "%" + pageFilter.getTitle() + "%"));
@@ -151,7 +159,7 @@ public class PageBusiness implements IPageBusiness {
 		CriteriaQuery<Page> cq = cb.createQuery(Page.class);
 		Root<Page> fromPage = cq.from(Page.class);
 		Join<Page, Category> joinCat = fromPage.join("category", JoinType.INNER);
-		Join<Page, Blog> joinBlog = fromPage.join("blog", JoinType.INNER);
+		Join<Page, Blog> joinBlog = joinCat.join("blog", JoinType.INNER);
 		cq.where(cb.equal(joinBlog.get("key"), blogKey), cb.equal(joinCat.get("key"), categoryKey), cb.equal(fromPage.get("published"), Boolean.TRUE));
 		cq.orderBy(cb.desc(fromPage.get("created")));
 		cq.select(fromPage);

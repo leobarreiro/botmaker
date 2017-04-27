@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h2 class="pc50">Blogs List</h2>
+		<rich:panel styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{blogAction.startNewBlog()}" value="New Blog" styleClass="primary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+			</h:panelGroup>
+		</rich:panel>
+		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+			<rich:dataTable id="dtBlogs" value="#{blogAction.blogs}" var="bg" rows="20" styleClass="pc100">
+				<rich:column sortBy="#{bg.name}" styleClass="txlft">
+					<f:facet name="header">Name</f:facet>
+					<h:commandLink action="#{blogAction.detailBlog(bg)}" value="#{bg.name}" />
+				</rich:column>
+				<rich:column sortBy="#{bg.key}" styleClass="pc20 txctr">
+					<f:facet name="header">Key</f:facet>
+					<h:outputText value="#{bg.key}" />
+				</rich:column>
+				<rich:column sortBy="#{bg.active}" styleClass="pc20 txctr">
+					<f:facet name="header">Active</f:facet>
+					<h:outputText value="#{(bg.active) ? 'Yes' : 'No'}" styleClass="#{(bg.active) ? 'green' : 'red'}" />
+				</rich:column>
+			</rich:dataTable>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

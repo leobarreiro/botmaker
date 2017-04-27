@@ -27,6 +27,9 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 	public static final String PAGE_DETAIL = "/page-detail.botf?faces-redirect=true";
 	public static final String PAGE_LIST = "/pages/contents/page-search.bot?faces-redirect=true";
 
+	private Blog blog;
+	private Category category;
+	private List<Category> categories;
 	private PageFilter filter;
 	private List<Page> pageList;
 	private Page page;
@@ -46,12 +49,13 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 	public void listPages() {
 		startOrResumeConversation();
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		Blog blog;
 		if (params.containsKey("blog")) {
 			String blogKey = params.get("blog");
 			blog = facade.getBlogFromKey(blogKey);
 		} else {
-			blog = facade.getBlogFromId(1L);
+			if (blog == null) {
+				blog = facade.getBlogFromId(1L);
+			}
 		}
 
 		if (blog == null) {
@@ -59,12 +63,15 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 			return;
 		}
 
-		Category category;
+		categories = facade.listActiveCategoriesFromBlog(blog);
+
 		if (params.containsKey("cat")) {
 			String categoryKey = params.get("cat");
 			category = facade.getCategoryFromKey(categoryKey);
 		} else {
-			category = facade.getFirstCategoryOptionFromBlog(blog);
+			if (category == null) {
+				category = facade.getFirstCategoryOptionFromBlog(blog);
+			}
 		}
 
 		try {
@@ -74,9 +81,41 @@ public class BlogPagesAction extends AbstractBlogAction implements Serializable 
 		}
 	}
 
+	public void handleListPagesFromCategory() {
+		// try {
+		// pageList = facade.listPagesFromBlogKeyAndCategoryKey(blog.getKey(), category.getKey());
+		// } catch (BusinessException e) {
+		// pageList = new ArrayList<Page>();
+		// }
+	}
+
 	@Override
 	public Conversation getConversation() {
 		return conversation;
+	}
+
+	public Blog getBlog() {
+		return blog;
+	}
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	public PageFilter getFilter() {

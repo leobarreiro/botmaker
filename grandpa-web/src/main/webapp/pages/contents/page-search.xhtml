@@ -4,7 +4,19 @@
 	<ui:define name="content">
 		<h2 class="pc95">Content Pages</h2>
 		<rich:panel legend="Filter" styleClass="frm-crud pc95">
-			<h:panelGrid columns="6" styleClass="pc100">
+			<h:panelGrid columns="10" styleClass="pc100">
+				<h:outputText styleClass="txt" value="Blog" />
+				<h:selectOneMenu value="#{pageAction.filter.blog}" converter="#{entityConverter}">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}"/>
+					<f:selectItems value="#{pageAction.filter.blogOpt}" var="bg" itemValue="#{bg}" itemLabel="#{bg.name}" />
+					<f:ajax event="change" execute="@this" listener="#{pageAction.handleCategories()}" render="frm:categoryId" />
+				</h:selectOneMenu>
+				<h:outputText styleClass="txt" value="Category" />
+				<h:selectOneMenu id="categoryId" value="#{pageAction.filter.category}" converter="#{entityConverter}">
+					<f:selectItem itemLabel="Select..." itemValue="#{null}"/>
+					<f:selectItems value="#{pageAction.filter.categoryOpt}" var="ct" itemValue="#{ct}" itemLabel="#{ct.name}" />
+					<f:ajax event="change" execute="@this" />
+				</h:selectOneMenu>
 				<h:outputText styleClass="txt" value="Title" />
 				<h:inputText value="#{pageAction.filter.title}" />
 				<h:outputText styleClass="txt" value="Content" />

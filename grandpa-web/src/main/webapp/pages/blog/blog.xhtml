@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h2 class="pc50">Blog</h2>
+		<rich:panel id="blogCrudId" styleClass="frm-crud pc50">
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Name" styleClass="required" />
+				<h:inputText value="#{blogAction.blog.name}" maxlength="60" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Description" />
+				<h:inputTextarea value="#{blogAction.blog.description}" rows="2" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Active" />
+				<h:selectBooleanCheckbox value="#{blogAction.blog.active}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel value="Key" styleClass="required" />
+				<h:outputText id="keyId" value="#{blogAction.blog.key}" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{blogAction.listBlogs()}" value="Cancel" styleClass="secondary">
+					<f:ajax execute="@this" />
+				</h:commandButton>
+				<h:commandButton action="#{blogAction.saveBlog()}" value="Save" styleClass="primary" />
+			</h:panelGroup>
+		</rich:panel>
+	</ui:define>
+</ui:composition>

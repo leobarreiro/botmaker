@@ -2,27 +2,31 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h2 class="pc50">Categories List</h2>
-		<rich:panel styleClass="frm-crud pc50">
+		<h2 class="pc70">Categories List</h2>
+		<rich:panel styleClass="frm-crud pc70">
 			<h:panelGroup layout="block" styleClass="frm-submit">
 				<h:commandButton action="#{categoryAction.startNewCategory()}" value="New Category" styleClass="primary">
 					<f:ajax execute="@this" />
 				</h:commandButton>
 			</h:panelGroup>
 		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud pc50">
+		<h:panelGroup layout="block" styleClass="frm-crud pc70">
 			<rich:dataTable id="dtCategories" value="#{categoryAction.categoryList}" var="ct" rows="20" styleClass="pc100">
 				<rich:column sortBy="#{ct.name}" styleClass="txlft">
 					<f:facet name="header">Name</f:facet>
 					<h:commandLink action="#{categoryAction.detailCategory(ct)}" value="#{ct.name}" />
 				</rich:column>
-				<rich:column sortBy="#{ct.active}" styleClass="pc20 txctr">
+				<rich:column sortBy="#{ct.firstOption}" styleClass="pc20 txctr">
 					<f:facet name="header">First Option</f:facet>
 					<h:outputText value="#{(ct.firstOption) ? 'Yes' : 'No'}" styleClass="#{(ct.firstOption) ? 'green' : 'red'}" />
 				</rich:column>
 				<rich:column sortBy="#{ct.active}" styleClass="pc20 txctr">
 					<f:facet name="header">Active</f:facet>
 					<h:outputText value="#{(ct.active) ? 'Yes' : 'No'}" styleClass="#{(ct.active) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column sortBy="#{ct.key}" styleClass="txlft">
+					<f:facet name="header">Key</f:facet>
+					<h:outputText value="#{ct.key}" />
 				</rich:column>
 				<rich:column sortBy="#{ct.blog.name}" styleClass="txlft">
 					<f:facet name="header">Blog</f:facet>

@@ -83,15 +83,18 @@
 							<f:facet name="label">
 								<h:outputText value="Blog" />
 							</f:facet>
-							<c:forEach items="#{auxAction.lastPagesEdited}" var="pg">
-								<rich:menuItem label="#{pg.title}" action="#{pageAction.detail(pg)}" immediate="true" execute="@this" />
-							</c:forEach>
+							<rich:menuItem label="List Blogs" action="#{blogAction.listBlogs()}" immediate="true" execute="@this" />
+							<rich:menuItem label="New Blog" action="#{blogAction.startNewBlog()}" immediate="true" execute="@this" />
 							<rich:menuSeparator />
 							<rich:menuItem label="List Categories" action="#{categoryAction.listCategories()}" immediate="true" execute="@this" />
 							<rich:menuItem label="New Category" action="#{categoryAction.startNewCategory()}" immediate="true" execute="@this" />
 							<rich:menuSeparator />
 							<rich:menuItem label="List Pages" action="#{pageAction.list()}" immediate="true" execute="@this" />
 							<rich:menuItem label="New Page" action="#{pageAction.startNew()}" immediate="true" execute="@this" />
+							<rich:menuSeparator />
+							<c:forEach items="#{auxAction.lastPagesEdited}" var="pg">
+								<rich:menuItem label="#{pg.title}" action="#{pageAction.detail(pg)}" immediate="true" execute="@this" />
+							</c:forEach>
 						</rich:dropDownMenu>
 					</rich:toolbar>
 					<rich:toolbar styleClass="userbar">

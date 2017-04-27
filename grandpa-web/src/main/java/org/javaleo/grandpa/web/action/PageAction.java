@@ -107,7 +107,12 @@ public class PageAction extends AbstractConversationAction implements Serializab
 		return list();
 	}
 
+	public void handleCategories() {
+		filter.setCategoryOpt(facade.listActiveCategoriesFromBlog(filter.getBlog()));
+	}
+
 	private void initLoad() {
+		filter.setBlogOpt(facade.listBlogs());
 		categories = facade.listAllCategories();
 	}
 
