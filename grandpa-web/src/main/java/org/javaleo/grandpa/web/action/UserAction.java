@@ -30,6 +30,8 @@ public class UserAction extends AbstractConversationAction implements Serializab
 
 	private static final String PAGE_NEW_ACCOUNT = "/new-account.bot?faces-redirect=true";
 
+	private static final String PAGE_WAIT_MAIL_CONFIRMATION = "/confirm-new-account.bot?faces-redirect=true";
+
 	private static final String PAGE_INIT = "/index.bot?faces-redirect=true";
 
 	private static final long serialVersionUID = 8467442454444489390L;
@@ -98,18 +100,63 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		return PAGE_NEW_ACCOUNT;
 	}
 
-	public String saveNewUser() {
+	public String confirmMailOwnership() {
 		startOrResumeConversation();
 		try {
 			facade.validateUser(user, plainPassword, passwordReview);
 			if (StringUtils.isBlank(company.getName())) {
 				company.setName(user.getName());
 			}
+			company.setActive(false);
+			facade.saveCompany(company);
+			user.setActive(false);
+			user.setCompany(company);
+			facade.saveUser(user, plainPassword, passwordReview);
+			facade.sendMessageToConfirmMailOwnership(user);
+			msgAction.addInfoMessage("Congratulations! Just one more step. Please access your e-mail account and confirm his ownership.");
+			username = user.getUsername();
+			return PAGE_INIT;
+		} catch (BusinessException e) {
+			msgAction.addErrorMessage(e.getMessage());
+			return PAGE_NEW_ACCOUNT;
+		}
+	}
+
+	public void loadUserAfterMailConfirmation() {
+		startOrResumeConversation();
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String uniqueToken = params.get("uuidToken");
+		validToken = false;
+
+		try {
+			token = facade.getTokenByUUID(uniqueToken);
+			validToken = (token != null);
+		} catch (BusinessException e) {
+			LOG.error(e.getMessage());
+			return;
+		}
+
+		if (!validToken) {
+			msgAction.addErrorMessage("The token used is not valid or was expired. Please try a new register again.");
+			return;
+		}
+
+		uuidToken = uniqueToken;
+		user = token.getUser();
+		user.setActive(true);
+		company = user.getCompany();
+		company.setActive(true);
+	}
+
+	public String saveNewUser() {
+		startOrResumeConversation();
+		try {
+			user.setActive(true);
 			company.setActive(true);
 			facade.saveCompany(company);
 			user.setCompany(company);
-			facade.saveUser(user, plainPassword, passwordReview);
-			msgAction.addInfoMessage("Congratulations! Now you are registered in BotMaker. Please log in to start.");
+			facade.confirmUserRegistration(user);
+			msgAction.addInfoMessage("Congratulations! Now you are registered in GrandPa. Please log in to start.");
 			username = user.getUsername();
 			return goToLogin();
 		} catch (BusinessException e) {

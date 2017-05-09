@@ -86,6 +86,53 @@ public class UserBusiness implements IUserBusiness {
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+	public void sendMessageToConfirmMailOwnership(User user) throws BusinessException {
+		if (!GrandPaUtils.validateEmail(user.getEmail())) {
+			throw new BusinessException("The email can't be empty. You must enter a valid e-mail.");
+		}
+
+		User otherUserEmailOwner = findUserByEmail(user.getEmail());
+		if (otherUserEmailOwner == null) {
+			throw new BusinessException("The email entered not belongs to any user. Please try to create a new account again.");
+		}
+		if (!user.equals(otherUserEmailOwner)) {
+			throw new BusinessException("The email entered belongs to other user already registered. Please use other e-mail account.");
+		}
+
+		String mailContent = "";
+		Map<String, String> keyValues = new HashMap<>();
+
+		try {
+			mailContent = IOUtils.toString(getClass().getResourceAsStream("/templates/confirm-mail-ownership.html"));
+		} catch (IOException e) {
+			LOG.warn(e.getMessage());
+			throw new BusinessException(e.getMessage());
+		}
+
+		String domainName = null;
+		try {
+			domainName = System.getProperty("botmaker.domain");
+		} catch (Exception e) {
+			LOG.warn(e.getMessage());
+		}
+
+		if (StringUtils.isBlank(domainName)) {
+			LOG.warn("Property botmaker.domain is not defined in System properties. Please revise this configuration.");
+			domainName = GrandPaUtils.DOMAIN_NAME;
+		}
+
+		Token token = tokenBusiness.generateTokenToUser(otherUserEmailOwner);
+		keyValues.put("{domain-name}", domainName);
+		keyValues.put("{token-uuid}", token.getUuid());
+		keyValues.put("user-email", user.getEmail());
+
+		String htmlContent = messageUtils.assemblyBodyMail(keyValues, mailContent);
+
+		messageUtils.sendMailMessage("javaleo.org@gmail.com", user.getEmail(), "GrandPa Team - Confirm your e-mail ownership", htmlContent);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 	public void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException {
 		if (!GrandPaUtils.validateEmail(email)) {
 			throw new BusinessException("The email can't be empty. You must enter a valid e-mail.");
@@ -161,6 +208,13 @@ public class UserBusiness implements IUserBusiness {
 		cq.where(cb.equal(from.get("username"), username));
 		cq.select(from);
 		return persistence.getSingleResult(cq);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void confirmUserRegistration(User user) throws BusinessException {
+		user.setActive(true);
+		persistence.saveOrUpdate(user);
 	}
 
 	@Override

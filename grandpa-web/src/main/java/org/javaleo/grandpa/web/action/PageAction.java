@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 
 import org.javaleo.grandpa.ejb.annotations.EditingNow;
+import org.javaleo.grandpa.ejb.entities.Blog;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
@@ -29,6 +30,8 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	public static final String PAGE_DETAIL = "/pages/contents/page-detail.bot?faces-redirect=true";
 	public static final String PAGE_LIST = "/pages/contents/page-search.bot?faces-redirect=true";
 
+	private Blog blog;
+	private List<Blog> blogList;
 	private PageFilter filter;
 	private List<Page> pageList;
 	private Page page;
@@ -48,11 +51,8 @@ public class PageAction extends AbstractConversationAction implements Serializab
 
 	public String list() {
 		startOrResumeConversation();
-		if (filter == null) {
-			filter = new PageFilter();
-		}
-		pageList = facade.listPages(filter);
 		initLoad();
+		pageList = facade.listPages(filter);
 		return PAGE_LIST;
 	}
 
@@ -112,6 +112,10 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	}
 
 	private void initLoad() {
+		if (filter == null) {
+			filter = new PageFilter();
+		}
+		blogList = facade.listBlogs();
 		filter.setBlogOpt(facade.listBlogs());
 		categories = facade.listAllCategories();
 	}
@@ -119,6 +123,22 @@ public class PageAction extends AbstractConversationAction implements Serializab
 	@Override
 	public Conversation getConversation() {
 		return conversation;
+	}
+
+	public Blog getBlog() {
+		return blog;
+	}
+
+	public void setBlog(Blog blog) {
+		this.blog = blog;
+	}
+
+	public List<Blog> getBlogList() {
+		return blogList;
+	}
+
+	public void setBlogList(List<Blog> blogList) {
+		this.blogList = blogList;
 	}
 
 	public PageFilter getFilter() {

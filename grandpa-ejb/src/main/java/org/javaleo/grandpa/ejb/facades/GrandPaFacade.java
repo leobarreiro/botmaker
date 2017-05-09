@@ -141,8 +141,18 @@ public class GrandPaFacade implements IGrandPaFacade {
 	}
 
 	@Override
+	public void sendMessageToConfirmMailOwnership(User user) throws BusinessException {
+		userBusiness.sendMessageToConfirmMailOwnership(user);
+	}
+
+	@Override
 	public void saveUser(User user, String password, String passwordReview) throws BusinessException {
 		userBusiness.saveUser(user, password, passwordReview);
+	}
+
+	@Override
+	public void confirmUserRegistration(User user) throws BusinessException {
+		userBusiness.confirmUserRegistration(user);
 	}
 
 	@Override

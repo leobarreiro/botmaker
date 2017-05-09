@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:panelGroup layout="block" styleClass="topmenu">
+		<rich:toolbar rendered="#{botMakerAuthenticator.loggedIn}" styleClass="menubar">
+			<rich:dropDownMenu mode="ajax" rendered="#{botMakerCredentials.user.admin}">
+				<f:facet name="label">
+					<h:outputText value="Expressions" />
+				</f:facet>
+				<rich:menuItem label="List Expressions" action="#{blackListExpressionAction.list()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Expression" action="#{blackListExpressionAction.startNew()}" immediate="true" execute="@this" />
+			</rich:dropDownMenu>
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="Validators" />
+				</f:facet>
+				<rich:menuItem label="List Validators" action="#{validatorAction.list()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" />
+			</rich:dropDownMenu>
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="Bots" />
+				</f:facet>
+				<c:forEach items="#{auxAction.bots}" var="bt">
+					<rich:menuItem label="#{bt.name}" action="#{botAction.detail(bt)}" immediate="true" execute="@this" styleClass="#{(bt.valid) ? 'green' : 'red'}" />
+				</c:forEach>
+				<rich:menuSeparator />
+				<rich:menuItem label="List Bots" action="#{botAction.list()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Bot" action="#{botAction.startNew()}" immediate="true" execute="@this" />
+			</rich:dropDownMenu>
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="Scripts" />
+				</f:facet>
+				<rich:menuItem label="Generic Scripts" disabled="true" />
+				<c:forEach items="#{auxAction.lastGenericScripts}" var="sc">
+					<rich:menuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="green" />
+				</c:forEach>
+				<rich:menuSeparator />
+				<rich:menuItem label="List Generic Scripts" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Generic Script" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" />
+				<rich:menuSeparator />
+				<rich:menuSeparator />
+				<rich:menuItem label="Command Scripts" disabled="true" />
+				<c:forEach items="#{auxAction.lastCommandScriptsEdited}" var="cse">
+					<rich:menuItem action="#{scriptAction.startEditScript(cse.command.bot, cse.command, cse)}" immediate="true" execute="@this">
+						<h:outputLabel value="#{cse.command.key}"
+							styleClass="tx9 personal-item #{(cse.scriptType eq 'GROOVY') ? 'groovy' : (cse.scriptType eq 'PYTHON') ? 'python' : (cse.scriptType eq 'JAVASCRIPT') ? 'javascript' : 'none'}" />
+						<h:outputLabel value="(#{cse.command.bot.name})" styleClass="tx9 personal-item" />
+					</rich:menuItem>
+				</c:forEach>
+			</rich:dropDownMenu>
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="Blog" />
+				</f:facet>
+				<rich:menuItem label="List Blogs" action="#{blogAction.listBlogs()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Blog" action="#{blogAction.startNewBlog()}" immediate="true" execute="@this" />
+				<rich:menuSeparator />
+				<rich:menuItem label="List Categories" action="#{categoryAction.listCategories()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Category" action="#{categoryAction.startNewCategory()}" immediate="true" execute="@this" />
+				<rich:menuSeparator />
+				<rich:menuItem label="List Pages" action="#{pageAction.list()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Page" action="#{pageAction.startNew()}" immediate="true" execute="@this" />
+				<rich:menuSeparator />
+				<c:forEach items="#{auxAction.lastPagesEdited}" var="pg">
+					<rich:menuItem label="#{pg.title}" action="#{pageAction.detail(pg)}" immediate="true" execute="@this" />
+				</c:forEach>
+			</rich:dropDownMenu>
+		</rich:toolbar>
+		<rich:toolbar styleClass="userbar">
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="#{botMakerCredentials.user.name}" />
+				</f:facet>
+				<rich:menuItem label="Preferences" action="#{userPreferenceAction.init()}" immediate="true" execute="@this" />
+				<rich:menuSeparator />
+				<rich:menuItem label="Logout" action="#{userAction.logoff()}" immediate="true" />
+			</rich:dropDownMenu>
+		</rich:toolbar>
+	</h:panelGroup>
+</ui:composition>

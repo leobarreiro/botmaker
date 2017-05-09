@@ -5,29 +5,36 @@
 		<h2>Content Page</h2>
 		<rich:panel styleClass="frm-crud" id="infoPanelId">
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Title" styleClass="required" />
-				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
+				<h:outputLabel value="Blog" styleClass="required pc15" />
+				<h:selectOneMenu id="blogId" value="#{pageAction.blog}" converter="#{entityConverter}">
+					<f:selectItems value="#{pageAction.blogList}" var="bl" itemLabel="#{bl.name}" itemValue="#{bl}" />
+					<f:ajax event="change" listener="" execute="@this" render="categoryId" />
+				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Category" styleClass="required" />
+				<h:outputLabel value="Category" styleClass="required pc15" />
 				<h:selectOneMenu id="categoryId" value="#{pageAction.page.category}" converter="#{entityConverter}">
 					<f:selectItems value="#{pageAction.categories}" var="ct" itemLabel="#{ct.name}" itemValue="#{ct}" />
 					<f:ajax event="change" execute="@this" />
 				</h:selectOneMenu>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Published" />
+				<h:outputLabel value="Title" styleClass="required pc15" />
+				<h:inputText value="#{pageAction.page.title}" maxlength="50" size="50" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="frm-line">
+				<h:outputLabel styleClass="pc15" value="Published" />
 				<h:selectBooleanCheckbox value="#{pageAction.page.published}">
 					<f:selectItem itemLabel="Yes" itemValue="true" />
 					<f:selectItem itemLabel="No" itemValue="false" />
 				</h:selectBooleanCheckbox>
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Author" />
+				<h:outputLabel styleClass="pc15" value="Author" />
 				<h:outputText value="#{pageAction.page.user.name}" styleClass="txt" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Created" />
+				<h:outputLabel styleClass="pc15" value="Created" />
 				<h:outputText value="#{pageAction.page.created}" styleClass="txt">
 					<f:convertDateTime pattern="dd/MM/yy HH'h'mm'm'" timeZone="America/Sao_Paulo" />
 				</h:outputText>

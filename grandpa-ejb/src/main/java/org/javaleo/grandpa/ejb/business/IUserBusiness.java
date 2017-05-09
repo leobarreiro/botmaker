@@ -19,7 +19,11 @@ public interface IUserBusiness extends Serializable {
 
 	User findUserByUsername(String username);
 
+	void sendMessageToConfirmMailOwnership(User user) throws BusinessException;
+
 	void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException;
+
+	void confirmUserRegistration(User user) throws BusinessException;
 
 	List<User> listAllUsers();
 

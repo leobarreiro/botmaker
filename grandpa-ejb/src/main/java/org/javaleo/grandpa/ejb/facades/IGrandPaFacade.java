@@ -41,7 +41,11 @@ public interface IGrandPaFacade extends Serializable {
 
 	void validateUser(User user, String password, String passwordReview) throws BusinessException;
 
+	void sendMessageToConfirmMailOwnership(User user) throws BusinessException;
+
 	void saveUser(User user, String password, String passwordReview) throws BusinessException;
+
+	void confirmUserRegistration(User user) throws BusinessException;
 
 	void sendMessageRecoveryLoginToUser(String email, String emailReview) throws BusinessException;
 
