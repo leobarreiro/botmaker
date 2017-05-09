@@ -124,7 +124,7 @@ public class UserBusiness implements IUserBusiness {
 		Token token = tokenBusiness.generateTokenToUser(otherUserEmailOwner);
 		keyValues.put("{domain-name}", domainName);
 		keyValues.put("{token-uuid}", token.getUuid());
-		keyValues.put("user-email", user.getEmail());
+		keyValues.put("{user-email}", user.getEmail());
 
 		String htmlContent = messageUtils.assemblyBodyMail(keyValues, mailContent);
 
