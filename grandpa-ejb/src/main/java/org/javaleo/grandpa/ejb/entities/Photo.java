@@ -2,7 +2,6 @@ package org.javaleo.grandpa.ejb.entities;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,6 +38,7 @@ public class Photo implements IEntityBasic {
 	private Gallery gallery;
 	private byte[] content;
 
+	@Override
 	@Id
 	@Column(name = "photo_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_sq")
@@ -125,7 +125,7 @@ public class Photo implements IEntityBasic {
 		this.uploader = uploader;
 	}
 
-	@ManyToOne(optional = false, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "gallery_id", referencedColumnName = "gallery_id", foreignKey = @ForeignKey(name = "photo_fk_gallery"))
 	public Gallery getGallery() {
 		return gallery;

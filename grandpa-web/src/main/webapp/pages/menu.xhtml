@@ -67,6 +67,13 @@
 					<rich:menuItem label="#{pg.title}" action="#{pageAction.detail(pg)}" immediate="true" execute="@this" />
 				</c:forEach>
 			</rich:dropDownMenu>
+			<rich:dropDownMenu mode="ajax">
+				<f:facet name="label">
+					<h:outputText value="Photograph" />
+				</f:facet>
+				<rich:menuItem label="List Galleries" action="#{galleryAction.startListGalleries()}" immediate="true" execute="@this" />
+				<rich:menuItem label="New Gallery" action="#{galleryAction.startNewGallery()}" immediate="true" execute="@this" />
+			</rich:dropDownMenu>
 		</rich:toolbar>
 		<rich:toolbar styleClass="userbar">
 			<rich:dropDownMenu mode="ajax">

@@ -121,13 +121,11 @@ public class UserBusiness implements IUserBusiness {
 			domainName = GrandPaUtils.DOMAIN_NAME;
 		}
 
-		Token token = tokenBusiness.generateTokenToUser(otherUserEmailOwner);
+		Token token = tokenBusiness.generateTokenWithDuration(otherUserEmailOwner, 48);
 		keyValues.put("{domain-name}", domainName);
 		keyValues.put("{token-uuid}", token.getUuid());
 		keyValues.put("{user-email}", user.getEmail());
-
 		String htmlContent = messageUtils.assemblyBodyMail(keyValues, mailContent);
-
 		messageUtils.sendMailMessage("javaleo.org@gmail.com", user.getEmail(), "GrandPa Team - Confirm your e-mail ownership", htmlContent);
 	}
 

@@ -41,11 +41,8 @@ public class User implements IEntityBasic {
 
 	@Override
 	@Id
-	@Column(
-			name = "user_id")
-	@GeneratedValue(
-			strategy = GenerationType.SEQUENCE,
-			generator = "sq_user")
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_user")
 	public Long getId() {
 		return id;
 	}
@@ -54,9 +51,7 @@ public class User implements IEntityBasic {
 		this.id = id;
 	}
 
-	@Column(
-			name = "name",
-			length = 80)
+	@Column(name = "name", length = 80)
 	public String getName() {
 		return name;
 	}
@@ -65,9 +60,7 @@ public class User implements IEntityBasic {
 		this.name = name;
 	}
 
-	@Column(
-			name = "username",
-			length = 30)
+	@Column(name = "username", length = 30)
 	public String getUsername() {
 		return username;
 	}
@@ -76,9 +69,7 @@ public class User implements IEntityBasic {
 		this.username = username;
 	}
 
-	@Column(
-			name = "passphrase",
-			length = 128)
+	@Column(name = "passphrase", length = 128)
 	public String getPassword() {
 		return password;
 	}
@@ -87,9 +78,7 @@ public class User implements IEntityBasic {
 		this.password = password;
 	}
 
-	@Column(
-			name = "email",
-			length = 80)
+	@Column(name = "email", length = 80)
 	public String getEmail() {
 		return email;
 	}
@@ -98,9 +87,7 @@ public class User implements IEntityBasic {
 		this.email = email;
 	}
 
-	@Column(
-			name = "telegram_id",
-			nullable = true)
+	@Column(name = "telegram_id", nullable = true)
 	public Integer getIdTelegram() {
 		return idTelegram;
 	}
@@ -109,14 +96,8 @@ public class User implements IEntityBasic {
 		this.idTelegram = idTelegram;
 	}
 
-	@ManyToOne(
-			fetch = FetchType.EAGER,
-			optional = true)
-	@JoinColumn(
-			name = "company_id",
-			referencedColumnName = "company_id",
-			foreignKey = @ForeignKey(
-					name = "fk_user_company"))
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "company_id", referencedColumnName = "company_id", foreignKey = @ForeignKey(name = "fk_user_company"))
 	public Company getCompany() {
 		return company;
 	}
@@ -125,8 +106,7 @@ public class User implements IEntityBasic {
 		this.company = company;
 	}
 
-	@Column(
-			name = "admin")
+	@Column(name = "admin")
 	public Boolean getAdmin() {
 		return admin;
 	}
@@ -135,8 +115,7 @@ public class User implements IEntityBasic {
 		this.admin = admin;
 	}
 
-	@Column(
-			name = "active")
+	@Column(name = "active")
 	public Boolean getActive() {
 		return active;
 	}
@@ -145,10 +124,7 @@ public class User implements IEntityBasic {
 		this.active = active;
 	}
 
-	@OneToMany(
-			mappedBy = "user",
-			cascade = { CascadeType.REMOVE },
-			fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	public List<UserPreference> getPreferences() {
 		return preferences;
 	}
@@ -157,22 +133,9 @@ public class User implements IEntityBasic {
 		this.preferences = preferences;
 	}
 
-	@ManyToMany(
-			cascade = { CascadeType.REFRESH },
-			fetch = FetchType.EAGER)
-	@JoinTable(
-			schema = EntityUtils.SCHEMA,
-			name = "user_gallery",
-			joinColumns = { @JoinColumn(
-					name = "user_id",
-					referencedColumnName = "user_id",
-					foreignKey = @ForeignKey(
-							name = "user_fk_user")) },
-			inverseJoinColumns = { @JoinColumn(
-					name = "gallery_id",
-					referencedColumnName = "gallery_id",
-					foreignKey = @ForeignKey(
-							name = "gallery_fk_gallery")) })
+	@ManyToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
+	@JoinTable(schema = EntityUtils.SCHEMA, name = "user_gallery", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "user_fk_user")) },
+			inverseJoinColumns = { @JoinColumn(name = "gallery_id", referencedColumnName = "gallery_id", foreignKey = @ForeignKey(name = "gallery_fk_gallery")) })
 	public List<Gallery> getGalleries() {
 		return galleries;
 	}

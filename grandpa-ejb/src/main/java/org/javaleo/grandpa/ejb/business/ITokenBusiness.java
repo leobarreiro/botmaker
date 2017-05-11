@@ -13,6 +13,8 @@ public interface ITokenBusiness extends Serializable {
 
 	Token generateTokenToUser(User user) throws BusinessException;
 
+	Token generateTokenWithDuration(User user, Integer durationHours) throws BusinessException;
+
 	Token getTokenByUUID(final String uuid) throws BusinessException;
 
 }

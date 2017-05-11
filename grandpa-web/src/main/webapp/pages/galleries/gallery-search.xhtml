@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h2 class="pc70">Galleries List</h2>
+		<rich:panel styleClass="frm-crud pc90">
+			<h:panelGroup layout="block" styleClass="frm-submit">
+				<h:commandButton action="#{galleryAction.listGalleries()}" value="Search" styleClass="primary" />
+				<h:commandButton action="#{galleryAction.startNewGallery()}" value="New Gallery" styleClass="secondary">
+					<f:ajax execute="@this" immediate="true" />
+				</h:commandButton>
+			</h:panelGroup>
+		</rich:panel>
+		<h:panelGroup layout="block" styleClass="frm-crud pc90">
+			<rich:dataTable id="dtGalleries" value="#{galleryAction.galleries}" var="gl" rows="20" styleClass="pc100">
+				<rich:column sortBy="#{gl.name}" styleClass="txlft">
+					<f:facet name="header">Name</f:facet>
+					<h:commandLink action="#{galleryAction.startEdit(gl)}" value="#{gl.name}">
+						<f:ajax execute="@this" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column sortBy="#{gl.resumeDescription}" styleClass="txlft">
+					<f:facet name="header">Description</f:facet>
+					<h:outputText value="#{gl.resumeDescription()}" />
+				</rich:column>
+				<rich:column sortBy="#{gl.active}" styleClass="pc10 txctr">
+					<f:facet name="header">Active</f:facet>
+					<h:outputText value="#{(gl.active) ? 'Yes' : 'No'}" styleClass="#{(gl.active) ? 'green' : 'red'}" />
+				</rich:column>
+				<rich:column sortBy="#{gl.uuid}" styleClass="txlft">
+					<f:facet name="header">UUID</f:facet>
+					<h:outputText value="#{gl.uuid}" />
+				</rich:column>
+				<rich:column sortBy="#{gl.owner.name}" styleClass="txctr">
+					<f:facet name="header">Owner</f:facet>
+					<h:outputText value="#{gl.owner.name}" />
+				</rich:column>
+				<rich:column sortBy="#{gl.created}" styleClass="txctr">
+					<f:facet name="header">Created</f:facet>
+					<h:outputText value="#{gl.created}" />
+				</rich:column>
+				<rich:column sortBy="#{gl.lastModified}" styleClass="txctr">
+					<f:facet name="header">Last Modified</f:facet>
+					<h:outputText value="#{gl.lastModified}" />
+				</rich:column>
+			</rich:dataTable>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>

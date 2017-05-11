@@ -30,8 +30,6 @@ public class UserAction extends AbstractConversationAction implements Serializab
 
 	private static final String PAGE_NEW_ACCOUNT = "/new-account.bot?faces-redirect=true";
 
-	private static final String PAGE_WAIT_MAIL_CONFIRMATION = "/confirm-new-account.bot?faces-redirect=true";
-
 	private static final String PAGE_INIT = "/index.bot?faces-redirect=true";
 
 	private static final long serialVersionUID = 8467442454444489390L;
@@ -137,7 +135,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		}
 
 		if (!validToken) {
-			msgAction.addErrorMessage("The token used is not valid or was expired. Please try a new register again.");
+			msgAction.addErrorMessage("The token used is not valid. Please try a new registration again.");
 			return;
 		}
 
@@ -156,7 +154,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 			facade.saveCompany(company);
 			user.setCompany(company);
 			facade.confirmUserRegistration(user);
-			msgAction.addInfoMessage("Congratulations! Now you are registered in GrandPa. Please log in to start.");
+			msgAction.addInfoMessage("Congratulations! You are registered in GrandPa. Please log in to start.");
 			username = user.getUsername();
 			return goToLogin();
 		} catch (BusinessException e) {
@@ -204,7 +202,7 @@ public class UserAction extends AbstractConversationAction implements Serializab
 		startOrResumeConversation();
 		try {
 			facade.saveUser(token.getUser(), plainPassword, passwordReview);
-			msgAction.addInfoMessage("Your new password was been saved!");
+			msgAction.addInfoMessage("Your new password has been saved!");
 			return PAGE_INIT;
 		} catch (BusinessException e) {
 			msgAction.addErrorMessage(e.getMessage());

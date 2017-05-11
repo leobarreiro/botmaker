@@ -11,6 +11,7 @@ import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
+import org.javaleo.grandpa.ejb.entities.Gallery;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.entities.Script;
@@ -21,6 +22,7 @@ import org.javaleo.grandpa.ejb.entities.Validator;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
+import org.javaleo.grandpa.ejb.filters.GalleryFilter;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
@@ -152,5 +154,17 @@ public interface IGrandPaFacade extends Serializable {
 	Blog getBlogFromKey(String key);
 
 	Blog getBlogFromId(Long id);
+
+	Gallery getGalleryByUuid(String uuid);
+
+	Gallery createGallery(String name) throws BusinessException;
+
+	void saveGallery(Gallery gallery) throws BusinessException;
+
+	boolean validateGallery(Gallery gallery) throws BusinessException;
+
+	void deleteGallery(Gallery gallery) throws BusinessException;
+
+	List<Gallery> searchGalleries(GalleryFilter galleryFilter);
 
 }

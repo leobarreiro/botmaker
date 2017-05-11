@@ -15,6 +15,7 @@ import org.javaleo.grandpa.ejb.business.ICategoryBusiness;
 import org.javaleo.grandpa.ejb.business.ICommandBusiness;
 import org.javaleo.grandpa.ejb.business.ICompanyBusiness;
 import org.javaleo.grandpa.ejb.business.IDialogContextVarBusiness;
+import org.javaleo.grandpa.ejb.business.IGalleryBusiness;
 import org.javaleo.grandpa.ejb.business.IPageBusiness;
 import org.javaleo.grandpa.ejb.business.IQuestionBusiness;
 import org.javaleo.grandpa.ejb.business.IScriptBusiness;
@@ -28,6 +29,7 @@ import org.javaleo.grandpa.ejb.entities.Bot;
 import org.javaleo.grandpa.ejb.entities.Category;
 import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
+import org.javaleo.grandpa.ejb.entities.Gallery;
 import org.javaleo.grandpa.ejb.entities.Page;
 import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.entities.Script;
@@ -38,6 +40,7 @@ import org.javaleo.grandpa.ejb.entities.Validator;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
+import org.javaleo.grandpa.ejb.filters.GalleryFilter;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
@@ -90,6 +93,9 @@ public class GrandPaFacade implements IGrandPaFacade {
 
 	@Inject
 	private ICategoryBusiness categoryBusiness;
+
+	@Inject
+	private IGalleryBusiness galleryBusiness;
 
 	@Override
 	public List<Company> listAllCompanies() {
@@ -404,6 +410,36 @@ public class GrandPaFacade implements IGrandPaFacade {
 	@Override
 	public Category getFirstCategoryOptionfromBlog(Blog blog) {
 		return categoryBusiness.getFirstCategoryOptionFromBlog(blog);
+	}
+
+	@Override
+	public Gallery getGalleryByUuid(String uuid) {
+		return galleryBusiness.getGalleryByUuid(uuid);
+	}
+
+	@Override
+	public Gallery createGallery(String name) throws BusinessException {
+		return galleryBusiness.createGallery(name);
+	}
+
+	@Override
+	public void saveGallery(Gallery gallery) throws BusinessException {
+		galleryBusiness.saveGallery(gallery);
+	}
+
+	@Override
+	public boolean validateGallery(Gallery gallery) throws BusinessException {
+		return galleryBusiness.validateGallery(gallery);
+	}
+
+	@Override
+	public void deleteGallery(Gallery gallery) throws BusinessException {
+		galleryBusiness.deleteGallery(gallery);
+	}
+
+	@Override
+	public List<Gallery> searchGalleries(GalleryFilter galleryFilter) {
+		return galleryBusiness.searchGalleries(galleryFilter);
 	}
 
 }
