@@ -51,6 +51,7 @@
 		<version.richfaces>4.5.15.Final</version.richfaces>
 		<version.resteasy>3.1.2.Final</version.resteasy>
 		<version.gson>2.8.0</version.gson>
+		<version.imgscal>4.2</version.imgscal>
 	</properties>
 	<scm>
 		<connection>scm:git:https://bitbucket.org/javaleo/botmaker.git</connection>
@@ -153,9 +154,14 @@
 				<version>${version.resteasy}</version>
 			</dependency>
 			<dependency>
-			    <groupId>com.google.code.gson</groupId>
-			    <artifactId>gson</artifactId>
-			    <version>${version.gson}</version>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${version.gson}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.imgscalr</groupId>
+				<artifactId>imgscalr-lib</artifactId>
+				<version>${version.imgscal}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>

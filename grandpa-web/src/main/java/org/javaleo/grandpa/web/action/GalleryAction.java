@@ -1,7 +1,6 @@
 package org.javaleo.grandpa.web.action;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -70,14 +69,11 @@ public class GalleryAction extends AbstractConversationAction implements Seriali
 		return PAGE_GALLERY_2;
 	}
 
-	public String startListGalleries() {
-		startOrResumeConversation();
-		filter = new GalleryFilter();
-		galleries = new ArrayList<Gallery>();
-		return PAGE_LIST;
-	}
-
 	public String listGalleries() {
+		startOrResumeConversation();
+		if (filter == null) {
+			filter = new GalleryFilter();
+		}
 		galleries = facade.searchGalleries(filter);
 		return PAGE_LIST;
 	}
@@ -108,7 +104,7 @@ public class GalleryAction extends AbstractConversationAction implements Seriali
 			msgAction.addErrorMessage(e.getMessage());
 			LOG.warn(e.getMessage());
 		}
-		return startListGalleries();
+		return listGalleries();
 	}
 
 	public Gallery getGallery() {

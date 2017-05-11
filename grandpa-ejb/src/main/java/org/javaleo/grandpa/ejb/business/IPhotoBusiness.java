@@ -1,5 +1,7 @@
 package org.javaleo.grandpa.ejb.business;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +15,10 @@ import org.javaleo.grandpa.ejb.filters.PhotoFilter;
 public interface IPhotoBusiness extends Serializable {
 
 	boolean validatePhoto(Photo photo) throws BusinessException;
+
+	File getFileFromPhoto(Photo photo) throws BusinessException, IOException;
+
+	File getFileThumbnailFromPhoto(Photo photo) throws BusinessException, IOException;
 
 	void savePhoto(Photo photo) throws BusinessException;
 
