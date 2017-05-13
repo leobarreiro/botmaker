@@ -1,5 +1,7 @@
 package org.javaleo.grandpa.ejb.facades;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Gallery;
 import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.entities.Photo;
 import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.entities.Token;
@@ -24,6 +27,7 @@ import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
 import org.javaleo.grandpa.ejb.filters.GalleryFilter;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
+import org.javaleo.grandpa.ejb.filters.PhotoFilter;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
@@ -166,5 +170,17 @@ public interface IGrandPaFacade extends Serializable {
 	void deleteGallery(Gallery gallery) throws BusinessException;
 
 	List<Gallery> searchGalleries(GalleryFilter galleryFilter);
+
+	boolean validatePhoto(Photo photo) throws BusinessException;
+
+	File getFileFromPhoto(Photo photo) throws BusinessException, IOException;
+
+	File getFileThumbnailFromPhoto(Photo photo) throws BusinessException, IOException;
+
+	void savePhoto(Photo photo) throws BusinessException;
+
+	void deletePhoto(Photo photo) throws BusinessException;
+
+	List<Photo> searchPhotos(PhotoFilter photoFilter);
 
 }

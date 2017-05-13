@@ -1,5 +1,7 @@
 package org.javaleo.grandpa.ejb.facades;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -17,6 +19,7 @@ import org.javaleo.grandpa.ejb.business.ICompanyBusiness;
 import org.javaleo.grandpa.ejb.business.IDialogContextVarBusiness;
 import org.javaleo.grandpa.ejb.business.IGalleryBusiness;
 import org.javaleo.grandpa.ejb.business.IPageBusiness;
+import org.javaleo.grandpa.ejb.business.IPhotoBusiness;
 import org.javaleo.grandpa.ejb.business.IQuestionBusiness;
 import org.javaleo.grandpa.ejb.business.IScriptBusiness;
 import org.javaleo.grandpa.ejb.business.ITokenBusiness;
@@ -31,6 +34,7 @@ import org.javaleo.grandpa.ejb.entities.Command;
 import org.javaleo.grandpa.ejb.entities.Company;
 import org.javaleo.grandpa.ejb.entities.Gallery;
 import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.entities.Photo;
 import org.javaleo.grandpa.ejb.entities.Question;
 import org.javaleo.grandpa.ejb.entities.Script;
 import org.javaleo.grandpa.ejb.entities.Token;
@@ -42,6 +46,7 @@ import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.filters.BotFilter;
 import org.javaleo.grandpa.ejb.filters.GalleryFilter;
 import org.javaleo.grandpa.ejb.filters.PageFilter;
+import org.javaleo.grandpa.ejb.filters.PhotoFilter;
 import org.javaleo.grandpa.ejb.filters.ValidatorFilter;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.DialogContextVar;
@@ -96,6 +101,9 @@ public class GrandPaFacade implements IGrandPaFacade {
 
 	@Inject
 	private IGalleryBusiness galleryBusiness;
+
+	@Inject
+	private IPhotoBusiness photoBusiness;
 
 	@Override
 	public List<Company> listAllCompanies() {
@@ -440,6 +448,36 @@ public class GrandPaFacade implements IGrandPaFacade {
 	@Override
 	public List<Gallery> searchGalleries(GalleryFilter galleryFilter) {
 		return galleryBusiness.searchGalleries(galleryFilter);
+	}
+
+	@Override
+	public boolean validatePhoto(Photo photo) throws BusinessException {
+		return photoBusiness.validatePhoto(photo);
+	}
+
+	@Override
+	public File getFileFromPhoto(Photo photo) throws BusinessException, IOException {
+		return photoBusiness.getFileFromPhoto(photo);
+	}
+
+	@Override
+	public File getFileThumbnailFromPhoto(Photo photo) throws BusinessException, IOException {
+		return photoBusiness.getFileThumbnailFromPhoto(photo);
+	}
+
+	@Override
+	public void savePhoto(Photo photo) throws BusinessException {
+		photoBusiness.savePhoto(photo);
+	}
+
+	@Override
+	public void deletePhoto(Photo photo) throws BusinessException {
+		photoBusiness.deletePhoto(photo);
+	}
+
+	@Override
+	public List<Photo> searchPhotos(PhotoFilter photoFilter) {
+		return photoBusiness.searchPhotos(photoFilter);
 	}
 
 }
