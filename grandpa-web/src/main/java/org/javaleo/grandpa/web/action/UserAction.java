@@ -15,6 +15,7 @@ import org.javaleo.grandpa.ejb.entities.Token;
 import org.javaleo.grandpa.ejb.entities.User;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
+import org.javaleo.grandpa.ejb.security.BotMakerAuthenticator;
 import org.javaleo.grandpa.web.action.MsgAction.MessageType;
 import org.javaleo.libs.jee.core.exceptions.JavaleoException;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;

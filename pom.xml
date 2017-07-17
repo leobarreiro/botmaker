@@ -83,6 +83,7 @@
 				<groupId>org.javaleo.libs</groupId>
 				<artifactId>jee-core</artifactId>
 				<version>${version.javaleo.core}</version>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.javaleo.libs</groupId>
@@ -100,6 +101,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${version.hibernate.core}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -154,11 +156,6 @@
 				<version>${version.resteasy}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.google.code.gson</groupId>
-				<artifactId>gson</artifactId>
-				<version>${version.gson}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.imgscalr</groupId>
 				<artifactId>imgscalr-lib</artifactId>
 				<version>${version.imgscal}</version>
@@ -169,6 +166,12 @@
 				<version>${version.junit}</version>
 				<type>jar</type>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>1.6.1</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

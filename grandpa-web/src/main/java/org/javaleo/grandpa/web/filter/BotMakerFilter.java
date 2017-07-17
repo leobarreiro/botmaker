@@ -2,6 +2,7 @@ package org.javaleo.grandpa.web.filter;
 
 import java.io.IOException;
 
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.javaleo.grandpa.ejb.security.BotMakerAuthenticator;
 import org.javaleo.grandpa.web.action.MsgAction;
 import org.javaleo.libs.jee.core.security.IJavaleoAuthenticator;
 import org.slf4j.Logger;
