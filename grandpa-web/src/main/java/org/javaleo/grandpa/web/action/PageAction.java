@@ -10,9 +10,9 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 
 import org.javaleo.grandpa.ejb.annotations.EditingNow;
-import org.javaleo.grandpa.ejb.entities.Blog;
-import org.javaleo.grandpa.ejb.entities.Category;
-import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.entities.blog.Blog;
+import org.javaleo.grandpa.ejb.entities.blog.Category;
+import org.javaleo.grandpa.ejb.entities.blog.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.grandpa.ejb.filters.PageFilter;

@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.javaleo.grandpa.ejb.entities.Command;
-import org.javaleo.grandpa.ejb.entities.Question;
+import org.javaleo.grandpa.ejb.entities.bot.Command;
+import org.javaleo.grandpa.ejb.entities.bot.Question;
 import org.javaleo.libs.botgram.model.Update;
 
 public class Dialog implements Serializable {

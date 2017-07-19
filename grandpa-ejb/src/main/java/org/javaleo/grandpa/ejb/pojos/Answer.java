@@ -3,7 +3,7 @@ package org.javaleo.grandpa.ejb.pojos;
 import java.io.Serializable;
 import java.util.List;
 
-import org.javaleo.grandpa.ejb.entities.Question;
+import org.javaleo.grandpa.ejb.entities.bot.Question;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 
 public class Answer implements Serializable {

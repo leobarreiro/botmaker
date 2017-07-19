@@ -11,7 +11,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.business.IBlackListExpressionBusiness;
+import org.javaleo.grandpa.ejb.business.bot.IBlackListExpressionBusiness;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.pojos.Dialog;

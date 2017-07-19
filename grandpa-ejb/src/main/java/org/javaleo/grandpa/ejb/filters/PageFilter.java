@@ -2,8 +2,8 @@ package org.javaleo.grandpa.ejb.filters;
 
 import java.util.List;
 
-import org.javaleo.grandpa.ejb.entities.Blog;
-import org.javaleo.grandpa.ejb.entities.Category;
+import org.javaleo.grandpa.ejb.entities.blog.Blog;
+import org.javaleo.grandpa.ejb.entities.blog.Category;
 
 public class PageFilter {
 

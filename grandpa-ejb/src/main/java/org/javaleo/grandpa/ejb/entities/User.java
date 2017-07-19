@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.javaleo.grandpa.ejb.entities.blog.Gallery;
 import org.javaleo.libs.jee.core.model.IEntityBasic;
 
 @Entity

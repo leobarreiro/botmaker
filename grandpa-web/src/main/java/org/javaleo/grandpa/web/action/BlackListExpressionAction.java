@@ -8,7 +8,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.entities.BlackListExpression;
+import org.javaleo.grandpa.ejb.entities.bot.BlackListExpression;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;

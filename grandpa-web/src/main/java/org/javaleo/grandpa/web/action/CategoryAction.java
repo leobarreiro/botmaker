@@ -8,8 +8,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.entities.Blog;
-import org.javaleo.grandpa.ejb.entities.Category;
+import org.javaleo.grandpa.ejb.entities.blog.Blog;
+import org.javaleo.grandpa.ejb.entities.blog.Category;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;
 import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;

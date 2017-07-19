@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import org.javaleo.grandpa.ejb.entities.Blog;
-import org.javaleo.grandpa.ejb.entities.Category;
-import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.entities.blog.Blog;
+import org.javaleo.grandpa.ejb.entities.blog.Category;
+import org.javaleo.grandpa.ejb.entities.blog.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 
 @Local

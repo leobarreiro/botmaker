@@ -6,12 +6,12 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.business.IBlogBusiness;
-import org.javaleo.grandpa.ejb.business.ICategoryBusiness;
-import org.javaleo.grandpa.ejb.business.IPageBusiness;
-import org.javaleo.grandpa.ejb.entities.Blog;
-import org.javaleo.grandpa.ejb.entities.Category;
-import org.javaleo.grandpa.ejb.entities.Page;
+import org.javaleo.grandpa.ejb.business.blog.IBlogBusiness;
+import org.javaleo.grandpa.ejb.business.blog.ICategoryBusiness;
+import org.javaleo.grandpa.ejb.business.blog.IPageBusiness;
+import org.javaleo.grandpa.ejb.entities.blog.Blog;
+import org.javaleo.grandpa.ejb.entities.blog.Category;
+import org.javaleo.grandpa.ejb.entities.blog.Page;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 
 @Named

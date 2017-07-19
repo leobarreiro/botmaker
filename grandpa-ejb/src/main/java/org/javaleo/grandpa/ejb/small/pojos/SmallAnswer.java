@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.javaleo.grandpa.ejb.entities.Question;
+import org.javaleo.grandpa.ejb.entities.bot.Question;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 import org.javaleo.grandpa.ejb.pojos.UrlFile;
 

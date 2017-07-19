@@ -12,10 +12,10 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.javaleo.grandpa.ejb.entities.Command;
-import org.javaleo.grandpa.ejb.entities.Question;
-import org.javaleo.grandpa.ejb.entities.Script;
-import org.javaleo.grandpa.ejb.entities.Validator;
+import org.javaleo.grandpa.ejb.entities.bot.Command;
+import org.javaleo.grandpa.ejb.entities.bot.Question;
+import org.javaleo.grandpa.ejb.entities.bot.Script;
+import org.javaleo.grandpa.ejb.entities.bot.Validator;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;

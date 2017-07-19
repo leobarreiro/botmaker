@@ -11,9 +11,9 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.entities.Bot;
-import org.javaleo.grandpa.ejb.entities.Page;
-import org.javaleo.grandpa.ejb.entities.Script;
+import org.javaleo.grandpa.ejb.entities.blog.Page;
+import org.javaleo.grandpa.ejb.entities.bot.Bot;
+import org.javaleo.grandpa.ejb.entities.bot.Script;
 import org.javaleo.grandpa.ejb.enums.AnswerType;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.facades.IGrandPaFacade;

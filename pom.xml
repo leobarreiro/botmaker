@@ -33,7 +33,7 @@
 		<version.war.plugin>2.5</version.war.plugin>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
-		<version.javaleo.core>0.0.4</version.javaleo.core>
+		<version.javaleo.core>0.0.5</version.javaleo.core>
 		<version.primefaces>5.3</version.primefaces>
 		<version.primefaces.extensions>4.0.0</version.primefaces.extensions>
 		<version.primefaces.themes>1.0.10</version.primefaces.themes>

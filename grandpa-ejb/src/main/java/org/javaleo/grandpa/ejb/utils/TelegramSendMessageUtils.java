@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.javaleo.grandpa.ejb.entities.Bot;
+import org.javaleo.grandpa.ejb.entities.bot.Bot;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.grandpa.ejb.pojos.UrlFile;
 import org.javaleo.libs.botgram.enums.ParseMode;

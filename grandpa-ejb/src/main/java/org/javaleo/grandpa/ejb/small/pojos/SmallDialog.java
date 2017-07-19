@@ -11,8 +11,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.javaleo.grandpa.ejb.entities.Command;
-import org.javaleo.grandpa.ejb.entities.Question;
+import org.javaleo.grandpa.ejb.entities.bot.Command;
+import org.javaleo.grandpa.ejb.entities.bot.Question;
 
 @XmlRootElement(name = "small-dialog")
 @XmlAccessorType(XmlAccessType.FIELD)

@@ -10,7 +10,7 @@ import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.javaleo.grandpa.ejb.entities.Validator;
+import org.javaleo.grandpa.ejb.entities.bot.Validator;
 import org.javaleo.grandpa.ejb.enums.ScriptType;
 import org.javaleo.grandpa.ejb.enums.ValidatorType;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;

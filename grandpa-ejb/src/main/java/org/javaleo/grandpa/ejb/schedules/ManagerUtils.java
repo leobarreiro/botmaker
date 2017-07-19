@@ -18,7 +18,7 @@ import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.javaleo.grandpa.ejb.entities.Bot;
+import org.javaleo.grandpa.ejb.entities.bot.Bot;
 import org.javaleo.grandpa.ejb.pojos.Dialog;
 import org.javaleo.libs.botgram.model.Update;
 import org.slf4j.Logger;
