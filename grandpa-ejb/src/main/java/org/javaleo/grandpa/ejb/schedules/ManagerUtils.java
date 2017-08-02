@@ -59,7 +59,7 @@ public class ManagerUtils implements Serializable {
 	}
 
 	public void addUpdatesToBot(Bot bot, List<Update> updates) {
-		if (updates.isEmpty()) {
+		if (updates == null || updates.isEmpty()) {
 			return;
 		}
 		if (botUpdatesMap.containsKey(bot.getId())) {

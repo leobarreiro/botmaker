@@ -7,55 +7,53 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.javaleo.grandpa.ejb.entities.price.Measure;
+import org.javaleo.grandpa.ejb.entities.price.Input;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 @Named
 @Stateless
-public class MeasureBusiness implements IMeasureBusiness {
+public class InputBusiness implements IInputBusiness {
 
 	@Inject
-	private IPersistenceBasic<Measure> persistence;
+	private IPersistenceBasic<Input> persistence;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveMeasure(Measure measure) throws BusinessException {
-		persistence.saveOrUpdate(measure);
+	public void saveInput(Input input) throws BusinessException {
+		persistence.saveOrUpdate(input);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllMeasures() {
+	public List<Input> listAllInputs() {
 		Criteria crt = createCriteria();
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllActiveMeasures() {
+	public List<Input> listAllActiveInputs() {
 		Criteria crt = createCriteria();
-		crt.add(Restrictions.eq("ms.active", Boolean.TRUE));
+		crt.add(Restrictions.eq("it.active", Boolean.TRUE));
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void deactivateMeasure(Measure measure) throws BusinessException {
-		EntityManager em = persistence.getEntityManager();
-		em.refresh(measure);
-		measure.setActive(Boolean.FALSE);
-		persistence.saveOrUpdate(measure);
+	public void deactivateInput(Input input) throws BusinessException {
+		persistence.getEntityManager().refresh(input);
+		input.setActive(Boolean.FALSE);
+		persistence.saveOrUpdate(input);
 	}
 
 	private Criteria createCriteria() {
-		Criteria crt = persistence.createCriteria(Measure.class, "ms");
-		crt.addOrder(Order.asc("ms.name"));
+		Criteria crt = persistence.createCriteria(Input.class, "it");
+		crt.addOrder(Order.asc("it.name"));
 		return crt;
 	}
 

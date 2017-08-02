@@ -12,50 +12,50 @@ import javax.persistence.EntityManager;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.javaleo.grandpa.ejb.entities.price.Measure;
+import org.javaleo.grandpa.ejb.entities.price.CategoryInput;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 @Named
 @Stateless
-public class MeasureBusiness implements IMeasureBusiness {
+public class CategoryInputBusiness implements ICategoryInputBusiness {
 
 	@Inject
-	private IPersistenceBasic<Measure> persistence;
+	private IPersistenceBasic<CategoryInput> persistence;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveMeasure(Measure measure) throws BusinessException {
-		persistence.saveOrUpdate(measure);
+	public void saveCategoryInput(CategoryInput categoryInput) throws BusinessException {
+		persistence.saveOrUpdate(categoryInput);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllMeasures() {
+	public List<CategoryInput> listAllCategoryInputs() {
 		Criteria crt = createCriteria();
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllActiveMeasures() {
+	public List<CategoryInput> listActiveCategoryInputs() {
 		Criteria crt = createCriteria();
-		crt.add(Restrictions.eq("ms.active", Boolean.TRUE));
+		crt.add(Restrictions.eq("ci.active", Boolean.TRUE));
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void deactivateMeasure(Measure measure) throws BusinessException {
+	public void deactivateCategoryInput(CategoryInput categoryInput) throws BusinessException {
 		EntityManager em = persistence.getEntityManager();
-		em.refresh(measure);
-		measure.setActive(Boolean.FALSE);
-		persistence.saveOrUpdate(measure);
+		em.refresh(categoryInput);
+		categoryInput.setActive(Boolean.FALSE);
+		persistence.saveOrUpdate(categoryInput);
 	}
 
 	private Criteria createCriteria() {
-		Criteria crt = persistence.createCriteria(Measure.class, "ms");
-		crt.addOrder(Order.asc("ms.name"));
+		Criteria crt = persistence.createCriteria(CategoryInput.class, "ci");
+		crt.addOrder(Order.asc("ci.name"));
 		return crt;
 	}
 

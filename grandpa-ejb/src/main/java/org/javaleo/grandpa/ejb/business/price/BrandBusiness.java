@@ -8,7 +8,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
@@ -23,7 +22,7 @@ public class BrandBusiness implements IBrandBusiness {
 
 	@Inject
 	private IPersistenceBasic<Brand> persistence;
-	
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void saveBrand(Brand brand) throws BusinessException {
@@ -33,17 +32,15 @@ public class BrandBusiness implements IBrandBusiness {
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Brand> listAllBrands() {
-		Criteria crt = persistence.createCriteria(Brand.class, "br");
-		crt.addOrder(Order.asc("br.name"));
+		Criteria crt = createCriteria();
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Brand> listAllActiveBrands() {
-		Criteria crt = persistence.createCriteria(Brand.class, "br");
+		Criteria crt = createCriteria();
 		crt.add(Restrictions.eq("br.active", Boolean.TRUE));
-		crt.addOrder(Order.asc("br.name"));
 		return persistence.getResultList(crt);
 	}
 
@@ -54,6 +51,12 @@ public class BrandBusiness implements IBrandBusiness {
 		em.refresh(brand);
 		brand.setActive(Boolean.FALSE);
 		persistence.saveOrUpdate(brand);
+	}
+
+	private Criteria createCriteria() {
+		Criteria crt = persistence.createCriteria(Brand.class, "br");
+		crt.addOrder(Order.asc("br.name"));
+		return crt;
 	}
 
 }

@@ -7,55 +7,53 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.javaleo.grandpa.ejb.entities.price.Measure;
+import org.javaleo.grandpa.ejb.entities.price.Product;
 import org.javaleo.grandpa.ejb.exceptions.BusinessException;
 import org.javaleo.libs.jee.core.persistence.IPersistenceBasic;
 
 @Named
 @Stateless
-public class MeasureBusiness implements IMeasureBusiness {
+public class ProductBusiness implements IProductBusiness {
 
 	@Inject
-	private IPersistenceBasic<Measure> persistence;
+	private IPersistenceBasic<Product> persistence;
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void saveMeasure(Measure measure) throws BusinessException {
-		persistence.saveOrUpdate(measure);
+	public void saveProduct(Product product) throws BusinessException {
+		persistence.saveOrUpdate(product);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllMeasures() {
+	public List<Product> listAllProducts() {
 		Criteria crt = createCriteria();
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public List<Measure> listAllActiveMeasures() {
+	public List<Product> listAllActiveProducts() {
 		Criteria crt = createCriteria();
-		crt.add(Restrictions.eq("ms.active", Boolean.TRUE));
+		crt.add(Restrictions.eq("pr.active", Boolean.TRUE));
 		return persistence.getResultList(crt);
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	public void deactivateMeasure(Measure measure) throws BusinessException {
-		EntityManager em = persistence.getEntityManager();
-		em.refresh(measure);
-		measure.setActive(Boolean.FALSE);
-		persistence.saveOrUpdate(measure);
+	public void deactivateProduct(Product product) throws BusinessException {
+		persistence.getEntityManager().refresh(product);
+		product.setActive(Boolean.FALSE);
+		persistence.saveOrUpdate(product);
 	}
 
 	private Criteria createCriteria() {
-		Criteria crt = persistence.createCriteria(Measure.class, "ms");
-		crt.addOrder(Order.asc("ms.name"));
+		Criteria crt = persistence.createCriteria(Product.class, "pr");
+		crt.addOrder(Order.asc("pr.name"));
 		return crt;
 	}
 
