@@ -5,34 +5,31 @@
 
 		<h2>BlackList Expression</h2>
 
-		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Script Type" />
-				<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true">
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Regexp" styleClass="txtop" />
-				<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}">
-					<f:selectItem itemValue="#{false}" itemLabel="No" />
-					<f:selectItem itemValue="#{true}" itemLabel="Yes" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Content" />
-				<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" immediate="true" value="Cancel" styleClass="secondary"
-					rendered="#{blackListExpressionAction.expression.id ne null}">
-					<f:ajax execute="@this" immediate="true" />
-				</h:commandButton>
-				<h:commandButton action="#{blackListExpressionAction.list()}" value="Cancel" styleClass="secondary" rendered="#{blackListExpressionAction.expression.id eq null}">
-					<f:ajax execute="@this" immediate="true" />
-				</h:commandButton>
-				<h:commandButton action="#{blackListExpressionAction.save()}" value="Save" styleClass="primary" />
-			</h:panelGroup>
+		<rich:panel styleClass="w3-container w3-middle w3-padding">
+
+			<h:outputLabel value="Script Type" styleClass="w3-margin-top" />
+			<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true" styleClass="w3-input">
+				<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
+			</h:selectOneMenu>
+
+			<h:outputLabel value="Regexp" styleClass="w3-margin-top" />
+			<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}" styleClass="w3-input">
+				<f:selectItem itemValue="#{false}" itemLabel="No" />
+				<f:selectItem itemValue="#{true}" itemLabel="Yes" />
+			</h:selectOneMenu>
+
+			<h:outputLabel value="Content" styleClass="w3-margin-top" />
+			<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" styleClass="w3-input w3-margin-top" />
+
+			<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" immediate="true" value="Cancel" styleClass="w3-gray"
+				rendered="#{blackListExpressionAction.expression.id ne null}">
+				<f:ajax execute="@this" immediate="true" />
+			</h:commandButton>
+			<h:commandButton action="#{blackListExpressionAction.list()}" value="Cancel" styleClass="w3-gray" rendered="#{blackListExpressionAction.expression.id eq null}">
+				<f:ajax execute="@this" immediate="true" />
+			</h:commandButton>
+			<h:commandButton action="#{blackListExpressionAction.save()}" value="Save" styleClass="w3-green" />
+
 		</rich:panel>
 
 	</ui:define>

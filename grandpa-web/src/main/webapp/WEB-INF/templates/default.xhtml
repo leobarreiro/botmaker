@@ -7,6 +7,8 @@
 		<title><h:outputText value="BotMaker" /></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<h:outputStylesheet name="css/botmaker.css" />
+		<h:outputStylesheet name="css/w3.css" />
+		<h:outputStylesheet name="css/bk.css" />
 		<h:outputStylesheet name="css/codemirror/codemirror.css" />
 		<h:outputStylesheet name="css/codemirror/ambiance.css" />
 		<h:outputStylesheet name="css/codemirror/cobalt.css" />
@@ -25,24 +27,33 @@
 		<h:outputScript name="js/markdown/markdown.min.js" />
 		<h:outputScript name="js/bot49.js" />
 	</h:head>
-	<h:body styleClass="page">
+	<h:body styleClass="w3-display-container">
 		<a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" rendered="false" />
 		<a4j:poll action="#{userAction.logoff()}" interval="300000" execute="@this" enabled="#{not botMakerCredentials.editing}" />
 		<h:form id="frm" acceptcharset="ISO-8859-1">
-			<h:panelGroup layout="block" styleClass="head">
-				<ui:include src="/pages/menu.xhtml" />
+
+			<h:panelGroup layout="block" styleClass="w3-display-container">
+
+				<h:panelGroup layout="block" styleClass="w3-sidebar w3-blue wd180 w3-rightbar">
+					<h:panelGroup layout="block" styleClass="w3-container">
+						<h:graphicImage alt="BotMaker" value="/resources/img/botmaker-logo-white.png" title="BotMaker" />
+					</h:panelGroup>
+					<ui:include src="/pages/menu.xhtml" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="w3-rest" style="margin-left: 190pt">
+					<ui:insert name="content">
+					[Template content will be inserted here]
+				</ui:insert>
+				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup layout="block">
-				<ui:insert name="content">
-				[Template content will be inserted here]
-			</ui:insert>
-			</h:panelGroup>
+
+
 			<rich:popupPanel id="statPane" autosized="true" styleClass="statPane" modal="true">
     	        Please wait...
 	        </rich:popupPanel>
 		</h:form>
 		<rich:notifyStack id="mainStack" position="topRight" direction="vertical" method="first" />
-		<rich:notify id="notify" stack="mainStack" summary="#{msgAction.showMsg()}" escape="false" rendered="#{msgAction.mustShow}" />
+		<rich:notify id="notify" stack="mainStack" summary="#{msgAction.showMsg()}" escape="false" rendered="#{msgAction.mustShow}" styleClass="w3-bar w3-red" />
 	</h:body>
 </f:view>
 </html>

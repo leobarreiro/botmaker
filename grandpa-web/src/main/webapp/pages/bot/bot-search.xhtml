@@ -4,8 +4,8 @@
 	<ui:define name="content">
 
 		<h2>Search Bots</h2>
-		<rich:panel header="Filtro" styleClass="frm-crud">
-			<h:panelGrid columns="6" styleClass="pc100">
+		<rich:panel header="Filtro" styleClass="pc95">
+			<h:panelGrid columns="6" columnClasses="tx-right,txt,tx-right,txt,tx-center,tx-center">
 				<h:outputText value="Name" />
 				<h:inputText value="#{botAction.filter.name}" />
 				<h:outputText value="Type" />
@@ -13,15 +13,15 @@
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
 				</h:selectOneMenu>
-				<h:commandButton action="#{botAction.search()}" value="Search" update="dtBots" styleClass="primary" />
-				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="secondary" />
+				<h:commandButton action="#{botAction.search()}" value="Search" update="dtBots" styleClass="w3-button w3-green" />
+				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="w3-button w3-indigo" />
 			</h:panelGrid>
 		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud">
+		<h:panelGroup layout="block" styleClass="pc95">
 			<rich:dataTable id="dtBots" value="#{botAction.bots}" var="bt" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{bt.id}" styleClass="pc5 txctr">
 					<f:facet name="header">Id</f:facet>
-					<h:outputText value="#{bt.id}" />
+					<h:outputText value="#{bt.id}" styleClass="txt" />
 				</rich:column>
 				<rich:column sortBy="#{bt.name}" styleClass="txlft">
 					<f:facet name="header">Name</f:facet>
@@ -33,7 +33,7 @@
 				</rich:column>
 				<rich:column sortBy="#{bt.listCommands}" styleClass="pc15 txctr">
 					<f:facet name="header">List Commands</f:facet>
-					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" />
+					<h:outputText value="#{(bt.listCommands) ? 'Yes' : 'No'}" styleClass="txt" />
 				</rich:column>
 				<rich:column headerText="Valid" sortBy="#{bt.valid}" styleClass="pc10 txctr">
 					<f:facet name="header">Valid</f:facet>

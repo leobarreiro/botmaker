@@ -22,6 +22,8 @@ import org.javaleo.libs.jee.core.web.actions.AbstractCrudAction;
 @ConversationScoped
 public class BotAction extends AbstractCrudAction implements Serializable {
 
+	private static final String PAGE_LIST = "/pages/bot/bot-search.bot?faces-redirect=true";
+
 	private static final String PAGE_BOT_1 = "/pages/bot/bot1.bot?faces-redirect=true";
 
 	private static final String PAGE_BOT_2 = "/pages/bot/bot2.bot?faces-redirect=true";
@@ -67,7 +69,7 @@ public class BotAction extends AbstractCrudAction implements Serializable {
 		startNewConversation();
 		filter = new BotFilter();
 		search();
-		return "/pages/bot/bot-search.bot?faces-redirect=true";
+		return PAGE_LIST;
 	}
 
 	public void search() {

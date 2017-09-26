@@ -2,19 +2,19 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" >
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" 
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <f:view contentType="text/html; charset=ISO-8859-1" encoding="ISO-8859-1">
 	<h:head>
 		<title><h:outputText value="BotMaker" /></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<h:outputStylesheet name="css/botmaker.css" />
+		<h:outputStylesheet name="css/w3.css" />
+		<h:outputStylesheet name="css/bk.css" />
 	</h:head>
 	<h:body>
 		<h:form id="frm" acceptcharset="ISO-8859-1">
-			<h:panelGroup layout="block" styleClass="mrauto wd200 txctr">
-				<h:graphicImage value="/resources/img/botmaker-logo-black.png" width="140" height="140" />
-			</h:panelGroup>
-			<h:panelGroup layout="block">
+			<h:panelGroup layout="block" styleClass="w3-container">
 				<ui:insert name="content">
 				[Template content will be inserted here]
 			</ui:insert>

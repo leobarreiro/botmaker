@@ -3,18 +3,19 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 		<a4j:poll actionListener="#{scriptAction.handleRefreshConversation()}" interval="30000" execute="frm:scriptCode" ontimer="scriptCodeMirror.save()" />
+		<h1 class="fleft">Script Editor</h1>
 		<h:panelGroup layout="block" styleClass="editor-toolbar">
-			<h2 class="fleft">Script Editor</h2>
+			
 			<rich:panel id="panelScriptConstrolsId" styleClass="editor-menu">
 				<h:panelGroup layout="block" styleClass="editor-info">
 					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}">
-						<h:outputLabel value="Bot" />
+						<h:outputText value="Bot" />
 						<h:commandLink value="#{scriptAction.bot.name}" action="#{botAction.detail(scriptAction.bot)}">
 							<f:ajax execute="@this" immediate="true" />
 						</h:commandLink>
 					</h:panelGroup>
 					<h:panelGroup layout="block" rendered="#{scriptAction.script.command ne null}">
-						<h:outputLabel value="Command" />
+						<h:outputText value="Command" />
 						<h:commandLink value="#{scriptAction.script.command.key}" action="#{scriptAction.goBackCommand()}">
 							<f:ajax execute="@this" immediate="true" />
 						</h:commandLink>
@@ -32,7 +33,7 @@
 					</h:panelGroup>
 					<h:panelGroup rendered="#{(scriptAction.bot eq null) and (scriptAction.script.validator eq null)}">
 						<h:panelGroup styleClass="txt">
-							<h:outputLabel value="Script Name" />
+							<h:outputText value="Script Name" />
 							<h:inputText value="#{scriptAction.script.name}" maxlength="40" size="40" />
 						</h:panelGroup>
 					</h:panelGroup>
@@ -81,7 +82,7 @@
 			</rich:panel>
 		</h:panelGroup>
 		<rich:panel styleClass="frm-crud editor-screen">
-			<h:panelGrid columns="2" columnClasses="pc80 txtop,pc20 txtop" styleClass="pc100">
+			<h:panelGrid columns="2" columnClasses="bk-wd-80pc txtop,bk-wd-80pc txtop" styleClass="pc100">
 				<h:panelGroup layout="block" styleClass="hg100pc">
 					<h:panelGroup layout="block">
 						<h:inputTextarea id="scriptCode" value="#{scriptAction.script.code}" rows="16" />

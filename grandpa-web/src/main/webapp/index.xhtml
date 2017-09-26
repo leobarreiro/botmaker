@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/templates/blank_logo.xhtml">
+	xmlns:rich="http://richfaces.org/rich" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/blank_logo.xhtml">
 	<ui:define name="content">
-		<h:panelGroup layout="block" styleClass="frm-login">
-			<h:panelGroup layout="block">
-				<h:outputLabel value="Username" styleClass="txleft" />
-				<h:inputText value="#{userAction.username}" />
+		<h:panelGroup layout="block" styleClass="w3-display-middle bk-wd-180 bk-pd-12 w3-blue w3-round-large">
+			<h:panelGroup layout="block" styleClass="w3-middle w3-center">
+				<h:graphicImage value="/resources/img/botmaker-logo-white.png" width="140" height="140" />
 			</h:panelGroup>
-			<h:panelGroup layout="block">
-				<h:outputLabel value="Password" styleClass="txleft" />
-				<h:inputSecret value="#{userAction.plainPassword}" />
+			<h:panelGroup layout="block" styleClass="w3-center">
+				<h:inputText value="#{userAction.username}" pt:placeholder="User Name" styleClass="wd120 w3-input w3-margin" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="txctr">
-				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="primary pc100 mtop30 mgauto" />
+			<h:panelGroup layout="block" styleClass="w3-row w3-center">
+				<h:inputSecret value="#{userAction.plainPassword}" pt:placeholder="Password" styleClass="wd120 w3-input w3-margin" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="txctr link-destac">
-				<h:commandLink action="#{userAction.createAccount()}" value="I want to create a new Account">
+			<h:panelGroup layout="block" styleClass="w3-center">
+				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="w3-btn w3-green" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="w3-center">
+				<h:commandLink action="#{userAction.createAccount()}" value="I wanna create a new Account" styleClass="w3-text-white">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandLink>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="txctr link-destac">
-				<h:commandLink action="#{userAction.forgotMyPassword()}" value="I forgot my password">
+			<h:panelGroup layout="block" styleClass="w3-center">
+				<h:commandLink action="#{userAction.forgotMyPassword()}" value="Forgot password?" styleClass="w3-text-white">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandLink>
 			</h:panelGroup>

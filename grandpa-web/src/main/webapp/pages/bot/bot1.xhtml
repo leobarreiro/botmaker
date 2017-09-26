@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	template="/WEB-INF/templates/default.xhtml">
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
 		<h2>New Bot</h2>
 
-		<h:panelGroup layout="block" styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-title">
-				<h:outputLabel value="Select a bot type" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Bot Type" />
-				<h:selectOneMenu value="#{botAction.botType}">
-					<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Token" styleClass="required" />
-				<h:inputSecret value="#{botAction.token}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
+		<h:panelGroup styleClass="w3-half w3-middle">
+
+			<h:outputLabel value="Bot Type" />
+			<h:selectOneMenu value="#{botAction.botType}" styleClass="w3-input w3-border" pt:placeholder="Bot Type">
+				<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
+			</h:selectOneMenu>
+
+			<h:outputLabel value="Token" />
+			<h:inputSecret value="#{botAction.token}" styleClass="w3-input w3-border" pt:placeholder="Token" />
+
+			<h:panelGroup layout="block" styleClass="w3-row w3-margin-top">
 				<h:commandButton action="#{botAction.list()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />
 			</h:panelGroup>
+
 		</h:panelGroup>
+
+
+
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,257 @@
+@charset "UTF-8";
+
+body {
+	font-size: 12pt !important;
+}
+
+table {
+	width: 100% !important;
+	height: 100%;
+}
+
+a {
+	color: blue !important;
+	text-decoration: underline !important;
+	font-size: 12pt !important;
+}
+
+span, label {
+	display: block;
+	padding: 4pt;
+}
+
+span, input[type="text"], textarea {
+	color: #666666 !important;
+}
+
+label {
+	color: #222222 !important;
+	margin-top: 6pt;
+}
+
+input, select, textarea {
+	display: block;
+	background-image: none !important;
+	display: block;
+	font-size: 12pt !important;
+	padding: 6pt;
+	width: 100%;
+	text-align: left;
+}
+
+button, input[type="reset"], input[type="submit"], input[type="button"],
+	input[type="checkbox"] {
+	width: auto !important;
+	background-image: none !important;
+}
+
+button, input[type="reset"], input[type="submit"], input[type="button"]
+	{
+	display: inline-flex;
+	border: none !important;
+	border-radius: 6px !important;
+	color: #ffffff !important;
+	margin: 4px;
+	padding: 6px 12px !important;
+	text-decoration: none !important;
+	margin: 4px;
+	color: #ffffff !important;
+}
+
+span.primary, a.primary, a.secondary, span.secondary {
+	margin: 6px;
+	padding: 4px 12px;
+	font-size: 11pt;
+}
+
+a.primary {
+	color: magenta !important;
+	font-size: 12pt !important;
+	font-weight: bold !important;
+}
+
+input.primary, button.primary {
+	background: #4e9a06 !important;
+	font-weight: bold !important;
+}
+
+input.secondary, button.secondary, a.cke_dialog_ui_button_cancel {
+	background: #666666 !important;
+}
+
+input.attention, button.attention {
+	background: #aa0000 !important;
+	border: 1px solid #666666 !important;
+	border-radius: 4px !important;
+	color: #FFFFFF !important;
+	font-weight: normal !important;
+	margin: 4px;
+	padding: 2px 6px 2px 6px !important;
+}
+
+/* border */
+.bk-bo-round {
+	border-radius: 6pt;
+}
+
+.bk-bo-round-medium {
+	border-radius: 12pt;
+}
+
+.bk-bo-round-large {
+	border-radius: 24pt;
+}
+
+/* colors */
+.bk-orange {
+	background-color: orange;
+}
+
+.bk-blue {
+	background-color: blue;
+}
+
+/* padding */
+.bk-pd-12 {
+	padding: 12pt;
+}
+
+.bk-pd-24 {
+	padding: 24pt;
+}
+
+.bk-pd-36 {
+	padding: 36pt;
+}
+
+/* margin */
+.bk-mg-auto {
+	margin: auto;
+}
+
+.bk-mg-12 {
+	margin: 12pt;
+}
+
+.bk-pd-12 {
+	padding: 12pt;
+}
+
+/* width */
+.wdfill {
+	display: inline;
+	width: 100%;
+}
+
+.wd120 {
+	width: 120pt;
+}
+
+.wd180 {
+	width: 180pt;
+}
+
+.wd240 {
+	width: 240pt;
+}
+
+.pc10 {
+	width: 10%;
+}
+
+.pc15 {
+	width: 15%;
+}
+
+.pc20 {
+	width: 20%;
+}
+
+.pc25 {
+	width: 25%;
+}
+
+.pc30 {
+	width: 30%;
+}
+
+.pc35 {
+	width: 35%;
+}
+
+.pc40 {
+	width: 40%;
+}
+
+.pc45 {
+	width: 45%;
+}
+
+.pc50 {
+	width: 50%;
+}
+
+.pc55 {
+	width: 55%;
+}
+
+.pc60 {
+	width: 60%;
+}
+
+.pc65 {
+	width: 65%;
+}
+.pc70 {
+	width: 70%;
+}
+
+.pc75 {
+	width: 75%;
+}
+
+.pc80 {
+	width: 80%;
+}
+
+.pc85 {
+	width: 85%;
+}
+
+.pc90 {
+	width: 90%;
+}
+
+.pc95 {
+	width: 95%;
+}
+
+.pc100 {
+	width: 100%;
+}
+
+/* positioning */
+.vtop, .bk-top {
+	vertical-align: top;
+}
+
+fllft, .bk-left {
+	float: left;
+}
+
+.bk-middle {
+	vertical-align: middle;
+	margin: auto;
+}
+
+.txctr, .tx-center {
+	text-align: center;
+}
+
+.txlft, .tx-left {
+	text-align: left;
+}
+
+.txrgt, .tx-right {
+	text-align: right;
+}
