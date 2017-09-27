@@ -3,21 +3,26 @@
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Search Bots</h2>
-		<rich:panel header="Filtro" styleClass="pc95">
-			<h:panelGrid columns="6" columnClasses="tx-right,txt,tx-right,txt,tx-center,tx-center">
-				<h:outputText value="Name" />
+		<h1 class="w3-text-indigo">Search Bots</h1>
+
+		<fieldset class="pc95">
+			<legend>Filter</legend>
+			<h:panelGrid columns="6" styleClass="w3-table" columnClasses="pc6th, pc6th, pc6th, pc6th, pc6th txctr, pc6th txctr">
+				<h:outputText value="Name" styleClass="txrgt" />
 				<h:inputText value="#{botAction.filter.name}" />
-				<h:outputText value="Type" />
+				<h:outputText value="Type" styleClass="txrgt" />
 				<h:selectOneMenu value="#{botAction.filter.botType}">
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
 				</h:selectOneMenu>
 				<h:commandButton action="#{botAction.search()}" value="Search" update="dtBots" styleClass="w3-button w3-green" />
-				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="w3-button w3-indigo" />
+				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="w3-button w3-gray" />
 			</h:panelGrid>
-		</rich:panel>
-		<h:panelGroup layout="block" styleClass="pc95">
+		</fieldset>
+		<br />
+
+		<fieldset class="pc95">
+			<legend>Results</legend>
 			<rich:dataTable id="dtBots" value="#{botAction.bots}" var="bt" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{bt.id}" styleClass="pc5 txctr">
 					<f:facet name="header">Id</f:facet>
@@ -44,6 +49,7 @@
 					<h:outputText value="#{(bt.active) ? 'Yes' : 'No'}" styleClass="#{(bt.active) ? 'green' : 'red'}" />
 				</rich:column>
 			</rich:dataTable>
-		</h:panelGroup>
+		</fieldset>
+
 	</ui:define>
 </ui:composition>

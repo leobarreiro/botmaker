@@ -1,9 +1,5 @@
 @CHARSET "UTF-8";
 
-h1, h2, h3, h4, h5, h6 {
-	color: #2196F3 !important;
-}
-
 a.cke_dialog_ui_button_ok {
 	background: #67ab49 !important;
 	border: 1px solid #67ab49 !important;
@@ -75,16 +71,17 @@ textarea[disabled].script {
 }
 
 .rf-p-b, .rf-dt-c {
+	border: 1px solid #999999 !important;
 	color: #666666 !important;
-	font-size: 12pt !important;
+	font-size: inherit !important;
 	font-family: inherit !important;
+	line-height: 1 !important;
 }
 
 .rf-p-hdr, .rf-dt-c-srt, .rf-dt-shdr-c {
-	background-color: #2196F3 !important;
+	background-color: #cecece !important;
 	border: 1px solid #FFFFFF !important;
 	font-size: inherit !important;
-	background-image: none !important;
 }
 
 .rf-ds {
@@ -106,16 +103,13 @@ textarea[disabled].script {
 	color: #FFFFFF !important;
 }
 
-.rf-dt-c-srt:hover {
-	color: #FFFFFF !important;
-}
-
 .rf-dt-shdr-c {
-	border: 1px solid #dfa5a5 !important;
+	border: 1px solid #999999 !important;
 	background-image: none !important;
-	color: #FFFFFF;
-	padding: 4px;
-	text-align: center;
+	color: #444444 !important;
+	font-family: inherit !important;
+	font-weight: normal !important;
+	line-height: 1 !important;
 }
 
 .statPane {

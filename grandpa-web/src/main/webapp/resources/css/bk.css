@@ -9,6 +9,15 @@ table {
 	height: 100%;
 }
 
+fieldset {
+	
+}
+
+legend {
+	padding: 2pt;
+	font-size: inherit !important;
+}
+
 a {
 	color: blue !important;
 	text-decoration: underline !important;
@@ -20,7 +29,7 @@ span, label {
 	padding: 4pt;
 }
 
-span, input[type="text"], textarea {
+span, input[type="text"], textarea, legend {
 	color: #666666 !important;
 }
 
@@ -143,6 +152,10 @@ input.attention, button.attention {
 	width: 100%;
 }
 
+.pc6th {
+	width: 16.66%;
+}
+
 .wd120 {
 	width: 120pt;
 }
@@ -231,27 +244,27 @@ input.attention, button.attention {
 }
 
 /* positioning */
-.vtop, .bk-top {
+.vtop {
 	vertical-align: top;
 }
 
-fllft, .bk-left {
-	float: left;
+.lft {
+	float: left !important;
 }
 
-.bk-middle {
+.vmid {
 	vertical-align: middle;
 	margin: auto;
 }
 
-.txctr, .tx-center {
-	text-align: center;
+.txctr {
+	text-align: center !important;
 }
 
-.txlft, .tx-left {
-	text-align: left;
+.txlft {
+	text-align: left !important;
 }
 
-.txrgt, .tx-right {
-	text-align: right;
+.txrgt {
+	text-align: right !important;
 }
