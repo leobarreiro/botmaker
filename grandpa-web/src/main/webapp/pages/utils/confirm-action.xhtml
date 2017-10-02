@@ -3,14 +3,14 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 
 	<rich:popupPanel id="popupConfirmId" modal="true" moveable="true" header="Confirm this operation" height="200" width="300" maxHeight="200" maxWidth="300">
-		<h:panelGroup layout="block" styleClass="frm-confirm">
+		<h:panelGroup layout="block" styleClass="w3-container">
 			<h4 class="confirm-title">
 				<h:outputText value="#{confirmTitle}" />
 			</h4>
 			<h:panelGroup layout="block" styleClass="confirm-descr">
 				<h:outputText value="#{confirmDescription}" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
+			<h:panelGroup layout="block" styleClass="w3-text-center w3-center">
 				<h:commandButton value="Confirm" action="#{confirmBean[confirmMethod]}" styleClass="primary" onclick="#{rich:component('popupConfirmId')}.hide()">
 					<f:ajax execute="@this" />
 				</h:commandButton>

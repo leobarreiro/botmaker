@@ -84,6 +84,38 @@ textarea[disabled].script {
 	font-size: inherit !important;
 }
 
+/* Richfaces Popup */
+.rf-pp-hdr {
+	background-image: none !important;
+	border-radius: 6px 6px 0 0 !important;
+}
+
+
+.rf-pp-shade {
+	background-color: #000000 !important;
+	opacity: .6 !important;
+}
+
+.rf-pp-cntr {
+	border-radius: 8px !important;
+	background-color: #ffffff !important;
+}
+
+.rf-pp-cnt-scrlr {
+	background: none !important;
+}
+
+.rf-pp-shdw {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+.rf-pp-cnt {
+	background: none !important;
+	font-family: inherit !important;
+	font-size: inherit !important;
+}
+
 .rf-ds {
 	background-color: inherit !important;
 }
