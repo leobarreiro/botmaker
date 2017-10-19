@@ -3,9 +3,11 @@
 	template="/WEB-INF/templates/default.xhtml" xmlns:rich="http://richfaces.org/rich">
 	<ui:define name="content">
 
-		<h2>BlackList Expression Detail</h2>
+		<h1 class="w3-text-indigo">BlackList Expression Detail</h1>
 
-		<rich:panel styleClass="frm-crud">
+		<fieldset class="pc95">
+			<legend>Detail</legend>
+			
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Script Type" />
 				<h:outputText styleClass="txt" value="#{blackListExpressionAction.expression.scriptType.descriptor}" />
@@ -25,7 +27,7 @@
 				</h:commandButton>
 				<h:commandButton action="#{blackListExpressionAction.edit(blackListExpressionAction.expression)}" value="Edit" styleClass="primary" />
 			</h:panelGroup>
-		</rich:panel>
+		</fieldset>
 
 		<ui:param name="confirmTitle" value="Drop Expression" />
 		<ui:param name="confirmDescription" value="Are you sure to delete this expression? You can't undo this action." />

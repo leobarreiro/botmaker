@@ -18,24 +18,20 @@ legend {
 	font-size: inherit !important;
 }
 
+fieldset label {
+	color: #444444;
+	display: block;
+	margin-top: 12pt;
+}
+
 a {
 	color: blue !important;
 	text-decoration: underline !important;
 	font-size: 12pt !important;
 }
 
-span, label {
-	display: block;
-	padding: 4pt;
-}
-
 span, input[type="text"], textarea, legend {
 	color: #666666 !important;
-}
-
-label {
-	color: #222222 !important;
-	margin-top: 6pt;
 }
 
 input, select, textarea {
@@ -142,11 +138,23 @@ input.attention, button.attention {
 	margin: 12pt;
 }
 
-.bk-pd-12 {
-	padding: 12pt;
+.mgtop12 {
+	display: inline-block;
+	margin-top: 12pt;
+}
+
+.mgtop24 {
+	display: inline-block;
+	margin-top: 24pt;
+}
+
+.mgtop36 {
+	display: inline-block;
+	margin-top: 36pt;
 }
 
 /* width */
+
 .wdfill {
 	display: inline;
 	width: 100%;

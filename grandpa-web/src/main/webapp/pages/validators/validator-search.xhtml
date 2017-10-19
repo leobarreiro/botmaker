@@ -3,9 +3,10 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Search Validators</h2>
+		<h1 class="w3-text-indigo">Search Validators</h1>
 
-		<rich:panel legend="Filter" styleClass="frm-crud">
+		<fieldset class="pc95">
+			<legend>Filter</legend>
 			<h:panelGrid columns="6" styleClass="pc100">
 				<h:outputText styleClass="txt" value="Name" />
 				<h:inputText value="#{validatorAction.filter.name}" />
@@ -17,8 +18,10 @@
 				<h:commandButton action="#{validatorAction.list()}" value="Search" update="snippetsId" styleClass="primary" />
 				<h:commandButton action="#{validatorAction.startNew()}" value="New validator" immediate="true" styleClass="secondary" />
 			</h:panelGrid>
-		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud">
+		</fieldset>
+		
+		<fieldset class="pc95">
+			<legend>Results</legend>
 			<rich:dataTable id="snippetsId" value="#{validatorAction.validators}" var="vdt" rows="20" styleClass="pc100">
 				<rich:column sortBy="#{vdt.name}" styleClass="txlft pc20">
 					<f:facet name="header">Name</f:facet>
@@ -62,7 +65,8 @@
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
 			</rich:dataTable>
-		</h:panelGroup>
+		</fieldset>
+		
 		<ui:include src="/pages/utils/validator-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

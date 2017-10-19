@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:rich="http://richfaces.org/rich" >
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich">
 
-	<rich:panel id="panelExplainId" styleClass="pc100">
+	<h:panelGroup id="panelExplainId" layout="block" styleClass="pc95">
 		<h:outputText styleClass="explain" value="Validators of Type BOOLEAN must return a boolean value (true or false)" rendered="#{validatorAction.validator.validatorType eq 'BOOLEAN'}" />
 		<h:outputText styleClass="explain" value="Validators of Type SET OF OPTIONS must have values (one or more) separated by comma." rendered="#{validatorAction.validator.validatorType eq 'SET'}" />
-	</rich:panel>
-	
+	</h:panelGroup>
 
 	<h:panelGroup layout="block" styleClass="pc100" rendered="false">
-		<b>Available Environment Variables</b><br/>
+		<b>Available Environment Variables</b>
+		<br />
 		<ul>
 			<li><i>idChat</i> : Integer value from Telegram Chat who origins the Dialog.</li>
 			<li><i>dateInMilis</i> : Integer value who represents the datetime (in milliseconds) that the Dialog starts.</li>

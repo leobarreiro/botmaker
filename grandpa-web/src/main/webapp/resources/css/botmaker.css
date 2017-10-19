@@ -123,7 +123,7 @@ textarea[disabled].script {
 .rf-ds-btn {
 	background-image: none !important;
 	background-color: inherit !important;
-	border: 1px solid #444444 !important;
+	border: 1px solid #999999 !important;
 }
 
 .rf-ds-dis {
@@ -135,13 +135,13 @@ textarea[disabled].script {
 	color: #FFFFFF !important;
 }
 
-.rf-dt-shdr-c {
+.rf-dt-shdr-c, .rf-dt-ftr-c {
 	border: 1px solid #999999 !important;
 	background-image: none !important;
 	color: #444444 !important;
 	font-family: inherit !important;
 	font-weight: normal !important;
-	line-height: 1 !important;
+	line-height: 1.5 !important;
 }
 
 .statPane {

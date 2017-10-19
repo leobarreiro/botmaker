@@ -1,104 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j"
-	template="/WEB-INF/templates/default.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1>BlackList Expressions</h1>
+		<h1 class="w3-text-indigo">BlackList Expressions</h1>
 
-		<rich:panel legend="Filter" styleClass="frm-crud">
+
+		<fieldset class="pc95">
+			<legend>Filter</legend>
 			<h:panelGrid columns="5" styleClass="pc100">
 				<h:outputText styleClass="txt" value="Script Type" />
 				<h:selectOneMenu value="#{blackListExpressionAction.scriptType}">
-					<f:selectItem value="#{null}" itemValue="#{null}"
-						itemLabel="All of them" />
-					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt"
-						itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
+					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
+					<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
 				</h:selectOneMenu>
-				<h:commandButton action="#{blackListExpressionAction.list()}"
-					value="List" update="expressionListId" styleClass="primary" />
-				<h:commandButton action="#{blackListExpressionAction.startNew()}"
-					value="New Expression" styleClass="secondary" immediate="true" />
+				<h:commandButton action="#{blackListExpressionAction.list()}" value="List" update="expressionListId" styleClass="primary" />
+				<h:commandButton action="#{blackListExpressionAction.startNew()}" value="New Expression" styleClass="secondary" immediate="true" />
 				<h:commandButton value="Test Expressions" styleClass="secondary">
-					<rich:componentControl event="click" target="popupTestExpressionId"
-						operation="show" />
+					<rich:componentControl event="click" target="popupTestExpressionId" operation="show" />
 				</h:commandButton>
 			</h:panelGrid>
-		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud">
-			<rich:dataTable id="expressionListId"
-				value="#{blackListExpressionAction.expressionList}" var="expr"
-				rows="5" styleClass="pc100">
+		</fieldset>
+
+
+		<fieldset class="pc95">
+			<legend>Results</legend>
+			<rich:dataTable id="expressionListId" value="#{blackListExpressionAction.expressionList}" var="expr" rows="5" styleClass="pc100">
 				<rich:column sortBy="#{expr.scriptType}" styleClass="txlft pc20">
 					<f:facet name="header">Script Type</f:facet>
-					<h:commandLink action="#{blackListExpressionAction.detail(expr)}"
-						value="#{expr.scriptType}" styleClass="tx11" />
+					<h:commandLink action="#{blackListExpressionAction.detail(expr)}" value="#{expr.scriptType}" styleClass="tx11" />
 				</rich:column>
 				<rich:column sortBy="#{expr.regexp}" styleClass="txlft pc15">
 					<f:facet name="header">Regexp</f:facet>
-					<h:outputText value="#{(expr.regexp) ? 'Yes' : 'No'}"
-						styleClass="#{(expr.regexp) ? 'green' : 'gray'}" />
+					<h:outputText value="#{(expr.regexp) ? 'Yes' : 'No'}" styleClass="#{(expr.regexp) ? 'green' : 'gray'}" />
 				</rich:column>
 				<rich:column sortBy="#{expr.content}">
 					<f:facet name="header">Content</f:facet>
-					<h:commandLink action="#{blackListExpressionAction.detail(expr)}"
-						value="#{expr.content}" styleClass="tx11" />
+					<h:commandLink action="#{blackListExpressionAction.detail(expr)}" value="#{expr.content}" styleClass="tx11" />
 				</rich:column>
 				<f:facet name="footer">
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
 			</rich:dataTable>
-		</h:panelGroup>
+		</fieldset>
 
-		<rich:popupPanel id="popupTestExpressionId" modal="true"
-			moveable="true" header="Test Expressions" height="450" width="700"
-			maxHeight="450" maxWidth="700">
-
+		<rich:popupPanel id="popupTestExpressionId" modal="true" moveable="true" header="Test Expressions" height="450" width="700" maxHeight="450" maxWidth="700">
 			<f:facet name="controls">
-				<h:outputLink value="#"
-					onclick="#{rich:component('popupTestExpressionId')}.hide(); return false;">X</h:outputLink>
+				<h:outputLink value="#" onclick="#{rich:component('popupTestExpressionId')}.hide(); return false;">X</h:outputLink>
 			</f:facet>
-
 			<rich:panel id="testExpressionId" styleClass="pc95 mrauto">
-
-				<h:panelGrid columns="2" columnClasses="pc50,pc40"
-					styleClass="pc100">
-
+				<h:panelGrid columns="2" columnClasses="pc50,pc40" styleClass="pc100">
 					<h:column>
-
 						<h4 class="mrtop0 pc100">Script to Test</h4>
 						<h:panelGroup layout="block" styleClass="scripting">
-							<h:inputTextarea id="scriptCode"
-								value="#{blackListExpressionAction.exampleCode}" />
+							<h:inputTextarea id="scriptCode" value="#{blackListExpressionAction.exampleCode}" />
 						</h:panelGroup>
-
 					</h:column>
 					<h:column>
-
 						<h4 class="mrtop0 pc100">Output validation</h4>
 						<h:panelGroup id="outputValidationId" layout="block">
 							<pre class="output-console">#{blackListExpressionAction.debugContent}</pre>
 						</h:panelGroup>
-
 					</h:column>
-
 				</h:panelGrid>
-
 				<h:panelGroup layout="block" styleClass="frm-submit">
 					<h:commandButton value="Clear Output" styleClass="secondary">
-						<f:ajax event="click" execute="@this"
-							listener="#{blackListExpressionAction.clear()}"
-							render="frm:outputValidationId" />
+						<f:ajax event="click" execute="@this" listener="#{blackListExpressionAction.clear()}" render="frm:outputValidationId" />
 					</h:commandButton>
-
 					<h:commandButton id="btScriptTestId" value="Test" actionListener="#{blackListExpressionAction.testExpression()}" styleClass="primary">
 						<a4j:ajax execute="frm:testExpressionId" render="frm:testExpressionId" onbeforesubmit="scriptEditor.save();" />
 					</h:commandButton>
-
 					<h:commandButton value="Close" styleClass="secondary">
 						<rich:componentControl event="click" target="popupTestExpressionId" operation="hide" />
 					</h:commandButton>

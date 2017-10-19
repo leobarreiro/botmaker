@@ -2,38 +2,41 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h2>Validator</h2>
-		<rich:panel styleClass="frm-crud">
-
+		<h1 class="w3-text-indigo">Validator</h1>
+		
+		<fieldset class="pc95">
+			<legend>Validator</legend>
+			
+			
 			<h:outputLabel value="Name" styleClass="required" />
-			<h:inputText value="#{validatorAction.validator.name}" maxlength="60" />
+			<h:inputText value="#{validatorAction.validator.name}" maxlength="60" styleClass="pc90" />
 
-			<h:outputLabel value="Description" styleClass="txtop required" />
-			<h:inputTextarea value="#{validatorAction.validator.description}" rows="2" />
+			<h:outputLabel value="Description" styleClass="required" />
+			<h:inputTextarea value="#{validatorAction.validator.description}" rows="2" styleClass="pc90" />
 
 			<h:outputLabel value="Public Use" />
 			<h:panelGroup>
 				<h:selectBooleanCheckbox value="#{validatorAction.validator.publicUse}" />
-				<h:outputText value=" If checked, this validator can be used by other people, but not edited by them." styleClass="explain" />
+				<h:outputText value=" If checked, this validator can be used by other people, but not edited by them." styleClass="pc80 explain" />
 			</h:panelGroup>
 
 			<h:outputLabel value="Type" />
-			<h:selectOneMenu value="#{validatorAction.validator.validatorType}" immediate="true">
+			<h:selectOneMenu value="#{validatorAction.validator.validatorType}" immediate="true" styleClass="pc90">
 				<f:selectItems value="#{validatorAction.validatorTypeOptions}" var="snpOpt" itemLabel="#{snpOpt.descriptor}" itemValue="#{snpOpt}" />
 				<a4j:ajax render="panelExplainId" />
 			</h:selectOneMenu>
 
 			<h:outputLabel value="Valid Example" />
-			<h:inputText value="#{validatorAction.validator.validExample}" maxlength="60" />
+			<h:inputText value="#{validatorAction.validator.validExample}" maxlength="60" styleClass="pc90" />
 
 			<h:outputLabel value="Succesful Message" />
-			<h:inputTextarea value="#{validatorAction.validator.successMessage}" rows="2" />
+			<h:inputTextarea value="#{validatorAction.validator.successMessage}" rows="2" styleClass="pc90" />
 
 			<h:outputLabel value="Invalid Message" />
-			<h:inputTextarea value="#{validatorAction.validator.invalidMessage}" rows="2" />
+			<h:inputTextarea value="#{validatorAction.validator.invalidMessage}" rows="2" styleClass="pc90" />
 
 			<h:outputLabel value="Script Code" />
-			<h:panelGroup layout="block" styleClass="scripting">
+			<h:panelGroup layout="block" styleClass="pc90 scripting">
 				<ui:include src="/pages/utils/defaultvars.xhtml" />
 				<h:inputTextarea id="scriptCode" value="#{validatorAction.validator.code}" />
 			</h:panelGroup>
@@ -42,7 +45,8 @@
 				<h:commandButton action="#{validatorAction.cancel()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{validatorAction.save()}" value="Save" styleClass="primary" />
 			</h:panelGroup>
-		</rich:panel>
+		</fieldset>
+
 		<script type="text/javascript">
 			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
 			    mode: "groovy",
@@ -51,7 +55,7 @@
 			    lineNumbers: true, 
 			    lineWrapping: true  
 			});
-			scriptEditor.setSize('90%', 100);
+			scriptEditor.setSize('100%', 100);
 		</script>
 	</ui:define>
 </ui:composition>

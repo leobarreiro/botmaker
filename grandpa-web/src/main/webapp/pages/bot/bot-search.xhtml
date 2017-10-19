@@ -15,8 +15,8 @@
 					<f:selectItem value="#{null}" itemValue="#{null}" itemLabel="All of them" />
 					<f:selectItems value="#{botAction.filter.optBotTypes}" var="tps" itemLabel="#{tps.name}" itemValue="#{tps}" />
 				</h:selectOneMenu>
-				<h:commandButton action="#{botAction.search()}" value="Search" update="dtBots" styleClass="w3-button w3-green" />
-				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="w3-button w3-gray" />
+				<h:commandButton action="#{botAction.search()}" value="Search" update="dtBots" styleClass="primary" />
+				<h:commandButton action="#{botAction.startNew()}" value="New Bot" immediate="true" styleClass="secondary" />
 			</h:panelGrid>
 		</fieldset>
 		<br />

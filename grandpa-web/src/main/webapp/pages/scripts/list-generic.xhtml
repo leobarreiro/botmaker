@@ -3,13 +3,17 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>Generic Scripts</h2>
-		<rich:panel header="Filtro" styleClass="frm-crud">
+		<h1 class="w3-text-indigo">Generic Scripts</h1>
+		
+		<fieldset class="pc95">
+			<legend>Filter</legend>
 			<h:panelGrid columns="6" styleClass="pc100">
 				<h:commandButton action="#{scriptAction.startNewGeneric()}" value="New Generic Script" immediate="true" styleClass="primary" />
 			</h:panelGrid>
-		</rich:panel>
-		<h:panelGroup layout="block" styleClass="frm-crud">
+		</fieldset>
+		
+		<fieldset class="pc95">
+			<legend>Results</legend>
 			<rich:dataTable id="scriptsId" value="#{scriptAction.scripts}" var="sc" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{sc.name}" styleClass="txlft">
 					<f:facet name="header">Name</f:facet>
@@ -44,7 +48,8 @@
 					<h:outputText value="#{sc.modified}" />
 				</rich:column>
 			</rich:dataTable>
-		</h:panelGroup>
+		</fieldset>
+		
 		<ui:include src="/pages/utils/script-viewer.xhtml" />
 	</ui:define>
 </ui:composition>

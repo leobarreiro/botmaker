@@ -3,10 +3,10 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h2>New Bot</h2>
+		<h1 class="w3-text-indigo">New Bot</h1>
 
-		<h:panelGroup styleClass="w3-half w3-middle">
-
+		<fieldset class="pc95">
+			<legend>Type and Token</legend>
 			<h:outputLabel value="Bot Type" />
 			<h:selectOneMenu value="#{botAction.botType}" styleClass="w3-input w3-border" pt:placeholder="Bot Type">
 				<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
@@ -20,9 +20,7 @@
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />
 			</h:panelGroup>
 
-		</h:panelGroup>
-
-
+		</fieldset>
 
 	</ui:define>
 </ui:composition>
