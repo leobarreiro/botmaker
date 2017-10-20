@@ -5,21 +5,18 @@
 
 		<h1 class="w3-text-indigo">New Bot</h1>
 
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Type and Token</legend>
 			<h:outputLabel value="Bot Type" />
 			<h:selectOneMenu value="#{botAction.botType}" styleClass="w3-input w3-border" pt:placeholder="Bot Type">
 				<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
 			</h:selectOneMenu>
-
 			<h:outputLabel value="Token" />
 			<h:inputSecret value="#{botAction.token}" styleClass="w3-input w3-border" pt:placeholder="Token" />
-
 			<h:panelGroup layout="block" styleClass="w3-row w3-margin-top">
 				<h:commandButton action="#{botAction.list()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />
 			</h:panelGroup>
-
 		</fieldset>
 
 	</ui:define>

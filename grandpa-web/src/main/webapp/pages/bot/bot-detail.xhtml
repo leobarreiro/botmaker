@@ -2,9 +2,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
+
 		<h1 class="w3-text-indigo">Bot</h1>
 		
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Review</legend>
 			<h:panelGroup layout="block" styleClass="w3-third w3-cell">
 				<h:outputLabel value="Bot Type" />
@@ -38,9 +39,7 @@
 			</h:panelGroup>
 		</fieldset>
 		
-		
-
-		<h:panelGroup layout="block" styleClass="pc95 w3-row txctr w3-padding">
+		<h:panelGroup layout="block" styleClass="w3-row txctr w3-padding">
 			<h:commandButton action="#{botAction.list()}" value="List Bots" styleClass="secondary">
 				<f:ajax execute="@this" />
 			</h:commandButton>

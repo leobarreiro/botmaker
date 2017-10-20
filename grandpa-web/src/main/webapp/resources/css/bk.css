@@ -6,7 +6,6 @@ body {
 
 table {
 	width: 100% !important;
-	height: 100%;
 }
 
 fieldset {
@@ -86,12 +85,7 @@ input.secondary, button.secondary, a.cke_dialog_ui_button_cancel {
 
 input.attention, button.attention {
 	background: #aa0000 !important;
-	border: 1px solid #666666 !important;
-	border-radius: 4px !important;
 	color: #FFFFFF !important;
-	font-weight: normal !important;
-	margin: 4px;
-	padding: 2px 6px 2px 6px !important;
 }
 
 /* border */
@@ -117,24 +111,27 @@ input.attention, button.attention {
 }
 
 /* padding */
-.bk-pd-12 {
+.pd0 {
+	padding: 0pt !important;
+}
+.pd12 {
 	padding: 12pt;
 }
 
-.bk-pd-24 {
+.pd24 {
 	padding: 24pt;
 }
 
-.bk-pd-36 {
+.pd36 {
 	padding: 36pt;
 }
 
 /* margin */
-.bk-mg-auto {
+.mgauto {
 	margin: auto;
 }
 
-.bk-mg-12 {
+.mg12 {
 	margin: 12pt;
 }
 
@@ -162,6 +159,10 @@ input.attention, button.attention {
 
 .pc6th {
 	width: 16.66%;
+}
+
+.wd100 {
+	width: 100pt;
 }
 
 .wd120 {
@@ -253,7 +254,7 @@ input.attention, button.attention {
 
 /* positioning */
 .vtop {
-	vertical-align: top;
+	vertical-align: top !important;
 }
 
 .lft {
@@ -261,8 +262,7 @@ input.attention, button.attention {
 }
 
 .vmid {
-	vertical-align: middle;
-	margin: auto;
+	vertical-align: middle !important;
 }
 
 .txctr {

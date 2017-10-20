@@ -40,13 +40,15 @@
 					</h:panelGroup>
 					<ui:include src="/pages/menu.xhtml" />
 				</h:panelGroup>
+				
 				<h:panelGroup layout="block" styleClass="w3-rest" style="margin-left: 190pt">
-					<ui:insert name="content">
-					[Template content will be inserted here]
-				</ui:insert>
+					<h:panelGroup layout="block" styleClass="pc95">
+						<ui:insert name="content">
+							[Template content will be inserted here]
+						</ui:insert>
+					</h:panelGroup>
 				</h:panelGroup>
 			</h:panelGroup>
-
 
 			<rich:popupPanel id="statPane" autosized="true" styleClass="statPane" modal="true">
     	        Please wait...

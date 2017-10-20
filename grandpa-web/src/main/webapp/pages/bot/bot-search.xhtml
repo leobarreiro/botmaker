@@ -5,7 +5,7 @@
 
 		<h1 class="w3-text-indigo">Search Bots</h1>
 
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Filter</legend>
 			<h:panelGrid columns="6" styleClass="w3-table" columnClasses="pc6th, pc6th, pc6th, pc6th, pc6th txctr, pc6th txctr">
 				<h:outputText value="Name" styleClass="txrgt" />
@@ -21,7 +21,7 @@
 		</fieldset>
 		<br />
 
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Results</legend>
 			<rich:dataTable id="dtBots" value="#{botAction.bots}" var="bt" rows="10" styleClass="pc100">
 				<rich:column sortBy="#{bt.id}" styleClass="pc5 txctr">

@@ -2,35 +2,38 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-	
+
 		<h1 class="w3-text-indigo">Command</h1>
-		
-		<rich:panel id="commandCrudId" styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Bot" />
-				<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
+
+		<fieldset class="pc90">
+			<legend>Command</legend>
+			<h:panelGroup id="commandCrudId">
+				<h:panelGroup layout="block">
+					<h:outputLabel value="Bot" />
+					<h:outputText styleClass="txt" value="#{botAction.bot.name}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block">
+					<h:outputLabel value="Command Key" />
+					<h:inputText value="#{commandAction.command.key}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block">
+					<h:outputLabel value="Short Description" styleClass="txtop" />
+					<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="2" />
+				</h:panelGroup>
+				<h:panelGroup layout="block">
+					<h:outputLabel value="Process Answers" />
+					<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
+						<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="frm:commandCrudId" render="@form" />
+					</h:selectBooleanCheckbox>
+				</h:panelGroup>
+				<h:panelGroup layout="block" styleClass="w3-margin-top">
+					<h:commandButton action="#{botAction.detail(commandAction.bot)}" value="Cancel" styleClass="secondary">
+						<f:ajax execute="@this" />
+					</h:commandButton>
+					<h:commandButton action="#{commandAction.save()}" value="Save" styleClass="primary" />
+				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Command Key" />
-				<h:inputText value="#{commandAction.command.key}" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Short Description" styleClass="txtop" />
-				<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="2" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Process Answers" />
-				<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
-					<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="frm:commandCrudId" render="@form" />
-				</h:selectBooleanCheckbox>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
-				<h:commandButton action="#{botAction.detail(commandAction.bot)}" value="Cancel" styleClass="secondary">
-					<f:ajax execute="@this" />
-				</h:commandButton>
-				<h:commandButton action="#{commandAction.save()}" value="Save" styleClass="primary" />
-			</h:panelGroup>
-		</rich:panel>
+		</fieldset>
 
 	</ui:define>
 </ui:composition>

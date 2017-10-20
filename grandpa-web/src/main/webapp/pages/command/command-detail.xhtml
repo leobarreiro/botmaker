@@ -2,16 +2,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<h2>Command detail</h2>
-		<rich:panel styleClass="frm-crud">
-			<h:panelGroup layout="block" styleClass="blc1">
-				<h:outputLabel value="Bot" />
-				<h:panelGroup styleClass="txt">
-					<h:commandLink action="#{botAction.detail(botAction.bot)}" value="#{botAction.bot.name}" />
-				</h:panelGroup>
-			</h:panelGroup>
-		</rich:panel>
-		<rich:panel styleClass="frm-crud">
+
+		<h1 class="w3-text-indigo">Command detail</h1>
+
+		<fieldset>
+			<legend>Bot</legend>
+			<h:commandLink action="#{botAction.detail(botAction.bot)}" value="#{botAction.bot.name}" />
+		</fieldset>
+
+		<fieldset>
+			<legend>Command</legend>
 			<h:panelGroup layout="block" styleClass="blc3">
 				<h:outputLabel value="Command Key" />
 				<h:outputText styleClass="txt" value="#{commandAction.command.key}" />
@@ -41,7 +41,7 @@
 					<h:outputText value="None" rendered="#{not commandAction.command.postProcess}" />
 				</h:panelGroup>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
+			<h:panelGroup layout="block" styleClass="w3-margin-top">
 				<h:commandButton action="#{botAction.detail(commandAction.command.bot)}" value="Back to Bot" styleClass="secondary" immediate="true" />
 				<h:commandButton value="Drop Command" styleClass="attention">
 					<rich:componentControl event="click" target="popupConfirmId" operation="show" />
@@ -53,7 +53,10 @@
 					<f:ajax execute="@this" />
 				</h:commandButton>
 			</h:panelGroup>
-		</rich:panel>
+		</fieldset>
+
+
+
 		<rich:panel styleClass="frm-crud" rendered="#{not empty commandAction.questions}">
 			<rich:dataTable value="#{commandAction.questions}" var="qst" id="dataTableQuestions" styleClass="pc100">
 				<rich:column styleClass="pc5 txctr">

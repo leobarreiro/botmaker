@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-	<rich:popupPanel id="popupViewScriptId" onshow="configureViewerMirror()" modal="false" moveable="true" header="Script Viewer" height="460" width="600" maxHeight="460" maxWidth="600">
+	<rich:popupPanel id="popupViewScriptId" onshow="configureViewerMirror()" modal="false" moveable="true" header="Script Viewer" height="460" width="600" maxHeight="460" maxWidth="600" rendered="#{scriptAction.viewScript ne null}">
 		<f:facet name="controls">
 			<h:outputLink value="#" onclick="#{rich:component('popupViewScriptId')}.hide(); return false;">
 				<h:graphicImage value="/resources/img/close-popup.png" />

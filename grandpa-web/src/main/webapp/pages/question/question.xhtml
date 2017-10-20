@@ -7,11 +7,11 @@
 			<h:panelGroup layout="block" styleClass="blc2">
 				<h:outputLabel value="Bot" />
 				<h:panelGroup styleClass="txt">
-					<h:commandLink action="#{botAction.detail(questionAction.command.bot)}" value="#{questionAction.command.bot.name}" />
+					<h:commandLink action="#{botAction.detail(questionAction.command.bot)}" value="#{questionAction.command.bot.name}" immediate="true" />
 				</h:panelGroup>
 				<h:outputLabel value="Command" />
 				<h:panelGroup styleClass="txt">
-					<h:commandLink action="#{commandAction.detail(questionAction.command)}" value="#{questionAction.command.key}" />
+					<h:commandLink action="#{commandAction.detail(questionAction.command)}" value="#{questionAction.command.key}" immediate="true" />
 				</h:panelGroup>
 			</h:panelGroup>
 		</rich:panel>
