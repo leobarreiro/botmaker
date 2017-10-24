@@ -5,17 +5,17 @@
 	<h:panelGroup layout="block" rendered="#{botMakerAuthenticator.loggedIn}">
 
 		<rich:panelMenu styleClass="w3-padding">
-			<rich:panelMenuGroup label="Expressions" rendered="#{botMakerCredentials.user.admin}" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Expressions" rendered="#{botMakerCredentials.user.admin}">
 				<rich:panelMenuItem label="List Expressions" action="#{blackListExpressionAction.list()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:panelMenuItem label="New Expression" action="#{blackListExpressionAction.startNew()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="Validators" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Validators">
 				<rich:panelMenuItem label="List Validators" action="#{validatorAction.list()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:panelMenuItem label="New Validator" action="#{validatorAction.startNew()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="Bots" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Bots">
 				<c:forEach items="#{auxAction.bots}" var="bt">
 					<rich:panelMenuItem label="#{bt.name}" action="#{botAction.detail(bt)}" immediate="true" execute="@this" styleClass="w3-text-#{(bt.valid) ? 'green' : 'red'}" />
 				</c:forEach>
@@ -24,24 +24,25 @@
 				<rich:panelMenuItem label="New Bot" action="#{botAction.startNew()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="Scripts" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Scripts">
 				<c:forEach items="#{auxAction.lastGenericScripts}" var="sc">
 					<rich:panelMenuItem label="#{sc.name}" action="#{scriptAction.startEditGeneric(sc)}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				</c:forEach>
-				<rich:menuSeparator />
+
+				<hr class="spacer" />
+
 				<rich:panelMenuItem label="List Generic Scripts" action="#{scriptAction.listGenericScripts()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:panelMenuItem label="New Generic Script" action="#{scriptAction.startNewGeneric()}" immediate="true" execute="@this" styleClass="w3-text-white" />
-				<rich:menuSeparator />
+
+				<hr class="spacer" />
+
 				<c:forEach items="#{auxAction.lastCommandScriptsEdited}" var="cse">
-					<rich:panelMenuItem action="#{scriptAction.startEditScript(cse.command.bot, cse.command, cse)}" immediate="true" execute="@this"  styleClass="w3-text-white">
-						<h:outputLabel value="#{cse.command.key}"
-							styleClass="tx9 personal-item #{(cse.scriptType eq 'GROOVY') ? 'groovy' : (cse.scriptType eq 'PYTHON') ? 'python' : (cse.scriptType eq 'JAVASCRIPT') ? 'javascript' : 'none'}" />
-						<h:outputLabel value="(#{cse.command.bot.name})" styleClass="tx9 personal-item" />
-					</rich:panelMenuItem>
+					<rich:panelMenuItem label="#{cse.command.key}" action="#{scriptAction.startEditScript(cse.command.bot, cse.command, cse)}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				</c:forEach>
+
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="Blog" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Blog">
 				<rich:panelMenuItem label="List Blogs" action="#{blogAction.listBlogs()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:panelMenuItem label="New Blog" action="#{blogAction.startNewBlog()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:menuSeparator />
@@ -56,12 +57,12 @@
 				</c:forEach>
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="Photograph" styleClass="w3-indigo">
+			<rich:panelMenuGroup label="Photograph">
 				<rich:panelMenuItem label="List Galleries" action="#{galleryAction.listGalleries()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:panelMenuItem label="New Gallery" action="#{galleryAction.startNewGallery()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 			</rich:panelMenuGroup>
 
-			<rich:panelMenuGroup label="My account (#{botMakerCredentials.user.username})" styleClass="w3-orange">
+			<rich:panelMenuGroup label="My account">
 				<rich:panelMenuItem label="Preferences" action="#{userPreferenceAction.init()}" immediate="true" execute="@this" styleClass="w3-text-white" />
 				<rich:menuSeparator />
 				<rich:panelMenuItem label="Logout" action="#{userAction.logoff()}" immediate="true" styleClass="w3-text-white" />

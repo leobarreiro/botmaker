@@ -164,8 +164,14 @@ div.CodeMirror {
 	color: blue !important;
 }
 
+.groovy, .javascript, .python {
+	border-radius: 4pt;
+	padding: 2pt 4pt;
+}
+
 .groovy {
 	color: #a953ff !important;
+	background-color: lightsteelblue;
 }
 
 .javascript {
@@ -207,6 +213,11 @@ div.CodeMirror {
 
 .page-content * {
 	margin: 0 !important;
+}
+
+hr.spacer {
+	padding: 1pt !important;
+	margin: 2pt 22pt !important;
 }
 
 div.editor-toolbar div.editor-menu {
@@ -276,9 +287,9 @@ div.editor-toolbar div.editor-info {
 	color: #222222 !important;
 	font-size: 9pt !important;
 	overflow: auto;
-	min-height: 220px;
-	height: 220px;
-	max-height: 220px;
+	min-height: 260px;
+	height: 260px;
+	max-height: 260px;
 	padding: 6px !important;
 	margin: 2px !important;
 	white-space: pre-line !important;
@@ -301,18 +312,27 @@ div.editor-toolbar div.editor-info {
 	display: none !important;
 }
 
+.rf-pm-top-gr {
+	border: none !important;
+	margin-bottom: 6pt !important;
+}
+
 .rf-pm-top-gr-hdr {
 	background-image: none !important;
 	background-color: transparent !important;
 }
 
-.rf-pm-top-gr-lbl, .rf-pm-itm-lbl {
-	font-size: inherit !important;
+.rf-pm-top-gr-lbl {
+	font-size: 12pt !important;
+}
+
+.rf-pm-itm-lbl {
+	font-size: 10pt !important;
 }
 
 .rf-pm-itm, .rf-pm-top-itm, .rf-pm-gr-hdr {
-	background-color: inherit !important;
-	padding-left: 16px !important;
+	border: none !important;
+	padding-left: 6px !important;
 }
 
 .rf-pm-itm:hover, .rf-pm-top-itm:hover, .rf-pm-gr-hdr:hover {

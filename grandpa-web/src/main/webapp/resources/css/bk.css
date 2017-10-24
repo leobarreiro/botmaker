@@ -4,6 +4,10 @@ body {
 	font-size: 12pt !important;
 }
 
+h1,h2,h3,h4,h5,h6 {
+	margin: 0pt !important;
+}
+
 table {
 	width: 100% !important;
 }
@@ -17,10 +21,14 @@ legend {
 	font-size: inherit !important;
 }
 
+label {
+	color: #666666;
+	margin-right: 6pt;
+}
+
 fieldset label {
-	color: #444444;
 	display: block;
-	margin-top: 12pt;
+	margin-top: 8pt;
 }
 
 a {
@@ -29,18 +37,18 @@ a {
 	font-size: 12pt !important;
 }
 
-span, input[type="text"], textarea, legend {
-	color: #666666 !important;
-}
-
 input, select, textarea {
 	display: block;
 	background-image: none !important;
-	display: block;
 	font-size: 12pt !important;
 	padding: 6pt;
 	width: 100%;
 	text-align: left;
+}
+
+input[type="checkbox"] {
+	display: inline-block !important;
+	margin: 4pt !important;
 }
 
 button, input[type="reset"], input[type="submit"], input[type="button"],
@@ -88,27 +96,6 @@ input.attention, button.attention {
 	color: #FFFFFF !important;
 }
 
-/* border */
-.bk-bo-round {
-	border-radius: 6pt;
-}
-
-.bk-bo-round-medium {
-	border-radius: 12pt;
-}
-
-.bk-bo-round-large {
-	border-radius: 24pt;
-}
-
-/* colors */
-.bk-orange {
-	background-color: orange;
-}
-
-.bk-blue {
-	background-color: blue;
-}
 
 /* padding */
 .pd0 {
@@ -129,6 +116,10 @@ input.attention, button.attention {
 /* margin */
 .mgauto {
 	margin: auto;
+}
+
+.mg0 {
+	margin: 0 !important;
 }
 
 .mg12 {
@@ -165,12 +156,44 @@ input.attention, button.attention {
 	width: 100pt;
 }
 
+.wd110 {
+	width: 110pt;
+}
+
 .wd120 {
 	width: 120pt;
 }
 
+.wd130 {
+	width: 130pt;
+}
+
+.wd140 {
+	width: 140pt;
+}
+
+.wd150 {
+	width: 150pt;
+}
+
+.wd160 {
+	width: 160pt;
+}
+
+.wd170 {
+	width: 170pt;
+}
+
 .wd180 {
 	width: 180pt;
+}
+
+.wd190 {
+	width: 190pt;
+}
+
+.wd200 {
+	width: 200pt;
 }
 
 .wd240 {
@@ -275,4 +298,33 @@ input.attention, button.attention {
 
 .txrgt {
 	text-align: right !important;
+}
+
+/* text */
+.tx8 {
+	font-size: 8pt !important;
+}
+
+.tx9 {
+	font-size: 9pt !important;
+}
+
+.tx10 {
+	font-size: 10pt !important;
+}
+
+.tx11 {
+	font-size: 11pt !important;
+}
+
+.tx12 {
+	font-size: 12pt !important;
+}
+
+.lh100 {
+	line-height: 1 !important;
+}
+
+.lh120 {
+	line-height: 1.2 !important;
 }

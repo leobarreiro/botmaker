@@ -88,7 +88,7 @@ public class UserPreferenceAction implements Serializable {
 			editorShowLineNumbers.setValue("true");
 		}
 
-		codeExample = "Onononono\nOnononono\nOnononono";
+		codeExample = "\n\n/* A comment inside the code is good for organization. */\n\ndef theme = \"My Theme Choice.\"\n\ndef myIntegerVar = 12";
 
 		themeOpt = Arrays
 				.asList(new String[] { "ambiance", "cobalt", "eclipse", "elegant", "erlang-dark", "icecoder", "liquibyte", "monokai", "pastel-on-dark", "solarized", "rubyblue", "vibrant-ink" });

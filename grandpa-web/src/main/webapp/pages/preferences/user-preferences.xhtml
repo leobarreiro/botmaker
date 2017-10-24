@@ -3,9 +3,10 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h3>User Preferences for #{botMakerCredentials.user.name}</h3>
+		<h1 class="w3-text-teal">User Preferences</h1>
 
-		<rich:panel styleClass="frm-crud">
+		<fieldset class="pc50">
+			<legend>Programming</legend>
 			<h:panelGroup layout="block" styleClass="frm-line">
 				<h:outputLabel value="Programming Theme" />
 				<h:selectOneMenu id="usrPrefTheme" value="#{userPreferenceAction.scriptingTheme.value}" immediate="true">
@@ -14,44 +15,20 @@
 					<f:ajax event="change" onevent="changeScriptTheme(this.value)" />
 				</h:selectOneMenu>
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Editor Width" />
-				<h:selectOneMenu id="usrPrefWdt" value="#{userPreferenceAction.editorMaxWidthSize.value}" immediate="true">
-					<f:selectItem itemValue="60%" itemLabel="60%" />
-					<f:selectItem itemValue="70%" itemLabel="70%" />
-					<f:selectItem itemValue="80%" itemLabel="80%" />
-					<f:selectItem itemValue="90%" itemLabel="90%" />
-					<f:selectItem itemValue="100%" itemLabel="100%" />
-					<f:ajax event="change" onevent="changeScriptTheme(this.value)" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-line">
-				<h:outputLabel value="Editor Height" />
-				<h:selectOneMenu id="usrPrefHgt" value="#{userPreferenceAction.editorMaxHeightSize.value}" immediate="true">
-					<f:selectItem itemValue="150" itemLabel="150" />
-					<f:selectItem itemValue="200" itemLabel="200" />
-					<f:selectItem itemValue="250" itemLabel="250" />
-					<f:selectItem itemValue="300" itemLabel="300" />
-					<f:selectItem itemValue="350" itemLabel="350" />
-					<f:selectItem itemValue="400" itemLabel="400" />
-					<f:selectItem itemValue="450" itemLabel="450" />
-					<f:selectItem itemValue="500" itemLabel="500" />
-					<f:ajax event="change" onevent="changeScriptTheme()" />
-				</h:selectOneMenu>
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="frm-submit">
-				<a4j:commandButton action="#{userPreferenceAction.savePreferences()}" value="Save Prefs" styleClass="primary" render="bmNotify" />
-			</h:panelGroup>
-		</rich:panel>
 
-		<rich:panel styleClass="frm-crud">
+			<h:panelGroup layout="block">
+				<a4j:commandButton action="#{userPreferenceAction.savePreferences()}" value="Save" styleClass="primary" render="bmNotify" />
+			</h:panelGroup>
+
 			<h:panelGroup id="scriptCodeId" layout="block" styleClass="frm-line">
-				<h:outputLabel value="Editor Example" styleClass="txtop" />
+				<h:outputLabel value="Programming Editor Sample" styleClass="txtop" />
 				<h:panelGroup layout="block" styleClass="scripting">
 					<h:inputTextarea id="postProcessScript" value="#{userPreferenceAction.codeExample}" rows="6" />
 				</h:panelGroup>
 			</h:panelGroup>
-		</rich:panel>
+
+		</fieldset>
+
 
 		<script type="text/javascript">
 			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:postProcessScript'), {
@@ -61,15 +38,15 @@
 			    indentWithTabs: true,
 			    lineWrapping: true 
 			});
-			scriptEditor.setSize('#{userPreferenceAction.editorMaxWidthSize.value}', #{userPreferenceAction.editorMaxHeightSize.value});
+			scriptEditor.setSize('100%', 200);
 			
 			function changeScriptTheme() {
 				try {
 					var theme = document.getElementById('frm:usrPrefTheme').value;
-					var wdt = document.getElementById('frm:usrPrefWdt').value;
-					var hgt = document.getElementById('frm:usrPrefHgt').value;
+					// var wdt = document.getElementById('frm:usrPrefWdt').value;
+					// var hgt = document.getElementById('frm:usrPrefHgt').value;
 					scriptEditor.setOption("theme", theme);
-					scriptEditor.setSize(wdt, hgt);
+					// scriptEditor.setSize(wdt, hgt);
 				} catch(e) {
 					alert(e);
 				}

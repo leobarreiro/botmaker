@@ -3,16 +3,16 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1 class="w3-text-indigo">New Bot</h1>
+		<h1 class="w3-text-teal">New Bot</h1>
 
 		<fieldset>
 			<legend>Type and Token</legend>
 			<h:outputLabel value="Bot Type" />
-			<h:selectOneMenu value="#{botAction.botType}" styleClass="w3-input w3-border" pt:placeholder="Bot Type">
+			<h:selectOneMenu value="#{botAction.botType}" styleClass="pc90" pt:placeholder="Bot Type">
 				<f:selectItems value="#{botAction.filter.optBotTypes}" var="bt" itemLabel="#{bt.name}" itemValue="#{bt}" />
 			</h:selectOneMenu>
 			<h:outputLabel value="Token" />
-			<h:inputSecret value="#{botAction.token}" styleClass="w3-input w3-border" pt:placeholder="Token" />
+			<h:inputSecret value="#{botAction.token}" styleClass="pc90" pt:placeholder="Token" />
 			<h:panelGroup layout="block" styleClass="w3-row w3-margin-top">
 				<h:commandButton action="#{botAction.list()}" value="Cancel" styleClass="secondary" />
 				<h:commandButton action="#{botAction.validateToken()}" value="Validate" styleClass="primary" />

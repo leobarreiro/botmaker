@@ -3,7 +3,7 @@
 	xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1 class="w3-text-indigo">Bot</h1>
+		<h1 class="w3-text-teal">Bot</h1>
 
 		<h:panelGroup layout="block">
 			<fieldset>
@@ -15,7 +15,7 @@
 				<h:outputLabel value="Username" />
 				<h:outputText id="usernameBotId" styleClass="txt" value="@#{botAction.bot.username}" />
 				<h:outputLabel value="Token" />
-				<h:inputText value="#{botAction.bot.token}" styleClass="pc70">
+				<h:inputText value="#{botAction.bot.token}" styleClass="pc90">
 					<f:ajax event="blur" listener="#{botAction.validateNewToken()}" execute="@this" render="frm:nameBotId frm:usernameBotId frm:validBotId" />
 				</h:inputText>
 				<h:outputLabel value="Valid" />
@@ -23,17 +23,17 @@
 				<h:outputLabel value="Active" />
 				<h:selectBooleanCheckbox value="#{botAction.bot.active}" />
 				<h:outputLabel value="Maintenance Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{botAction.bot.closedBotMessage}" rows="2" styleClass="pc90" />
 				<h:outputLabel value="Unknown Command Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{botAction.bot.unknownCommadMessage}" rows="2" styleClass="pc90" />
 				<h:outputLabel value="List commands when unknown command is received" />
 				<h:selectBooleanCheckbox value="#{botAction.bot.listCommands}" />
 				<h:outputLabel value="End of Dialog Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{botAction.bot.endOfDialogMessage}" rows="2" styleClass="pc90" />
 				<h:outputLabel value="Cancel Command Key" styleClass="txtop" />
-				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc70" />
+				<h:inputText value="#{botAction.bot.cancelKey}" maxlength="30" styleClass="pc90" />
 				<h:outputLabel value="Cancel Message" styleClass="txtop" />
-				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc70" />
+				<h:inputTextarea value="#{botAction.bot.cancelMessage}" rows="2" styleClass="pc90" />
 				<h:panelGroup layout="block" styleClass="w3-row w3-margin-top">
 					<h:commandButton action="#{botAction.list()}" value="Go back" styleClass="secondary" />
 					<a4j:commandButton value="Save Bot" action="#{botAction.save()}" styleClass="primary" render="notify" />

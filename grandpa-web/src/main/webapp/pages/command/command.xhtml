@@ -5,7 +5,7 @@
 
 		<h1 class="w3-text-indigo">Command</h1>
 
-		<fieldset class="pc90">
+		<fieldset>
 			<legend>Command</legend>
 			<h:panelGroup id="commandCrudId">
 				<h:panelGroup layout="block">
@@ -14,15 +14,15 @@
 				</h:panelGroup>
 				<h:panelGroup layout="block">
 					<h:outputLabel value="Command Key" />
-					<h:inputText value="#{commandAction.command.key}" />
+					<h:inputText value="#{commandAction.command.key}" styleClass="pc90" />
 				</h:panelGroup>
 				<h:panelGroup layout="block">
 					<h:outputLabel value="Short Description" styleClass="txtop" />
-					<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="2" />
+					<h:inputTextarea value="#{commandAction.command.shortDescription}" cols="40" rows="2" styleClass="pc90" />
 				</h:panelGroup>
 				<h:panelGroup layout="block">
 					<h:outputLabel value="Process Answers" />
-					<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}">
+					<h:selectBooleanCheckbox value="#{commandAction.command.postProcess}" styleClass="pc90">
 						<f:ajax event="click" listener="#{commandAction.enablePostScript()}" execute="frm:commandCrudId" render="@form" />
 					</h:selectBooleanCheckbox>
 				</h:panelGroup>

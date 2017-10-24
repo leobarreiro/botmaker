@@ -3,24 +3,24 @@
 	xmlns:rich="http://richfaces.org/rich" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1 class="w3-text-indigo">BlackList Expression</h1>
+		<h1 class="w3-text-teal">BlackList Expression</h1>
 
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Detail</legend>
 
-			<h:outputLabel value="Script Type" styleClass="w3-margin-top" />
-			<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true" styleClass="w3-border">
+			<h:outputLabel value="Script Type" />
+			<h:selectOneMenu value="#{blackListExpressionAction.expression.scriptType}" immediate="true" styleClass="pc90">
 				<f:selectItems value="#{auxAction.scriptTypeOpt}" var="opt" itemLabel="#{opt.descriptor}" itemValue="#{opt}" />
 			</h:selectOneMenu>
 	
-			<h:outputLabel value="Regexp" styleClass="w3-margin-top" />
-			<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}" styleClass="w3-border">
+			<h:outputLabel value="Regexp" />
+			<h:selectOneMenu value="#{blackListExpressionAction.expression.regexp}" styleClass="pc90">
 				<f:selectItem itemValue="#{false}" itemLabel="No" />
 				<f:selectItem itemValue="#{true}" itemLabel="Yes" />
 			</h:selectOneMenu>
 	
-			<h:outputLabel value="Content" styleClass="w3-margin-top" />
-			<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" styleClass="w3-border" />
+			<h:outputLabel value="Content" />
+			<h:inputTextarea value="#{blackListExpressionAction.expression.content}" cols="50" rows="2" styleClass="pc90" />
 	
 			<h:commandButton action="#{blackListExpressionAction.detail(blackListExpressionAction.expression)}" immediate="true" value="Cancel" styleClass="secondary"
 				rendered="#{blackListExpressionAction.expression.id ne null}">
