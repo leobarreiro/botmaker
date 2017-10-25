@@ -25,24 +25,17 @@ textarea[disabled].script {
 	border: 1px solid #440044 !important;
 }
 
-.green {
-	color: green !important;
+img.arrow-menu {
+	cursor: pointer;
+	position: relative;
+	top: 2px;
+	float: right;
+	z-index: 40;
+	position: relative;
 }
 
-.blue {
-	color: blue !important;
-}
-
-.purple {
-	color: #440044 !important;
-}
-
-.red {
-	color: red !important;
-}
-
-.gray {
-	color: gray !important;
+img.logo {
+	display: inline-block;
 }
 
 /* Richfaces components customization */

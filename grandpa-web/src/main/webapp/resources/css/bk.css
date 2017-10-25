@@ -96,11 +96,50 @@ input.attention, button.attention {
 	color: #FFFFFF !important;
 }
 
+/* backgrounds */
+.bkg-deepblue {
+	background-color: #204a87;
+}
+
+/* colors */
+
+.deepblue {
+	color: #204a87;
+}
+
+.green {
+	color: green !important;
+}
+
+.blue {
+	color: blue !important;
+}
+
+.purple {
+	color: #440044 !important;
+}
+
+.red {
+	color: red !important;
+}
+
+.gray {
+	color: gray !important;
+}
 
 /* padding */
 .pd0 {
 	padding: 0pt !important;
 }
+
+.pd6 {
+	padding: 6pt;
+}
+
+.pd8 {
+	padding: 8pt;
+}
+
 .pd12 {
 	padding: 12pt;
 }

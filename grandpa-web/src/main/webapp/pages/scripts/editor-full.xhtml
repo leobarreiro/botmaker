@@ -5,16 +5,15 @@
 		<a4j:poll actionListener="#{scriptAction.handleRefreshConversation()}" interval="30000" execute="frm:scriptCode" ontimer="scriptCodeMirror.save()" />
 
 		<h:panelGrid columns="2" styleClass="pc100 pd0" columnClasses="pc80 vtop,pc20 vtop">
-			<h1 class="w3-text-teal">Script Editor</h1>
+			<h1 class="deepblue">Script Editor</h1>
 			<h:panelGroup layout="block" styleClass="editor-buttons">
 				<h:commandButton value="Go Back" action="#{scriptAction.goBackValidator()}" rendered="#{scriptAction.script.validator ne null}" styleClass="secondary" immediate="true" />
 				<h:commandButton id="btScriptSaveId" value="Save" action="#{scriptAction.saveScript()}" styleClass="primary" onclick="scriptCodeMirror.save()">
 				</h:commandButton>
 			</h:panelGroup>
 
-
 			<h:panelGroup>
-				<h:panelGrid id="panelScriptConstrolsId" styleClass="pc100 editor-info" columns="#{(scriptAction.script.command ne null) ? 5 : 4}"
+				<h:panelGrid id="panelScriptConstrolsId" styleClass="pc100 editor-info w3-light-gray" columns="#{(scriptAction.script.command ne null) ? 5 : 4}"
 					columnClasses="#{(scriptAction.script.command ne null) ? 'pc20,pc20,pc15,pc15,pc30' : 'none,none,none,none'}">
 					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}" styleClass="lh100">
 						<h:outputLabel value="Bot" />

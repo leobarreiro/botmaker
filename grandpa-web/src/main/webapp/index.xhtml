@@ -2,21 +2,21 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" template="/WEB-INF/templates/blank_logo.xhtml">
 	<ui:define name="content">
-		<h:panelGroup layout="block" styleClass="w3-display-middle bk-wd-180 bk-pd-12 w3-blue w3-round-large">
+		<h:panelGroup layout="block" styleClass="w3-display-middle wd200 pd12 bkg-deepblue w3-round-large">
 			<h:panelGroup layout="block" styleClass="w3-middle w3-center">
 				<h:graphicImage value="/resources/img/botmaker-logo-white.png" width="140" height="140" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="w3-center">
-				<h:inputText value="#{userAction.username}" pt:placeholder="User Name" styleClass="wd120 w3-input w3-margin" />
+			<h:panelGroup layout="block" styleClass="pc100 pd8 txctr">
+				<h:inputText value="#{userAction.username}" pt:placeholder="User Name" />
 			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="w3-row w3-center">
-				<h:inputSecret value="#{userAction.plainPassword}" pt:placeholder="Password" styleClass="wd120 w3-input w3-margin" />
+			<h:panelGroup layout="block" styleClass="pc100 pd8 txctr">
+				<h:inputSecret value="#{userAction.plainPassword}" pt:placeholder="Password" />
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="txctr">
+				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="primary orange" />
 			</h:panelGroup>
 			<h:panelGroup layout="block" styleClass="w3-center">
-				<h:commandButton action="#{userAction.login()}" value="Login" styleClass="w3-btn w3-green" />
-			</h:panelGroup>
-			<h:panelGroup layout="block" styleClass="w3-center">
-				<h:commandLink action="#{userAction.createAccount()}" value="I wanna create a new Account" styleClass="w3-text-white">
+				<h:commandLink action="#{userAction.createAccount()}" value="Create a new Account" styleClass="w3-text-white">
 					<f:ajax execute="@this" immediate="true" />
 				</h:commandLink>
 			</h:panelGroup>

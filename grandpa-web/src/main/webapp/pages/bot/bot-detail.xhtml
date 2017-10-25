@@ -3,7 +3,7 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j" template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
 
-		<h1 class="w3-text-teal">Bot</h1>
+		<h1 class="deepblue">Bot</h1>
 		
 		<fieldset>
 			<legend>Review</legend>
@@ -60,10 +60,10 @@
 			</h:commandButton>
 		</h:panelGroup>
 		
-		<h2 class="w3-text-teal">Commands for this Bot</h2>
+		<h2 class="deepblue">Commands for this Bot</h2>
 		
 		
-		<fieldset class="pc95">
+		<fieldset>
 			<legend>Commands</legend>
 			<rich:dataTable value="#{commandAction.commands}" var="cmd" styleClass="pc100"  rendered="#{not empty commandAction.commands}">
 				<rich:column styleClass="pc15">
