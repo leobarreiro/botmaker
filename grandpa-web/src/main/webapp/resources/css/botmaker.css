@@ -25,13 +25,14 @@ textarea[disabled].script {
 	border: 1px solid #440044 !important;
 }
 
-img.arrow-menu {
+img.toggle-menu {
+	position: relative;
+	top: 0px;
+	float: right;
+	margin: 4pt;
 	cursor: pointer;
 	position: relative;
-	top: 2px;
-	float: right;
 	z-index: 40;
-	position: relative;
 }
 
 img.logo {
