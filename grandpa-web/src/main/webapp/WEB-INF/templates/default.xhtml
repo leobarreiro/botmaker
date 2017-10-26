@@ -34,17 +34,18 @@
 
 			<h:panelGroup layout="block" styleClass="w3-display-container">
 
-				<h:panelGroup layout="block" styleClass="w3-sidebar bkg-deepblue wd180 menubar">
+				<h:panelGroup layout="block" styleClass="w3-sidebar bkg-deepblue wd160 menubar">
 
 					<h:graphicImage alt="Menu Visibility" value="/resources/img/icons/toggle-menu.png" title="toggle menu" width="24" height="24" styleClass="toggle-menu" />
+					<h:graphicImage alt="Menu Visibility" value="/resources/img/icons/hide-menu.png" title="hide menu" width="24" height="24" styleClass="hide-menu" />
 
 					<h:panelGroup layout="block" styleClass="pc100 vmid txctr">
-						<h:graphicImage alt="BotMaker" value="/resources/img/botmaker-logo-white.png" title="BotMaker" width="140" height="140" styleClass="logo" />
+						<h:graphicImage alt="BotMaker" value="/resources/img/botmaker-screen-white.png" title="BotMaker" width="65" height="40" styleClass="logo" />
 					</h:panelGroup>
 					<ui:include src="/pages/menu.xhtml" />
 				</h:panelGroup>
 
-				<h:panelGroup layout="block" styleClass="w3-rest" style="margin-left: 190pt">
+				<h:panelGroup layout="block" styleClass="w3-rest" style="margin-left: 170pt">
 					<h:panelGroup layout="block" styleClass="pc95">
 						<ui:insert name="content">
 							[Template content will be inserted here]
@@ -60,22 +61,24 @@
 		<rich:notifyStack id="mainStack" position="topRight" direction="vertical" method="first" />
 		<rich:notify id="notify" stack="mainStack" summary="#{msgAction.showMsg()}" escape="false" rendered="#{msgAction.mustShow}" styleClass="w3-tag w3-large w3-round-large w3-padding w3-blue" />
 
-		<script>
+		<script type="text/javascript">
 			$(document).ready(function(){
 			    $("img.toggle-menu").click(function(){
+			    	$("img.hide-menu:first").css("display", "inline-block").css("visibility", "visible");
+			    	$("img.toggle-menu:first").css("display", "none").css("visibility", "hidden");
 			    	var wdt = $("div.menubar:first").width();
-				    if (wdt != 240) {
-				    	$("div.menubar:first").width(240);
-				    	$("div.w3-rest:first").css("margin-left", "190pt");
-				    	$("img.logo:first").width(140);
-				    	$("img.logo:first").height(140);
-				    	
-					} else {
-						$("div.menubar:first").width(40);
-						$("div.w3-rest:first").css("margin-left", "46pt");
-				    	$("img.logo:first").width(34);
-				    	$("img.logo:first").height(34);
-					}
+			    	$("div.menubar:first").width("160pt");
+			    	$("div.w3-rest:first").css("margin-left", "170pt");
+			    	$("img.logo:first").width(65);
+			    	$("img.logo:first").height(40);
+			    });
+			    $("img.hide-menu").click(function(){
+			    	$("img.toggle-menu:first").css("display", "inline-block").css("visibility", "visible");
+			    	$("img.hide-menu:first").css("display", "none").css("visibility", "hidden");
+			    	$("div.menubar:first").width("30pt");
+					$("div.w3-rest:first").css("margin-left", "40pt");
+			    	$("img.logo:first").width(34);
+			    	$("img.logo:first").height(21);
 			    });
 			});
 		</script>

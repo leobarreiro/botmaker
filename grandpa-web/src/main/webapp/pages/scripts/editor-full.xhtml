@@ -13,7 +13,7 @@
 			</h:panelGroup>
 
 			<h:panelGroup>
-				<h:panelGrid id="panelScriptConstrolsId" styleClass="pc100 editor-info w3-light-gray" columns="#{(scriptAction.script.command ne null) ? 5 : 4}"
+				<h:panelGrid id="panelScriptConstrolsId" styleClass="pc100 editor-info bkg-deepblue" columns="#{(scriptAction.script.command ne null) ? 5 : 4}"
 					columnClasses="#{(scriptAction.script.command ne null) ? 'pc20,pc20,pc15,pc15,pc30' : 'none,none,none,none'}">
 					<h:panelGroup layout="block" rendered="#{scriptAction.bot ne null}" styleClass="lh100">
 						<h:outputLabel value="Bot" />
@@ -81,14 +81,14 @@
 					</h:panelGroup>
 				</h:panelGrid>
 
-				<h:panelGroup layout="block">
+				<h:panelGroup layout="block" styleClass="mgtop12">
 					<h:inputTextarea id="scriptCode" value="#{scriptAction.script.code}" rows="16" />
 				</h:panelGroup>
 
 			</h:panelGroup>
 
-			<h:panelGroup layout="block" styleClass="pc100">
-				<h3 class="vtop w3-text-indigo">Context Vars</h3>
+			<h:panelGroup layout="block" styleClass="pc100 pdlft12">
+				<h3 class="vtop deepblue">Context Vars</h3>
 				<h:dataTable id="contextVarsId" headerClass="tx9" var="ctx" value="#{scriptAction.contextVars}" styleClass="pc100" columnClasses="pc10,pc40,pc50 txrgt">
 					<h:column headerClass="tx11 pc10">
 						<h:graphicImage value="/resources/img/icons/info.png" title="#{ctx.description}" styleClass="tip-left" />
@@ -105,7 +105,7 @@
 						<a4j:ajax execute="frm:scriptCode @this" render="frm:outputHiddenId" onbeforesubmit="scriptCodeMirror.save();" oncomplete="treatConsoleOutput()" />
 					</h:commandButton>
 				</h:panelGroup>
-				<h3 class="vtop w3-text-indigo">Output Console</h3>
+				<h3 class="vtop deepblue">Output Console</h3>
 				<h:panelGroup layout="block" id="consoleOutputId" styleClass="output-console" />
 				<h:inputHidden id="outputHiddenId" value="#{scriptAction.debugContent}" />
 				<h:panelGroup layout="block" styleClass="pc100 txrgt">

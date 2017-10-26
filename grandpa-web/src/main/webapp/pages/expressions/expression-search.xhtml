@@ -5,7 +5,6 @@
 
 		<h1 class="deepblue">BlackList Expressions</h1>
 
-
 		<fieldset class="pc95">
 			<legend>Filter</legend>
 			<h:panelGrid columns="5" styleClass="pc100">
@@ -21,7 +20,6 @@
 				</h:commandButton>
 			</h:panelGrid>
 		</fieldset>
-
 
 		<fieldset class="pc95">
 			<legend>Results</legend>
@@ -44,49 +42,78 @@
 			</rich:dataTable>
 		</fieldset>
 
-		<rich:popupPanel id="popupTestExpressionId" modal="true" moveable="true" header="Test Expressions" height="450" width="700" maxHeight="450" maxWidth="700">
+		<rich:popupPanel id="popupTestExpressionId" modal="true" moveable="true" header="Test Expressions" height="380" width="650" maxHeight="380" maxWidth="650">
+			
 			<f:facet name="controls">
-				<h:outputLink value="#" onclick="#{rich:component('popupTestExpressionId')}.hide(); return false;">X</h:outputLink>
+				<h:outputLink value="#" onclick="#{rich:component('popupTestExpressionId')}.hide(); return false;">
+					<h:graphicImage value="/resources/img/close-popup.png" styleClass="mg0" />
+				</h:outputLink>
 			</f:facet>
-			<rich:panel id="testExpressionId" styleClass="pc95 mrauto">
-				<h:panelGrid columns="2" columnClasses="pc50,pc40" styleClass="pc100">
-					<h:column>
-						<h4 class="mrtop0 pc100">Script to Test</h4>
-						<h:panelGroup layout="block" styleClass="scripting">
-							<h:inputTextarea id="scriptCode" value="#{blackListExpressionAction.exampleCode}" />
-						</h:panelGroup>
-					</h:column>
-					<h:column>
-						<h4 class="mrtop0 pc100">Output validation</h4>
-						<h:panelGroup id="outputValidationId" layout="block">
-							<pre class="output-console">#{blackListExpressionAction.debugContent}</pre>
-						</h:panelGroup>
-					</h:column>
-				</h:panelGrid>
-				<h:panelGroup layout="block" styleClass="frm-submit">
-					<h:commandButton value="Clear Output" styleClass="secondary">
-						<f:ajax event="click" execute="@this" listener="#{blackListExpressionAction.clear()}" render="frm:outputValidationId" />
-					</h:commandButton>
-					<h:commandButton id="btScriptTestId" value="Test" actionListener="#{blackListExpressionAction.testExpression()}" styleClass="primary">
-						<a4j:ajax execute="frm:testExpressionId" render="frm:testExpressionId" onbeforesubmit="scriptEditor.save();" />
-					</h:commandButton>
-					<h:commandButton value="Close" styleClass="secondary">
-						<rich:componentControl event="click" target="popupTestExpressionId" operation="hide" />
-					</h:commandButton>
-				</h:panelGroup>
-			</rich:panel>
-		</rich:popupPanel>
 
-		<script type="text/javascript">
-			var scriptEditor = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
-			    mode: "groovy",
-			    theme: "#{userPreferenceAction.scriptingTheme.value}", 
-			    indentWithTabs: true,
-			    lineNumbers: true, 
-			    lineWrapping: true  
-			});
-			scriptEditor.setSize('100%', 292);
-		</script>
+			<h:panelGroup layout="block" styleClass="pc95 mrauto">
+				<h:panelGrid id="testExpressionId" columns="2" columnClasses="pc60 vtop,pc30 vtop" styleClass="pc100">
+					<h:panelGroup>
+						<h4 class="deepblue pc100">Script to Test</h4>
+						<h:panelGroup layout="block" styleClass="scripting">
+							<h:inputTextarea id="scriptCode" value="" />
+						</h:panelGroup>
+					</h:panelGroup>
+					<h:panelGroup>
+						<h4 class="deepblue pc100">Output validation</h4>
+						<h:panelGroup layout="block" id="consoleOutputId" styleClass="output-console" />
+					</h:panelGroup>
+
+					<h:panelGroup>
+						<h:inputHidden id="codeHiddenId" value="#{blackListExpressionAction.exampleCode}" />
+						<h:inputHidden id="outputHiddenId" value="#{blackListExpressionAction.debugContent}" />
+						<h:commandButton type="button" value="Clear Output" styleClass="secondary">
+							<f:ajax event="click" execute="@this" listener="#{blackListExpressionAction.clear()}" render="frm:consoleOutputId" />
+						</h:commandButton>
+						<h:commandButton type="submit" id="btScriptTestId" value="Test" actionListener="#{blackListExpressionAction.testExpression()}" styleClass="primary" accesskey="e">
+							<a4j:ajax execute="frm:codeHiddenId" render="frm:outputHiddenId" onbegin="copyContentToTarget();" oncomplete="treatConsoleOutput()" />
+						</h:commandButton>
+						<h:commandButton type="button" value="Close" styleClass="secondary">
+							<rich:componentControl event="click" target="popupTestExpressionId" operation="hide" />
+						</h:commandButton>
+					</h:panelGroup>
+
+				</h:panelGrid>
+
+			</h:panelGroup>
+
+			<script type="text/javascript">
+				var scriptCodeMirror = CodeMirror.fromTextArea(document.getElementById('frm:scriptCode'), {
+				    mode: "groovy",
+				    theme: "#{userPreferenceAction.scriptingTheme.value}", 
+				    indentWithTabs: true,
+				    lineNumbers: true, 
+				    lineWrapping: true, 
+				});
+				
+				function configureCodeMirror() {
+					scriptCodeMirror.setSize('100%', 262);
+					scriptCodeMirror.on("blur", function() {scriptCodeMirror.save()});
+					scriptCodeMirror.setOption('readOnly', false);
+				}
+
+				function copyContentToTarget() {
+	 				var contentCode = document.getElementById('frm:scriptCode').value;
+	 				document.getElementById('frm:codeHiddenId').value = contentCode;
+				}
+	
+				function treatConsoleOutput() {
+		 			try {
+		 				var treatedContent = document.getElementById('frm:outputHiddenId').value;
+		 				document.getElementById('frm:consoleOutputId').innerHTML = treatedContent;
+		 			} catch (ee) {
+						alert(ee.message);
+				 	} 
+				}
+	
+				configureCodeMirror();
+			</script>
+
+		</rich:popupPanel>
 
 	</ui:define>
 </ui:composition>

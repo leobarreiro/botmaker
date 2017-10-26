@@ -25,7 +25,7 @@ textarea[disabled].script {
 	border: 1px solid #440044 !important;
 }
 
-img.toggle-menu {
+img.toggle-menu, img.hide-menu {
 	position: relative;
 	top: 0px;
 	float: right;
@@ -33,6 +33,11 @@ img.toggle-menu {
 	cursor: pointer;
 	position: relative;
 	z-index: 40;
+}
+
+img.toggle-menu {
+	display: none;
+	visibility: hidden;
 }
 
 img.logo {

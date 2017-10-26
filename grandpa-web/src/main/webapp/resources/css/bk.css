@@ -4,7 +4,7 @@ body {
 	font-size: 12pt !important;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1, h2, h3, h4, h5, h6 {
 	margin: 0pt !important;
 }
 
@@ -102,7 +102,6 @@ input.attention, button.attention {
 }
 
 /* colors */
-
 .deepblue {
 	color: #204a87;
 }
@@ -152,6 +151,14 @@ input.attention, button.attention {
 	padding: 36pt;
 }
 
+.pdlft8 {
+	padding-left: 8pt;
+}
+
+.pdlft12 {
+	padding-left: 12pt;
+}
+
 /* margin */
 .mgauto {
 	margin: auto;
@@ -166,22 +173,18 @@ input.attention, button.attention {
 }
 
 .mgtop12 {
-	display: inline-block;
 	margin-top: 12pt;
 }
 
 .mgtop24 {
-	display: inline-block;
 	margin-top: 24pt;
 }
 
 .mgtop36 {
-	display: inline-block;
 	margin-top: 36pt;
 }
 
 /* width */
-
 .wdfill {
 	display: inline;
 	width: 100%;
@@ -286,6 +289,7 @@ input.attention, button.attention {
 .pc65 {
 	width: 65%;
 }
+
 .pc70 {
 	width: 70%;
 }
