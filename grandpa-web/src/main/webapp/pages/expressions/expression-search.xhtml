@@ -19,10 +19,15 @@
 					<rich:componentControl event="click" target="popupTestExpressionId" operation="show" />
 				</h:commandButton>
 			</h:panelGrid>
+<<<<<<< HEAD
 		</fieldset>
 
 		<fieldset class="pc95">
 			<legend>Results</legend>
+=======
+		</rich:panel>
+		<h:panelGroup layout="block" styleClass="frm-crud">
+>>>>>>> master
 			<rich:dataTable id="expressionListId" value="#{blackListExpressionAction.expressionList}" var="expr" rows="5" styleClass="pc100">
 				<rich:column sortBy="#{expr.scriptType}" styleClass="txlft pc20">
 					<f:facet name="header">Script Type</f:facet>
@@ -40,6 +45,7 @@
 					<rich:dataScroller fastStep="3" />
 				</f:facet>
 			</rich:dataTable>
+<<<<<<< HEAD
 		</fieldset>
 
 		<rich:popupPanel id="popupTestExpressionId" modal="true" moveable="true" header="Test Expressions" height="380" width="650" maxHeight="380" maxWidth="650">
@@ -113,6 +119,42 @@
 				configureCodeMirror();
 			</script>
 
+=======
+		</h:panelGroup>
+
+		<rich:popupPanel id="popupTestExpressionId" modal="true" moveable="true" header="Test Expressions" height="450" width="700" maxHeight="450" maxWidth="700">
+			<f:facet name="controls">
+				<h:outputLink value="#" onclick="#{rich:component('popupTestExpressionId')}.hide(); return false;">X</h:outputLink>
+			</f:facet>
+			<rich:panel id="testExpressionId" styleClass="pc95 mrauto">
+				<h:panelGrid columns="2" columnClasses="pc50,pc40" styleClass="pc100">
+					<h:column>
+						<h4 class="mrtop0 pc100">Script to Test</h4>
+						<h:panelGroup layout="block" styleClass="scripting">
+							<h:inputTextarea id="scriptCode" value="#{blackListExpressionAction.exampleCode}" />
+						</h:panelGroup>
+					</h:column>
+					<h:column>
+						<h4 class="mrtop0 pc100">Output validation</h4>
+						<h:panelGroup id="outputValidationId" layout="block">
+							<pre class="output-console">#{blackListExpressionAction.debugContent}</pre>
+						</h:panelGroup>
+					</h:column>
+				</h:panelGrid>
+
+				<h:panelGroup layout="block" styleClass="frm-submit">
+					<h:commandButton value="Clear Output" styleClass="secondary">
+						<f:ajax event="click" execute="@this" listener="#{blackListExpressionAction.clear()}" render="frm:outputValidationId" />
+					</h:commandButton>
+					<h:commandButton id="btScriptTestId" value="Test" actionListener="#{blackListExpressionAction.testExpression()}" styleClass="primary">
+						<a4j:ajax execute="frm:testExpressionId" render="frm:testExpressionId" onbeforesubmit="scriptEditor.save();" />
+					</h:commandButton>
+					<h:commandButton value="Close" styleClass="secondary">
+						<rich:componentControl event="click" target="popupTestExpressionId" operation="hide" />
+					</h:commandButton>
+				</h:panelGroup>
+			</rich:panel>
+>>>>>>> master
 		</rich:popupPanel>
 
 	</ui:define>
